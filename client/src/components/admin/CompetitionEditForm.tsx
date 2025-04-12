@@ -79,10 +79,13 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
   // Update form mutation
   const updateMutation = useMutation({
     mutationFn: async (data: CompetitionUpdateFormValues) => {
-      const res = await apiRequest('PUT', `/api/admin/competitions/${competition.id}`, {
+      // Ensure endDate is properly formatted for the API
+      const formattedData = {
         ...data,
-        endDate: data.endDate.toISOString(),
-      });
+        endDate: data.endDate instanceof Date ? data.endDate.toISOString() : data.endDate,
+      };
+      
+      const res = await apiRequest('PUT', `/api/admin/competitions/${competition.id}`, formattedData);
       
       if (!res.ok) {
         const errorData = await res.json();
@@ -252,7 +255,7 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
             name="prize"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Prize Value (USD)</FormLabel>
+                <FormLabel>Prize Value (GBP)</FormLabel>
                 <FormControl>
                   <Input type="number" min="0" {...field} />
                 </FormControl>
@@ -280,7 +283,7 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
             name="ticketPrice"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Ticket Price (¢)</FormLabel>
+                <FormLabel>Ticket Price (p)</FormLabel>
                 <FormControl>
                   <Input 
                     type="number" 
@@ -290,7 +293,7 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
                   />
                 </FormControl>
                 <FormDescription>
-                  Price per ticket in cents (e.g. 500 = $5.00)
+                  Price per ticket in pence (e.g. 500 = £5.00)
                 </FormDescription>
                 <FormMessage />
               </FormItem>

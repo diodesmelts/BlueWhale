@@ -273,7 +273,7 @@ export default function AdminPage() {
                   name="prize"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Prize Value (USD)</FormLabel>
+                      <FormLabel>Prize Value (GBP)</FormLabel>
                       <FormControl>
                         <Input type="number" min="0" {...field} />
                       </FormControl>
