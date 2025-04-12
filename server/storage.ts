@@ -7,6 +7,10 @@ import { CompetitionWithEntryStatus, LeaderboardUser, UserStats } from "@shared/
 
 // modify the interface with any CRUD methods
 // you might need
+import session from "express-session";
+import connectPg from "connect-pg-simple";
+import { pool } from "./db";
+
 export interface IStorage {
   // User methods
   getUser(id: number): Promise<User | undefined>;
@@ -20,7 +24,8 @@ export interface IStorage {
   listCompetitions(
     filter?: { platform?: string; type?: string; }, 
     sort?: string, 
-    tab?: string
+    tab?: string,
+    includeDeleted?: boolean
   ): Promise<Competition[]>;
   createCompetition(competition: InsertCompetition): Promise<Competition>;
   updateCompetition(id: number, data: Partial<Competition>): Promise<Competition | undefined>;
@@ -48,6 +53,9 @@ export interface IStorage {
     sort?: string, 
     tab?: string
   ): Promise<CompetitionWithEntryStatus[]>;
+  
+  // Session store for authentication
+  sessionStore: session.Store;
 }
 
 export class MemStorage implements IStorage {
@@ -62,6 +70,10 @@ export class MemStorage implements IStorage {
   private userEntryIdCounter: number;
   private userWinIdCounter: number;
   private leaderboardIdCounter: number;
+  
+  public sessionStore: session.Store = new (require('memorystore')(session))({
+    checkPeriod: 86400000 // prune expired entries every 24h
+  });
 
   constructor() {
     this.users = new Map();
@@ -624,4 +636,6 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+// Switch from MemStorage to DatabaseStorage
+import { DatabaseStorage } from "./database-storage";
+export const storage = new DatabaseStorage();
