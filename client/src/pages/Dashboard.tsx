@@ -65,16 +65,18 @@ export default function Dashboard() {
   return (
     <div className="container mx-auto px-4 py-6">
       {/* Dashboard Header */}
-      <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-8 bg-white p-6 rounded-xl shadow-md border-l-4 border-rose-500">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">Competition Dashboard</h1>
-          <p className="text-base text-gray-600 mt-1">Discover trending competitions and track your entries</p>
-        </div>
-        <div className="mt-4 md:mt-0">
-          <Button className="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-medium py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
-            <i className="fas fa-plus-circle mr-2"></i>
-            <span>Add Competition</span>
-          </Button>
+      <div className="bg-white p-8 rounded-xl shadow-md mb-8">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">Competition Dashboard</h1>
+            <p className="text-lg text-gray-700 mt-2">Discover trending competitions and track your entries</p>
+          </div>
+          <div className="mt-4 md:mt-0">
+            <Button className="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-medium py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
+              <i className="fas fa-plus-circle mr-2"></i>
+              <span>Add Competition</span>
+            </Button>
+          </div>
         </div>
       </div>
 

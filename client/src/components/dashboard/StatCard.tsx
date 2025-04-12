@@ -18,6 +18,17 @@ export default function StatCard({ icon, iconColor, title, value }: StatCardProp
       default: return "from-rose-500 to-pink-600";
     }
   };
+  
+  const getBorderClass = () => {
+    switch (iconColor) {
+      case "red": return "border-rose-500";
+      case "green": return "border-emerald-500";
+      case "yellow": return "border-amber-400";
+      case "navy": return "border-indigo-500";
+      case "purple": return "border-violet-500";
+      default: return "border-rose-500";
+    }
+  };
 
   const getIconClasses = () => {
     switch (iconColor) {
@@ -41,30 +52,21 @@ export default function StatCard({ icon, iconColor, title, value }: StatCardProp
   };
 
   return (
-    <div 
-      className={`rounded-xl overflow-hidden shadow-md bg-gradient-to-br ${getGradientClass()} text-white relative`}
-      style={{ 
-        backgroundImage: getBackgroundPattern() 
-      }}
-    >
-      {/* Decorative elements */}
-      <div className="absolute -bottom-6 -right-6 w-24 h-24 rounded-full bg-white/10"></div>
-      <div className="absolute top-0 left-0 w-full h-full bg-white/5 backdrop-blur-3xl opacity-30"></div>
-      
-      <div className="p-5 relative">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-sm font-medium text-white/80 mb-1">{title}</p>
-            <h3 className="text-2xl font-bold">{value}</h3>
-          </div>
-          <div className={`rounded-full ${getIconClasses()} p-3 flex items-center justify-center h-12 w-12 shadow-lg`}>
+    <div className={`bg-white rounded-xl shadow-md border-t-4 ${getBorderClass()} overflow-hidden`}>
+      <div className="p-6">
+        <div className="flex items-center space-x-4">
+          <div className={`w-14 h-14 rounded-full flex items-center justify-center bg-gradient-to-br ${getGradientClass()} text-white shadow-md`}>
             {icon}
+          </div>
+          <div>
+            <div className="text-3xl font-bold text-gray-900">{value}</div>
+            <div className="text-sm text-gray-600 font-medium">{title}</div>
           </div>
         </div>
         
         {/* Trend indicator */}
-        <div className="mt-4 pt-2 border-t border-white/10 flex items-center">
-          <span className="text-xs font-medium bg-white/20 rounded-full py-1 px-2 flex items-center">
+        <div className="mt-4 pt-2 border-t border-gray-100 flex items-center">
+          <span className="text-xs font-medium bg-green-100 text-green-800 rounded-full py-1 px-2 flex items-center">
             <i className="fas fa-arrow-up mr-1"></i> 12% from last week
           </span>
         </div>
