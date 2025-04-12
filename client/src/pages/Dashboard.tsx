@@ -69,10 +69,10 @@ export default function Dashboard() {
   return (
     <div className="container mx-auto px-4 py-6">
       {/* Hero Welcome Section */}
-      <div className="bg-gradient-to-r from-rose-500 to-pink-600 p-10 rounded-2xl shadow-xl mb-8 overflow-hidden relative">
+      <div className="bg-gradient-to-r from-blue-900 to-indigo-800 p-10 rounded-2xl shadow-xl mb-8 overflow-hidden relative">
         {/* Decorative elements */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full -mt-20 -mr-20"></div>
-        <div className="absolute bottom-0 left-0 w-40 h-40 bg-white opacity-10 rounded-full -mb-10 -ml-10"></div>
+        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-300 opacity-10 rounded-full -mt-20 -mr-20"></div>
+        <div className="absolute bottom-0 left-0 w-40 h-40 bg-cyan-200 opacity-10 rounded-full -mb-10 -ml-10"></div>
         
         <div className="flex flex-col md:flex-row justify-between items-center relative z-10">
           <div className="text-white">
@@ -84,12 +84,12 @@ export default function Dashboard() {
             </p>
             
             <div className="mt-6 flex items-center space-x-4">
-              <Button className="bg-white text-rose-600 hover:bg-yellow-300 hover:text-rose-700 py-2.5 px-6 rounded-full shadow-lg font-bold transition-all duration-300 text-lg">
-                <i className="fas fa-trophy mr-2"></i>
+              <Button className="bg-white text-blue-900 hover:bg-yellow-300 hover:text-blue-800 py-2.5 px-6 rounded-full shadow-lg font-bold transition-all duration-300 text-lg">
+                <i className="fas fa-trophy mr-2 text-amber-500"></i>
                 <span>Start Winning</span>
               </Button>
-              <Button variant="outline" className="bg-transparent border-2 border-white text-white hover:bg-white/20 py-2.5 px-6 rounded-full font-medium transition-all">
-                <i className="fas fa-plus-circle mr-2"></i>
+              <Button variant="outline" className="bg-transparent border-2 border-white text-white hover:bg-indigo-700/40 py-2.5 px-6 rounded-full font-medium transition-all">
+                <i className="fas fa-plus-circle mr-2 text-cyan-300"></i>
                 <span>Add Competition</span>
               </Button>
             </div>
@@ -143,8 +143,8 @@ export default function Dashboard() {
               href="#" 
               className={`text-sm px-6 py-4 font-medium text-center transition-all duration-200 border-b-2 ${
                 activeTab === "trending" 
-                  ? "text-rose-600 border-rose-500 font-semibold" 
-                  : "text-gray-500 hover:text-rose-500 border-transparent"
+                  ? "text-blue-700 border-blue-700 font-semibold" 
+                  : "text-gray-500 hover:text-blue-600 border-transparent"
               }`}
               onClick={(e) => { e.preventDefault(); setActiveTab("trending"); }}
             >
@@ -155,8 +155,8 @@ export default function Dashboard() {
               href="#" 
               className={`text-sm px-6 py-4 font-medium text-center transition-all duration-200 border-b-2 ${
                 activeTab === "my-entries" 
-                  ? "text-rose-600 border-rose-500 font-semibold" 
-                  : "text-gray-500 hover:text-rose-500 border-transparent"
+                  ? "text-blue-700 border-blue-700 font-semibold" 
+                  : "text-gray-500 hover:text-blue-600 border-transparent"
               }`}
               onClick={(e) => { e.preventDefault(); setActiveTab("my-entries"); }}
             >
@@ -167,8 +167,8 @@ export default function Dashboard() {
               href="#" 
               className={`text-sm px-6 py-4 font-medium text-center transition-all duration-200 border-b-2 ${
                 activeTab === "ending-soon" 
-                  ? "text-rose-600 border-rose-500 font-semibold" 
-                  : "text-gray-500 hover:text-rose-500 border-transparent"
+                  ? "text-blue-700 border-blue-700 font-semibold" 
+                  : "text-gray-500 hover:text-blue-600 border-transparent"
               }`}
               onClick={(e) => { e.preventDefault(); setActiveTab("ending-soon"); }}
             >
@@ -179,8 +179,8 @@ export default function Dashboard() {
               href="#" 
               className={`text-sm px-6 py-4 font-medium text-center transition-all duration-200 border-b-2 ${
                 activeTab === "high-value" 
-                  ? "text-rose-600 border-rose-500 font-semibold" 
-                  : "text-gray-500 hover:text-rose-500 border-transparent"
+                  ? "text-blue-700 border-blue-700 font-semibold" 
+                  : "text-gray-500 hover:text-blue-600 border-transparent"
               }`}
               onClick={(e) => { e.preventDefault(); setActiveTab("high-value"); }}
             >
@@ -230,7 +230,7 @@ export default function Dashboard() {
         <div className="flex items-center ml-auto">
           <Button 
             variant="outline" 
-            className="text-rose-600 border-rose-200 hover:bg-rose-50 text-sm font-medium h-9 rounded-lg"
+            className="text-blue-700 border-blue-200 hover:bg-blue-50 text-sm font-medium h-9 rounded-lg"
             onClick={() => {
               setPrizeValue("all");
               setSortBy("popularity");
@@ -246,7 +246,7 @@ export default function Dashboard() {
         {isLoadingCompetitions ? (
           <div className="p-8 text-center bg-white rounded-xl shadow">
             <p className="flex items-center justify-center text-gray-500">
-              <i className="fas fa-circle-notch fa-spin mr-2 text-rose-500"></i>
+              <i className="fas fa-circle-notch fa-spin mr-2 text-blue-700"></i>
               Loading competitions...
             </p>
           </div>
@@ -269,16 +269,16 @@ export default function Dashboard() {
             <div className="p-5 flex items-center justify-between bg-white rounded-xl shadow mt-6">
               <div className="flex items-center text-sm text-gray-600">
                 <span>
-                  Showing <span className="font-semibold text-rose-600">1</span> to <span className="font-semibold text-rose-600">4</span> of <span className="font-semibold text-rose-600">42</span> competitions
+                  Showing <span className="font-semibold text-blue-700">1</span> to <span className="font-semibold text-blue-700">4</span> of <span className="font-semibold text-blue-700">42</span> competitions
                 </span>
               </div>
               <div className="flex items-center space-x-2">
                 <Button variant="outline" size="sm" className="text-gray-600 border-gray-200 hover:bg-gray-50 rounded-md">
                   <i className="fas fa-chevron-left mr-1"></i> Previous
                 </Button>
-                <Button size="sm" className="px-3 py-1 bg-rose-500 hover:bg-rose-600 text-white border-0 rounded-md">1</Button>
-                <Button variant="outline" size="sm" className="text-rose-600 border-rose-200 hover:bg-rose-50 rounded-md">2</Button>
-                <Button variant="outline" size="sm" className="text-rose-600 border-rose-200 hover:bg-rose-50 rounded-md">3</Button>
+                <Button size="sm" className="px-3 py-1 bg-blue-700 hover:bg-blue-800 text-white border-0 rounded-md">1</Button>
+                <Button variant="outline" size="sm" className="text-blue-700 border-blue-200 hover:bg-blue-50 rounded-md">2</Button>
+                <Button variant="outline" size="sm" className="text-blue-700 border-blue-200 hover:bg-blue-50 rounded-md">3</Button>
                 <Button variant="outline" size="sm" className="text-gray-600 border-gray-200 hover:bg-gray-50 rounded-md">
                   Next <i className="fas fa-chevron-right ml-1"></i>
                 </Button>
@@ -296,7 +296,7 @@ export default function Dashboard() {
             Community Leaderboard
           </h2>
           <Link href="/leaderboard">
-            <span className="inline-flex items-center text-rose-600 hover:text-rose-700 text-sm font-medium transition-colors">
+            <span className="inline-flex items-center text-blue-700 hover:text-blue-800 text-sm font-medium transition-colors">
               View Complete Leaderboard 
               <i className="fas fa-arrow-right ml-1"></i>
             </span>
