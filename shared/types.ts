@@ -16,6 +16,7 @@ export interface CompetitionWithEntryStatus {
   entrySteps: EntryStep[];
   isVerified: boolean;
   createdAt: string;
+  entryFee?: number; // Optional entry fee, if undefined or 0, competition is free
   
   // User entry specific fields
   isEntered: boolean;

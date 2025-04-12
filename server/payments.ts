@@ -4,7 +4,7 @@ import { storage } from "./storage";
 
 // Initialize Stripe with the secret key
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-  apiVersion: "2023-10-16", // Use a stable API version
+  apiVersion: "2025-03-31.basil", // Use a stable API version
 });
 
 export interface PaymentMetadata {
