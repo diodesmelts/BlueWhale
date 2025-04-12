@@ -24,6 +24,25 @@ const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
 export async function registerRoutes(app: Express): Promise<Server> {
   // API routes
   
+  // Admin routes
+  app.get("/api/admin/check", isAdmin, (req, res) => {
+    res.status(200).json({ isAdmin: true });
+  });
+  
+  app.post("/api/admin/competitions", isAdmin, async (req, res) => {
+    try {
+      const validatedData = insertCompetitionSchema.parse(req.body);
+      const competition = await storage.createCompetition(validatedData);
+      res.status(201).json(competition);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ message: "Validation error", errors: error.errors });
+      } else {
+        res.status(500).json({ message: "Failed to create competition" });
+      }
+    }
+  });
+  
   // Get user stats
   app.get("/api/user/stats", async (req, res) => {
     try {
@@ -285,35 +304,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // ADMIN ROUTES //
-  
-  // Admin - Create new competition
-  app.post("/api/admin/competitions", isAdmin, async (req, res) => {
-    try {
-      // Validate the request body
-      const parseResult = insertCompetitionSchema.safeParse(req.body);
-      
-      if (!parseResult.success) {
-        return res.status(400).json({ 
-          message: "Invalid competition data", 
-          errors: parseResult.error.errors 
-        });
-      }
-      
-      // Create the competition
-      const competition = await storage.createCompetition(parseResult.data);
-      
-      res.status(201).json(competition);
-    } catch (error) {
-      console.error("Failed to create competition:", error);
-      res.status(500).json({ message: "Failed to create competition" });
-    }
-  });
-  
-  // Admin - Check if user is admin
-  app.get("/api/admin/check", isAdmin, (req, res) => {
-    res.status(200).json({ isAdmin: true });
-  });
+  // (We already defined admin routes above)
 
   const httpServer = createServer(app);
 

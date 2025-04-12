@@ -50,7 +50,7 @@ export default function AdminPage() {
   const [entrySteps, setEntrySteps] = useState([
     { id: 1, description: "", link: "" }
   ]);
-  const navigate = useNavigate();
+  const [, setLocation] = useLocation();
 
   const form = useForm<CompetitionFormValues>({
     resolver: zodResolver(competitionSchema),
@@ -79,17 +79,17 @@ export default function AdminPage() {
           setIsAdmin(true);
         } else {
           setIsAdmin(false);
-          navigate("/");
+          setLocation("/");
         }
       } catch (error) {
         console.error("Failed to check admin status:", error);
         setIsAdmin(false);
-        navigate("/");
+        setLocation("/");
       }
     };
 
     checkAdminStatus();
-  }, [navigate]);
+  }, [setLocation]);
 
   const addEntryStep = () => {
     const newStep = {
