@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { EntryStep } from "@shared/schema";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CompetitionWithEntryStatus } from "@shared/types";
 import TicketPurchaseModal from "@/components/payments/TicketPurchaseModal";
 import { apiRequest } from "@/lib/queryClient";
@@ -20,18 +20,50 @@ export default function EntryProgress({ steps, progress, onComplete, competition
   const progressPercentage = (completedCount / steps.length) * 100;
   const isFullyCompleted = completedCount === steps.length;
 
+  // Create a local copy of competition with ticket price
+  // This is a temporary solution until we update the database schema
+  const competitionWithTicket = competition ? {
+    ...competition,
+    ticketPrice: 999, // Set a fixed value for testing (9.99 USD)
+    maxTicketsPerUser: 10,
+    totalTickets: 100,
+    soldTickets: competition.soldTickets || 0
+  } : undefined;
+  
+  // Debug logging
+  console.log('Competition in EntryProgress:', competition);
+  console.log('Is fully completed:', isFullyCompleted);
+  console.log('Modified competition:', competitionWithTicket);
+
+  // Direct function to show ticket modal that can be called from anywhere
+  const openTicketModal = () => {
+    setIsProcessing(false);
+    setShowTicketModal(true);
+  };
+  
+  // If steps are already complete and button is clicked, 
+  // automatically open ticket modal on render
+  useEffect(() => {
+    if (isFullyCompleted && isProcessing && competition?.ticketPrice && competition.ticketPrice > 0) {
+      const timer = setTimeout(() => {
+        openTicketModal();
+      }, 800);
+      return () => clearTimeout(timer);
+    }
+  }, [isFullyCompleted, isProcessing, competition?.ticketPrice]);
+
   const handleComplete = () => {
     setIsProcessing(true);
     
     // Call the onComplete function which will make the API request
     onComplete();
     
-    // If competition is ticket-based, show ticket modal after short delay
-    if (competition?.ticketPrice && competition.ticketPrice > 0) {
+    // If entry is complete and competition is ticket-based, show ticket modal
+    if (isFullyCompleted && competition?.ticketPrice && competition.ticketPrice > 0) {
+      // Use a timeout to ensure UI updates after API request completes
       setTimeout(() => {
-        setIsProcessing(false);
-        setShowTicketModal(true);
-      }, 800); // Shorter delay for better UX
+        openTicketModal();
+      }, 800);
     } else {
       // For non-ticket competitions or when entry is not yet completed
       setTimeout(() => {
