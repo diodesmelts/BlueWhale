@@ -516,14 +516,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "Competition not found" });
       }
       
-      // Update progress - for demo we'll just increment one step if not complete
-      const entryProgress = [...entry.entryProgress];
-      
-      // Find first incomplete step
-      const incompleteIndex = entryProgress.findIndex(step => step === 0);
-      if (incompleteIndex !== -1) {
-        entryProgress[incompleteIndex] = 1;
-      }
+      // Update progress - mark all steps as complete at once
+      const entryProgress = entry.entryProgress.map(() => 1);
       
       // Update entry
       const updatedEntry = await storage.updateUserEntry(entry.id, {
