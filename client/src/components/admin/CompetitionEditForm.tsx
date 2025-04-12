@@ -79,12 +79,21 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
   // Update form mutation
   const updateMutation = useMutation({
     mutationFn: async (data: CompetitionUpdateFormValues) => {
-      // Ensure endDate is properly formatted for the API
+      // Format the data properly, ensuring endDate is an ISO string
+      // and we explicitly provide platform even though removed from UI
       const formattedData = {
         ...data,
-        endDate: data.endDate instanceof Date ? data.endDate.toISOString() : data.endDate,
+        // Force the platform to be "Other" since we've removed it from the UI
+        platform: "Other",
+        // Ensure entry steps are preserved (even if empty)
+        entrySteps: data.entrySteps || [],
+        // Ensure endDate is properly formatted as an ISO string
+        endDate: data.endDate instanceof Date ? data.endDate.toISOString() : 
+                 (typeof data.endDate === 'string' ? new Date(data.endDate).toISOString() : 
+                 new Date().toISOString()),
       };
       
+      console.log('Submission data:', formattedData);
       const res = await apiRequest('PUT', `/api/admin/competitions/${competition.id}`, formattedData);
       
       if (!res.ok) {
