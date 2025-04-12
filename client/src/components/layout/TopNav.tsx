@@ -93,11 +93,7 @@ export default function TopNav() {
             {user && isAdmin && (
               <Link href="/admin">
                 <Button 
-                  className={`hidden md:flex items-center transition-all border-0 shadow-md ${
-                    isActive("/admin") 
-                      ? 'bg-amber-500 text-white hover:bg-amber-600' 
-                      : 'bg-rose-500 text-white hover:bg-rose-600'
-                  }`}
+                  className="hidden md:flex items-center px-4 py-2 transition-all border-0 shadow-md bg-amber-500 text-white hover:bg-amber-600 rounded-lg"
                 >
                   <i className="fas fa-shield-alt mr-1.5"></i>
                   <span className="text-sm font-medium">Admin</span>
