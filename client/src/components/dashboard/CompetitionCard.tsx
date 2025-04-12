@@ -146,9 +146,9 @@ export default function CompetitionCard({
         } cursor-pointer`}
         onClick={() => setLocation(`/competitions/${id}`)}
       >
-        {/* Competition image at the top - increased height from h-48 to h-64 */}
+        {/* Competition image at the top - square format */}
         <div 
-          className="w-full h-64 bg-center bg-cover relative"
+          className="aspect-square w-full bg-center bg-cover relative"
           style={{ backgroundImage: `url(${image})` }}
         >
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>

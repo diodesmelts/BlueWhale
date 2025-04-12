@@ -258,12 +258,14 @@ export default function CompetitionDetailPage() {
 
       <div className="bg-white rounded-lg shadow-md overflow-hidden">
         {/* Hero image */}
-        <div className="h-96 relative overflow-hidden">
-          <img 
-            src={competition.image} 
-            alt={competition.title}
-            className="w-full h-full object-cover"
-          />
+        <div className="relative overflow-hidden" style={{ maxWidth: '700px', margin: '0 auto' }}>
+          <div className="aspect-square">
+            <img 
+              src={competition.image} 
+              alt={competition.title}
+              className="w-full h-full object-cover"
+            />
+          </div>
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-6">
             <div className="flex items-center justify-between">
               <h1 className="text-white text-3xl font-bold">{competition.title}</h1>
