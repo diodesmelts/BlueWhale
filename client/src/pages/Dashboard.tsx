@@ -324,17 +324,20 @@ export default function Dashboard() {
       </div>
 
       {/* Competition Listings */}
-      <div>
+      <div className="bg-white p-6 rounded-xl shadow">
         {isLoadingCompetitions ? (
-          <div className="p-8 text-center bg-white rounded-xl shadow">
-            <p className="flex items-center justify-center text-gray-500">
-              <i className="fas fa-circle-notch fa-spin mr-2 text-blue-700"></i>
-              Loading competitions...
-            </p>
+          <div className="p-8 text-center">
+            <div className="animate-spin w-8 h-8 border-4 border-rose-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+            <p className="text-gray-500">Loading competitions...</p>
+          </div>
+        ) : competitions?.length === 0 ? (
+          <div className="p-8 text-center">
+            <p className="text-gray-600">No competitions found matching your criteria.</p>
           </div>
         ) : (
           <>
-            <div className="space-y-0">
+            {/* Grid layout with 2 columns on tablet and desktop */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
               {competitions?.map((competition: CompetitionWithEntryStatus) => (
                 <CompetitionCard
                   key={competition.id}

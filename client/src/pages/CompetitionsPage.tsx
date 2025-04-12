@@ -198,26 +198,34 @@ export default function CompetitionsPage() {
       </div>
 
       {/* Competition Listings */}
-      <div className="bg-white rounded-b-lg shadow-md overflow-hidden">
+      <div className="bg-white rounded-b-lg shadow-md p-6">
         {isLoading ? (
           <div className="p-8 text-center">
+            <div className="animate-spin w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full mx-auto mb-4"></div>
             <p>Loading competitions...</p>
+          </div>
+        ) : competitions?.length === 0 ? (
+          <div className="p-8 text-center">
+            <p className="text-gray-600">No competitions found matching your criteria.</p>
           </div>
         ) : (
           <>
-            {competitions?.map((competition: CompetitionWithEntryStatus) => (
-              <CompetitionCard
-                key={competition.id}
-                competition={competition}
-                onEnter={handleEnterCompetition}
-                onBookmark={handleBookmarkCompetition}
-                onLike={handleLikeCompetition}
-                onCompleteEntry={handleCompleteEntry}
-              />
-            ))}
+            {/* Grid layout with 2 columns on tablet and desktop */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+              {competitions?.map((competition: CompetitionWithEntryStatus) => (
+                <CompetitionCard
+                  key={competition.id}
+                  competition={competition}
+                  onEnter={handleEnterCompetition}
+                  onBookmark={handleBookmarkCompetition}
+                  onLike={handleLikeCompetition}
+                  onCompleteEntry={handleCompleteEntry}
+                />
+              ))}
+            </div>
             
             {/* Pagination */}
-            <div className="p-4 flex items-center justify-between border-t border-gray">
+            <div className="mt-6 pt-4 flex items-center justify-between border-t border-gray-200">
               <div className="flex items-center text-sm text-gray-700">
                 <span>
                   Showing <span className="font-medium">1</span> to <span className="font-medium">{competitions?.length || 0}</span> of <span className="font-medium">42</span> competitions

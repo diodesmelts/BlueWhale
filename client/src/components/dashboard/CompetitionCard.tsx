@@ -141,30 +141,36 @@ export default function CompetitionCard({
       />
       
       <div 
-        className={`competition-card p-5 mb-4 transition duration-300 rounded-xl bg-white shadow-md hover:shadow-lg border border-gray-100 ${
+        className={`competition-card mb-5 transition duration-300 rounded-xl bg-white shadow-md hover:shadow-lg border border-gray-100 overflow-hidden ${
           isEntered ? 'border-l-4 border-rose-500' : ''
         } cursor-pointer`}
         onClick={() => setLocation(`/competitions/${id}`)}
       >
-        <div className="flex flex-col">
-          {/* Competition title and verification badge */}
-          <div className="flex items-start justify-between mb-4">
-            <h3 className="text-xl font-bold text-gray-800 flex items-center">
-              {title}
-              {isVerified && (
-                <Badge 
-                  variant="default" 
-                  className="ml-2 bg-blue-100 text-blue-600 hover:bg-blue-200 text-xs font-normal flex items-center"
-                >
-                  <i className="fas fa-check-circle mr-1"></i> Verified
-                </Badge>
-              )}
-            </h3>
-            
-            <div className="flex items-center space-x-2">
+        {/* Competition image at the top */}
+        <div 
+          className="w-full h-36 bg-center bg-cover relative"
+          style={{ backgroundImage: `url(${image})` }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+          
+          {/* Title overlaid on image */}
+          <div className="absolute bottom-0 left-0 right-0 p-3 text-white">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-bold flex items-center">
+                {title}
+                {isVerified && (
+                  <Badge 
+                    variant="default" 
+                    className="ml-2 bg-blue-100/80 text-blue-600 hover:bg-blue-200 text-xs font-normal flex items-center"
+                  >
+                    <i className="fas fa-check-circle mr-1"></i> Verified
+                  </Badge>
+                )}
+              </h3>
+              
               <button 
-                className={`p-2 rounded-full hover:bg-gray-100 transition-colors ${
-                  isBookmarked ? 'text-indigo-500' : 'text-gray-400 hover:text-indigo-500'
+                className={`p-1.5 rounded-full hover:bg-white/20 transition-colors ${
+                  isBookmarked ? 'text-yellow-400' : 'text-white hover:text-yellow-400'
                 }`}
                 onClick={(e) => {
                   e.stopPropagation(); // Prevent card click event
@@ -175,9 +181,11 @@ export default function CompetitionCard({
               </button>
             </div>
           </div>
-          
-          {/* Key information in 4 equal panels */}
-          <div className="grid grid-cols-4 gap-3 mb-4">
+        </div>
+        
+        <div className="p-4">
+          {/* Key competition info */}
+          <div className="grid grid-cols-3 gap-2 mb-4">
             <div className="flex flex-col items-center">
               <div className="text-xl text-center mb-1">🏆</div>
               <div className="text-base font-bold text-center">${prize.toLocaleString()}</div>
@@ -193,36 +201,34 @@ export default function CompetitionCard({
             <div className="flex flex-col items-center">
               <div className="text-xl text-center mb-1">⏰</div>
               <div className="text-base font-bold text-center">
-                {daysRemaining.includes("Ends in") ? daysRemaining.replace("Ends in ", "") : "5 days left"}
+                {daysRemaining.includes("Ends in") 
+                  ? daysRemaining.replace("Ends in ", "") 
+                  : daysRemaining === "Ends tomorrow" 
+                    ? "1 day" 
+                    : "5 days"}
               </div>
               <div className="text-xs text-gray-500 text-center">Ends In</div>
             </div>
-            
-            <div className="flex flex-col items-center">
-              <div className="text-xl text-center mb-1">🌎</div>
-              <div className="text-base font-bold text-center">{eligibility}</div>
-              <div className="text-xs text-gray-500 text-center">Eligibility</div>
-            </div>
           </div>
           
-          {/* Ticket information */}
+          {/* Ticket information in a more compact layout */}
           <div className="bg-blue-50 p-3 rounded-lg mb-4">
-            <div className="flex justify-between items-center">
+            <div className="grid grid-cols-3 gap-2">
               <div>
-                <div className="text-sm text-gray-500">Price per ticket</div>
-                <div className="text-lg font-bold text-blue-700">${(ticketPrice ? ticketPrice/100 : 0).toFixed(2)}</div>
+                <div className="text-xs text-gray-500">Ticket price</div>
+                <div className="text-base font-bold text-blue-700">${(ticketPrice ? ticketPrice/100 : 0).toFixed(2)}</div>
               </div>
               
               <div>
-                <div className="text-sm text-gray-500">Available tickets</div>
-                <div className="text-lg font-bold text-blue-700">
+                <div className="text-xs text-gray-500">Available</div>
+                <div className="text-base font-bold text-blue-700">
                   {(totalTickets && soldTickets) ? (totalTickets - soldTickets) : 1766} / {totalTickets || 10000}
                 </div>
               </div>
               
               <div>
-                <div className="text-sm text-gray-500">Maximum per user</div>
-                <div className="text-lg font-bold text-blue-700">{maxTicketsPerUser || 3}</div>
+                <div className="text-xs text-gray-500">Max per user</div>
+                <div className="text-base font-bold text-blue-700">{maxTicketsPerUser || 3}</div>
               </div>
             </div>
           </div>
@@ -234,7 +240,7 @@ export default function CompetitionCard({
               isEntered ? setTicketModalOpen(true) : handleEnterCompetition();
             }}
             disabled={isPaying}
-            className="w-full bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-medium py-3 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg"
+            className="w-full bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-medium py-2.5 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg"
           >
             <i className="fas fa-ticket-alt mr-2"></i>
             Get Tickets
