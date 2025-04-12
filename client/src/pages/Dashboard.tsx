@@ -62,7 +62,24 @@ export default function Dashboard() {
   const handleCompleteEntry = (id: number) => {
     fetch(`/api/competitions/${id}/complete-entry`, {
       method: "POST",
-      credentials: "include"
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to complete entry');
+      }
+      return response.json();
+    })
+    .then(() => {
+      // Invalidate the cache to refetch the competitions
+      window.location.reload(); // Force a refresh to update the UI
+    })
+    .catch(error => {
+      console.error('Error completing entry:', error);
+      // Add toast notification here if you have a toast system
     });
   };
 
