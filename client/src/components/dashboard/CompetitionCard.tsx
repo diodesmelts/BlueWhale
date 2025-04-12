@@ -256,7 +256,8 @@ export default function CompetitionCard({
           <Button 
             onClick={(e) => {
               e.stopPropagation(); // Prevent card click event
-              isEntered ? setTicketModalOpen(true) : handleEnterCompetition();
+              // Always open the ticket modal when the "Get Tickets" button is clicked
+              setTicketModalOpen(true);
             }}
             disabled={isPaying}
             className="w-full bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-medium py-2.5 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg"
