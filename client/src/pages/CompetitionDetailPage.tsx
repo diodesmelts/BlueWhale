@@ -258,7 +258,7 @@ export default function CompetitionDetailPage() {
 
       <div className="bg-white rounded-lg shadow-md overflow-hidden">
         {/* Hero image */}
-        <div className="h-64 relative overflow-hidden">
+        <div className="h-96 relative overflow-hidden">
           <img 
             src={competition.image} 
             alt={competition.title}
