@@ -5,6 +5,10 @@ import { z } from "zod";
 import { insertCompetitionSchema } from "@shared/schema";
 import { setupAuth } from "./auth";
 import { setupPaymentRoutes } from "./payments";
+import multer from "multer";
+import path from "path";
+import fs from "fs";
+import { v4 as uuidv4 } from "uuid";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Set up authentication
@@ -652,6 +656,66 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // (We already defined admin routes above)
+
+  // Set up file upload configuration
+  const uploadsDir = path.join(process.cwd(), 'public/uploads');
+  
+  // Ensure uploads directory exists
+  if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+  }
+  
+  // Configure multer for file uploads
+  const multerStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, uploadsDir);
+    },
+    filename: (req, file, cb) => {
+      // Generate unique filename with original extension
+      const uniqueName = `${uuidv4()}${path.extname(file.originalname)}`;
+      cb(null, uniqueName);
+    }
+  });
+  
+  // Create multer upload instance
+  const upload = multer({
+    storage: multerStorage,
+    limits: {
+      fileSize: 5 * 1024 * 1024, // 5MB limit
+    },
+    fileFilter: (req, file, cb) => {
+      // Only allow image files
+      if (!file.mimetype.startsWith('image/')) {
+        return cb(new Error('Only image files are allowed'));
+      }
+      cb(null, true);
+    }
+  });
+  
+  // Image upload endpoint
+  app.post('/api/upload-image', isAdmin, upload.single('file'), (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ message: 'No file uploaded' });
+      }
+      
+      // Construct the URL to the uploaded file
+      const baseUrl = `${req.protocol}://${req.get('host')}`;
+      const imageUrl = `${baseUrl}/uploads/${req.file.filename}`;
+      
+      res.status(200).json({ 
+        message: 'File uploaded successfully',
+        url: imageUrl,
+        filename: req.file.filename
+      });
+    } catch (error) {
+      console.error('File upload error:', error);
+      res.status(500).json({ 
+        message: 'Failed to upload file',
+        error: error instanceof Error ? error.message : 'Unknown error'
+      });
+    }
+  });
 
   const httpServer = createServer(app);
 
