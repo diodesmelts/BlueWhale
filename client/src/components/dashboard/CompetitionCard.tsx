@@ -257,16 +257,21 @@ export default function CompetitionCard({
             
             {isEntered ? (
               <div className="mt-4">
-                <EntryProgress 
-                  steps={entrySteps}
-                  progress={entryProgress}
-                  onComplete={() => onCompleteEntry(id)}
-                />
+                <div onClick={(e) => e.stopPropagation()}>
+                  <EntryProgress 
+                    steps={entrySteps}
+                    progress={entryProgress}
+                    onComplete={() => onCompleteEntry(id)}
+                  />
+                </div>
               </div>
             ) : (
               <div className="flex items-center mt-4">
                 <Button 
-                  onClick={handleEnterCompetition}
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent card click event
+                    handleEnterCompetition();
+                  }}
                   disabled={isPaying}
                   className="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white text-sm font-medium px-6 py-2 mr-4 rounded-full transition-all duration-300 shadow-md hover:shadow-lg pulse-glow wiggle-on-hover"
                 >

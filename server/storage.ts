@@ -130,7 +130,8 @@ export class MemStorage implements IStorage {
     sort?: string,
     tab?: string
   ): Promise<Competition[]> {
-    let competitions = Array.from(this.competitions.values());
+    // Get all competitions, but filter out any deleted ones
+    let competitions = Array.from(this.competitions.values()).filter(comp => !comp.isDeleted);
     
     // Apply filters
     if (filter) {
