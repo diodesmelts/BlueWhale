@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import StatCard from "@/components/dashboard/StatCard";
 import CompetitionCard from "@/components/dashboard/CompetitionCard";
 import LeaderboardTable from "@/components/dashboard/LeaderboardTable";
-import { CompetitionWithEntryStatus, LeaderboardUser } from "@shared/types";
+import { CompetitionWithEntryStatus, LeaderboardUser, UserStats } from "@shared/types";
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("trending");
@@ -16,17 +16,17 @@ export default function Dashboard() {
   const [sortBy, setSortBy] = useState("popularity");
 
   // Fetch user stats
-  const { data: userStats } = useQuery({
+  const { data: userStats } = useQuery<UserStats>({
     queryKey: ["/api/user/stats"],
   });
 
   // Fetch competitions
-  const { data: competitions, isLoading: isLoadingCompetitions } = useQuery({
+  const { data: competitions, isLoading: isLoadingCompetitions } = useQuery<CompetitionWithEntryStatus[]>({
     queryKey: ["/api/competitions", platform, type, sortBy, activeTab],
   });
 
   // Fetch leaderboard
-  const { data: leaderboard } = useQuery({
+  const { data: leaderboard } = useQuery<LeaderboardUser[]>({
     queryKey: ["/api/leaderboard"],
   });
 
