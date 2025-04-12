@@ -1,5 +1,5 @@
-import { and, desc, eq, gte, lt, lte, sql } from "drizzle-orm";
-import { db } from "./db";
+import { and, desc, eq, gte, lte } from "drizzle-orm";
+import { db, pool } from "./db";
 import { 
   User, InsertUser, Competition, InsertCompetition, 
   UserEntry, InsertUserEntry, UserWin, InsertUserWin, 
@@ -8,13 +8,13 @@ import {
 } from "@shared/schema";
 import { IStorage } from "./storage";
 import { UserStats, LeaderboardUser, CompetitionWithEntryStatus } from "@shared/types";
-import connectPg from "connect-pg-simple";
 import session from "express-session";
-import { pool } from "./db";
+// Import the connect-pg-simple module
+import pgSession from "connect-pg-simple";
 
 export class DatabaseStorage implements IStorage {
   // Create a session store that connects to PostgreSQL
-  public sessionStore: session.Store = new (connectPg(session))({
+  public sessionStore: session.Store = new (pgSession(session))({
     pool,
     tableName: 'session', // Default session table name
     createTableIfMissing: true
