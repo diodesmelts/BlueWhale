@@ -165,7 +165,7 @@ export default function UserManagement() {
                   </TableCell>
                   <TableCell className="text-sm">{user.email}</TableCell>
                   <TableCell className="text-sm">
-                    {new Date(user.createdAt).toLocaleDateString('en-US', {
+                    {user.createdAt && new Date(user.createdAt).toLocaleDateString('en-US', {
                       year: 'numeric',
                       month: 'short',
                       day: 'numeric'
@@ -178,7 +178,7 @@ export default function UserManagement() {
                           <div className="flex justify-center">
                             {editMode ? (
                               <Switch
-                                checked={user.isPremium}
+                                checked={user.isPremium || false}
                                 onCheckedChange={(checked) => handlePermissionChange(user, "isPremium", checked)}
                                 className="data-[state=checked]:bg-amber-500"
                               />
@@ -202,7 +202,7 @@ export default function UserManagement() {
                           <div className="flex justify-center">
                             {editMode ? (
                               <Switch
-                                checked={user.isAdmin}
+                                checked={user.isAdmin || false}
                                 onCheckedChange={(checked) => handlePermissionChange(user, "isAdmin", checked)}
                                 className="data-[state=checked]:bg-blue-600"
                               />

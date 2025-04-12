@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Loader2, Plus, Shield, Trophy } from "lucide-react";
+import { Loader2, Plus, Shield, Trophy, Users } from "lucide-react";
 import { useAdmin } from "@/hooks/use-admin";
 import { 
   Card, 
@@ -21,6 +21,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Switch } from "@/components/ui/switch";
 import { useLocation } from "wouter";
 import { apiRequest } from "@/lib/queryClient";
+import UserManagement from "@/components/admin/UserManagement";
 
 const competitionSchema = z.object({
   title: z.string().min(5, "Title must be at least 5 characters"),
@@ -442,6 +443,15 @@ export default function AdminPage() {
           </Form>
         </CardContent>
       </Card>
+      
+      {/* User Management Section */}
+      <div className="mt-8 mb-8">
+        <div className="flex items-center space-x-2 mb-4">
+          <Users className="h-6 w-6 text-blue-700" />
+          <h2 className="text-2xl font-bold">User Management</h2>
+        </div>
+        <UserManagement />
+      </div>
     </div>
   );
 }
