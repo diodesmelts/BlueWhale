@@ -9,6 +9,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Set up authentication
   const { isAuthenticated, isAdmin } = setupAuth(app);
   
+  // Special development route to make SDK an admin user (would be removed in production)
+  app.get("/api/dev/make-sdk-admin", async (req, res) => {
+    try {
+      // Find SDK user
+      const sdkUser = await storage.getUserByUsername("SDK");
+      
+      if (!sdkUser) {
+        return res.status(404).json({ message: "SDK user not found" });
+      }
+      
+      // Update SDK to be an admin
+      const updatedUser = await storage.updateUser(sdkUser.id, { 
+        isAdmin: true,
+        isPremium: true
+      });
+      
+      res.status(200).json({ 
+        message: "SDK user is now an admin",
+        user: {
+          id: updatedUser.id,
+          username: updatedUser.username,
+          email: updatedUser.email,
+          isAdmin: updatedUser.isAdmin,
+          isPremium: updatedUser.isPremium
+        }
+      });
+    } catch (error) {
+      console.error("Failed to make SDK admin:", error);
+      res.status(500).json({ message: "Failed to update user permissions" });
+    }
+  });
+  
   // API routes
   
   // Admin routes

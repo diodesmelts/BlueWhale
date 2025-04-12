@@ -390,6 +390,16 @@ export class MemStorage implements IStorage {
     const updatedUser = { ...user, isAdmin: true };
     this.users.set(user.id, updatedUser);
     
+    // Create SDK user with admin privileges
+    const sdkUser: InsertUser = {
+      username: 'SDK',
+      password: 'password123', // This would be hashed in a real app
+      email: 'sdk@competepro.com',
+      isAdmin: true,
+      isPremium: true
+    };
+    await this.createUser(sdkUser);
+    
     // Create demo competitions
     const competitionData: InsertCompetition[] = [
       {
