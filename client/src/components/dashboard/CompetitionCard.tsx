@@ -256,15 +256,29 @@ export default function CompetitionCard({
             </div>
             
             {isEntered ? (
-              <div className="mt-4">
-                <div onClick={(e) => e.stopPropagation()}>
-                  <EntryProgress 
-                    steps={entrySteps}
-                    progress={entryProgress}
-                    onComplete={() => onCompleteEntry(id)}
-                    competition={competition}
-                  />
-                </div>
+              <div className="flex items-center mt-4">
+                <Button 
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent card click event
+                    setLocation(`/competitions/${id}`);
+                  }}
+                  className="bg-gradient-to-r from-indigo-500 to-blue-600 hover:from-indigo-600 hover:to-blue-700 text-white text-sm font-medium px-6 py-2 mr-4 rounded-full transition-all duration-300 shadow-md hover:shadow-lg"
+                >
+                  <i className="fas fa-eye mr-2"></i>
+                  View Details
+                </Button>
+                {entryProgress.length > 0 && entryProgress.every(step => step === 1) && (
+                  <Button 
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent card click event
+                      setTicketModalOpen(true);
+                    }}
+                    className="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white text-sm font-medium px-6 py-2 rounded-full transition-all duration-300 shadow-md hover:shadow-lg"
+                  >
+                    <i className="fas fa-ticket mr-2"></i>
+                    Get Tickets
+                  </Button>
+                )}
               </div>
             ) : (
               <div className="flex items-center mt-4">
