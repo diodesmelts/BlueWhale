@@ -1,0 +1,69 @@
+App Name: CompetePro – The Ultimate Competition Hub
+
+Description:
+
+CompetePro is a sleek, high-performance competition tracking and management web app designed for brands, influencers, and competition enthusiasts. Inspired by the best features of Competition Fox, CompetePro offers a cutting-edge, user-first experience with intuitive navigation, real-time analytics, and bold, engaging design.
+
+Key Features:
+
+1. Competition Discovery Dashboard
+	•	Browse trending competitions from various platforms (Instagram, Facebook, TikTok, websites)
+	•	Filter by type (giveaway, sweepstakes, contests), platform, or end date
+	•	Sort by popularity, recency, or verified status
+
+2. Real-Time Competition Tracker
+	•	Save and monitor entered competitions in a personal dashboard
+	•	Countdown timers and deadline alerts
+	•	Entry method checklists (follow, like, comment, tag, etc.)
+
+3. Smart Entry Assistant
+	•	Automatically detects and displays entry requirements
+	•	Guides users through step-by-step entry processes
+	•	Flags incomplete entries or missed steps
+
+4. Personalized Alerts & Notifications
+	•	Notify users when new competitions match their interests
+	•	Daily or weekly digests via email or push
+	•	Winner alerts and claim reminders
+
+5. Verified Competition Indicator
+	•	Highlight and prioritize verified or brand-backed competitions
+	•	Display trust badges based on source validation
+
+6. Entry Automation (Pro Feature)
+	•	Auto-fill details where allowed
+	•	Save commonly used tags, bios, and entry messages
+	•	Auto-follow and auto-like (within ethical/legal bounds)
+
+7. Win Tracker & Stats Hub
+	•	Log your entries, wins, and hit rate
+	•	Visualize success over time with charts and graphs
+	•	Share wins on social media with branded templates
+
+8. Leaderboards & Community Challenges
+	•	Weekly top entrant leaderboard
+	•	Join streak and milestone challenges for rewards
+	•	Comment and react to community-shared competitions
+
+9. Seamless UX/UI Design
+	•	Clean, minimalist layout with eye-catching color accents
+	•	Dynamic interaction cues and hover states
+	•	Smooth animations and transitions
+	•	Fully responsive across devices
+
+Color Palette:
+	•	Navy Blue #153B84: Background & headers – bold and professional
+	•	Red #DB1F1F: Calls-to-action – high energy and urgency
+	•	Yellow #FFF13A: Highlights & alerts – attention-grabbing
+	•	Green #7ED957: Success states & win indicators – fresh and positive
+	•	White #FFFFFF: Base content – clean and legible
+
+Tech Stack:
+	•	Frontend: React + TailwindCSS
+	•	Backend: Node.js + Express
+	•	Database: MongoDB
+	•	Authentication: OAuth 2.0 (Google, Facebook, etc.)
+	•	Hosting: Replit with deployment integration
+
+Why Users Love It:
+CompetePro transforms competition hunting into a smooth, gamified experience. Whether you’re a casual entrant or a hardcore “comping” pro, CompetePro gives you the tools, tracking, and insights to win more, stress less, and enjoy every giveaway.
