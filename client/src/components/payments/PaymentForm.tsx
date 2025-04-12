@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 interface PaymentFormProps {
   onSuccess?: () => void;
-  onError?: (error: Error) => void;
+  onError?: (error: any) => void;
   amountLabel?: string;
   buttonText?: string;
   processingText?: string;

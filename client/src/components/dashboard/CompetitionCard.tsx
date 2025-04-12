@@ -3,6 +3,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import EntryProgress from "./EntryProgress";
 import { CompetitionWithEntryStatus } from "@shared/types";
+import { usePaymentContext } from "@/components/payments/PaymentProvider";
+import { useAuth } from "@/hooks/use-auth";
 
 interface CompetitionCardProps {
   competition: CompetitionWithEntryStatus;
@@ -19,6 +21,10 @@ export default function CompetitionCard({
   onLike, 
   onCompleteEntry 
 }: CompetitionCardProps) {
+  const { user } = useAuth();
+  const { showPaymentModal } = usePaymentContext();
+  const [isPaying, setIsPaying] = useState(false);
+  
   const {
     id,
     title,
@@ -36,8 +42,32 @@ export default function CompetitionCard({
     isEntered,
     entryProgress,
     isBookmarked,
-    isLiked
+    isLiked,
+    entryFee
   } = competition;
+  
+  const handleEnterCompetition = () => {
+    // If the user is not authenticated, the ProtectedRoute component will handle redirection
+    if (!user) {
+      onEnter(id);
+      return;
+    }
+    
+    // Check if competition has an entry fee
+    if (entryFee && entryFee > 0) {
+      // Show payment modal
+      showPaymentModal(
+        entryFee * 100, // Convert to cents for Stripe
+        `Entry fee for ${title}`,
+        "Pay Entry Fee",
+        { competitionId: id.toString() }
+      );
+      setIsPaying(true);
+    } else {
+      // Free competition
+      onEnter(id);
+    }
+  };
 
   // Get days remaining
   const getDaysRemaining = () => {
@@ -174,11 +204,12 @@ export default function CompetitionCard({
           ) : (
             <div className="flex items-center mt-4">
               <Button 
-                onClick={() => onEnter(id)}
+                onClick={handleEnterCompetition}
+                disabled={isPaying}
                 className="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white text-sm font-medium px-6 py-2 mr-4 rounded-full transition-all duration-300 shadow-md hover:shadow-lg pulse-glow wiggle-on-hover"
               >
                 <i className="fas fa-trophy mr-2 trophy-icon"></i>
-                Enter Now
+                {entryFee && entryFee > 0 ? `Enter - $${entryFee.toFixed(2)}` : "Enter Now"}
               </Button>
               <div className="flex items-center text-sm text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
                 <i className="fas fa-list-check mr-2 text-indigo-500"></i>
