@@ -23,6 +23,8 @@ export interface IStorage {
     tab?: string
   ): Promise<Competition[]>;
   createCompetition(competition: InsertCompetition): Promise<Competition>;
+  updateCompetition(id: number, data: Partial<Competition>): Promise<Competition | undefined>;
+  deleteCompetition(id: number): Promise<boolean>;
   
   // User Entry methods
   getUserEntries(userId: number): Promise<UserEntry[]>;
@@ -188,6 +190,41 @@ export class MemStorage implements IStorage {
     };
     this.competitions.set(id, competition);
     return competition;
+  }
+  
+  async updateCompetition(id: number, data: Partial<Competition>): Promise<Competition | undefined> {
+    const competition = this.competitions.get(id);
+    if (!competition) {
+      return undefined;
+    }
+    
+    const updatedCompetition: Competition = { ...competition, ...data };
+    this.competitions.set(id, updatedCompetition);
+    return updatedCompetition;
+  }
+  
+  async deleteCompetition(id: number): Promise<boolean> {
+    if (!this.competitions.has(id)) {
+      return false;
+    }
+    
+    // Delete the competition
+    this.competitions.delete(id);
+    
+    // Also delete any related user entries and wins
+    for (const [entryId, entry] of this.userEntries.entries()) {
+      if (entry.competitionId === id) {
+        this.userEntries.delete(entryId);
+      }
+    }
+    
+    for (const [winId, win] of this.userWins.entries()) {
+      if (win.competitionId === id) {
+        this.userWins.delete(winId);
+      }
+    }
+    
+    return true;
   }
   
   // User Entry methods

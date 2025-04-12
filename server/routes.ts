@@ -97,6 +97,71 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // Get a specific competition (admin only)
+  app.get("/api/admin/competitions/:id", isAdmin, async (req, res) => {
+    try {
+      const competitionId = parseInt(req.params.id);
+      const competition = await storage.getCompetition(competitionId);
+      
+      if (!competition) {
+        return res.status(404).json({ message: "Competition not found" });
+      }
+      
+      res.status(200).json(competition);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch competition" });
+    }
+  });
+  
+  // Update a competition (admin only)
+  app.put("/api/admin/competitions/:id", isAdmin, async (req, res) => {
+    try {
+      const competitionId = parseInt(req.params.id);
+      const updateSchema = insertCompetitionSchema.partial();
+      
+      const validatedData = updateSchema.parse(req.body);
+      const competition = await storage.updateCompetition(competitionId, validatedData);
+      
+      if (!competition) {
+        return res.status(404).json({ message: "Competition not found" });
+      }
+      
+      res.status(200).json(competition);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ message: "Validation error", errors: error.errors });
+      } else {
+        res.status(500).json({ message: "Failed to update competition" });
+      }
+    }
+  });
+  
+  // Get all competitions (admin only)
+  app.get("/api/admin/competitions", isAdmin, async (req, res) => {
+    try {
+      const competitions = await storage.listCompetitions();
+      res.status(200).json(competitions);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch competitions" });
+    }
+  });
+  
+  // Delete a competition (admin only)
+  app.delete("/api/admin/competitions/:id", isAdmin, async (req, res) => {
+    try {
+      const competitionId = parseInt(req.params.id);
+      const deleted = await storage.deleteCompetition(competitionId);
+      
+      if (!deleted) {
+        return res.status(404).json({ message: "Competition not found" });
+      }
+      
+      res.status(200).json({ message: "Competition deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to delete competition" });
+    }
+  });
+  
   // Get user stats
   app.get("/api/user/stats", async (req, res) => {
     try {
