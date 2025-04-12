@@ -22,10 +22,11 @@ const competitionUpdateSchema = z.object({
   // Platform is now optional with a default value
   platform: z.string().default("Other"),
   type: z.string().min(1, "Type is required"),
-  prize: z.coerce.number().min(1, "Prize must be at least $1"),
+  prize: z.coerce.number().min(1, "Prize must be at least £1"),
   entries: z.coerce.number().default(0),
   eligibility: z.string().min(1, "Eligibility is required"),
-  endDate: z.coerce.date(),
+  // Simplified date handling
+  endDate: z.string().min(1, "End date is required"),
   // Entry steps are now optional with an empty default array
   entrySteps: z.array(
     z.object({
@@ -51,6 +52,21 @@ interface CompetitionEditFormProps {
 
 export function CompetitionEditForm({ competition, onClose }: CompetitionEditFormProps) {
   const [loading, setLoading] = useState(false);
+  
+  // Function to ensure we always get a YYYY-MM-DD string for the date input
+  const formatDateForInput = (value: string | Date | null | undefined): string => {
+    if (!value) {
+      return new Date().toISOString().split('T')[0];
+    }
+    
+    try {
+      const date = typeof value === 'string' ? new Date(value) : value;
+      return date.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+    } catch (error) {
+      console.error('Error formatting date:', error);
+      return new Date().toISOString().split('T')[0]; // Default to today
+    }
+  };
 
   // Set up the form with existing competition values
   const form = useForm<CompetitionUpdateFormValues>({
@@ -65,7 +81,8 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
       prize: competition.prize,
       entries: competition.entries || 0,
       eligibility: competition.eligibility,
-      endDate: new Date(competition.endDate),
+      // Format the date for the date input
+      endDate: competition.endDate ? formatDateForInput(competition.endDate) : new Date().toISOString().split('T')[0],
       entrySteps: [], // Empty array as we're removing this field
       isVerified: competition.isVerified || false,
       // Ticket-related fields
@@ -79,18 +96,18 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
   // Update form mutation
   const updateMutation = useMutation({
     mutationFn: async (data: CompetitionUpdateFormValues) => {
-      // Format the data properly, ensuring endDate is an ISO string
-      // and we explicitly provide platform even though removed from UI
+      // Convert the form date (YYYY-MM-DD) to an ISO string
+      const endDateObj = new Date(data.endDate);
+      
+      // Format the data properly for the API
       const formattedData = {
         ...data,
         // Force the platform to be "Other" since we've removed it from the UI
         platform: "Other",
         // Ensure entry steps are preserved (even if empty)
         entrySteps: data.entrySteps || [],
-        // Ensure endDate is properly formatted as an ISO string
-        endDate: data.endDate instanceof Date ? data.endDate.toISOString() : 
-                 (typeof data.endDate === 'string' ? new Date(data.endDate).toISOString() : 
-                 new Date().toISOString()),
+        // Format the date as an ISO string
+        endDate: endDateObj.toISOString(),
       };
       
       console.log('Submission data:', formattedData);
@@ -319,8 +336,7 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
               <FormControl>
                 <Input 
                   type="date" 
-                  {...field} 
-                  value={field.value instanceof Date ? field.value.toISOString().split('T')[0] : ''} 
+                  {...field}
                 />
               </FormControl>
               <FormMessage />
