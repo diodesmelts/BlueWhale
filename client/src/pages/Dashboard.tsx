@@ -65,13 +65,13 @@ export default function Dashboard() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
       {/* Dashboard Header */}
-      <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-6">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-8">
         <div>
-          <h1 className="text-2xl font-semibold text-[#153B84]">Competition Dashboard</h1>
-          <p className="text-sm text-gray-600">Discover trending competitions and track your entries</p>
+          <h1 className="text-3xl font-bold text-gray-800">Competition Dashboard</h1>
+          <p className="text-base text-gray-600 mt-1">Discover trending competitions and track your entries</p>
         </div>
         <div className="mt-4 md:mt-0">
-          <Button className="bg-[#DB1F1F] hover:bg-red-700 text-white font-medium transition duration-300">
+          <Button className="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-medium py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
             <i className="fas fa-plus-circle mr-2"></i>
             <span>Add Competition</span>
           </Button>
@@ -107,51 +107,55 @@ export default function Dashboard() {
       </div>
 
       {/* Tabs */}
-      <div className="bg-white rounded-t-lg shadow pt-1">
-        <div className="border-b border-gray">
-          <nav className="flex -mb-px">
+      <div className="bg-white rounded-xl shadow overflow-hidden mb-6">
+        <div className="border-b border-gray-100">
+          <nav className="flex px-2">
             <a 
               href="#" 
-              className={`text-sm px-4 py-3 font-medium flex-1 text-center transition-all duration-200 border-b-3 ${
+              className={`text-sm px-6 py-4 font-medium text-center transition-all duration-200 border-b-2 ${
                 activeTab === "trending" 
-                  ? "text-[#153B84] border-b-3 border-[#DB1F1F]" 
-                  : "text-gray-500 hover:text-[#153B84] border-transparent"
+                  ? "text-rose-600 border-rose-500 font-semibold" 
+                  : "text-gray-500 hover:text-rose-500 border-transparent"
               }`}
               onClick={(e) => { e.preventDefault(); setActiveTab("trending"); }}
             >
+              <i className="fas fa-fire mr-2 text-amber-500"></i>
               Trending Competitions
             </a>
             <a 
               href="#" 
-              className={`text-sm px-4 py-3 font-medium flex-1 text-center transition-all duration-200 border-b-3 ${
+              className={`text-sm px-6 py-4 font-medium text-center transition-all duration-200 border-b-2 ${
                 activeTab === "my-entries" 
-                  ? "text-[#153B84] border-b-3 border-[#DB1F1F]" 
-                  : "text-gray-500 hover:text-[#153B84] border-transparent"
+                  ? "text-rose-600 border-rose-500 font-semibold" 
+                  : "text-gray-500 hover:text-rose-500 border-transparent"
               }`}
               onClick={(e) => { e.preventDefault(); setActiveTab("my-entries"); }}
             >
+              <i className="fas fa-clipboard-check mr-2 text-emerald-500"></i>
               My Entries
             </a>
             <a 
               href="#" 
-              className={`text-sm px-4 py-3 font-medium flex-1 text-center transition-all duration-200 border-b-3 ${
+              className={`text-sm px-6 py-4 font-medium text-center transition-all duration-200 border-b-2 ${
                 activeTab === "ending-soon" 
-                  ? "text-[#153B84] border-b-3 border-[#DB1F1F]" 
-                  : "text-gray-500 hover:text-[#153B84] border-transparent"
+                  ? "text-rose-600 border-rose-500 font-semibold" 
+                  : "text-gray-500 hover:text-rose-500 border-transparent"
               }`}
               onClick={(e) => { e.preventDefault(); setActiveTab("ending-soon"); }}
             >
+              <i className="fas fa-clock mr-2 text-orange-500"></i>
               Ending Soon
             </a>
             <a 
               href="#" 
-              className={`text-sm px-4 py-3 font-medium flex-1 text-center transition-all duration-200 border-b-3 ${
+              className={`text-sm px-6 py-4 font-medium text-center transition-all duration-200 border-b-2 ${
                 activeTab === "high-value" 
-                  ? "text-[#153B84] border-b-3 border-[#DB1F1F]" 
-                  : "text-gray-500 hover:text-[#153B84] border-transparent"
+                  ? "text-rose-600 border-rose-500 font-semibold" 
+                  : "text-gray-500 hover:text-rose-500 border-transparent"
               }`}
               onClick={(e) => { e.preventDefault(); setActiveTab("high-value"); }}
             >
+              <i className="fas fa-gem mr-2 text-violet-500"></i>
               High Value
             </a>
           </nav>
@@ -159,11 +163,13 @@ export default function Dashboard() {
       </div>
 
       {/* Filters */}
-      <div className="bg-white p-4 border-b border-gray flex flex-wrap items-center gap-4">
+      <div className="bg-white p-5 rounded-xl shadow flex flex-wrap items-center gap-5 mb-6">
         <div className="flex items-center">
-          <span className="text-sm font-medium text-gray-600 mr-2">Platform:</span>
+          <span className="text-sm font-medium text-gray-700 mr-2">
+            <i className="fas fa-sitemap text-indigo-500 mr-1"></i> Platform:
+          </span>
           <Select value={platform} onValueChange={setPlatform}>
-            <SelectTrigger className="border-gray rounded-md text-sm h-8 w-[140px]">
+            <SelectTrigger className="border-gray-200 rounded-lg text-sm h-9 w-[160px] bg-gray-50 focus:ring-rose-500">
               <SelectValue placeholder="All Platforms" />
             </SelectTrigger>
             <SelectContent>
@@ -178,9 +184,11 @@ export default function Dashboard() {
         </div>
         
         <div className="flex items-center">
-          <span className="text-sm font-medium text-gray-600 mr-2">Type:</span>
+          <span className="text-sm font-medium text-gray-700 mr-2">
+            <i className="fas fa-tag text-amber-500 mr-1"></i> Type:
+          </span>
           <Select value={type} onValueChange={setType}>
-            <SelectTrigger className="border-gray rounded-md text-sm h-8 w-[140px]">
+            <SelectTrigger className="border-gray-200 rounded-lg text-sm h-9 w-[160px] bg-gray-50 focus:ring-rose-500">
               <SelectValue placeholder="All Types" />
             </SelectTrigger>
             <SelectContent>
@@ -193,9 +201,11 @@ export default function Dashboard() {
         </div>
         
         <div className="flex items-center">
-          <span className="text-sm font-medium text-gray-600 mr-2">Sort By:</span>
+          <span className="text-sm font-medium text-gray-700 mr-2">
+            <i className="fas fa-sort text-emerald-500 mr-1"></i> Sort By:
+          </span>
           <Select value={sortBy} onValueChange={setSortBy}>
-            <SelectTrigger className="border-gray rounded-md text-sm h-8 w-[140px]">
+            <SelectTrigger className="border-gray-200 rounded-lg text-sm h-9 w-[160px] bg-gray-50 focus:ring-rose-500">
               <SelectValue placeholder="Popularity" />
             </SelectTrigger>
             <SelectContent>
@@ -209,51 +219,60 @@ export default function Dashboard() {
         
         <div className="flex items-center ml-auto">
           <Button 
-            variant="ghost" 
-            className="text-[#153B84] hover:bg-gray-100 text-sm font-medium h-8"
+            variant="outline" 
+            className="text-rose-600 border-rose-200 hover:bg-rose-50 text-sm font-medium h-9 rounded-lg"
             onClick={() => {
               setPlatform("all");
               setType("all");
               setSortBy("popularity");
             }}
           >
-            <i className="fas fa-sync-alt mr-1"></i> Reset
+            <i className="fas fa-sync-alt mr-2"></i> Reset Filters
           </Button>
         </div>
       </div>
 
       {/* Competition Listings */}
-      <div className="bg-white rounded-b-lg shadow-md overflow-hidden">
+      <div>
         {isLoadingCompetitions ? (
-          <div className="p-8 text-center">
-            <p>Loading competitions...</p>
+          <div className="p-8 text-center bg-white rounded-xl shadow">
+            <p className="flex items-center justify-center text-gray-500">
+              <i className="fas fa-circle-notch fa-spin mr-2 text-rose-500"></i>
+              Loading competitions...
+            </p>
           </div>
         ) : (
           <>
-            {competitions?.map((competition: CompetitionWithEntryStatus) => (
-              <CompetitionCard
-                key={competition.id}
-                competition={competition}
-                onEnter={handleEnterCompetition}
-                onBookmark={handleBookmarkCompetition}
-                onLike={handleLikeCompetition}
-                onCompleteEntry={handleCompleteEntry}
-              />
-            ))}
+            <div className="space-y-0">
+              {competitions?.map((competition: CompetitionWithEntryStatus) => (
+                <CompetitionCard
+                  key={competition.id}
+                  competition={competition}
+                  onEnter={handleEnterCompetition}
+                  onBookmark={handleBookmarkCompetition}
+                  onLike={handleLikeCompetition}
+                  onCompleteEntry={handleCompleteEntry}
+                />
+              ))}
+            </div>
             
             {/* Pagination */}
-            <div className="p-4 flex items-center justify-between border-t border-gray">
-              <div className="flex items-center text-sm text-gray-700">
+            <div className="p-5 flex items-center justify-between bg-white rounded-xl shadow mt-6">
+              <div className="flex items-center text-sm text-gray-600">
                 <span>
-                  Showing <span className="font-medium">1</span> to <span className="font-medium">4</span> of <span className="font-medium">42</span> competitions
+                  Showing <span className="font-semibold text-rose-600">1</span> to <span className="font-semibold text-rose-600">4</span> of <span className="font-semibold text-rose-600">42</span> competitions
                 </span>
               </div>
               <div className="flex items-center space-x-2">
-                <Button variant="outline" size="sm" className="text-[#153B84]">Previous</Button>
-                <Button size="sm" className="px-3 py-1 bg-[#153B84] text-white border border-[#153B84]">1</Button>
-                <Button variant="outline" size="sm" className="text-[#153B84]">2</Button>
-                <Button variant="outline" size="sm" className="text-[#153B84]">3</Button>
-                <Button variant="outline" size="sm" className="text-[#153B84]">Next</Button>
+                <Button variant="outline" size="sm" className="text-gray-600 border-gray-200 hover:bg-gray-50 rounded-md">
+                  <i className="fas fa-chevron-left mr-1"></i> Previous
+                </Button>
+                <Button size="sm" className="px-3 py-1 bg-rose-500 hover:bg-rose-600 text-white border-0 rounded-md">1</Button>
+                <Button variant="outline" size="sm" className="text-rose-600 border-rose-200 hover:bg-rose-50 rounded-md">2</Button>
+                <Button variant="outline" size="sm" className="text-rose-600 border-rose-200 hover:bg-rose-50 rounded-md">3</Button>
+                <Button variant="outline" size="sm" className="text-gray-600 border-gray-200 hover:bg-gray-50 rounded-md">
+                  Next <i className="fas fa-chevron-right ml-1"></i>
+                </Button>
               </div>
             </div>
           </>
@@ -261,10 +280,18 @@ export default function Dashboard() {
       </div>
 
       {/* Leaderboard Section */}
-      <div className="mt-8">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-semibold text-[#153B84]">Community Leaderboard</h2>
-          <Link href="/leaderboard" className="text-[#DB1F1F] hover:text-red-700 text-sm font-medium">View Complete Leaderboard</Link>
+      <div className="mt-10 mb-10">
+        <div className="flex items-center justify-between mb-5">
+          <h2 className="text-xl font-bold text-gray-800 flex items-center">
+            <i className="fas fa-trophy text-amber-500 mr-2"></i>
+            Community Leaderboard
+          </h2>
+          <Link href="/leaderboard">
+            <span className="inline-flex items-center text-rose-600 hover:text-rose-700 text-sm font-medium transition-colors">
+              View Complete Leaderboard 
+              <i className="fas fa-arrow-right ml-1"></i>
+            </span>
+          </Link>
         </div>
         {leaderboard && (
           <LeaderboardTable 
