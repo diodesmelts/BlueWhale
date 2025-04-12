@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Competition } from "@shared/schema";
-import { Loader2, Plus, Trash } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -14,20 +14,18 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 
+// Schema with simple string for endDate
 const competitionUpdateSchema = z.object({
   title: z.string().min(5, "Title must be at least 5 characters"),
   organizer: z.string().min(2, "Organizer must be at least 2 characters"),
   description: z.string().min(10, "Description must be at least 10 characters"),
   image: z.string().url("Must be a valid URL"),
-  // Platform is now optional with a default value
   platform: z.string().default("Other"),
   type: z.string().min(1, "Type is required"),
   prize: z.coerce.number().min(1, "Prize must be at least £1"),
   entries: z.coerce.number().default(0),
   eligibility: z.string().min(1, "Eligibility is required"),
-  // Simplified date handling
   endDate: z.string().min(1, "End date is required"),
-  // Entry steps are now optional with an empty default array
   entrySteps: z.array(
     z.object({
       id: z.number(),
@@ -36,7 +34,6 @@ const competitionUpdateSchema = z.object({
     })
   ).default([]),
   isVerified: z.boolean().default(false),
-  // Using ticketPrice instead of entryFee
   ticketPrice: z.coerce.number().default(0),
   maxTicketsPerUser: z.coerce.number().default(10),
   totalTickets: z.coerce.number().default(1000),
@@ -53,31 +50,18 @@ interface CompetitionEditFormProps {
 export function CompetitionEditForm({ competition, onClose }: CompetitionEditFormProps) {
   const [loading, setLoading] = useState(false);
   
-  // Helper function to format any date to YYYY-MM-DD string
-  const formatDateToYYYYMMDD = (date: Date | string | null | undefined): string => {
-    if (!date) return '';
-    
-    if (typeof date === 'string') {
-      // If it's already a string, try to parse it
-      try {
-        const parsed = new Date(date);
-        if (isNaN(parsed.getTime())) {
-          // If the parsed date is invalid, check if it's already in YYYY-MM-DD format
-          if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
-            return date;
-          }
-          return '';
-        }
-        return parsed.toISOString().substring(0, 10);
-      } catch {
-        return '';
-      }
-    } else {
-      // If it's a Date object, format it
-      return date.toISOString().substring(0, 10);
+  // Get YYYY-MM-DD from an ISO date string
+  function getDateString(isoString: string | null | undefined): string {
+    if (!isoString) return '';
+    try {
+      // Take just the date part (first 10 chars) of ISO string
+      return isoString.substring(0, 10);
+    } catch (error) {
+      console.error('Error formatting date:', error);
+      return '';
     }
-  };
-
+  }
+  
   // Set up the form with existing competition values
   const form = useForm<CompetitionUpdateFormValues>({
     resolver: zodResolver(competitionUpdateSchema),
@@ -86,16 +70,14 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
       organizer: competition.organizer,
       description: competition.description,
       image: competition.image,
-      platform: competition.platform || "Other", // Default value if missing
+      platform: "Other", // Default value
       type: competition.type,
       prize: competition.prize,
       entries: competition.entries || 0,
       eligibility: competition.eligibility,
-      // Format the date for the date input
-      endDate: formatDateToYYYYMMDD(competition.endDate),
+      endDate: getDateString(competition.endDate),
       entrySteps: [], // Empty array as we're removing this field
       isVerified: competition.isVerified || false,
-      // Ticket-related fields
       ticketPrice: competition.ticketPrice || 0,
       maxTicketsPerUser: competition.maxTicketsPerUser || 10,
       totalTickets: competition.totalTickets || 1000,
@@ -106,18 +88,14 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
   // Update form mutation
   const updateMutation = useMutation({
     mutationFn: async (data: CompetitionUpdateFormValues) => {
-      // Convert the form date (YYYY-MM-DD) to an ISO string
-      // Ensure the time is set to end of day to avoid timezone issues
+      // Add time to make a full ISO date, ensuring end of day
       const dateStr = `${data.endDate}T23:59:59.999Z`;
       
-      // Format the data properly for the API
+      // Format the data for the API
       const formattedData = {
         ...data,
-        // Force the platform to be "Other" since we've removed it from the UI
         platform: "Other",
-        // Ensure entry steps are preserved (even if empty)
-        entrySteps: data.entrySteps || [],
-        // Use ISO date string
+        entrySteps: [],
         endDate: dateStr,
       };
       
