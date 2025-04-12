@@ -422,6 +422,84 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // Direct ticket purchase for users who have already entered
+  app.post("/api/competitions/:id/purchase-tickets", async (req, res) => {
+    try {
+      const competitionId = parseInt(req.params.id);
+      const userId = req.isAuthenticated() ? req.user!.id : 1; // Use authenticated user if available
+      const ticketCount = req.body.ticketCount ? parseInt(req.body.ticketCount) : 1;
+      
+      // Check if competition exists
+      const competition = await storage.getCompetition(competitionId);
+      if (!competition) {
+        return res.status(404).json({ message: "Competition not found" });
+      }
+      
+      // Check if user has already entered
+      const existingEntry = await storage.getUserEntry(userId, competitionId);
+      if (!existingEntry) {
+        return res.status(400).json({ message: "You must enter this competition first" });
+      }
+      
+      // Check for available tickets if this is a ticket-based competition
+      if (competition.ticketPrice && competition.ticketPrice > 0) {
+        // Check if competition has available tickets
+        if (competition.soldTickets && competition.totalTickets && 
+            competition.soldTickets >= competition.totalTickets) {
+          return res.status(400).json({ message: "Competition is sold out" });
+        }
+        
+        // Calculate total tickets including the new purchase
+        const userTotal = (existingEntry.ticketCount || 0) + ticketCount;
+        
+        // Check if user is trying to buy more than allowed
+        if (competition.maxTicketsPerUser && userTotal > competition.maxTicketsPerUser) {
+          return res.status(400).json({ 
+            message: `You can only purchase up to ${competition.maxTicketsPerUser} tickets total`
+          });
+        }
+        
+        // Check available tickets
+        if (competition.totalTickets && competition.soldTickets) {
+          const remainingTickets = competition.totalTickets - competition.soldTickets;
+          if (ticketCount > remainingTickets) {
+            return res.status(400).json({ 
+              message: `Only ${remainingTickets} tickets remaining`
+            });
+          }
+        }
+      }
+      
+      // Generate ticket numbers
+      const startNumber = competition.soldTickets || 0;
+      const ticketNumbers: number[] = [];
+      for (let i = 0; i < ticketCount; i++) {
+        ticketNumbers.push(startNumber + i + 1);
+      }
+      
+      // Update user entry with new tickets
+      const updatedEntry = await storage.updateUserEntry(existingEntry.id, {
+        ticketCount: (existingEntry.ticketCount || 0) + ticketCount,
+        ticketNumbers: [...(existingEntry.ticketNumbers || []), ...ticketNumbers],
+        paymentStatus: "completed",
+        totalPaid: (existingEntry.totalPaid || 0) + (ticketCount * (competition.ticketPrice || 0))
+      });
+      
+      // Update competition soldTickets count
+      await storage.updateCompetition(competitionId, {
+        soldTickets: (competition.soldTickets || 0) + ticketCount
+      });
+      
+      res.status(200).json({
+        ...updatedEntry,
+        message: "Tickets purchased successfully"
+      });
+    } catch (error) {
+      console.error("Error purchasing tickets:", error);
+      res.status(500).json({ message: "Failed to purchase tickets" });
+    }
+  });
+  
   // Bookmark competition
   app.post("/api/competitions/:id/bookmark", async (req, res) => {
     try {
