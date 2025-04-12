@@ -25,7 +25,7 @@ export default function TopNav() {
   const isActive = (path: string) => location === path;
 
   return (
-    <header className="sticky top-0 shadow-md transition-all duration-300 bg-rose-500 text-white z-20">
+    <header className="sticky top-0 shadow-md transition-all duration-300 bg-gradient-to-r from-blue-900 to-indigo-800 text-white z-20">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-8">
@@ -33,7 +33,7 @@ export default function TopNav() {
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 rounded-full flex items-center justify-center bg-white shadow-md">
                 <svg 
-                  className="w-6 h-6 text-rose-600" 
+                  className="w-6 h-6 text-blue-800" 
                   viewBox="0 0 24 24" 
                   fill="none" 
                   xmlns="http://www.w3.org/2000/svg"
@@ -81,7 +81,7 @@ export default function TopNav() {
               <DropdownMenuTrigger asChild>
                 <button className="relative p-1.5 rounded-full focus:outline-none transition-all text-white hover:bg-white/20">
                   <Bell className="h-6 w-6" />
-                  <span className="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-amber-300 ring-2 ring-rose-500"></span>
+                  <span className="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-amber-300 ring-2 ring-blue-800"></span>
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-80 p-1">
