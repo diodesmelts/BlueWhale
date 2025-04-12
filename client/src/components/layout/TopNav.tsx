@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Bell, Search, Crown } from "lucide-react";
+import { Bell, Crown } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export default function TopNav() {
@@ -94,21 +94,6 @@ export default function TopNav() {
           </div>
 
           <div className="flex items-center space-x-5">
-            {/* Search */}
-            <div className="relative hidden md:block w-64 transition-all duration-300">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Search className={`h-4 w-4 ${scrolled ? 'text-gray-400' : 'text-white/70'}`} />
-              </div>
-              <Input
-                className={`block w-full pl-10 pr-3 py-1.5 border-0 focus:ring-2 sm:text-sm rounded-xl ${
-                  scrolled 
-                    ? 'text-gray-700 placeholder-gray-400 bg-gray-100 focus:bg-white focus:ring-rose-200' 
-                    : 'text-white placeholder-white/70 bg-white/20 focus:bg-white/30 focus:ring-white/30'
-                }`}
-                placeholder="Search competitions..."
-              />
-            </div>
-
             {/* Premium Button */}
             <Button variant="outline" className={`hidden md:flex items-center transition-all ${
               scrolled 
