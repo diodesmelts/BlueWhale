@@ -132,77 +132,93 @@ function CheckoutForm({
 
   const [canUseApplePay, setCanUseApplePay] = useState(false);
   const [paymentRequest, setPaymentRequest] = useState<any>(null);
+  const [applePayError, setApplePayError] = useState<string | null>(null);
   
   // Check if Apple Pay is available
   useEffect(() => {
     if (stripe) {
-      const pr = stripe.paymentRequest({
-        country: 'GB',
-        currency: 'gbp',
-        total: {
-          label: description,
-          amount: amount,
-        },
-        requestPayerName: true,
-        requestPayerEmail: true,
-      });
-      
-      // Check if the Payment Request is supported
-      pr.canMakePayment().then(result => {
-        if (result && result.applePay) {
-          setCanUseApplePay(true);
-          setPaymentRequest(pr);
-        }
-      });
-      
-      // Handle payment method
-      pr.on('paymentmethod', async (e: any) => {
-        setIsProcessing(true);
+      try {
+        const pr = stripe.paymentRequest({
+          country: 'GB',
+          currency: 'gbp',
+          total: {
+            label: description,
+            amount: amount,
+          },
+          requestPayerName: true,
+          requestPayerEmail: true,
+        });
         
-        try {
-          // Process payment on the server
-          const response = await fetch('/api/payments/process', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              amount,
-              paymentMethodId: e.paymentMethod.id,
-              description,
-              metadata
-            }),
-          });
-          
-          const result = await response.json();
-          
-          if (!response.ok) {
-            throw new Error(result.error || 'Payment failed');
+        // Check if the Payment Request is supported
+        pr.canMakePayment().then(result => {
+          if (result && result.applePay) {
+            setCanUseApplePay(true);
+            setPaymentRequest(pr);
+            setApplePayError(null);
+          } else if (result) {
+            // Payment Request API is available but not Apple Pay
+            setApplePayError("Apple Pay is not available in your browser or device.");
+          } else {
+            // Payment Request API is not available
+            setApplePayError("Your browser doesn't support Apple Pay.");
           }
+        }).catch(err => {
+          console.warn("Apple Pay check failed:", err);
+          setApplePayError("Couldn't check Apple Pay availability. This may not work in development environments.");
+        });
+        
+        // Handle payment method
+        pr.on('paymentmethod', async (e: any) => {
+          setIsProcessing(true);
           
-          // Complete the payment
-          e.complete('success');
-          
-          // Show success message
-          toast({
-            title: 'Payment Successful',
-            description: result.message || 'Your payment has been processed successfully.',
-          });
-          
-          // Close the modal
-          onClose();
-        } catch (error: any) {
-          e.complete('fail');
-          setErrorMessage(error.message || 'An error occurred during payment processing.');
-          toast({
-            title: 'Payment Failed',
-            description: error.message || 'There was an error processing your payment.',
-            variant: 'destructive',
-          });
-        } finally {
-          setIsProcessing(false);
-        }
-      });
+          try {
+            // Process payment on the server
+            const response = await fetch('/api/payments/process', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                amount,
+                paymentMethodId: e.paymentMethod.id,
+                description,
+                metadata
+              }),
+            });
+            
+            const result = await response.json();
+            
+            if (!response.ok) {
+              throw new Error(result.error || 'Payment failed');
+            }
+            
+            // Complete the payment
+            e.complete('success');
+            
+            // Show success message
+            toast({
+              title: 'Payment Successful',
+              description: result.message || 'Your payment has been processed successfully.',
+            });
+            
+            // Close the modal
+            onClose();
+          } catch (error: any) {
+            e.complete('fail');
+            setErrorMessage(error.message || 'An error occurred during payment processing.');
+            toast({
+              title: 'Payment Failed',
+              description: error.message || 'There was an error processing your payment.',
+              variant: 'destructive',
+            });
+          } finally {
+            setIsProcessing(false);
+          }
+        });
+      } catch (error) {
+        console.error("Error setting up payment request:", error);
+        setApplePayError("Failed to initialize Apple Pay");
+      }
     }
   }, [stripe, amount, description, metadata, onClose, toast]);
 
@@ -275,6 +291,21 @@ function CheckoutForm({
                 <p className="text-sm text-gray-500 mt-2">
                   Click the Apple Pay button above to pay securely
                 </p>
+              </div>
+            )}
+            {!paymentRequest && (
+              <div className="flex flex-col items-center justify-center p-6 bg-gray-50 rounded-lg border border-gray-200">
+                <div className="text-center">
+                  <AppleIcon size={40} className="mx-auto mb-3 text-gray-400" />
+                  <h3 className="text-lg font-medium text-gray-900 mb-1">Apple Pay Unavailable</h3>
+                  <p className="text-sm text-gray-500">
+                    {applePayError || 
+                      "Apple Pay is not available in this environment. Please use a card payment instead."}
+                  </p>
+                  <p className="text-xs text-gray-400 mt-2">
+                    Note: Apple Pay requires HTTPS and domain registration in production environments.
+                  </p>
+                </div>
               </div>
             )}
           </TabsContent>
