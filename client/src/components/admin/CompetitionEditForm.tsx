@@ -14,7 +14,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 
-// Schema with simple string for endDate
+// Schema with proper date transformation
 const competitionUpdateSchema = z.object({
   title: z.string().min(5, "Title must be at least 5 characters"),
   organizer: z.string().min(2, "Organizer must be at least 2 characters"),
@@ -25,7 +25,17 @@ const competitionUpdateSchema = z.object({
   prize: z.coerce.number().min(1, "Prize must be at least £1"),
   entries: z.coerce.number().default(0),
   eligibility: z.string().min(1, "Eligibility is required"),
-  endDate: z.string().min(1, "End date is required"),
+  // Parse date string to ISO string for proper date handling
+  endDate: z.string()
+    .min(1, "End date is required")
+    .transform(dateStr => {
+      // Create a date object from the string and ensure it's valid
+      const date = new Date(dateStr);
+      if (isNaN(date.getTime())) {
+        throw new Error("Invalid date format");
+      }
+      return date.toISOString();
+    }),
   entrySteps: z.array(
     z.object({
       id: z.number(),
@@ -50,12 +60,21 @@ interface CompetitionEditFormProps {
 export function CompetitionEditForm({ competition, onClose }: CompetitionEditFormProps) {
   const [loading, setLoading] = useState(false);
   
-  // Get YYYY-MM-DD from an ISO date string
-  function getDateString(isoString: string | null | undefined): string {
-    if (!isoString) return '';
+  // Debug logging to understand the data types we're working with
+  console.log('Competition endDate type:', typeof competition.endDate);
+  console.log('Competition endDate value:', competition.endDate);
+  
+  // Get YYYY-MM-DD from a date object or ISO date string
+  function getDateString(dateValue: string | Date | null | undefined): string {
+    if (!dateValue) return '';
     try {
-      // Take just the date part (first 10 chars) of ISO string
-      return isoString.substring(0, 10);
+      if (typeof dateValue === 'string') {
+        // Take just the date part (first 10 chars) of ISO string
+        return dateValue.substring(0, 10);
+      } else {
+        // Format Date object to YYYY-MM-DD for input[type=date]
+        return dateValue.toISOString().substring(0, 10);
+      }
     } catch (error) {
       console.error('Error formatting date:', error);
       return '';
@@ -88,16 +107,13 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
   // Update form mutation
   const updateMutation = useMutation({
     mutationFn: async (data: CompetitionUpdateFormValues) => {
-      // Create a proper date object and convert to ISO string
-      const dateObj = new Date(data.endDate);
-      
+      // The endDate is already transformed into an ISO string by the zod schema
       // Format the data for the API
       const formattedData = {
         ...data,
         platform: "Other",
         entrySteps: [],
-        // Send an actual date object to the API
-        endDate: dateObj,
+        // The endDate is already in ISO format thanks to our schema transform
       };
       
       console.log('Submission data:', formattedData);
