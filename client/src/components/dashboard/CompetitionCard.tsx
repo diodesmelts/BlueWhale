@@ -148,12 +148,25 @@ export default function CompetitionCard({
       >
         {/* Competition image at the top */}
         <div 
-          className="w-full h-36 bg-center bg-cover relative"
+          className="w-full h-48 bg-center bg-cover relative"
           style={{ backgroundImage: `url(${image})` }}
         >
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
           
-          {/* Title overlaid on image */}
+          {/* Bookmark button - top right */}
+          <button 
+            className={`absolute top-2 right-2 p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors ${
+              isBookmarked ? 'text-yellow-400' : 'text-white hover:text-yellow-400'
+            }`}
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent card click event
+              onBookmark(id);
+            }}
+          >
+            <i className={isBookmarked ? 'fas fa-bookmark' : 'far fa-bookmark'}></i>
+          </button>
+          
+          {/* Title overlaid on image - bottom */}
           <div className="absolute bottom-0 left-0 right-0 p-3 text-white">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-bold flex items-center">
@@ -167,18 +180,6 @@ export default function CompetitionCard({
                   </Badge>
                 )}
               </h3>
-              
-              <button 
-                className={`p-1.5 rounded-full hover:bg-white/20 transition-colors ${
-                  isBookmarked ? 'text-yellow-400' : 'text-white hover:text-yellow-400'
-                }`}
-                onClick={(e) => {
-                  e.stopPropagation(); // Prevent card click event
-                  onBookmark(id);
-                }}
-              >
-                <i className={isBookmarked ? 'fas fa-bookmark' : 'far fa-bookmark'}></i>
-              </button>
             </div>
           </div>
         </div>
@@ -211,25 +212,43 @@ export default function CompetitionCard({
             </div>
           </div>
           
-          {/* Ticket information in a more compact layout */}
+          {/* Ticket information with progress bar */}
           <div className="bg-blue-50 p-3 rounded-lg mb-4">
-            <div className="grid grid-cols-3 gap-2">
-              <div>
-                <div className="text-xs text-gray-500">Ticket price</div>
-                <div className="text-base font-bold text-blue-700">${(ticketPrice ? ticketPrice/100 : 0).toFixed(2)}</div>
+            <div className="flex justify-between items-center mb-2">
+              <div className="text-sm font-medium text-blue-800">
+                <i className="fas fa-ticket-alt mr-1 text-blue-700"></i> ${(ticketPrice ? ticketPrice/100 : 0).toFixed(2)} per ticket
               </div>
-              
-              <div>
-                <div className="text-xs text-gray-500">Available</div>
-                <div className="text-base font-bold text-blue-700">
-                  {(totalTickets && soldTickets) ? (totalTickets - soldTickets) : 1766} / {totalTickets || 10000}
-                </div>
+              <div className="text-xs font-medium text-gray-600">
+                Max {maxTicketsPerUser || 3} per user
               </div>
-              
-              <div>
-                <div className="text-xs text-gray-500">Max per user</div>
-                <div className="text-base font-bold text-blue-700">{maxTicketsPerUser || 3}</div>
+            </div>
+            
+            {/* Ticket sales progress bar */}
+            <div className="mt-2 mb-1">
+              <div className="h-2.5 w-full bg-blue-200 rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full"
+                  style={{ 
+                    width: `${(totalTickets && soldTickets) ? 
+                    Math.min(100, Math.round((soldTickets / totalTickets) * 100)) : 30}%` 
+                  }}
+                ></div>
               </div>
+            </div>
+            
+            <div className="flex justify-between text-xs">
+              <span className="text-gray-600">
+                <span className="font-semibold text-blue-700">{(totalTickets && soldTickets) ? 
+                  (totalTickets - soldTickets).toLocaleString() : 1766}</span> available
+              </span>
+              <span className="text-gray-600">
+                <span className="font-semibold text-blue-700">{(totalTickets && soldTickets) ? 
+                  Math.min(100, Math.round((soldTickets / totalTickets) * 100)) : 30}%</span> sold
+              </span>
+              <span className="text-gray-600">
+                Total: <span className="font-semibold text-blue-700">{totalTickets ? 
+                  totalTickets.toLocaleString() : 10000}</span>
+              </span>
             </div>
           </div>
 

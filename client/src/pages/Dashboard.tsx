@@ -336,8 +336,8 @@ export default function Dashboard() {
           </div>
         ) : (
           <>
-            {/* Grid layout with 2 columns on tablet and desktop */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+            {/* Grid layout with 3 columns on larger screens */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-0">
               {competitions?.map((competition: CompetitionWithEntryStatus) => (
                 <CompetitionCard
                   key={competition.id}
