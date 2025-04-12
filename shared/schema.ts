@@ -23,10 +23,13 @@ export const competitions = pgTable("competitions", {
   description: text("description").notNull(),
   image: text("image").notNull(),
   platform: text("platform").notNull(), // instagram, facebook, tiktok, twitter, website
-  type: text("type").notNull(), // giveaway, sweepstakes, contest
+  type: text("type").notNull(), // competition, contest
   prize: integer("prize").notNull(), // value in USD
-  entryFee: integer("entry_fee").default(0), // in dollars, 0 = free
-  entries: integer("entries").default(0),
+  ticketPrice: integer("ticket_price").default(0), // price per ticket in cents
+  maxTicketsPerUser: integer("max_tickets_per_user").default(10), // limit per user
+  totalTickets: integer("total_tickets").default(1000), // total available tickets
+  soldTickets: integer("sold_tickets").default(0), // number of tickets sold so far
+  entries: integer("entries").default(0), // total number of participants
   eligibility: text("eligibility").notNull(), // worldwide, US only, etc.
   endDate: timestamp("end_date").notNull(),
   entrySteps: jsonb("entry_steps").notNull().$type<EntryStep[]>(),
@@ -42,8 +45,11 @@ export const userEntries = pgTable("user_entries", {
   entryProgress: jsonb("entry_progress").notNull().$type<number[]>(), // Array of 0/1 values for each step
   isBookmarked: boolean("is_bookmarked").default(false),
   isLiked: boolean("is_liked").default(false),
+  ticketCount: integer("ticket_count").default(1), // Number of tickets purchased
+  ticketNumbers: jsonb("ticket_numbers").$type<number[]>(), // Array of ticket numbers assigned to this user
   paymentIntentId: text("payment_intent_id"), // Stripe payment intent ID
   paymentStatus: text("payment_status").default("none"), // none, pending, completed, failed
+  totalPaid: integer("total_paid").default(0), // Total amount paid in cents
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -95,7 +101,10 @@ export const insertCompetitionSchema = createInsertSchema(competitions).pick({
   platform: true,
   type: true,
   prize: true,
-  entryFee: true,
+  ticketPrice: true,
+  maxTicketsPerUser: true,
+  totalTickets: true,
+  soldTickets: true,
   entries: true,
   eligibility: true,
   endDate: true,
@@ -109,8 +118,11 @@ export const insertUserEntrySchema = createInsertSchema(userEntries).pick({
   entryProgress: true,
   isBookmarked: true,
   isLiked: true,
+  ticketCount: true,
+  ticketNumbers: true,
   paymentIntentId: true,
   paymentStatus: true,
+  totalPaid: true,
 });
 
 export const insertUserWinSchema = createInsertSchema(userWins).pick({

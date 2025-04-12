@@ -16,13 +16,20 @@ export interface CompetitionWithEntryStatus {
   entrySteps: EntryStep[];
   isVerified: boolean;
   createdAt: string;
-  entryFee?: number; // Optional entry fee, if undefined or 0, competition is free
+  
+  // Ticket-related fields
+  ticketPrice: number; // Price per ticket in cents
+  maxTicketsPerUser: number; // Max tickets per user
+  totalTickets: number; // Total available tickets
+  soldTickets: number; // Number of tickets sold
   
   // User entry specific fields
   isEntered: boolean;
   entryProgress: number[];
   isBookmarked: boolean;
   isLiked: boolean;
+  ticketCount?: number; // Number of tickets the user has purchased
+  ticketNumbers?: number[]; // Array of ticket numbers assigned to this user
   
   // For wins
   winDate?: string;
