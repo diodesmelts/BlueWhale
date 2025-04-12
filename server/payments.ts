@@ -7,6 +7,19 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: "2025-03-31.basil", // Use a stable API version
 });
 
+// Configure Apple Pay
+try {
+  stripe.applePayDomains.create({
+    domain_name: process.env.APP_DOMAIN || 'localhost',
+  }).then(() => {
+    console.log('Apple Pay domain registration successful');
+  }).catch(err => {
+    console.warn('Apple Pay domain registration failed:', err.message);
+  });
+} catch (error) {
+  console.warn('Error setting up Apple Pay:', error);
+}
+
 export interface PaymentMetadata {
   userId: number;
   competitionId?: number;
@@ -98,7 +111,7 @@ export function setupPaymentRoutes(app: Express) {
       // Create a payment intent
       const paymentIntent = await stripe.paymentIntents.create({
         amount,
-        currency: 'usd',
+        currency: 'gbp',
         customer: customerId,
         payment_method: paymentMethodId,
         description,
@@ -277,7 +290,7 @@ export function setupPaymentRoutes(app: Express) {
       // Create the payment
       const paymentIntent = await stripe.paymentIntents.create({
         amount: competition.ticketPrice ? competition.ticketPrice : 0, // already in cents
-        currency: "usd",
+        currency: "gbp",
         customer: user.stripeCustomerId,
         payment_method: paymentMethodId,
         off_session: true,

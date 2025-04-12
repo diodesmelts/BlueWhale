@@ -214,7 +214,11 @@ function CheckoutForm({
           <div className="text-sm text-gray-500">{description}</div>
         </div>
         
-        <Tabs defaultValue="card" className="w-full">
+        <Tabs 
+          defaultValue="card" 
+          className="w-full"
+          onValueChange={(value) => setPaymentMethod(value as 'card' | 'apple_pay')}
+        >
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="card" className="flex items-center gap-2">
               <CreditCard size={16} />
