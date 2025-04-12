@@ -34,10 +34,7 @@ export default function TopNav() {
   // Combine public and user items
   let navItems = [...publicNavItems, ...userNavItems];
   
-  // Add admin link if user is admin
-  if (user && isAdmin) {
-    navItems.push({ icon: "fas fa-shield-alt", label: "Admin", path: "/admin" });
-  }
+  // We won't add admin to regular navItems since we'll create a special button for it
 
   const handleLogout = async () => {
     await logoutUser();
@@ -92,6 +89,22 @@ export default function TopNav() {
           </div>
 
           <div className="flex items-center space-x-5">
+            {/* Admin Button - Only visible to admins */}
+            {user && isAdmin && (
+              <Link href="/admin">
+                <Button 
+                  className={`hidden md:flex items-center transition-all border-0 shadow-md ${
+                    isActive("/admin") 
+                      ? 'bg-amber-500 text-white hover:bg-amber-600' 
+                      : 'bg-rose-500 text-white hover:bg-rose-600'
+                  }`}
+                >
+                  <i className="fas fa-shield-alt mr-1.5"></i>
+                  <span className="text-sm font-medium">Admin</span>
+                </Button>
+              </Link>
+            )}
+            
             {/* Premium Button */}
             <Button variant="outline" className="hidden md:flex items-center transition-all text-white border-white/30 hover:bg-white/10">
               <Crown className="h-4 w-4 mr-1.5" />
@@ -185,6 +198,13 @@ export default function TopNav() {
                     )}
                   </div>
                   <DropdownMenuSeparator />
+                  {isAdmin && (
+                    <Link href="/admin">
+                      <DropdownMenuItem className="py-2 cursor-pointer focus:bg-blue-50 rounded-md">
+                        <i className="fas fa-shield-alt mr-2 text-rose-600"></i> Admin Dashboard
+                      </DropdownMenuItem>
+                    </Link>
+                  )}
                   <DropdownMenuItem className="py-2 cursor-pointer focus:bg-blue-50 rounded-md">
                     <i className="fas fa-user mr-2 text-blue-600"></i> View Profile
                   </DropdownMenuItem>

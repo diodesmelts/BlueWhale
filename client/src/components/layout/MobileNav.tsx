@@ -22,18 +22,19 @@ export default function MobileNav() {
   
   // Authentication navigation item (login/profile)
   const authNavItem = user
-    ? { icon: "fas fa-user", label: "Profile", path: "/profile" }
+    ? { icon: "fas fa-user", label: "Profile", path: "/profile" } // This will be handled in the dropdown
     : { icon: "fas fa-sign-in-alt", label: "Login", path: "/auth" };
   
   // Build navigation items
   let navItems = [...publicNavItems, ...userNavItems];
   
-  // Add admin or profile as the last icon
+  // Always add admin as its own icon if admin, otherwise add the auth item
   if (user && isAdmin) {
     navItems.push({ icon: "fas fa-shield-alt", label: "Admin", path: "/admin" });
-  } else {
-    navItems.push(authNavItem);
-  }
+  } 
+  
+  // Always add login/profile item
+  navItems.push(authNavItem);
 
   const isActive = (path: string) => location === path;
 
