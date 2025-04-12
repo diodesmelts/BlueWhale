@@ -10,28 +10,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Bell, Crown } from "lucide-react";
-import { useEffect, useState } from "react";
 
 export default function TopNav() {
   const [location] = useLocation();
-  const [scrolled, setScrolled] = useState(false);
-
-  // Handle scroll effect for the sticky header
-  useEffect(() => {
-    const handleScroll = () => {
-      const offset = window.scrollY;
-      if (offset > 10) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
 
   const navItems = [
     { icon: "fas fa-home", label: "Dashboard", path: "/" },
@@ -44,15 +25,15 @@ export default function TopNav() {
   const isActive = (path: string) => location === path;
 
   return (
-    <header className={`sticky top-0 transition-all duration-300 ${scrolled ? 'bg-white shadow-md z-50' : 'bg-gradient-to-r from-rose-500 to-pink-600 text-white z-20'}`}>
+    <header className="sticky top-0 transition-all duration-300 bg-gradient-to-r from-rose-500 to-pink-600 text-white z-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-8">
             {/* Logo */}
             <div className="flex items-center space-x-3">
-              <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${scrolled ? 'bg-gradient-to-r from-rose-500 to-pink-600' : 'bg-white'}`}>
+              <div className="w-10 h-10 rounded-full flex items-center justify-center bg-white shadow-md">
                 <svg 
-                  className={`w-7 h-7 ${scrolled ? 'text-white' : 'text-rose-600'}`} 
+                  className="w-6 h-6 text-rose-600" 
                   viewBox="0 0 24 24" 
                   fill="none" 
                   xmlns="http://www.w3.org/2000/svg"
@@ -63,9 +44,9 @@ export default function TopNav() {
                   />
                 </svg>
               </div>
-              <h1 className={`text-xl font-bold tracking-tight transition-colors ${scrolled ? 'text-gray-800' : 'text-white'}`}>
+              <h1 className="text-xl font-bold tracking-tight text-white">
                 CompetePro
-                <span className="text-rose-500 ml-1">+</span>
+                <span className="text-white ml-1">+</span>
               </h1>
             </div>
 
@@ -76,15 +57,11 @@ export default function TopNav() {
                   <span
                     className={`px-4 py-2 rounded-xl text-sm flex items-center transition-all duration-200 cursor-pointer ${
                       isActive(item.path)
-                        ? scrolled 
-                          ? 'bg-rose-50 text-rose-600 font-medium shadow-sm' 
-                          : 'bg-white/25 text-white font-medium backdrop-blur-sm'
-                        : scrolled
-                          ? 'text-gray-600 hover:bg-gray-50'
-                          : 'text-white hover:bg-white/10'
+                        ? 'bg-white/25 text-white font-medium backdrop-blur-sm'
+                        : 'text-white hover:bg-white/10'
                     }`}
                   >
-                    <i className={`${item.icon} mr-2 ${isActive(item.path) && !scrolled ? 'text-white' : ''}`}></i>
+                    <i className={`${item.icon} mr-2`}></i>
                     {item.label}
                   </span>
                 </Link>
@@ -94,11 +71,7 @@ export default function TopNav() {
 
           <div className="flex items-center space-x-5">
             {/* Premium Button */}
-            <Button variant="outline" className={`hidden md:flex items-center transition-all ${
-              scrolled 
-                ? 'text-amber-600 border-amber-200 hover:bg-amber-50 shadow-sm' 
-                : 'text-white border-white/30 hover:bg-white/10'
-            }`}>
+            <Button variant="outline" className="hidden md:flex items-center transition-all text-white border-white/30 hover:bg-white/10">
               <Crown className="h-4 w-4 mr-1.5" />
               <span className="text-sm font-medium">Go Premium</span>
             </Button>
@@ -106,15 +79,9 @@ export default function TopNav() {
             {/* Notifications */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className={`relative p-1.5 rounded-full focus:outline-none transition-all ${
-                  scrolled 
-                    ? 'text-gray-600 hover:text-rose-600 hover:bg-rose-50' 
-                    : 'text-white hover:bg-white/20'
-                }`}>
+                <button className="relative p-1.5 rounded-full focus:outline-none transition-all text-white hover:bg-white/20">
                   <Bell className="h-6 w-6" />
-                  <span className={`absolute top-0 right-0 block h-2.5 w-2.5 rounded-full ${
-                    scrolled ? 'bg-rose-500' : 'bg-amber-300'
-                  } ring-2 ${scrolled ? 'ring-white' : 'ring-rose-500'}`}></span>
+                  <span className="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-amber-300 ring-2 ring-rose-500"></span>
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-80 p-1">
@@ -170,19 +137,11 @@ export default function TopNav() {
             {/* Profile Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <div className={`flex items-center space-x-2 cursor-pointer rounded-full pl-2 pr-3 py-1 transition-all ${
-                  scrolled 
-                    ? 'hover:bg-gray-100' 
-                    : 'hover:bg-white/10'
-                }`}>
-                  <Avatar className={`h-8 w-8 shadow-md ${
-                    scrolled 
-                      ? 'bg-gradient-to-br from-rose-500 to-pink-600 text-white'
-                      : 'bg-white text-rose-600'
-                  }`}>
+                <div className="flex items-center space-x-2 cursor-pointer rounded-full pl-2 pr-3 py-1 transition-all hover:bg-white/10">
+                  <Avatar className="h-8 w-8 shadow-md bg-white text-rose-600">
                     <span className="text-sm font-bold">JS</span>
                   </Avatar>
-                  <span className={`text-sm font-medium hidden md:block ${scrolled ? 'text-gray-700' : 'text-white'}`}>
+                  <span className="text-sm font-medium hidden md:block text-white">
                     John Smith
                   </span>
                 </div>
