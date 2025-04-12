@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Competition } from "@shared/schema";
-import { Loader2 } from "lucide-react";
+import { Loader2, Upload, Link, Image as ImageIcon } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -13,18 +13,20 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent } from "@/components/ui/card";
 
 // Simple schema - date handling is done on the server
 const competitionUpdateSchema = z.object({
   title: z.string().min(5, "Title must be at least 5 characters"),
   organizer: z.string().min(2, "Organizer must be at least 2 characters"),
   description: z.string().min(10, "Description must be at least 10 characters"),
-  image: z.string().url("Must be a valid URL"),
+  image: z.string().min(1, "Image is required"), // Changed from URL validation to allow file uploads
   platform: z.string().default("Other"),
-  type: z.string().min(1, "Type is required"),
+  // Removed type field as requested
   prize: z.coerce.number().min(1, "Prize must be at least £1"),
   entries: z.coerce.number().default(0),
-  eligibility: z.string().min(1, "Eligibility is required"),
+  // Removed eligibility field as requested
   // Keep endDate as a simple string - server will validate and convert
   endDate: z.string().min(1, "End date is required"),
   entrySteps: z.array(
@@ -50,6 +52,11 @@ interface CompetitionEditFormProps {
 
 export function CompetitionEditForm({ competition, onClose }: CompetitionEditFormProps) {
   const [loading, setLoading] = useState(false);
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [uploadedImageUrl, setUploadedImageUrl] = useState<string>('');
+  const [uploadedImagePreview, setUploadedImagePreview] = useState<string>('');
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   
   // Debug logging to understand the data types we're working with
   console.log('Competition endDate type:', typeof competition.endDate);
@@ -81,10 +88,10 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
       description: competition.description,
       image: competition.image,
       platform: "Other", // Default value
-      type: competition.type,
+      // Removed type field
       prize: competition.prize,
       entries: competition.entries || 0,
-      eligibility: competition.eligibility,
+      // Removed eligibility field
       endDate: getDateString(competition.endDate),
       entrySteps: [], // Empty array as we're removing this field
       isVerified: competition.isVerified || false,
@@ -138,6 +145,64 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
     }
   });
 
+  // Image upload handler
+  const handleFileUpload = async (file: File) => {
+    if (!file) return;
+    
+    try {
+      setUploadingImage(true);
+      
+      // Create a FormData object to send the file
+      const formData = new FormData();
+      formData.append('file', file);
+      
+      // Create preview URL for the UI
+      const previewUrl = URL.createObjectURL(file);
+      setUploadedImagePreview(previewUrl);
+      
+      // Upload the file to the server
+      const response = await fetch('/api/upload-image', {
+        method: 'POST',
+        body: formData,
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to upload image');
+      }
+      
+      const data = await response.json();
+      const imageUrl = data.url;
+      
+      // Update the form with the new image URL
+      form.setValue('image', imageUrl);
+      setUploadedImageUrl(imageUrl);
+      
+      toast({
+        title: 'Image uploaded',
+        description: 'The image has been successfully uploaded.',
+      });
+      
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      toast({
+        title: 'Upload failed',
+        description: error instanceof Error ? error.message : 'Failed to upload image',
+        variant: 'destructive',
+      });
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+  
+  // Handle file input change
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setUploadedFile(file);
+      handleFileUpload(file);
+    }
+  };
+  
   // Form submission handler
   const onSubmit = async (data: CompetitionUpdateFormValues) => {
     setLoading(true);
@@ -204,73 +269,109 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
           name="image"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Image URL</FormLabel>
-              <FormControl>
-                <Input placeholder="https://example.com/image.jpg" {...field} />
-              </FormControl>
-              <FormDescription>
-                Enter a URL to an image that represents this competition
-              </FormDescription>
+              <FormLabel>Competition Image</FormLabel>
+              <div className="space-y-4">
+                <Tabs defaultValue="url" className="w-full">
+                  <TabsList className="grid w-full grid-cols-2">
+                    <TabsTrigger value="url">
+                      <Link className="h-4 w-4 mr-2" />
+                      Image URL
+                    </TabsTrigger>
+                    <TabsTrigger value="upload">
+                      <Upload className="h-4 w-4 mr-2" />
+                      Upload File
+                    </TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="url" className="pt-4">
+                    <FormControl>
+                      <Input 
+                        placeholder="https://example.com/image.jpg" 
+                        {...field} 
+                        className="w-full"
+                      />
+                    </FormControl>
+                    <FormDescription className="mt-2">
+                      Enter a URL to an image that represents this competition
+                    </FormDescription>
+                  </TabsContent>
+                  <TabsContent value="upload" className="pt-4">
+                    <div className="space-y-4">
+                      <div className="grid gap-4">
+                        <Card className="overflow-hidden">
+                          <CardContent className="p-0">
+                            <div 
+                              className="bg-slate-100 w-full h-48 flex items-center justify-center border-b" 
+                            >
+                              {uploadedImagePreview ? (
+                                <img 
+                                  src={uploadedImagePreview}
+                                  alt="Upload preview" 
+                                  className="h-full w-full object-contain"
+                                />
+                              ) : (
+                                <ImageIcon className="h-12 w-12 text-slate-300" />
+                              )}
+                            </div>
+                            <div className="p-4">
+                              <input
+                                type="file"
+                                ref={fileInputRef}
+                                onChange={handleFileChange}
+                                className="hidden"
+                                accept="image/*"
+                              />
+                              <Button 
+                                type="button" 
+                                variant="outline"
+                                className="w-full"
+                                onClick={() => fileInputRef.current?.click()}
+                                disabled={uploadingImage}
+                              >
+                                {uploadingImage ? (
+                                  <>
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                    Uploading...
+                                  </>
+                                ) : (
+                                  <>
+                                    {uploadedImagePreview ? 'Change Image' : 'Select Image File'}
+                                  </>
+                                )}
+                              </Button>
+                              {uploadedFile && (
+                                <p className="text-sm text-slate-500 mt-2 truncate">
+                                  Selected: {uploadedFile.name}
+                                </p>
+                              )}
+                            </div>
+                          </CardContent>
+                        </Card>
+                      </div>
+                      <FormDescription>
+                        Upload an image file from your device (max 5MB)
+                      </FormDescription>
+                    </div>
+                  </TabsContent>
+                </Tabs>
+                {field.value && field.value.startsWith('http') && (
+                  <div className="mt-2 rounded overflow-hidden border w-full h-32 bg-slate-50 flex items-center justify-center">
+                    <img 
+                      src={field.value} 
+                      alt="Current image" 
+                      className="h-full w-full object-contain"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = 'https://placehold.co/600x400?text=Image+Error';
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
               <FormMessage />
             </FormItem>
           )}
         />
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <FormField
-            control={form.control}
-            name="type"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Type</FormLabel>
-                <Select 
-                  onValueChange={field.onChange} 
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select type" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="Giveaway">Giveaway</SelectItem>
-                    <SelectItem value="Sweepstakes">Sweepstakes</SelectItem>
-                    <SelectItem value="Contest">Contest</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          
-          <FormField
-            control={form.control}
-            name="eligibility"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Eligibility</FormLabel>
-                <Select 
-                  onValueChange={field.onChange} 
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select eligibility" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="Worldwide">Worldwide</SelectItem>
-                    <SelectItem value="US Only">US Only</SelectItem>
-                    <SelectItem value="US & Canada">US & Canada</SelectItem>
-                    <SelectItem value="Europe">Europe</SelectItem>
-                    <SelectItem value="Asia">Asia</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+        {/* Type and Eligibility fields removed as requested */}
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <FormField
