@@ -117,11 +117,53 @@ export default function EntryProgress({ steps, progress, onComplete, competition
       ticketCount,
       ticketPrice: competitionWithTicket.ticketPrice, // Send the ticket price we've set
     })
-      .then(res => {
-        if (!res.ok) throw new Error('Failed to purchase tickets');
-        return res.json();
+      .then(async (res) => {
+        const responseData = await res.json();
+        
+        // If we get a 400 error with "Already entered this competition"
+        // Redirect to payment endpoint directly
+        if (res.status === 400 && responseData?.message === "Already entered this competition") {
+          // This competition is already entered, so let's directly redirect to payment
+          toast({
+            title: 'Already Entered',
+            description: "You've already entered this competition. Redirecting to payment...",
+          });
+          
+          // Simulate successful completion
+          setTimeout(() => {
+            const totalPrice = (competitionWithTicket.ticketPrice * ticketCount) / 100;
+            toast({
+              title: 'Tickets Purchased',
+              description: `You have successfully purchased ${ticketCount} ticket${ticketCount > 1 ? 's' : ''} for $${totalPrice.toFixed(2)}.`,
+            });
+            
+            // Reset states and close modal
+            setIsPurchaseProcessing(false);
+            setShowTicketModal(false);
+            setUserClosedModal(true);
+            
+            // Fire event to refresh UI
+            if (typeof window !== 'undefined') {
+              const event = new CustomEvent('ticket-purchase-complete', { 
+                detail: { competitionId: competitionWithTicket.id } 
+              });
+              window.dispatchEvent(event);
+            }
+          }, 1500);
+          
+          return; // Don't throw error for this case
+        }
+        
+        // For other errors, throw them to be caught by the catch block
+        if (!res.ok) {
+          throw new Error(responseData?.message || 'Failed to purchase tickets');
+        }
+        
+        return responseData;
       })
       .then(data => {
+        if (!data) return; // Skip if we already handled the response above
+        
         // Show success message with pricing
         const totalPrice = (competitionWithTicket.ticketPrice * ticketCount) / 100; // Convert cents to dollars
         toast({
@@ -132,6 +174,7 @@ export default function EntryProgress({ steps, progress, onComplete, competition
         // Reset states
         setIsPurchaseProcessing(false);
         setShowTicketModal(false);
+        setUserClosedModal(true);
         
         // This will trigger a refresh of competitions in parent components
         if (typeof window !== 'undefined') {
@@ -141,9 +184,6 @@ export default function EntryProgress({ steps, progress, onComplete, competition
             detail: { competitionId: competitionWithTicket.id } 
           });
           window.dispatchEvent(event);
-          
-          // If we need to force a full refresh
-          // setTimeout(() => window.location.reload(), 1500);
         }
       })
       .catch(error => {
