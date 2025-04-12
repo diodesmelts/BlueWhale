@@ -78,6 +78,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     },
     onSuccess: (userData: User) => {
       queryClient.setQueryData(["/api/user"], userData);
+      
+      // If user is an admin, immediately update the admin status cache as well
+      if (userData.isAdmin) {
+        queryClient.setQueryData(["/api/admin/check"], { isAdmin: true });
+        // Force refetch to ensure server verification
+        queryClient.invalidateQueries({ queryKey: ["/api/admin/check"] });
+      }
+      
+      // Invalidate any user-related queries that might have changed
+      queryClient.invalidateQueries({ queryKey: ["/api/user"] });
+      
       toast({
         title: "Logged in successfully",
         description: `Welcome back, ${userData.username}!`,
@@ -109,6 +120,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     },
     onSuccess: (userData: User) => {
       queryClient.setQueryData(["/api/user"], userData);
+      
+      // If the newly registered user is an admin (unlikely but possible), update admin status 
+      if (userData.isAdmin) {
+        queryClient.setQueryData(["/api/admin/check"], { isAdmin: true });
+        queryClient.invalidateQueries({ queryKey: ["/api/admin/check"] });
+      }
+      
+      // Invalidate user-related queries
+      queryClient.invalidateQueries({ queryKey: ["/api/user"] });
+      
       toast({
         title: "Registration successful",
         description: `Welcome to CompetePro, ${userData.username}!`,
@@ -133,9 +154,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     },
     onSuccess: () => {
+      // Clear user data from cache
       queryClient.setQueryData(["/api/user"], null);
-      // Invalidate and refetch relevant queries
+      
+      // Clear admin status when logging out
+      queryClient.setQueryData(["/api/admin/check"], { isAdmin: false });
+      
+      // Invalidate all user-related queries
       queryClient.invalidateQueries({ queryKey: ["/api/user"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/check"] });
       
       toast({
         title: "Logged out successfully",
