@@ -53,18 +53,28 @@ interface CompetitionEditFormProps {
 export function CompetitionEditForm({ competition, onClose }: CompetitionEditFormProps) {
   const [loading, setLoading] = useState(false);
   
-  // Function to ensure we always get a YYYY-MM-DD string for the date input
-  const formatDateForInput = (value: string | Date | null | undefined): string => {
-    if (!value) {
-      return new Date().toISOString().split('T')[0];
-    }
+  // Helper function to format any date to YYYY-MM-DD string
+  const formatDateToYYYYMMDD = (date: Date | string | null | undefined): string => {
+    if (!date) return '';
     
-    try {
-      const date = typeof value === 'string' ? new Date(value) : value;
-      return date.toISOString().split('T')[0]; // Format as YYYY-MM-DD
-    } catch (error) {
-      console.error('Error formatting date:', error);
-      return new Date().toISOString().split('T')[0]; // Default to today
+    if (typeof date === 'string') {
+      // If it's already a string, try to parse it
+      try {
+        const parsed = new Date(date);
+        if (isNaN(parsed.getTime())) {
+          // If the parsed date is invalid, check if it's already in YYYY-MM-DD format
+          if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+            return date;
+          }
+          return '';
+        }
+        return parsed.toISOString().substring(0, 10);
+      } catch {
+        return '';
+      }
+    } else {
+      // If it's a Date object, format it
+      return date.toISOString().substring(0, 10);
     }
   };
 
@@ -82,7 +92,7 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
       entries: competition.entries || 0,
       eligibility: competition.eligibility,
       // Format the date for the date input
-      endDate: competition.endDate ? formatDateForInput(competition.endDate) : new Date().toISOString().split('T')[0],
+      endDate: formatDateToYYYYMMDD(competition.endDate),
       entrySteps: [], // Empty array as we're removing this field
       isVerified: competition.isVerified || false,
       // Ticket-related fields
@@ -97,7 +107,8 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
   const updateMutation = useMutation({
     mutationFn: async (data: CompetitionUpdateFormValues) => {
       // Convert the form date (YYYY-MM-DD) to an ISO string
-      const endDateObj = new Date(data.endDate);
+      // Ensure the time is set to end of day to avoid timezone issues
+      const dateStr = `${data.endDate}T23:59:59.999Z`;
       
       // Format the data properly for the API
       const formattedData = {
@@ -106,8 +117,8 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
         platform: "Other",
         // Ensure entry steps are preserved (even if empty)
         entrySteps: data.entrySteps || [],
-        // Format the date as an ISO string
-        endDate: endDateObj.toISOString(),
+        // Use ISO date string
+        endDate: dateStr,
       };
       
       console.log('Submission data:', formattedData);
