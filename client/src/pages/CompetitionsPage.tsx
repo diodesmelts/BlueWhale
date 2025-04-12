@@ -4,8 +4,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button";
 import CompetitionCard from "@/components/dashboard/CompetitionCard";
 import { CompetitionWithEntryStatus } from "@shared/types";
+import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/queryClient";
 
 export default function CompetitionsPage() {
+  const { toast } = useToast();
   const [prizeValue, setPrizeValue] = useState("all");
   const [sortBy, setSortBy] = useState("popularity");
   // For backward compatibility, keeping these available but not using them
@@ -15,32 +18,80 @@ export default function CompetitionsPage() {
   const setPlatform = () => {}; // Empty function since we're not using platform anymore
 
   // Fetch competitions
-  const { data: competitions, isLoading } = useQuery<CompetitionWithEntryStatus[]>({
+  const { data: competitions, isLoading, refetch } = useQuery<CompetitionWithEntryStatus[]>({
     queryKey: ["/api/competitions", prizeValue, sortBy],
   });
 
   // Handle competition entry
   const handleEnterCompetition = (id: number) => {
-    fetch(`/api/competitions/${id}/enter`, {
-      method: "POST",
-      credentials: "include"
-    });
+    apiRequest('POST', `/api/competitions/${id}/enter`)
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to enter competition');
+        return res.json();
+      })
+      .then(() => {
+        toast({
+          title: 'Competition Entered',
+          description: 'You have successfully entered this competition.',
+        });
+        refetch();
+      })
+      .catch(error => {
+        console.error('Error entering competition:', error);
+        toast({
+          title: 'Error',
+          description: error.message,
+          variant: 'destructive',
+        });
+      });
   };
 
   // Handle bookmarking competition
   const handleBookmarkCompetition = (id: number) => {
-    fetch(`/api/competitions/${id}/bookmark`, {
-      method: "POST",
-      credentials: "include"
-    });
+    apiRequest('POST', `/api/competitions/${id}/bookmark`)
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to bookmark competition');
+        return res.json();
+      })
+      .then(() => {
+        toast({
+          title: 'Competition Bookmarked',
+          description: 'This competition has been added to your bookmarks.',
+        });
+        refetch();
+      })
+      .catch(error => {
+        console.error('Error bookmarking competition:', error);
+        toast({
+          title: 'Error',
+          description: error.message,
+          variant: 'destructive',
+        });
+      });
   };
 
   // Handle liking competition
   const handleLikeCompetition = (id: number) => {
-    fetch(`/api/competitions/${id}/like`, {
-      method: "POST",
-      credentials: "include"
-    });
+    apiRequest('POST', `/api/competitions/${id}/like`)
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to like competition');
+        return res.json();
+      })
+      .then(() => {
+        toast({
+          title: 'Competition Liked',
+          description: 'You have liked this competition.',
+        });
+        refetch();
+      })
+      .catch(error => {
+        console.error('Error liking competition:', error);
+        toast({
+          title: 'Error',
+          description: error.message,
+          variant: 'destructive',
+        });
+      });
   };
 
   // Handle completing entry steps
