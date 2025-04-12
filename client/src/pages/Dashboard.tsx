@@ -64,18 +64,41 @@ export default function Dashboard() {
 
   return (
     <div className="container mx-auto px-4 py-6">
-      {/* Dashboard Header */}
-      <div className="bg-white p-8 rounded-xl shadow-md mb-8">
-        <div className="flex flex-col md:flex-row md:justify-between md:items-center">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Competition Dashboard</h1>
-            <p className="text-lg text-gray-700 mt-2">Discover trending competitions and track your entries</p>
+      {/* Hero Welcome Section */}
+      <div className="bg-gradient-to-r from-rose-500 to-pink-600 p-10 rounded-2xl shadow-xl mb-8 overflow-hidden relative">
+        {/* Decorative elements */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full -mt-20 -mr-20"></div>
+        <div className="absolute bottom-0 left-0 w-40 h-40 bg-white opacity-10 rounded-full -mb-10 -ml-10"></div>
+        
+        <div className="flex flex-col md:flex-row justify-between items-center relative z-10">
+          <div className="text-white">
+            <h1 className="text-5xl font-extrabold tracking-tight mb-2">
+              <span className="wiggle-on-hover inline-block">READY TO</span> <span className="text-yellow-300 pulse-glow inline-block">WIN BIG?</span>
+            </h1>
+            <p className="text-xl font-medium text-white/90 max-w-xl">
+              Your competition hub for <span className="underline decoration-yellow-300 decoration-wavy decoration-2 underline-offset-2">discovering</span> and <span className="underline decoration-yellow-300 decoration-wavy decoration-2 underline-offset-2">tracking</span> the best prize opportunities!
+            </p>
+            
+            <div className="mt-6 flex items-center space-x-4">
+              <Button className="bg-white text-rose-600 hover:bg-yellow-300 hover:text-rose-700 py-2.5 px-6 rounded-full shadow-lg font-bold transition-all duration-300 text-lg">
+                <i className="fas fa-trophy mr-2"></i>
+                <span>Start Winning</span>
+              </Button>
+              <Button variant="outline" className="bg-transparent border-2 border-white text-white hover:bg-white/20 py-2.5 px-6 rounded-full font-medium transition-all">
+                <i className="fas fa-plus-circle mr-2"></i>
+                <span>Add Competition</span>
+              </Button>
+            </div>
           </div>
-          <div className="mt-4 md:mt-0">
-            <Button className="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-medium py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
-              <i className="fas fa-plus-circle mr-2"></i>
-              <span>Add Competition</span>
-            </Button>
+          
+          <div className="mt-8 md:mt-0">
+            <div className="w-48 h-48 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center p-2 float-animation pulse-glow">
+              <div className="w-full h-full rounded-full bg-white flex items-center justify-center p-5 shine-effect">
+                <svg className="w-28 h-28 trophy-icon wiggle-on-hover" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M21 4H18V3C18 2.45 17.55 2 17 2H7C6.45 2 6 2.45 6 3V4H3C2.45 4 2 4.45 2 5V12C2 13.1 2.9 14 4 14H7.55C7.21 14.91 7 15.94 7 17C7 20.31 9.69 23 13 23C16.31 23 19 20.31 19 17C19 15.94 18.79 14.91 18.45 14H22C23.1 14 24 13.1 24 12V5C24 4.45 23.55 4 23 4H21ZM13 21C10.79 21 9 19.21 9 17C9 14.79 10.79 13 13 13C15.21 13 17 14.79 17 17C17 19.21 15.21 21 13 21ZM22 10H17.83C16.53 8.19 14.31 7 12 7C9.69 7 7.47 8.19 6.17 10H2V6H22V10Z" fill="currentColor"/>
+                </svg>
+              </div>
+            </div>
           </div>
         </div>
       </div>

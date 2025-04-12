@@ -57,27 +57,44 @@ export default function CompetitionCard({
   const isEndingSoon = daysRemaining === "Ends tomorrow" || daysRemaining.includes("Ends in 3 days");
 
   return (
-    <div className={`competition-card p-5 mb-5 transition duration-200 rounded-xl bg-white shadow-md hover:shadow-lg ${
+    <div className={`competition-card p-6 mb-5 transition duration-300 rounded-2xl bg-white shadow-lg hover:shadow-xl border border-gray-100 ${
       isEntered ? 'border-l-4 border-rose-500' : ''
     }`}>
       <div className="flex flex-col md:flex-row">
-        <div className="flex-shrink-0 md:w-1/4 lg:w-1/5 mb-4 md:mb-0">
-          <div 
-            className="w-full h-36 bg-gray-200 rounded-xl bg-center bg-cover shadow-sm"
-            style={{ backgroundImage: `url(${image})` }}
-          ></div>
+        <div className="flex-shrink-0 md:w-1/4 lg:w-1/5 mb-5 md:mb-0">
+          <div className="relative">
+            <div 
+              className="w-full h-44 bg-gray-200 rounded-xl bg-center bg-cover shadow-md overflow-hidden"
+              style={{ backgroundImage: `url(${image})` }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60"></div>
+            </div>
+            
+            {isVerified && (
+              <div className="absolute top-2 left-2 bg-blue-500 text-white text-xs px-2 py-1 rounded-full flex items-center">
+                <i className="fas fa-check-circle mr-1"></i> Verified
+              </div>
+            )}
+            
+            {isEndingSoon && (
+              <div className="absolute top-2 right-2 bg-orange-500 text-white text-xs px-2 py-1 rounded-full flex items-center">
+                <i className="fas fa-clock mr-1"></i> Ending Soon
+              </div>
+            )}
+          </div>
+          
           <div className="flex items-center mt-3 space-x-2">
             <Badge 
               variant="default" 
-              className="bg-indigo-100 text-indigo-600 hover:bg-indigo-200 text-xs font-medium"
+              className="bg-indigo-100 text-indigo-600 hover:bg-indigo-200 text-xs font-medium px-2.5 py-1.5"
             >
-              {platform}
+              <i className={`fa${platform.toLowerCase().includes('instagram') ? 'b' : 's'} fa-${platform.toLowerCase().includes('instagram') ? 'instagram' : platform.toLowerCase()} mr-1`}></i> {platform}
             </Badge>
             <Badge 
               variant="default" 
-              className="bg-amber-100 text-amber-600 hover:bg-amber-200 text-xs font-medium"
+              className="bg-amber-100 text-amber-600 hover:bg-amber-200 text-xs font-medium px-2.5 py-1.5"
             >
-              {type}
+              <i className="fas fa-tag mr-1"></i> {type}
             </Badge>
           </div>
         </div>
@@ -164,9 +181,9 @@ export default function CompetitionCard({
             <div className="flex items-center mt-4">
               <Button 
                 onClick={() => onEnter(id)}
-                className="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white text-sm font-medium px-6 py-2 mr-4 rounded-full transition-all duration-300 shadow-md hover:shadow-lg"
+                className="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white text-sm font-medium px-6 py-2 mr-4 rounded-full transition-all duration-300 shadow-md hover:shadow-lg pulse-glow wiggle-on-hover"
               >
-                <i className="fas fa-trophy mr-2"></i>
+                <i className="fas fa-trophy mr-2 trophy-icon"></i>
                 Enter Now
               </Button>
               <div className="flex items-center text-sm text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
