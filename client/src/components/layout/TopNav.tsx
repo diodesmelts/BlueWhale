@@ -85,13 +85,13 @@ export default function TopNav() {
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-80 p-1">
-                <DropdownMenuLabel className="px-4 py-2 text-lg font-semibold text-gray-800">
+                <DropdownMenuLabel className="px-4 py-2 text-lg font-semibold text-blue-800">
                   Notifications
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="p-4 cursor-pointer focus:bg-rose-50 rounded-lg">
+                <DropdownMenuItem className="p-4 cursor-pointer focus:bg-blue-50 rounded-lg">
                   <div className="flex space-x-3">
-                    <div className="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-500">
+                    <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600">
                       <i className="fas fa-gift"></i>
                     </div>
                     <div className="flex flex-col space-y-1">
@@ -101,9 +101,9 @@ export default function TopNav() {
                     </div>
                   </div>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="p-4 cursor-pointer focus:bg-rose-50 rounded-lg">
+                <DropdownMenuItem className="p-4 cursor-pointer focus:bg-blue-50 rounded-lg">
                   <div className="flex space-x-3">
-                    <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-500">
+                    <div className="w-10 h-10 bg-cyan-100 rounded-full flex items-center justify-center text-cyan-600">
                       <i className="fas fa-check-circle"></i>
                     </div>
                     <div className="flex flex-col space-y-1">
@@ -113,7 +113,7 @@ export default function TopNav() {
                     </div>
                   </div>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="p-4 cursor-pointer focus:bg-rose-50 rounded-lg">
+                <DropdownMenuItem className="p-4 cursor-pointer focus:bg-blue-50 rounded-lg">
                   <div className="flex space-x-3">
                     <div className="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center text-amber-500">
                       <i className="fas fa-trophy"></i>
@@ -127,7 +127,7 @@ export default function TopNav() {
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <div className="p-2">
-                  <Button variant="outline" className="w-full text-sm font-medium text-rose-600 border-rose-200 hover:bg-rose-50">
+                  <Button variant="outline" className="w-full text-sm font-medium text-blue-700 border-blue-200 hover:bg-blue-50">
                     View all notifications
                   </Button>
                 </div>
@@ -138,7 +138,7 @@ export default function TopNav() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <div className="flex items-center space-x-2 cursor-pointer rounded-full pl-2 pr-3 py-1 transition-all hover:bg-white/10">
-                  <Avatar className="h-8 w-8 shadow-md bg-white text-rose-600">
+                  <Avatar className="h-8 w-8 shadow-md bg-white text-blue-800 border-2 border-cyan-300">
                     <span className="text-sm font-bold">JS</span>
                   </Avatar>
                   <span className="text-sm font-medium hidden md:block text-white">
@@ -152,17 +152,17 @@ export default function TopNav() {
                   <div className="text-xs text-gray-500">john.smith@example.com</div>
                 </div>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="py-2 cursor-pointer focus:bg-rose-50 rounded-md">
-                  <i className="fas fa-user mr-2 text-gray-500"></i> View Profile
+                <DropdownMenuItem className="py-2 cursor-pointer focus:bg-blue-50 rounded-md">
+                  <i className="fas fa-user mr-2 text-blue-600"></i> View Profile
                 </DropdownMenuItem>
-                <DropdownMenuItem className="py-2 cursor-pointer focus:bg-rose-50 rounded-md">
-                  <i className="fas fa-cog mr-2 text-gray-500"></i> Settings
+                <DropdownMenuItem className="py-2 cursor-pointer focus:bg-blue-50 rounded-md">
+                  <i className="fas fa-cog mr-2 text-blue-600"></i> Settings
                 </DropdownMenuItem>
-                <DropdownMenuItem className="py-2 cursor-pointer focus:bg-rose-50 rounded-md">
+                <DropdownMenuItem className="py-2 cursor-pointer focus:bg-blue-50 rounded-md">
                   <i className="fas fa-crown mr-2 text-amber-500"></i> Upgrade to Premium
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="py-2 cursor-pointer focus:bg-rose-50 rounded-md text-rose-600">
+                <DropdownMenuItem className="py-2 cursor-pointer focus:bg-blue-50 rounded-md text-blue-700">
                   <i className="fas fa-sign-out-alt mr-2"></i> Logout
                 </DropdownMenuItem>
               </DropdownMenuContent>
