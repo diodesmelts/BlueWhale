@@ -9,6 +9,7 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
+import sharp from "sharp";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Set up authentication
@@ -695,11 +696,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
-  // Image upload endpoint
-  app.post('/api/upload-image', isAdmin, upload.single('file'), (req, res) => {
+  // Image upload endpoint with Sharp image processing
+  app.post('/api/upload-image', isAdmin, upload.single('file'), async (req, res) => {
     try {
       if (!req.file) {
         return res.status(400).json({ message: 'No file uploaded' });
+      }
+      
+      const inputPath = req.file.path;
+      const outputPath = inputPath; // Overwrite the original file
+      
+      // Process image - resize to 700x700 square
+      try {
+        await sharp(inputPath)
+          .resize({
+            width: 700,
+            height: 700,
+            fit: sharp.fit.cover, // This crops the image to make it square
+            position: sharp.strategy.attention // Focus on the most interesting part
+          })
+          .toFile(outputPath + '.processed');
+          
+        // Replace the original file with the processed one
+        fs.unlinkSync(inputPath);
+        fs.renameSync(outputPath + '.processed', outputPath);
+        
+        console.log(`Image processed successfully: ${req.file.filename}`);
+      } catch (processError) {
+        console.error('Image processing error:', processError);
+        // If processing fails, we still return the original image
       }
       
       // Construct the URL to the uploaded file
