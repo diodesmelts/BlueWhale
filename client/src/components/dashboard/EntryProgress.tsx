@@ -43,14 +43,16 @@ export default function EntryProgress({ steps, progress, onComplete, competition
   
   // If steps are already complete and button is clicked, 
   // automatically open ticket modal on render
+  // Using the fixed competition object with ticket price
   useEffect(() => {
-    if (isFullyCompleted && isProcessing && competition?.ticketPrice && competition.ticketPrice > 0) {
+    if (isFullyCompleted && isProcessing) {
+      // Always show ticket modal after short delay when processing is complete
       const timer = setTimeout(() => {
         openTicketModal();
       }, 800);
       return () => clearTimeout(timer);
     }
-  }, [isFullyCompleted, isProcessing, competition?.ticketPrice]);
+  }, [isFullyCompleted, isProcessing]);
 
   const handleComplete = () => {
     setIsProcessing(true);
@@ -58,14 +60,14 @@ export default function EntryProgress({ steps, progress, onComplete, competition
     // Call the onComplete function which will make the API request
     onComplete();
     
-    // If entry is complete and competition is ticket-based, show ticket modal
-    if (isFullyCompleted && competition?.ticketPrice && competition.ticketPrice > 0) {
+    // If entry is complete, show ticket modal (we're forcing this for now)
+    if (isFullyCompleted) {
       // Use a timeout to ensure UI updates after API request completes
       setTimeout(() => {
         openTicketModal();
       }, 800);
     } else {
-      // For non-ticket competitions or when entry is not yet completed
+      // For incomplete entries, just hide the processing indicator
       setTimeout(() => {
         setIsProcessing(false);
       }, 800);
@@ -76,21 +78,29 @@ export default function EntryProgress({ steps, progress, onComplete, competition
   
   const handlePurchaseTickets = (ticketCount: number) => {
     // If competition doesn't exist or has no ID, just close the modal
-    if (!competition?.id) {
+    if (!competitionWithTicket?.id) {
       setShowTicketModal(false);
       return;
     }
     
+    // Log purchase attempt
+    console.log('Purchasing', ticketCount, 'tickets for competition', competitionWithTicket);
+    
     // Use apiRequest instead of fetch for consistency
-    apiRequest('POST', `/api/competitions/${competition.id}/enter`, { ticketCount })
+    apiRequest('POST', `/api/competitions/${competitionWithTicket.id}/enter`, { 
+      ticketCount,
+      ticketPrice: competitionWithTicket.ticketPrice, // Send the ticket price we've set
+    })
       .then(res => {
         if (!res.ok) throw new Error('Failed to purchase tickets');
         return res.json();
       })
       .then(data => {
+        // Show success message with pricing
+        const totalPrice = (competitionWithTicket.ticketPrice * ticketCount) / 100; // Convert cents to dollars
         toast({
           title: 'Tickets Purchased',
-          description: `You have successfully purchased ${ticketCount} ticket${ticketCount > 1 ? 's' : ''}.`,
+          description: `You have successfully purchased ${ticketCount} ticket${ticketCount > 1 ? 's' : ''} for $${totalPrice.toFixed(2)}.`,
         });
         setShowTicketModal(false);
         
@@ -99,7 +109,7 @@ export default function EntryProgress({ steps, progress, onComplete, competition
           // Use React Query's cache invalidation in the parent component if possible
           // For now trigger a global event that parent components can listen to
           const event = new CustomEvent('ticket-purchase-complete', { 
-            detail: { competitionId: competition.id } 
+            detail: { competitionId: competitionWithTicket.id } 
           });
           window.dispatchEvent(event);
           
@@ -120,18 +130,18 @@ export default function EntryProgress({ steps, progress, onComplete, competition
 
   return (
     <>
-      {/* Only show ticket modal if competition data is provided */}
-      {competition && (
+      {/* Show ticket modal using our modified competition object with ticket price */}
+      {competitionWithTicket && (
         <TicketPurchaseModal
           isOpen={showTicketModal}
           onClose={() => setShowTicketModal(false)}
           onPurchase={handlePurchaseTickets}
           competition={{
-            title: competition.title,
-            ticketPrice: competition.ticketPrice,
-            maxTicketsPerUser: competition.maxTicketsPerUser,
-            totalTickets: competition.totalTickets,
-            soldTickets: competition.soldTickets
+            title: competitionWithTicket.title,
+            ticketPrice: competitionWithTicket.ticketPrice,
+            maxTicketsPerUser: competitionWithTicket.maxTicketsPerUser,
+            totalTickets: competitionWithTicket.totalTickets,
+            soldTickets: competitionWithTicket.soldTickets
           }}
         />
       )}
@@ -191,7 +201,7 @@ export default function EntryProgress({ steps, progress, onComplete, competition
               Processing...
             </>
           ) : (
-            isFullyCompleted ? (competition?.ticketPrice && competition.ticketPrice > 0 ? 'Get Tickets' : 'View Competition') : 'Complete Entry'
+            isFullyCompleted ? 'Get Tickets' : 'Complete Entry'
           )}
         </Button>
       </div>
