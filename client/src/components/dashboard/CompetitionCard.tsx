@@ -86,15 +86,9 @@ export default function CompetitionCard({
           <div className="flex items-center mt-3 space-x-2">
             <Badge 
               variant="default" 
-              className="bg-indigo-100 text-indigo-600 hover:bg-indigo-200 text-xs font-medium px-2.5 py-1.5"
+              className="bg-emerald-100 text-emerald-600 hover:bg-emerald-200 text-xs font-medium px-2.5 py-1.5"
             >
-              <i className={`fa${platform.toLowerCase().includes('instagram') ? 'b' : 's'} fa-${platform.toLowerCase().includes('instagram') ? 'instagram' : platform.toLowerCase()} mr-1`}></i> {platform}
-            </Badge>
-            <Badge 
-              variant="default" 
-              className="bg-amber-100 text-amber-600 hover:bg-amber-200 text-xs font-medium px-2.5 py-1.5"
-            >
-              <i className="fas fa-tag mr-1"></i> {type}
+              <i className="fas fa-gift mr-1"></i> Prize
             </Badge>
           </div>
         </div>
