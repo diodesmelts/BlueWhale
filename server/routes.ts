@@ -4,10 +4,14 @@ import { storage } from "./storage";
 import { z } from "zod";
 import { insertCompetitionSchema } from "@shared/schema";
 import { setupAuth } from "./auth";
+import { setupPaymentRoutes } from "./payments";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Set up authentication
   const { isAuthenticated, isAdmin } = setupAuth(app);
+  
+  // Set up payment routes
+  setupPaymentRoutes(app);
   
   // Special development route to make SDK an admin user (would be removed in production)
   app.get("/api/dev/make-sdk-admin", async (req, res) => {
@@ -171,12 +175,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
             endDate: competition.endDate.toISOString(),
             entrySteps: competition.entrySteps,
             isVerified: competition.isVerified,
-            createdAt: competition.createdAt.toISOString(),
+            createdAt: competition.createdAt ? competition.createdAt.toISOString() : new Date().toISOString(),
             isEntered: true,
             entryProgress: Array(competition.entrySteps.length).fill(1), // All completed since won
             isBookmarked: true,
             isLiked: false,
-            winDate: win.winDate.toISOString(),
+            winDate: win.winDate ? win.winDate.toISOString() : new Date().toISOString(),
             claimByDate: win.claimByDate.toISOString(),
             prizeReceived: win.prizeReceived,
             receivedDate: win.receivedDate?.toISOString()

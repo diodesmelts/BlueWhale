@@ -4,7 +4,7 @@ import { storage } from "./storage";
 
 // Initialize Stripe with the secret key
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-  apiVersion: "2025-03-31.basil", // Use the latest API version
+  apiVersion: "2023-10-16", // Use a stable API version
 });
 
 export interface PaymentMetadata {
@@ -133,7 +133,7 @@ export function setupPaymentRoutes(app: Express) {
           last4: pm.card?.last4,
           expMonth: pm.card?.exp_month,
           expYear: pm.card?.exp_year,
-          isDefault: pm.metadata.isDefault === "true"
+          isDefault: pm.metadata?.isDefault === "true"
         }))
       });
     } catch (error: any) {
