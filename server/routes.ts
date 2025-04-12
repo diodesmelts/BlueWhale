@@ -272,11 +272,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
-  // Enter competition
+  // Enter competition or purchase tickets
   app.post("/api/competitions/:id/enter", async (req, res) => {
     try {
       const competitionId = parseInt(req.params.id);
-      const userId = 1; // For demo purposes
+      const userId = req.isAuthenticated() ? req.user!.id : 1; // Use authenticated user if available
+      const ticketCount = req.body.ticketCount ? parseInt(req.body.ticketCount) : 1;
       
       // Check if competition exists
       const competition = await storage.getCompetition(competitionId);
@@ -284,24 +285,91 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "Competition not found" });
       }
       
+      // Check for available tickets if this is a ticket-based competition
+      if (competition.ticketPrice && competition.ticketPrice > 0) {
+        // Check if competition has available tickets
+        if (competition.soldTickets && competition.totalTickets && 
+            competition.soldTickets >= competition.totalTickets) {
+          return res.status(400).json({ message: "Competition is sold out" });
+        }
+        
+        // Check if user is trying to buy more than allowed
+        if (competition.maxTicketsPerUser && ticketCount > competition.maxTicketsPerUser) {
+          return res.status(400).json({ 
+            message: `You can only purchase up to ${competition.maxTicketsPerUser} tickets`
+          });
+        }
+        
+        // Check available tickets
+        if (competition.totalTickets && competition.soldTickets) {
+          const remainingTickets = competition.totalTickets - competition.soldTickets;
+          if (ticketCount > remainingTickets) {
+            return res.status(400).json({ 
+              message: `Only ${remainingTickets} tickets remaining`
+            });
+          }
+        }
+      }
+      
       // Check if already entered
       const existingEntry = await storage.getUserEntry(userId, competitionId);
+      
       if (existingEntry) {
+        // If this is a ticket purchase (not just a regular entry), redirect to payment route
+        if (competition.ticketPrice && competition.ticketPrice > 0 && ticketCount > 0) {
+          // Return existing entry for now - payment happens in separate endpoint
+          return res.status(200).json({
+            ...existingEntry,
+            message: "Continue to payment to purchase additional tickets"
+          });
+        }
+        
         return res.status(400).json({ message: "Already entered this competition" });
       }
       
-      // Create entry with initial progress
+      // For free entries or initial entry before payment
       const entryProgress = Array(competition.entrySteps.length).fill(0);
+      
+      // If this is a paid ticket entry, only create a placeholder entry
+      // The actual ticket counts will be updated after payment
       const entry = await storage.createUserEntry({
         userId,
         competitionId,
         entryProgress,
         isBookmarked: false,
-        isLiked: false
+        isLiked: false,
+        ticketCount: competition.ticketPrice && competition.ticketPrice > 0 ? 0 : ticketCount,
+        ticketNumbers: [],
+        paymentStatus: competition.ticketPrice && competition.ticketPrice > 0 ? "pending" : "none",
+        totalPaid: 0
       });
+      
+      // Update competition entries count if this is a free entry
+      if (!competition.ticketPrice || competition.ticketPrice === 0) {
+        await storage.updateCompetition(competitionId, {
+          entries: (competition.entries || 0) + 1,
+          soldTickets: (competition.soldTickets || 0) + ticketCount
+        });
+        
+        // For free entries, generate ticket numbers
+        if (ticketCount > 0) {
+          const startTicketNumber = (competition.soldTickets || 0) - ticketCount + 1;
+          const ticketNumbers = Array.from(
+            { length: ticketCount }, 
+            (_, i) => startTicketNumber + i
+          );
+          
+          await storage.updateUserEntry(entry.id, {
+            ticketNumbers
+          });
+          
+          entry.ticketNumbers = ticketNumbers;
+        }
+      }
       
       res.status(201).json(entry);
     } catch (error) {
+      console.error("Failed to enter competition:", error);
       res.status(500).json({ message: "Failed to enter competition" });
     }
   });

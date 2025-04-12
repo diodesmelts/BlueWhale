@@ -10,8 +10,9 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
 export interface PaymentMetadata {
   userId: number;
   competitionId?: number;
-  type: "wallet_funding" | "entry_fee" | "premium_upgrade";
+  type: "wallet_funding" | "entry_fee" | "premium_upgrade" | "ticket_purchase";
   amount: number;
+  ticketCount?: number;
 }
 
 export function setupPaymentRoutes(app: Express) {
@@ -168,7 +169,7 @@ export function setupPaymentRoutes(app: Express) {
 
       // Create the payment
       const paymentIntent = await stripe.paymentIntents.create({
-        amount: competition.entryFee ? competition.entryFee * 100 : 0, // convert dollars to cents
+        amount: competition.ticketPrice ? competition.ticketPrice : 0, // already in cents
         currency: "usd",
         customer: user.stripeCustomerId,
         payment_method: paymentMethodId,
@@ -271,6 +272,200 @@ export function setupPaymentRoutes(app: Express) {
       res.status(500).json({ error: error.message });
     }
   });
+
+  // Purchase competition tickets
+  app.post("/api/payments/purchase-tickets", ensureAuthenticated, async (req, res) => {
+    try {
+      const { competitionId, ticketCount, paymentMethodId } = req.body;
+      const userId = req.user!.id;
+      
+      // Validate inputs
+      if (!competitionId || !ticketCount || ticketCount < 1) {
+        return res.status(400).json({ error: "Invalid request parameters" });
+      }
+      
+      // Get the competition
+      const competition = await storage.getCompetition(Number(competitionId));
+      if (!competition) {
+        return res.status(404).json({ error: "Competition not found" });
+      }
+      
+      // Check if competition has available tickets
+      if (competition.soldTickets >= competition.totalTickets) {
+        return res.status(400).json({ error: "Competition is sold out" });
+      }
+      
+      // Check if user is trying to buy more than allowed
+      if (ticketCount > competition.maxTicketsPerUser) {
+        return res.status(400).json({ 
+          error: `You can only purchase up to ${competition.maxTicketsPerUser} tickets`
+        });
+      }
+      
+      // Check available tickets
+      const remainingTickets = competition.totalTickets - competition.soldTickets;
+      if (ticketCount > remainingTickets) {
+        return res.status(400).json({ 
+          error: `Only ${remainingTickets} tickets remaining`
+        });
+      }
+      
+      // Get user entry if it exists
+      let userEntry = await storage.getUserEntry(userId, competition.id);
+      
+      // Check if user already has some tickets and would exceed max
+      if (userEntry && userEntry.ticketCount) {
+        const totalTickets = userEntry.ticketCount + ticketCount;
+        if (totalTickets > competition.maxTicketsPerUser) {
+          return res.status(400).json({ 
+            error: `You already have ${userEntry.ticketCount} tickets. Maximum allowed is ${competition.maxTicketsPerUser}`
+          });
+        }
+      }
+      
+      // Get user for Stripe customer ID
+      const user = await storage.getUser(userId);
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+      
+      // Calculate total amount
+      const totalAmount = competition.ticketPrice * ticketCount;
+      
+      // If this is a free competition, just create/update the entry without payment
+      if (competition.ticketPrice === 0) {
+        await handleSuccessfulTicketPurchase(
+          userId, 
+          competition, 
+          ticketCount, 
+          userEntry, 
+          "free_entry",
+          totalAmount
+        );
+        
+        return res.json({ 
+          success: true, 
+          message: `Successfully entered with ${ticketCount} free ticket${ticketCount > 1 ? 's' : ''}`,
+          ticketCount,
+          ticketNumbers: userEntry?.ticketNumbers || []
+        });
+      }
+      
+      // Make sure user has a Stripe customer ID
+      if (!user.stripeCustomerId) {
+        // Create a new customer
+        const customer = await stripe.customers.create({
+          email: user.email,
+          name: user.username,
+          metadata: {
+            userId: user.id.toString()
+          }
+        });
+        
+        // Update the user with the Stripe customer ID
+        await storage.updateUser(userId, {
+          stripeCustomerId: customer.id
+        });
+        
+        user.stripeCustomerId = customer.id;
+      }
+      
+      // Create the payment
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: totalAmount, // amount in cents
+        currency: "usd",
+        customer: user.stripeCustomerId,
+        payment_method: paymentMethodId,
+        off_session: true,
+        confirm: true,
+        metadata: {
+          userId: userId.toString(),
+          competitionId: competition.id.toString(),
+          type: "ticket_purchase",
+          ticketCount: ticketCount.toString()
+        },
+        description: `${ticketCount} ticket${ticketCount > 1 ? 's' : ''} for ${competition.title}`
+      });
+      
+      // If payment is successful, create/update the entry
+      if (paymentIntent.status === "succeeded") {
+        await handleSuccessfulTicketPurchase(
+          userId, 
+          competition, 
+          ticketCount, 
+          userEntry, 
+          paymentIntent.id,
+          totalAmount
+        );
+        
+        return res.json({ 
+          success: true, 
+          message: "Payment successful and tickets purchased"
+        });
+      } else {
+        return res.status(400).json({ error: "Payment failed", status: paymentIntent.status });
+      }
+    } catch (error: any) {
+      console.error("Ticket purchase error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+  
+  // Helper function to handle ticket purchase after successful payment
+  async function handleSuccessfulTicketPurchase(
+    userId: number,
+    competition: any,
+    ticketCount: number,
+    existingEntry: any,
+    paymentIntentId: string,
+    amountPaid: number
+  ) {
+    // Generate ticket numbers (sequential from last sold ticket)
+    const startTicketNumber = competition.soldTickets + 1;
+    const ticketNumbers = Array.from(
+      { length: ticketCount }, 
+      (_, i) => startTicketNumber + i
+    );
+    
+    // Update competition with new sold tickets count
+    await storage.updateCompetition(competition.id, {
+      soldTickets: competition.soldTickets + ticketCount,
+      entries: competition.entries + (existingEntry ? 0 : 1) // Only increment entries if new user
+    });
+    
+    if (existingEntry) {
+      // Update existing entry
+      const updatedTicketCount = (existingEntry.ticketCount || 0) + ticketCount;
+      const updatedTicketNumbers = [
+        ...(existingEntry.ticketNumbers || []),
+        ...ticketNumbers
+      ];
+      const updatedTotalPaid = (existingEntry.totalPaid || 0) + amountPaid;
+      
+      await storage.updateUserEntry(existingEntry.id, {
+        ticketCount: updatedTicketCount,
+        ticketNumbers: updatedTicketNumbers,
+        paymentIntentId: paymentIntentId,
+        paymentStatus: "completed",
+        totalPaid: updatedTotalPaid
+      });
+    } else {
+      // Create new entry
+      const entryProgress = Array(competition.entrySteps.length).fill(0);
+      await storage.createUserEntry({
+        userId,
+        competitionId: competition.id,
+        entryProgress,
+        isBookmarked: false,
+        isLiked: false,
+        ticketCount,
+        ticketNumbers,
+        paymentIntentId,
+        paymentStatus: "completed",
+        totalPaid: amountPaid
+      });
+    }
+  }
 
   // Fund wallet (add credits to user's wallet)
   app.post("/api/payments/fund-wallet", ensureAuthenticated, async (req, res) => {

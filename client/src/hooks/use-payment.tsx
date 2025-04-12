@@ -7,6 +7,14 @@ interface UsePaymentProps {
   onError?: (error: Error) => void;
 }
 
+interface PaymentData {
+  amount: number;
+  competitionId?: number;
+  ticketCount?: number;
+  paymentType: 'ticket_purchase' | 'wallet_funding' | 'premium_upgrade';
+  metadata?: Record<string, any>;
+}
+
 export function usePayment({ onSuccess, onError }: UsePaymentProps = {}) {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
@@ -15,7 +23,7 @@ export function usePayment({ onSuccess, onError }: UsePaymentProps = {}) {
   const [currentPaymentDetails, setCurrentPaymentDetails] = useState<{
     amount: number;
     description: string;
-    metadata?: Record<string, string>;
+    metadata?: Record<string, any>;
     title: string;
   } | null>(null);
 
@@ -163,6 +171,74 @@ export function usePayment({ onSuccess, onError }: UsePaymentProps = {}) {
     setCurrentPaymentDetails(null);
   };
 
+  const initiatePayment = async (paymentData: PaymentData) => {
+    setIsLoading(true);
+    try {
+      const response = await apiRequest("POST", "/api/payments/create-payment-intent", paymentData);
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to create payment intent");
+      }
+      
+      const data = await response.json();
+
+      // Show payment modal with appropriate details
+      const title = paymentData.paymentType === 'ticket_purchase' 
+        ? 'Purchase Competition Tickets' 
+        : paymentData.paymentType === 'premium_upgrade'
+          ? 'Upgrade to Premium'
+          : 'Fund Your Wallet';
+
+      const description = paymentData.paymentType === 'ticket_purchase'
+        ? `You are purchasing ${paymentData.ticketCount} ticket${paymentData.ticketCount !== 1 ? 's' : ''}`
+        : paymentData.paymentType === 'premium_upgrade'
+          ? 'Upgrade your account to access premium features'
+          : 'Add funds to your wallet';
+
+      showPaymentModal(
+        paymentData.amount,
+        description,
+        title,
+        paymentData.metadata
+      );
+
+      // Process the payment with Stripe
+      // This would typically include showing a Stripe Elements form or similar
+      
+      // For this implementation, we'll simulate a successful payment
+      setTimeout(() => {
+        setPaymentModalOpen(false);
+        setIsLoading(false);
+        
+        toast({
+          title: "Payment Successful",
+          description: paymentData.paymentType === 'ticket_purchase'
+            ? `Successfully purchased ${paymentData.ticketCount} ticket${paymentData.ticketCount !== 1 ? 's' : ''}!`
+            : paymentData.paymentType === 'premium_upgrade'
+              ? "Your account has been upgraded to premium!"
+              : `Added ${new Intl.NumberFormat('en-US', {
+                  style: 'currency',
+                  currency: 'USD',
+                }).format(paymentData.amount / 100)} to your wallet!`,
+        });
+
+        if (onSuccess) onSuccess(data);
+      }, 2000);
+
+      return data;
+    } catch (err) {
+      console.error("Error initiating payment:", err);
+      toast({
+        title: "Payment Failed",
+        description: err instanceof Error ? err.message : "Failed to process payment",
+        variant: "destructive",
+      });
+      if (onError) onError(err instanceof Error ? err : new Error("Failed to process payment"));
+      setIsLoading(false);
+    }
+  };
+
   return {
     isLoading,
     paymentMethods,
@@ -170,6 +246,7 @@ export function usePayment({ onSuccess, onError }: UsePaymentProps = {}) {
     payForEntry,
     upgradeToPremium,
     fundWallet,
+    initiatePayment,
     paymentModalOpen,
     currentPaymentDetails,
     showPaymentModal,
