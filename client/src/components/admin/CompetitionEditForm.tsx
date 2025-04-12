@@ -14,7 +14,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 
-// Schema with proper date transformation
+// Simple schema - date handling is done on the server
 const competitionUpdateSchema = z.object({
   title: z.string().min(5, "Title must be at least 5 characters"),
   organizer: z.string().min(2, "Organizer must be at least 2 characters"),
@@ -25,17 +25,8 @@ const competitionUpdateSchema = z.object({
   prize: z.coerce.number().min(1, "Prize must be at least £1"),
   entries: z.coerce.number().default(0),
   eligibility: z.string().min(1, "Eligibility is required"),
-  // Parse date string to ISO string for proper date handling
-  endDate: z.string()
-    .min(1, "End date is required")
-    .transform(dateStr => {
-      // Create a date object from the string and ensure it's valid
-      const date = new Date(dateStr);
-      if (isNaN(date.getTime())) {
-        throw new Error("Invalid date format");
-      }
-      return date.toISOString();
-    }),
+  // Keep endDate as a simple string - server will validate and convert
+  endDate: z.string().min(1, "End date is required"),
   entrySteps: z.array(
     z.object({
       id: z.number(),

@@ -117,9 +117,48 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.put("/api/admin/competitions/:id", isAdmin, async (req, res) => {
     try {
       const competitionId = parseInt(req.params.id);
-      const updateSchema = insertCompetitionSchema.partial();
       
+      // Custom update schema with specific handling for endDate
+      const updateSchema = z.object({
+        title: z.string().optional(),
+        organizer: z.string().optional(),
+        description: z.string().optional(),
+        image: z.string().optional(),
+        platform: z.string().optional(),
+        type: z.string().optional(),
+        prize: z.number().optional(),
+        ticketPrice: z.number().optional(),
+        maxTicketsPerUser: z.number().optional(),
+        totalTickets: z.number().optional(),
+        soldTickets: z.number().optional(),
+        entries: z.number().optional(),
+        eligibility: z.string().optional(),
+        // Accept string for date and convert to Date object
+        endDate: z.string()
+          .transform(dateStr => {
+            // Create a Date object from the string
+            const date = new Date(dateStr);
+            if (isNaN(date.getTime())) {
+              throw new Error("Invalid date format");
+            }
+            return date;
+          })
+          .optional(),
+        entrySteps: z.array(
+          z.object({
+            id: z.number(),
+            description: z.string(),
+            link: z.string().optional()
+          })
+        ).optional(),
+        isVerified: z.boolean().optional(),
+        isDeleted: z.boolean().optional(),
+      });
+      
+      console.log('Request body:', req.body);
       const validatedData = updateSchema.parse(req.body);
+      console.log('Validated data:', validatedData);
+      
       const competition = await storage.updateCompetition(competitionId, validatedData);
       
       if (!competition) {
@@ -128,10 +167,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.status(200).json(competition);
     } catch (error) {
+      console.error('Competition update error:', error);
       if (error instanceof z.ZodError) {
         res.status(400).json({ message: "Validation error", errors: error.errors });
       } else {
-        res.status(500).json({ message: "Failed to update competition" });
+        res.status(500).json({ message: "Failed to update competition", error: error.message });
       }
     }
   });
