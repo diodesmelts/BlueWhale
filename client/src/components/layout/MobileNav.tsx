@@ -1,22 +1,39 @@
 import { Link, useLocation } from "wouter";
 import { useAdmin } from "@/hooks/use-admin";
+import { useAuth } from "@/hooks/use-auth";
 
 export default function MobileNav() {
   const [location] = useLocation();
   const { isAdmin } = useAdmin();
+  const { user } = useAuth();
   
-  // Base navigation items
-  const baseNavItems = [
+  // Public navigation items available to all users
+  const publicNavItems = [
     { icon: "fas fa-home", label: "Home", path: "/" },
     { icon: "fas fa-trophy", label: "Competitions", path: "/competitions" },
+    { icon: "fas fa-chart-line", label: "Leaderboard", path: "/leaderboard" },
+  ];
+  
+  // User-specific navigation items only when logged in
+  const userNavItems = user ? [
     { icon: "fas fa-clipboard-check", label: "Entries", path: "/my-entries" },
     { icon: "fas fa-medal", label: "Wins", path: "/my-wins" },
-  ];
-
+  ] : [];
+  
+  // Authentication navigation item (login/profile)
+  const authNavItem = user
+    ? { icon: "fas fa-user", label: "Profile", path: "/profile" }
+    : { icon: "fas fa-sign-in-alt", label: "Login", path: "/auth" };
+  
+  // Build navigation items
+  let navItems = [...publicNavItems, ...userNavItems];
+  
   // Add admin or profile as the last icon
-  const navItems = isAdmin 
-    ? [...baseNavItems, { icon: "fas fa-shield-alt", label: "Admin", path: "/admin" }]
-    : [...baseNavItems, { icon: "fas fa-user", label: "Profile", path: "/profile" }];
+  if (user && isAdmin) {
+    navItems.push({ icon: "fas fa-shield-alt", label: "Admin", path: "/admin" });
+  } else {
+    navItems.push(authNavItem);
+  }
 
   const isActive = (path: string) => location === path;
 

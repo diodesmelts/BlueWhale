@@ -9,26 +9,40 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Bell, Crown, ShieldCheck } from "lucide-react";
+import { Bell, Crown, LogIn, User } from "lucide-react";
 import { useAdmin } from "@/hooks/use-admin";
+import { useAuth } from "@/hooks/use-auth";
 
 export default function TopNav() {
-  const [location] = useLocation();
+  const [location, setLocation] = useLocation();
   const { isAdmin } = useAdmin();
+  const { user, logoutUser, isLoading } = useAuth();
 
-  // Base navigation items
-  const baseNavItems = [
+  // Public navigation items available to all users
+  const publicNavItems = [
     { icon: "fas fa-home", label: "Dashboard", path: "/" },
     { icon: "fas fa-trophy", label: "Competitions", path: "/competitions" },
-    { icon: "fas fa-clipboard-check", label: "My Entries", path: "/my-entries" },
-    { icon: "fas fa-medal", label: "My Wins", path: "/my-wins" },
     { icon: "fas fa-chart-line", label: "Leaderboard", path: "/leaderboard" },
   ];
-
+  
+  // User-specific navigation items available only when logged in
+  const userNavItems = user ? [
+    { icon: "fas fa-clipboard-check", label: "My Entries", path: "/my-entries" },
+    { icon: "fas fa-medal", label: "My Wins", path: "/my-wins" },
+  ] : [];
+  
+  // Combine public and user items
+  let navItems = [...publicNavItems, ...userNavItems];
+  
   // Add admin link if user is admin
-  const navItems = isAdmin 
-    ? [...baseNavItems, { icon: "fas fa-shield-alt", label: "Admin", path: "/admin" }]
-    : baseNavItems;
+  if (user && isAdmin) {
+    navItems.push({ icon: "fas fa-shield-alt", label: "Admin", path: "/admin" });
+  }
+
+  const handleLogout = async () => {
+    await logoutUser();
+    setLocation('/');
+  };
 
   const isActive = (path: string) => location === path;
 
@@ -142,39 +156,64 @@ export default function TopNav() {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            {/* Profile Dropdown */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <div className="flex items-center space-x-2 cursor-pointer rounded-full pl-2 pr-3 py-1 transition-all hover:bg-white/10">
-                  <Avatar className="h-8 w-8 shadow-md bg-white text-blue-800 border-2 border-cyan-300">
-                    <span className="text-sm font-bold">JS</span>
-                  </Avatar>
-                  <span className="text-sm font-medium hidden md:block text-white">
-                    John Smith
-                  </span>
-                </div>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56 p-1">
-                <div className="px-2 py-2.5 mb-1">
-                  <div className="font-medium">John Smith</div>
-                  <div className="text-xs text-gray-500">john.smith@example.com</div>
-                </div>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem className="py-2 cursor-pointer focus:bg-blue-50 rounded-md">
-                  <i className="fas fa-user mr-2 text-blue-600"></i> View Profile
-                </DropdownMenuItem>
-                <DropdownMenuItem className="py-2 cursor-pointer focus:bg-blue-50 rounded-md">
-                  <i className="fas fa-cog mr-2 text-blue-600"></i> Settings
-                </DropdownMenuItem>
-                <DropdownMenuItem className="py-2 cursor-pointer focus:bg-blue-50 rounded-md">
-                  <i className="fas fa-crown mr-2 text-amber-500"></i> Upgrade to Premium
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem className="py-2 cursor-pointer focus:bg-blue-50 rounded-md text-blue-700">
-                  <i className="fas fa-sign-out-alt mr-2"></i> Logout
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {/* Auth Button or Profile Dropdown */}
+            {user ? (
+              // User is logged in - show profile dropdown
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <div className="flex items-center space-x-2 cursor-pointer rounded-full pl-2 pr-3 py-1 transition-all hover:bg-white/10">
+                    <Avatar className="h-8 w-8 shadow-md bg-white text-blue-800 border-2 border-cyan-300">
+                      <span className="text-sm font-bold">
+                        {user.username.substring(0, 2).toUpperCase()}
+                      </span>
+                    </Avatar>
+                    <span className="text-sm font-medium hidden md:block text-white">
+                      {user.username}
+                    </span>
+                  </div>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56 p-1">
+                  <div className="px-2 py-2.5 mb-1">
+                    <div className="font-medium">{user.username}</div>
+                    <div className="text-xs text-gray-500">{user.email}</div>
+                    {isAdmin && (
+                      <div className="mt-1 flex items-center">
+                        <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
+                          <i className="fas fa-shield-alt mr-1"></i> Admin
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem className="py-2 cursor-pointer focus:bg-blue-50 rounded-md">
+                    <i className="fas fa-user mr-2 text-blue-600"></i> View Profile
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="py-2 cursor-pointer focus:bg-blue-50 rounded-md">
+                    <i className="fas fa-cog mr-2 text-blue-600"></i> Settings
+                  </DropdownMenuItem>
+                  {!user.isPremium && (
+                    <DropdownMenuItem className="py-2 cursor-pointer focus:bg-blue-50 rounded-md">
+                      <i className="fas fa-crown mr-2 text-amber-500"></i> Upgrade to Premium
+                    </DropdownMenuItem>
+                  )}
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem 
+                    className="py-2 cursor-pointer focus:bg-blue-50 rounded-md text-blue-700"
+                    onClick={handleLogout}
+                  >
+                    <i className="fas fa-sign-out-alt mr-2"></i> Logout
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              // User is not logged in - show login button
+              <Link href="/auth">
+                <Button variant="outline" className="flex items-center transition-all text-white border-white/30 hover:bg-white/10">
+                  <LogIn className="h-4 w-4 mr-1.5" />
+                  <span className="text-sm font-medium">Sign In</span>
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
       </div>
