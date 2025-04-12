@@ -262,6 +262,7 @@ export default function CompetitionCard({
                     steps={entrySteps}
                     progress={entryProgress}
                     onComplete={() => onCompleteEntry(id)}
+                    competition={competition}
                   />
                 </div>
               </div>
