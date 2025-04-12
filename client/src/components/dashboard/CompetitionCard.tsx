@@ -90,7 +90,7 @@ export default function CompetitionCard({
           "Purchase Tickets",
           { 
             competitionId: id.toString(),
-            ticketCount: ticketCount.toString()
+            ticketCount: String(ticketCount)
           }
         );
       } else {
