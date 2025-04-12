@@ -63,20 +63,11 @@ export default function EntryProgress({ steps, progress, onComplete, competition
     return () => window.removeEventListener('keydown', handleEscKey);
   }, [showTicketModal]);
   
-  // If steps are fully completed, show the ticket modal ONLY if user hasn't closed it
-  useEffect(() => {
-    // Only show modal if: 
-    // 1. Steps are complete
-    // 2. Modal is not already showing
-    // 3. User hasn't manually closed it
-    if (isFullyCompleted && !showTicketModal && !userClosedModal) {
-      const timer = setTimeout(() => {
-        setShowTicketModal(true);
-        setIsProcessing(false);
-      }, 300);
-      return () => clearTimeout(timer);
-    }
-  }, [isFullyCompleted, showTicketModal, userClosedModal]);
+  // We're removing the auto-open effect completely
+  // The modal will ONLY open when:
+  // 1. User completes all steps via handleComplete() function
+  // 2. User clicks "Get Tickets" button manually
+  // This ensures modal never appears unless explicitly requested by user
   
   const handleComplete = () => {
     setIsProcessing(true);
