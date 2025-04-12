@@ -3,25 +3,12 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { z } from "zod";
 import { insertCompetitionSchema } from "@shared/schema";
-
-// Admin middleware
-const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    // For demo purposes, we'll use user ID 1
-    const userId = 1;
-    const user = await storage.getUser(userId);
-    
-    if (user && user.isAdmin) {
-      next();
-    } else {
-      res.status(403).json({ message: "Unauthorized: Admin access required" });
-    }
-  } catch (error) {
-    res.status(500).json({ message: "Server error" });
-  }
-};
+import { setupAuth } from "./auth";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Set up authentication
+  const { isAuthenticated, isAdmin } = setupAuth(app);
+  
   // API routes
   
   // Admin routes
