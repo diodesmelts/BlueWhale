@@ -375,8 +375,8 @@ export class MemStorage implements IStorage {
     sort?: string,
     tab?: string
   ): Promise<CompetitionWithEntryStatus[]> {
-    // Get base competitions
-    let competitions = await this.listCompetitions(filter, sort, tab);
+    // Get base competitions - never include deleted items for the user view
+    let competitions = await this.listCompetitions(filter, sort, tab, false);
     
     // If the tab is "my-entries" filter to only user's entered competitions
     if (tab === 'my-entries') {

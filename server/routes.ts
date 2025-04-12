@@ -184,7 +184,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get all competitions (admin only)
   app.get("/api/admin/competitions", isAdmin, async (req, res) => {
     try {
-      const competitions = await storage.listCompetitions();
+      // Include deleted competitions for admin view
+      const competitions = await storage.listCompetitions(undefined, undefined, undefined, true);
       res.status(200).json(competitions);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch competitions" });
