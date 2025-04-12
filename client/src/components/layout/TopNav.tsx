@@ -89,17 +89,6 @@ export default function TopNav() {
           </div>
 
           <div className="flex items-center space-x-5">
-            {/* Admin Button - Only visible to admins */}
-            {user && isAdmin && (
-              <Link href="/admin">
-                <Button 
-                  className="hidden md:flex items-center px-3 py-2 transition-all border-0 shadow-md bg-amber-500 text-white hover:bg-amber-600 rounded-md"
-                >
-                  <i className="fas fa-shield-alt mr-1.5"></i>
-                  <span className="text-sm font-medium">Admin</span>
-                </Button>
-              </Link>
-            )}
             
             {/* Premium Button */}
             <Button variant="outline" className="hidden md:flex items-center transition-all text-white border-white/30 hover:bg-white/10">
