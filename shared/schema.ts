@@ -10,6 +10,8 @@ export const users = pgTable("users", {
   email: text("email").notNull().unique(),
   isPremium: boolean("is_premium").default(false),
   isAdmin: boolean("is_admin").default(false),
+  stripeCustomerId: text("stripe_customer_id"),
+  walletBalance: integer("wallet_balance").default(0), // Stored in cents
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -23,6 +25,7 @@ export const competitions = pgTable("competitions", {
   platform: text("platform").notNull(), // instagram, facebook, tiktok, twitter, website
   type: text("type").notNull(), // giveaway, sweepstakes, contest
   prize: integer("prize").notNull(), // value in USD
+  entryFee: integer("entry_fee").default(0), // in dollars, 0 = free
   entries: integer("entries").default(0),
   eligibility: text("eligibility").notNull(), // worldwide, US only, etc.
   endDate: timestamp("end_date").notNull(),
@@ -39,6 +42,8 @@ export const userEntries = pgTable("user_entries", {
   entryProgress: jsonb("entry_progress").notNull().$type<number[]>(), // Array of 0/1 values for each step
   isBookmarked: boolean("is_bookmarked").default(false),
   isLiked: boolean("is_liked").default(false),
+  paymentIntentId: text("payment_intent_id"), // Stripe payment intent ID
+  paymentStatus: text("payment_status").default("none"), // none, pending, completed, failed
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -90,6 +95,7 @@ export const insertCompetitionSchema = createInsertSchema(competitions).pick({
   platform: true,
   type: true,
   prize: true,
+  entryFee: true,
   entries: true,
   eligibility: true,
   endDate: true,
@@ -103,6 +109,8 @@ export const insertUserEntrySchema = createInsertSchema(userEntries).pick({
   entryProgress: true,
   isBookmarked: true,
   isLiked: true,
+  paymentIntentId: true,
+  paymentStatus: true,
 });
 
 export const insertUserWinSchema = createInsertSchema(userWins).pick({
