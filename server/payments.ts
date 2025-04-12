@@ -62,6 +62,113 @@ export function setupPaymentRoutes(app: Express) {
       res.status(500).json({ error: error.message });
     }
   });
+  
+  // Process a payment directly
+  app.post("/api/payments/process", ensureAuthenticated, async (req, res) => {
+    try {
+      const { amount, paymentMethodId, description, metadata } = req.body;
+      const userId = req.user!.id;
+      
+      if (!amount || !paymentMethodId) {
+        return res.status(400).json({ error: 'Missing required payment information' });
+      }
+      
+      // Get or create a Stripe customer for this user
+      const user = await storage.getUser(userId);
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+      
+      let customerId = user.stripeCustomerId;
+      
+      if (!customerId) {
+        // Create a new customer in Stripe
+        const customer = await stripe.customers.create({
+          email: user.email || undefined,
+          name: user.username,
+          metadata: { userId: userId.toString() }
+        });
+        
+        customerId = customer.id;
+        
+        // Update the user with their Stripe customer ID
+        await storage.updateUser(userId, { stripeCustomerId: customerId });
+      }
+      
+      // Create a payment intent
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount,
+        currency: 'usd',
+        customer: customerId,
+        payment_method: paymentMethodId,
+        description,
+        metadata: {
+          userId: userId.toString(),
+          ...metadata
+        },
+        confirm: true
+      });
+      
+      // Handle the different payment statuses
+      if (paymentIntent.status === 'succeeded') {
+        // If this is a ticket purchase, handle it
+        if (metadata?.competitionId && metadata?.ticketCount) {
+          const competitionId = parseInt(metadata.competitionId);
+          const ticketCount = parseInt(metadata.ticketCount);
+          
+          const competition = await storage.getCompetition(competitionId);
+          if (!competition) {
+            return res.status(404).json({ error: 'Competition not found' });
+          }
+          
+          const userEntry = await storage.getUserEntry(userId, competitionId);
+          
+          await handleSuccessfulTicketPurchase(
+            userId, 
+            competition, 
+            ticketCount, 
+            userEntry, 
+            paymentIntent.id,
+            paymentIntent.amount
+          );
+          
+          return res.json({ 
+            success: true, 
+            message: `Successfully purchased ${ticketCount} ticket${ticketCount > 1 ? 's' : ''}!`,
+            entry: userEntry
+          });
+        }
+        
+        // For other payment types, just return success
+        return res.json({ 
+          success: true, 
+          message: 'Payment successful' 
+        });
+      } else if (
+        paymentIntent.status === 'requires_action' || 
+        paymentIntent.status === 'requires_confirmation'
+      ) {
+        // The payment requires additional actions from the customer
+        return res.json({
+          success: false,
+          requiresAction: true,
+          clientSecret: paymentIntent.client_secret
+        });
+      } else {
+        // Other status, considered as failed for simplicity
+        return res.status(400).json({
+          success: false,
+          error: `Payment failed with status: ${paymentIntent.status}`
+        });
+      }
+    } catch (error: any) {
+      console.error('Payment processing error:', error);
+      return res.status(500).json({
+        success: false,
+        error: error.message || 'An error occurred while processing the payment'
+      });
+    }
+  });
 
   // Create a setup intent (for saving cards for future use)
   app.post("/api/payments/create-setup-intent", ensureAuthenticated, async (req, res) => {
