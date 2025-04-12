@@ -2,8 +2,18 @@ import { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { loadStripe } from '@stripe/stripe-js';
-import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { 
+  Elements, 
+  CardElement, 
+  useStripe, 
+  useElements, 
+  PaymentElement,
+  PaymentRequestButtonElement
+} from '@stripe/react-stripe-js';
 import { useToast } from '@/hooks/use-toast';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { CreditCard } from 'lucide-react';
+import AppleIcon from '@/components/icons/AppleIcon';
 
 // Initialize Stripe outside of component
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
@@ -120,43 +130,157 @@ function CheckoutForm({
     }
   };
 
+  const [canUseApplePay, setCanUseApplePay] = useState(false);
+  const [paymentRequest, setPaymentRequest] = useState<any>(null);
+  
+  // Check if Apple Pay is available
+  useEffect(() => {
+    if (stripe) {
+      const pr = stripe.paymentRequest({
+        country: 'GB',
+        currency: 'gbp',
+        total: {
+          label: description,
+          amount: amount,
+        },
+        requestPayerName: true,
+        requestPayerEmail: true,
+      });
+      
+      // Check if the Payment Request is supported
+      pr.canMakePayment().then(result => {
+        if (result && result.applePay) {
+          setCanUseApplePay(true);
+          setPaymentRequest(pr);
+        }
+      });
+      
+      // Handle payment method
+      pr.on('paymentmethod', async (e: any) => {
+        setIsProcessing(true);
+        
+        try {
+          // Process payment on the server
+          const response = await fetch('/api/payments/process', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              amount,
+              paymentMethodId: e.paymentMethod.id,
+              description,
+              metadata
+            }),
+          });
+          
+          const result = await response.json();
+          
+          if (!response.ok) {
+            throw new Error(result.error || 'Payment failed');
+          }
+          
+          // Complete the payment
+          e.complete('success');
+          
+          // Show success message
+          toast({
+            title: 'Payment Successful',
+            description: result.message || 'Your payment has been processed successfully.',
+          });
+          
+          // Close the modal
+          onClose();
+        } catch (error: any) {
+          e.complete('fail');
+          setErrorMessage(error.message || 'An error occurred during payment processing.');
+          toast({
+            title: 'Payment Failed',
+            description: error.message || 'There was an error processing your payment.',
+            variant: 'destructive',
+          });
+        } finally {
+          setIsProcessing(false);
+        }
+      });
+    }
+  }, [stripe, amount, description, metadata, onClose, toast]);
+
   return (
     <form onSubmit={handleSubmit}>
       <div className="space-y-4">
         <div className="bg-gray-50 p-4 rounded-lg text-center mb-4">
-          <div className="text-2xl font-bold text-gray-800">${(amount / 100).toFixed(2)}</div>
+          <div className="text-2xl font-bold text-gray-800">£{(amount / 100).toFixed(2)}</div>
           <div className="text-sm text-gray-500">{description}</div>
         </div>
         
-        <div className="space-y-2">
-          <div className="flex flex-col bg-white rounded-lg p-4 border border-gray-200">
-            <label className="text-sm font-medium text-gray-700 mb-2">
-              Card Details
-            </label>
-            <CardElement
-              options={{
-                style: {
-                  base: {
-                    fontSize: '16px',
-                    color: '#424770',
-                    '::placeholder': {
-                      color: '#aab7c4',
+        <Tabs defaultValue="card" className="w-full">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="card" className="flex items-center gap-2">
+              <CreditCard size={16} />
+              <span>Card</span>
+            </TabsTrigger>
+            <TabsTrigger 
+              value="apple_pay" 
+              disabled={!canUseApplePay}
+              className="flex items-center gap-2"
+            >
+              <AppleIcon size={16} />
+              <span>Apple Pay</span>
+            </TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="card" className="mt-4">
+            <div className="flex flex-col bg-white rounded-lg p-4 border border-gray-200">
+              <label className="text-sm font-medium text-gray-700 mb-2">
+                Card Details
+              </label>
+              <CardElement
+                options={{
+                  style: {
+                    base: {
+                      fontSize: '16px',
+                      color: '#424770',
+                      '::placeholder': {
+                        color: '#aab7c4',
+                      },
+                    },
+                    invalid: {
+                      color: '#9e2146',
                     },
                   },
-                  invalid: {
-                    color: '#9e2146',
-                  },
-                },
-              }}
-            />
-          </div>
-          
-          {errorMessage && (
-            <div className="text-sm text-red-500 mt-2">
-              {errorMessage}
+                }}
+              />
             </div>
-          )}
-        </div>
+          </TabsContent>
+          
+          <TabsContent value="apple_pay" className="mt-4">
+            {paymentRequest && (
+              <div className="flex flex-col items-center justify-center p-4">
+                <PaymentRequestButtonElement
+                  options={{
+                    paymentRequest,
+                    style: {
+                      paymentRequestButton: {
+                        theme: 'dark',
+                        height: '44px',
+                      },
+                    },
+                  }}
+                />
+                <p className="text-sm text-gray-500 mt-2">
+                  Click the Apple Pay button above to pay securely
+                </p>
+              </div>
+            )}
+          </TabsContent>
+        </Tabs>
+        
+        {errorMessage && (
+          <div className="text-sm text-red-500 mt-2">
+            {errorMessage}
+          </div>
+        )}
       </div>
       
       <DialogFooter className="mt-6">
@@ -168,23 +292,25 @@ function CheckoutForm({
         >
           Cancel
         </Button>
-        <Button
-          type="submit"
-          disabled={!stripe || isProcessing}
-          className={`bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 ${isProcessing ? 'opacity-70' : ''}`}
-        >
-          {isProcessing ? (
-            <>
-              <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-              Processing...
-            </>
-          ) : (
-            actionText
-          )}
-        </Button>
+        {paymentMethod === 'card' && (
+          <Button
+            type="submit"
+            disabled={!stripe || isProcessing}
+            className={`bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 ${isProcessing ? 'opacity-70' : ''}`}
+          >
+            {isProcessing ? (
+              <>
+                <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Processing...
+              </>
+            ) : (
+              actionText
+            )}
+          </Button>
+        )}
       </DialogFooter>
     </form>
   );
