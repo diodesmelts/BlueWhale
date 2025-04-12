@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
@@ -21,6 +21,20 @@ export default function CompetitionsPage() {
   const { data: competitions, isLoading, refetch } = useQuery<CompetitionWithEntryStatus[]>({
     queryKey: ["/api/competitions", prizeValue, sortBy],
   });
+  
+  // Add event listener for ticket purchase completion
+  useEffect(() => {
+    const handleTicketPurchase = () => {
+      // Refresh the competitions query data
+      refetch();
+    };
+    
+    window.addEventListener('ticket-purchase-complete', handleTicketPurchase);
+    
+    return () => {
+      window.removeEventListener('ticket-purchase-complete', handleTicketPurchase);
+    };
+  }, [refetch]);
 
   // Handle competition entry
   const handleEnterCompetition = (id: number) => {

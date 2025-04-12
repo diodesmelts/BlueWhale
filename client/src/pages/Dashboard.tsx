@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import { Trophy, Medal, Bolt, ChartLine, Loader2 } from "lucide-react";
@@ -31,6 +31,20 @@ export default function Dashboard() {
   const { data: competitions, isLoading: isLoadingCompetitions, refetch } = useQuery<CompetitionWithEntryStatus[]>({
     queryKey: ["/api/competitions", prizeValue, sortBy, activeTab],
   });
+  
+  // Add event listener for ticket purchase completion
+  useEffect(() => {
+    const handleTicketPurchase = () => {
+      // Refresh the competitions query data
+      refetch();
+    };
+    
+    window.addEventListener('ticket-purchase-complete', handleTicketPurchase);
+    
+    return () => {
+      window.removeEventListener('ticket-purchase-complete', handleTicketPurchase);
+    };
+  }, [refetch]);
 
   // Fetch leaderboard
   const { data: leaderboard } = useQuery<LeaderboardUser[]>({
