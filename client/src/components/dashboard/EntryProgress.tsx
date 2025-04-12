@@ -23,22 +23,20 @@ export default function EntryProgress({ steps, progress, onComplete, competition
   const handleComplete = () => {
     setIsProcessing(true);
     
-    // If entry is already complete, just run onComplete
-    if (isFullyCompleted) {
-      onComplete();
-      return;
-    }
-    
-    // Call the API and then show ticket modal if competition info is available
-    // and it's ticket-based
+    // Call the onComplete function which will make the API request
     onComplete();
     
-    // Check if competition is ticket-based - if so, we'll show the ticket modal
+    // If competition is ticket-based, show ticket modal after short delay
     if (competition?.ticketPrice && competition.ticketPrice > 0) {
       setTimeout(() => {
         setIsProcessing(false);
         setShowTicketModal(true);
-      }, 1000); // Small delay to show the completion animation
+      }, 800); // Shorter delay for better UX
+    } else {
+      // For non-ticket competitions or when entry is not yet completed
+      setTimeout(() => {
+        setIsProcessing(false);
+      }, 800);
     }
   };
   
