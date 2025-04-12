@@ -14,12 +14,12 @@ export default function MobileNav() {
   const isActive = (path: string) => location === path;
 
   return (
-    <div className="bg-[#153B84] text-white w-full md:hidden fixed bottom-0 z-50 flex justify-around py-3">
+    <div className="bg-gradient-to-r from-rose-500 to-pink-600 text-white w-full md:hidden fixed bottom-0 z-50 flex justify-around py-3">
       {navItems.map((item) => (
         <Link key={item.path} href={item.path}>
-          <a className="flex flex-col items-center">
-            <i className={`${item.icon} ${isActive(item.path) ? "text-[#FFF13A]" : ""}`}></i>
-            <span className="text-xs mt-1">{item.label}</span>
+          <a className="flex flex-col items-center py-1 px-3 rounded-full transition-colors">
+            <i className={`${item.icon} ${isActive(item.path) ? "text-yellow-300" : ""}`}></i>
+            <span className={`text-xs mt-1 ${isActive(item.path) ? "font-bold" : ""}`}>{item.label}</span>
           </a>
         </Link>
       ))}

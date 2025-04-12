@@ -8,10 +8,8 @@ import CompetitionsPage from "@/pages/CompetitionsPage";
 import MyEntries from "@/pages/MyEntries";
 import MyWins from "@/pages/MyWins";
 import Leaderboard from "@/pages/Leaderboard";
-import Sidebar from "@/components/layout/Sidebar";
-import Header from "@/components/layout/Header";
+import TopNav from "@/components/layout/TopNav";
 import MobileNav from "@/components/layout/MobileNav";
-import { useState } from "react";
 
 function Router() {
   return (
@@ -27,19 +25,14 @@ function Router() {
 }
 
 function App() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="flex h-screen overflow-hidden">
-        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-        <div className="flex-1 flex flex-col overflow-hidden">
-          <Header onMenuClick={() => setSidebarOpen(true)} />
-          <main className="flex-1 overflow-y-auto bg-lightGray pb-16 md:pb-0">
-            <Router />
-          </main>
-          <MobileNav />
-        </div>
+      <div className="flex flex-col h-screen overflow-hidden">
+        <TopNav />
+        <main className="flex-1 overflow-y-auto bg-gray-50 pb-16 md:pb-0">
+          <Router />
+        </main>
+        <MobileNav />
       </div>
       <Toaster />
     </QueryClientProvider>
