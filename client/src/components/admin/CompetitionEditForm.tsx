@@ -19,21 +19,27 @@ const competitionUpdateSchema = z.object({
   organizer: z.string().min(2, "Organizer must be at least 2 characters"),
   description: z.string().min(10, "Description must be at least 10 characters"),
   image: z.string().url("Must be a valid URL"),
-  platform: z.string().min(1, "Platform is required"),
+  // Platform is now optional with a default value
+  platform: z.string().default("Other"),
   type: z.string().min(1, "Type is required"),
   prize: z.coerce.number().min(1, "Prize must be at least $1"),
   entries: z.coerce.number().default(0),
   eligibility: z.string().min(1, "Eligibility is required"),
   endDate: z.coerce.date(),
+  // Entry steps are now optional with an empty default array
   entrySteps: z.array(
     z.object({
       id: z.number(),
       description: z.string().min(3, "Step description is required"),
       link: z.string().optional(),
     })
-  ).min(1, "At least one entry step is required"),
+  ).default([]),
   isVerified: z.boolean().default(false),
-  entryFee: z.coerce.number().nullable().default(null),
+  // Using ticketPrice instead of entryFee
+  ticketPrice: z.coerce.number().default(0),
+  maxTicketsPerUser: z.coerce.number().default(10),
+  totalTickets: z.coerce.number().default(1000),
+  soldTickets: z.coerce.number().default(0),
 });
 
 type CompetitionUpdateFormValues = z.infer<typeof competitionUpdateSchema>;
@@ -44,7 +50,6 @@ interface CompetitionEditFormProps {
 }
 
 export function CompetitionEditForm({ competition, onClose }: CompetitionEditFormProps) {
-  const [entrySteps, setEntrySteps] = useState(competition.entrySteps || []);
   const [loading, setLoading] = useState(false);
 
   // Set up the form with existing competition values
@@ -55,15 +60,19 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
       organizer: competition.organizer,
       description: competition.description,
       image: competition.image,
-      platform: competition.platform,
+      platform: competition.platform || "Other", // Default value if missing
       type: competition.type,
       prize: competition.prize,
       entries: competition.entries || 0,
       eligibility: competition.eligibility,
       endDate: new Date(competition.endDate),
-      entrySteps: competition.entrySteps || [],
+      entrySteps: [], // Empty array as we're removing this field
       isVerified: competition.isVerified || false,
-      entryFee: competition.entryFee || null,
+      // Ticket-related fields
+      ticketPrice: competition.ticketPrice || 0,
+      maxTicketsPerUser: competition.maxTicketsPerUser || 10,
+      totalTickets: competition.totalTickets || 1000,
+      soldTickets: competition.soldTickets || 0,
     }
   });
 
@@ -102,31 +111,6 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
       });
     }
   });
-
-  // Function to add a new entry step
-  const addEntryStep = () => {
-    const newStep = {
-      id: Math.max(0, ...entrySteps.map(s => s.id)) + 1,
-      description: "",
-      link: "",
-    };
-    
-    setEntrySteps([...entrySteps, newStep]);
-    
-    // Update the form value with the new steps
-    const currentSteps = form.getValues("entrySteps") || [];
-    form.setValue("entrySteps", [...currentSteps, newStep]);
-  };
-
-  // Function to remove an entry step
-  const removeEntryStep = (index: number) => {
-    const updatedSteps = [...entrySteps];
-    updatedSteps.splice(index, 1);
-    setEntrySteps(updatedSteps);
-    
-    // Update the form value with the new steps
-    form.setValue("entrySteps", updatedSteps);
-  };
 
   // Form submission handler
   const onSubmit = async (data: CompetitionUpdateFormValues) => {
@@ -206,36 +190,7 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
           )}
         />
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <FormField
-            control={form.control}
-            name="platform"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Platform</FormLabel>
-                <Select 
-                  onValueChange={field.onChange} 
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select platform" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="Instagram">Instagram</SelectItem>
-                    <SelectItem value="Facebook">Facebook</SelectItem>
-                    <SelectItem value="TikTok">TikTok</SelectItem>
-                    <SelectItem value="Twitter">Twitter</SelectItem>
-                    <SelectItem value="Website">Website</SelectItem>
-                    <SelectItem value="Other">Other</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormField
             control={form.control}
             name="type"
@@ -322,26 +277,20 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
           
           <FormField
             control={form.control}
-            name="entryFee"
+            name="ticketPrice"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Entry Fee (USD) - Optional</FormLabel>
+                <FormLabel>Ticket Price (¢)</FormLabel>
                 <FormControl>
                   <Input 
                     type="number" 
                     min="0" 
-                    step="0.01"
                     placeholder="0" 
                     {...field} 
-                    value={field.value === null ? '' : field.value}
-                    onChange={(e) => {
-                      const value = e.target.value === '' ? null : Number(e.target.value);
-                      field.onChange(value);
-                    }}
                   />
                 </FormControl>
                 <FormDescription>
-                  Leave empty for free competitions
+                  Price per ticket in cents (e.g. 500 = $5.00)
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -367,71 +316,7 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
           )}
         />
         
-        <div>
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold">Entry Steps</h3>
-            <Button 
-              type="button" 
-              variant="outline" 
-              size="sm" 
-              onClick={addEntryStep}
-              className="text-blue-600 border-blue-200"
-            >
-              <Plus className="h-4 w-4 mr-1" /> Add Step
-            </Button>
-          </div>
-          
-          {entrySteps.map((step, index) => (
-            <div key={index} className="mb-4 p-4 border rounded-md bg-slate-50 relative">
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                className="absolute top-2 right-2 text-red-600 hover:text-red-800 hover:bg-red-50"
-                onClick={() => removeEntryStep(index)}
-              >
-                <Trash className="h-4 w-4" />
-              </Button>
-              
-              <h4 className="font-medium mb-3">Step {index + 1}</h4>
-              <div className="space-y-4">
-                <FormField
-                  control={form.control}
-                  name={`entrySteps.${index}.description`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Description</FormLabel>
-                      <FormControl>
-                        <Input placeholder="e.g. Follow our Instagram account" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={form.control}
-                  name={`entrySteps.${index}.link`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Link (Optional)</FormLabel>
-                      <FormControl>
-                        <Input placeholder="https://instagram.com/username" {...field} value={field.value || ''} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <input 
-                  type="hidden" 
-                  {...form.register(`entrySteps.${index}.id`)} 
-                  value={step.id} 
-                />
-              </div>
-            </div>
-          ))}
-        </div>
+        {/* Entry Steps section removed as requested */}
         
         <FormField
           control={form.control}
