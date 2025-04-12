@@ -16,6 +16,7 @@ interface EntryProgressProps {
 export default function EntryProgress({ steps, progress, onComplete, competition }: EntryProgressProps) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [showTicketModal, setShowTicketModal] = useState(false);
+  const [isPurchaseProcessing, setIsPurchaseProcessing] = useState(false);
   const completedCount = progress.filter(step => step === 1).length;
   const progressPercentage = (completedCount / steps.length) * 100;
   const isFullyCompleted = completedCount === steps.length;
@@ -44,34 +45,29 @@ export default function EntryProgress({ steps, progress, onComplete, competition
   // If steps are already complete and button is clicked, 
   // automatically open ticket modal on render
   // Using the fixed competition object with ticket price
+  // Force show ticket modal when component mounts if entry is complete
   useEffect(() => {
-    if (isFullyCompleted && isProcessing) {
-      // Always show ticket modal after short delay when processing is complete
+    // If entry is fully completed, show the modal directly
+    if (isFullyCompleted && !showTicketModal) {
       const timer = setTimeout(() => {
-        openTicketModal();
-      }, 800);
+        setShowTicketModal(true);
+        setIsProcessing(false);
+      }, 300);
       return () => clearTimeout(timer);
     }
-  }, [isFullyCompleted, isProcessing]);
-
+  }, [isFullyCompleted, showTicketModal]);
+  
   const handleComplete = () => {
     setIsProcessing(true);
     
     // Call the onComplete function which will make the API request
     onComplete();
     
-    // If entry is complete, show ticket modal (we're forcing this for now)
-    if (isFullyCompleted) {
-      // Use a timeout to ensure UI updates after API request completes
-      setTimeout(() => {
-        openTicketModal();
-      }, 800);
-    } else {
-      // For incomplete entries, just hide the processing indicator
-      setTimeout(() => {
-        setIsProcessing(false);
-      }, 800);
-    }
+    // Always show the ticket modal after completing steps
+    setTimeout(() => {
+      setIsProcessing(false);
+      setShowTicketModal(true); // Show modal directly
+    }, 800);
   };
   
   const { toast } = useToast();
@@ -82,6 +78,9 @@ export default function EntryProgress({ steps, progress, onComplete, competition
       setShowTicketModal(false);
       return;
     }
+    
+    // Set processing state to show spinner
+    setIsPurchaseProcessing(true);
     
     // Log purchase attempt
     console.log('Purchasing', ticketCount, 'tickets for competition', competitionWithTicket);
@@ -102,6 +101,9 @@ export default function EntryProgress({ steps, progress, onComplete, competition
           title: 'Tickets Purchased',
           description: `You have successfully purchased ${ticketCount} ticket${ticketCount > 1 ? 's' : ''} for $${totalPrice.toFixed(2)}.`,
         });
+        
+        // Reset states
+        setIsPurchaseProcessing(false);
         setShowTicketModal(false);
         
         // This will trigger a refresh of competitions in parent components
@@ -124,6 +126,7 @@ export default function EntryProgress({ steps, progress, onComplete, competition
           description: error.message,
           variant: 'destructive',
         });
+        setIsPurchaseProcessing(false);
         setShowTicketModal(false);
       });
   };
@@ -136,6 +139,7 @@ export default function EntryProgress({ steps, progress, onComplete, competition
           isOpen={showTicketModal}
           onClose={() => setShowTicketModal(false)}
           onPurchase={handlePurchaseTickets}
+          isProcessing={isPurchaseProcessing}
           competition={{
             title: competitionWithTicket.title,
             ticketPrice: competitionWithTicket.ticketPrice,
