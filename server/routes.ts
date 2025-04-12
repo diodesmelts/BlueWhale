@@ -285,6 +285,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // ADMIN ROUTES //
+  
+  // Admin - Create new competition
+  app.post("/api/admin/competitions", isAdmin, async (req, res) => {
+    try {
+      // Validate the request body
+      const parseResult = insertCompetitionSchema.safeParse(req.body);
+      
+      if (!parseResult.success) {
+        return res.status(400).json({ 
+          message: "Invalid competition data", 
+          errors: parseResult.error.errors 
+        });
+      }
+      
+      // Create the competition
+      const competition = await storage.createCompetition(parseResult.data);
+      
+      res.status(201).json(competition);
+    } catch (error) {
+      console.error("Failed to create competition:", error);
+      res.status(500).json({ message: "Failed to create competition" });
+    }
+  });
+  
+  // Admin - Check if user is admin
+  app.get("/api/admin/check", isAdmin, (req, res) => {
+    res.status(200).json({ isAdmin: true });
+  });
+
   const httpServer = createServer(app);
 
   return httpServer;

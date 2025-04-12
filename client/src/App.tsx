@@ -8,6 +8,7 @@ import CompetitionsPage from "@/pages/CompetitionsPage";
 import MyEntries from "@/pages/MyEntries";
 import MyWins from "@/pages/MyWins";
 import Leaderboard from "@/pages/Leaderboard";
+import AdminPage from "@/pages/AdminPage";
 import TopNav from "@/components/layout/TopNav";
 import MobileNav from "@/components/layout/MobileNav";
 
@@ -19,6 +20,7 @@ function Router() {
       <Route path="/my-entries" component={MyEntries} />
       <Route path="/my-wins" component={MyWins} />
       <Route path="/leaderboard" component={Leaderboard} />
+      <Route path="/admin" component={AdminPage} />
       <Route component={NotFound} />
     </Switch>
   );

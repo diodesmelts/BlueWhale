@@ -93,7 +93,8 @@ export class MemStorage implements IStorage {
     const user: User = { 
       ...insertUser, 
       id, 
-      isPremium: false, 
+      isPremium: false,
+      isAdmin: false,
       createdAt: now 
     };
     this.users.set(id, user);
@@ -161,7 +162,13 @@ export class MemStorage implements IStorage {
   async createCompetition(insertCompetition: InsertCompetition): Promise<Competition> {
     const id = this.competitionIdCounter++;
     const now = new Date();
-    const competition: Competition = { ...insertCompetition, id, createdAt: now };
+    const competition: Competition = { 
+      ...insertCompetition, 
+      id, 
+      createdAt: now,
+      entries: insertCompetition.entries || 0,
+      isVerified: insertCompetition.isVerified || false
+    };
     this.competitions.set(id, competition);
     return competition;
   }
