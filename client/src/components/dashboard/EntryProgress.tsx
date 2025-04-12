@@ -17,6 +17,7 @@ export default function EntryProgress({ steps, progress, onComplete, competition
   const [isProcessing, setIsProcessing] = useState(false);
   const [showTicketModal, setShowTicketModal] = useState(false);
   const [isPurchaseProcessing, setIsPurchaseProcessing] = useState(false);
+  const [userClosedModal, setUserClosedModal] = useState(false);
   const completedCount = progress.filter(step => step === 1).length;
   const progressPercentage = (completedCount / steps.length) * 100;
   const isFullyCompleted = completedCount === steps.length;
@@ -46,6 +47,8 @@ export default function EntryProgress({ steps, progress, onComplete, competition
   const closeTicketModal = () => {
     setShowTicketModal(false);
     setIsPurchaseProcessing(false);
+    setUserClosedModal(true); // Remember that user has closed the modal
+    console.log("Modal closed by user");
   };
   
   // Handle clicks outside the modal and esc key
@@ -60,17 +63,20 @@ export default function EntryProgress({ steps, progress, onComplete, competition
     return () => window.removeEventListener('keydown', handleEscKey);
   }, [showTicketModal]);
   
-  // If steps are fully completed, show the ticket modal
+  // If steps are fully completed, show the ticket modal ONLY if user hasn't closed it
   useEffect(() => {
-    // Show modal only when steps are complete and it's not already visible
-    if (isFullyCompleted && !showTicketModal) {
+    // Only show modal if: 
+    // 1. Steps are complete
+    // 2. Modal is not already showing
+    // 3. User hasn't manually closed it
+    if (isFullyCompleted && !showTicketModal && !userClosedModal) {
       const timer = setTimeout(() => {
         setShowTicketModal(true);
         setIsProcessing(false);
       }, 300);
       return () => clearTimeout(timer);
     }
-  }, [isFullyCompleted, showTicketModal]);
+  }, [isFullyCompleted, showTicketModal, userClosedModal]);
   
   const handleComplete = () => {
     setIsProcessing(true);
@@ -78,10 +84,16 @@ export default function EntryProgress({ steps, progress, onComplete, competition
     // Call the onComplete function which will make the API request
     onComplete();
     
-    // Always show the ticket modal after completing steps
+    // Reset userClosedModal state when explicitly clicking the button
+    // User wants to get tickets, so we should show the modal again
+    if (isFullyCompleted) {
+      setUserClosedModal(false);
+    }
+    
+    // Show the ticket modal after completing steps (with delay for visual feedback)
     setTimeout(() => {
       setIsProcessing(false);
-      setShowTicketModal(true); // Show modal directly
+      setShowTicketModal(true);
     }, 800);
   };
   
