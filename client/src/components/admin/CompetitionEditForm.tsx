@@ -88,15 +88,16 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
   // Update form mutation
   const updateMutation = useMutation({
     mutationFn: async (data: CompetitionUpdateFormValues) => {
-      // Add time to make a full ISO date, ensuring end of day
-      const dateStr = `${data.endDate}T23:59:59.999Z`;
+      // Create a proper date object and convert to ISO string
+      const dateObj = new Date(data.endDate);
       
       // Format the data for the API
       const formattedData = {
         ...data,
         platform: "Other",
         entrySteps: [],
-        endDate: dateStr,
+        // Send an actual date object to the API
+        endDate: dateObj,
       };
       
       console.log('Submission data:', formattedData);
