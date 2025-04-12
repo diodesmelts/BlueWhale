@@ -440,77 +440,76 @@ export class MemStorage implements IStorage {
     // Create demo competitions
     const competitionData: InsertCompetition[] = [
       {
-        title: 'Ultimate Apple Bundle Giveaway',
+        title: 'Ultra Tech Prize Draw',
         organizer: 'TechReviewer',
-        description: 'Win the latest Apple products including MacBook Pro, iPhone 13, AirPods Pro, and Apple Watch Series 7.',
+        description: 'Get tickets to win the latest tech bundle including MacBook Pro, iPhone, AirPods Pro, and Apple Watch.',
         image: 'https://images.unsplash.com/photo-1611930022073-84f59b13927e?auto=format&fit=crop&w=800&q=80',
-        platform: 'Instagram',
-        type: 'Giveaway',
+        platform: 'Tech Expo',
+        type: 'Prize Draw',
         prize: 2999,
         entries: 2456,
         eligibility: 'Worldwide',
         endDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // 3 days from now
-        entrySteps: [
-          { id: 1, description: 'Follow TechReviewer' },
-          { id: 2, description: 'Like & Comment' },
-          { id: 3, description: 'Tag 2 Friends' },
-          { id: 4, description: 'Share to Story' }
-        ],
-        isVerified: true
+        entrySteps: [],
+        isVerified: true,
+        ticketPrice: 999, // $9.99
+        maxTicketsPerUser: 10,
+        totalTickets: 3000,
+        soldTickets: 2456
       },
       {
-        title: 'Dream Vacation Giveaway',
+        title: 'Luxury Travel Experience',
         organizer: 'TravelExplorer',
-        description: 'Win a 7-day all-inclusive vacation for two to Bali, including flights, 5-star accommodation, and activities.',
+        description: 'Exclusive chance to win a 7-day luxury vacation for two to Bali, including flights, 5-star accommodation, and activities.',
         image: 'https://images.unsplash.com/photo-1581417478175-a9ef18f210c2?auto=format&fit=crop&w=800&q=80',
-        platform: 'Facebook',
-        type: 'Sweepstakes',
+        platform: 'Travel Expo',
+        type: 'Prize Draw',
         prize: 5000,
         entries: 4891,
         eligibility: 'US & Canada',
         endDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
-        entrySteps: [
-          { id: 1, description: 'Like TravelExplorer Page' },
-          { id: 2, description: 'Comment on Post' },
-          { id: 3, description: 'Share Post' }
-        ],
-        isVerified: true
+        entrySteps: [],
+        isVerified: true,
+        ticketPrice: 1999, // $19.99
+        maxTicketsPerUser: 5,
+        totalTickets: 5000,
+        soldTickets: 4891
       },
       {
-        title: 'Ultimate Gaming Setup Giveaway',
+        title: 'Pro Gaming Championship',
         organizer: 'GameMaster',
-        description: 'Win a complete gaming setup including RTX 3080 gaming PC, curved monitor, gaming chair, and peripherals.',
+        description: 'Join the tournament for a chance to win a complete gaming setup including RTX 3080 gaming PC, curved monitor, and accessories.',
         image: 'https://images.unsplash.com/photo-1599751449028-36bb110148ef?auto=format&fit=crop&w=800&q=80',
-        platform: 'TikTok',
-        type: 'Contest',
+        platform: 'Gaming Expo',
+        type: 'Tournament',
         prize: 3500,
         entries: 8234,
         eligibility: 'Worldwide',
         endDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000), // 5 days from now
-        entrySteps: [
-          { id: 1, description: 'Follow GameMaster' },
-          { id: 2, description: 'Like & Comment' },
-          { id: 3, description: 'Tag 2 Friends' },
-          { id: 4, description: 'Share to Story' }
-        ],
-        isVerified: false
+        entrySteps: [],
+        isVerified: false,
+        ticketPrice: 1499, // $14.99
+        maxTicketsPerUser: 3,
+        totalTickets: 10000,
+        soldTickets: 8234
       },
       {
-        title: 'Premium Smartwatch Giveaway',
+        title: 'Fitness Gear Draw',
         organizer: 'FitnessTech',
-        description: 'Win one of five premium smartwatches with fitness tracking, GPS, and heart rate monitoring.',
+        description: 'Get tickets to win premium fitness gear including smartwatches with fitness tracking, GPS, and heart rate monitoring.',
         image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80',
-        platform: 'Website',
-        type: 'Giveaway',
+        platform: 'Fitness Expo',
+        type: 'Prize Draw',
         prize: 299,
         entries: 1245,
         eligibility: 'US Only',
         endDate: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000), // 1 day from now
-        entrySteps: [
-          { id: 1, description: 'Subscribe to Newsletter' },
-          { id: 2, description: 'Follow on Social Media' }
-        ],
-        isVerified: false
+        entrySteps: [],
+        isVerified: false,
+        ticketPrice: 499, // $4.99
+        maxTicketsPerUser: 20,
+        totalTickets: 2000,
+        soldTickets: 1245
       }
     ];
     
@@ -519,37 +518,37 @@ export class MemStorage implements IStorage {
     }
     
     // Create user entries for the competitions
-    const gameSetupCompetition = Array.from(this.competitions.values()).find(
-      comp => comp.title === 'Ultimate Gaming Setup Giveaway'
+    const gamingChampionship = Array.from(this.competitions.values()).find(
+      comp => comp.title === 'Pro Gaming Championship'
     );
     
-    if (gameSetupCompetition && user) {
+    if (gamingChampionship && user) {
       await this.createUserEntry({
         userId: user.id,
-        competitionId: gameSetupCompetition.id,
-        entryProgress: [1, 1, 1, 0], // 3/4 completed
+        competitionId: gamingChampionship.id,
+        entryProgress: [], // No entry steps
         isBookmarked: true,
         isLiked: false
       });
       
       await this.createUserEntry({
         userId: user.id,
-        competitionId: 2, // Dream Vacation Giveaway
-        entryProgress: [1, 1, 1], // All completed
+        competitionId: 2, // Luxury Travel Experience
+        entryProgress: [], // No entry steps
         isBookmarked: true,
         isLiked: true
       });
     }
     
     // Create user wins
-    const appleBundleCompetition = Array.from(this.competitions.values()).find(
-      comp => comp.title === 'Ultimate Apple Bundle Giveaway'
+    const ultraTechPrizeDraw = Array.from(this.competitions.values()).find(
+      comp => comp.title === 'Ultra Tech Prize Draw'
     );
     
-    if (appleBundleCompetition && user) {
+    if (ultraTechPrizeDraw && user) {
       await this.createUserWin({
         userId: user.id,
-        competitionId: appleBundleCompetition.id,
+        competitionId: ultraTechPrizeDraw.id,
         winDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), // 30 days ago
         claimByDate: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000),
         prizeReceived: true,
