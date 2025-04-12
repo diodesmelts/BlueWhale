@@ -1,15 +1,18 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
-import { Trophy, Medal, Bolt, ChartLine } from "lucide-react";
+import { Trophy, Medal, Bolt, ChartLine, Loader2 } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import StatCard from "@/components/dashboard/StatCard";
 import CompetitionCard from "@/components/dashboard/CompetitionCard";
 import LeaderboardTable from "@/components/dashboard/LeaderboardTable";
 import { CompetitionWithEntryStatus, LeaderboardUser, UserStats } from "@shared/types";
+import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/queryClient";
 
 export default function Dashboard() {
+  const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("trending");
   const [prizeValue, setPrizeValue] = useState("all");
   const [sortBy, setSortBy] = useState("popularity");
@@ -25,7 +28,7 @@ export default function Dashboard() {
   });
 
   // Fetch competitions
-  const { data: competitions, isLoading: isLoadingCompetitions } = useQuery<CompetitionWithEntryStatus[]>({
+  const { data: competitions, isLoading: isLoadingCompetitions, refetch } = useQuery<CompetitionWithEntryStatus[]>({
     queryKey: ["/api/competitions", prizeValue, sortBy, activeTab],
   });
 
@@ -60,26 +63,26 @@ export default function Dashboard() {
 
   // Handle completing entry steps
   const handleCompleteEntry = (id: number) => {
-    fetch(`/api/competitions/${id}/complete-entry`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Failed to complete entry');
-      }
-      return response.json();
-    })
-    .then(() => {
-      // Invalidate the cache to refetch the competitions
-      window.location.reload(); // Force a refresh to update the UI
-    })
-    .catch(error => {
-      console.error('Error completing entry:', error);
-      // Add toast notification here if you have a toast system
+    apiRequest('POST', `/api/competitions/${id}/complete-entry`)
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to complete entry steps');
+        return res.json();
+      })
+      .then(data => {
+        toast({
+          title: 'Entry Completed!',
+          description: 'You have successfully completed all entry steps.',
+        });
+        // Refetch competitions data to update UI
+        refetch();
+      })
+      .catch(error => {
+        console.error('Error completing entry:', error);
+        toast({
+          title: 'Error',
+          description: error.message,
+          variant: 'destructive',
+        });
     });
   };
 

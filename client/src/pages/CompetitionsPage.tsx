@@ -45,10 +45,27 @@ export default function CompetitionsPage() {
 
   // Handle completing entry steps
   const handleCompleteEntry = (id: number) => {
-    fetch(`/api/competitions/${id}/complete-entry`, {
-      method: "POST",
-      credentials: "include"
-    });
+    apiRequest('POST', `/api/competitions/${id}/complete-entry`)
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to complete entry steps');
+        return res.json();
+      })
+      .then(data => {
+        toast({
+          title: 'Entry Completed!',
+          description: 'You have successfully completed all entry steps.',
+        });
+        // Refetch competitions data to update UI
+        refetch();
+      })
+      .catch(error => {
+        console.error('Error completing entry:', error);
+        toast({
+          title: 'Error',
+          description: error.message,
+          variant: 'destructive',
+        });
+      });
   };
 
   return (

@@ -135,8 +135,8 @@ export default function CompetitionDetailPage() {
           title: 'Entry Completed!',
           description: 'You have successfully completed all entry steps.',
         });
-        // Force a refresh to ensure UI updates correctly
-        window.location.reload();
+        // Refetch competition data to update UI
+        refetch();
       })
       .catch(err => {
         toast({
