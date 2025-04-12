@@ -38,13 +38,13 @@ export function setupPaymentRoutes(app: Express) {
       // Create a payment intent
       const paymentIntent = await stripe.paymentIntents.create({
         amount: Math.round(amount), // amount in cents
-        currency: "usd",
+        currency: "gbp",
         description,
         metadata: {
           ...metadata,
           userId
         },
-        payment_method_types: ["card"],
+        payment_method_types: ["card", "apple_pay"],
         // Enable this when ready for Apple Pay:
         payment_method_options: {
           card: {
@@ -204,7 +204,7 @@ export function setupPaymentRoutes(app: Express) {
       // Create a setup intent
       const setupIntent = await stripe.setupIntents.create({
         customer: customer.id,
-        payment_method_types: ["card"],
+        payment_method_types: ["card", "apple_pay"],
       });
 
       // Return the client secret to the client
