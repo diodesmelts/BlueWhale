@@ -6,6 +6,7 @@ import { CompetitionWithEntryStatus } from "@shared/types";
 import { usePaymentContext } from "@/components/payments/PaymentProvider";
 import { useAuth } from "@/hooks/use-auth";
 import TicketPurchaseModal from "@/components/payments/TicketPurchaseModal";
+import { useLocation } from "wouter";
 
 interface CompetitionCardProps {
   competition: CompetitionWithEntryStatus;
@@ -26,6 +27,7 @@ export default function CompetitionCard({
   const { showPaymentModal } = usePaymentContext();
   const [isPaying, setIsPaying] = useState(false);
   const [ticketModalOpen, setTicketModalOpen] = useState(false);
+  const [, setLocation] = useLocation();
   
   const {
     id,
@@ -138,9 +140,12 @@ export default function CompetitionCard({
         }}
       />
       
-      <div className={`competition-card p-6 mb-5 transition duration-300 rounded-2xl bg-white shadow-lg hover:shadow-xl border border-gray-100 ${
-        isEntered ? 'border-l-4 border-rose-500' : ''
-      }`}>
+      <div 
+        className={`competition-card p-6 mb-5 transition duration-300 rounded-2xl bg-white shadow-lg hover:shadow-xl border border-gray-100 ${
+          isEntered ? 'border-l-4 border-rose-500' : ''
+        } cursor-pointer`}
+        onClick={() => setLocation(`/competitions/${id}`)}
+      >
         <div className="flex flex-col md:flex-row">
           <div className="flex-shrink-0 md:w-1/4 lg:w-1/5 mb-5 md:mb-0">
             <div className="relative">
@@ -206,7 +211,10 @@ export default function CompetitionCard({
                   className={`p-2 rounded-full hover:bg-gray-100 transition-colors ${
                     isBookmarked ? 'text-indigo-500' : 'text-gray-400 hover:text-indigo-500'
                   }`}
-                  onClick={() => onBookmark(id)}
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent card click event
+                    onBookmark(id);
+                  }}
                 >
                   <i className={isBookmarked ? 'fas fa-bookmark' : 'far fa-bookmark'}></i>
                 </button>
@@ -214,7 +222,10 @@ export default function CompetitionCard({
                   className={`p-2 rounded-full hover:bg-gray-100 transition-colors ${
                     isLiked ? 'text-rose-500' : 'text-gray-400 hover:text-rose-500'
                   }`}
-                  onClick={() => onLike(id)}
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent card click event
+                    onLike(id);
+                  }}
                 >
                   <i className={isLiked ? 'fas fa-heart' : 'far fa-heart'}></i>
                 </button>

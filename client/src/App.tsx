@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import NotFound from "@/pages/not-found";
 import Dashboard from "@/pages/Dashboard";
 import CompetitionsPage from "@/pages/CompetitionsPage";
+import CompetitionDetailPage from "@/pages/CompetitionDetailPage";
 import MyEntries from "@/pages/MyEntries";
 import MyWins from "@/pages/MyWins";
 import Leaderboard from "@/pages/Leaderboard";
@@ -22,6 +23,7 @@ function Router() {
       {/* Public routes */}
       <Route path="/" component={Dashboard} />
       <Route path="/competitions" component={CompetitionsPage} />
+      <Route path="/competitions/:id" component={CompetitionDetailPage} />
       <Route path="/leaderboard" component={Leaderboard} />
       <Route path="/auth" component={AuthPage} />
       

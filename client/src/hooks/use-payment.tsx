@@ -241,6 +241,7 @@ export function usePayment({ onSuccess, onError }: UsePaymentProps = {}) {
 
   return {
     isLoading,
+    isProcessing: isLoading, // Alias for isLoading to be consistent with names
     paymentMethods,
     fetchPaymentMethods,
     payForEntry,

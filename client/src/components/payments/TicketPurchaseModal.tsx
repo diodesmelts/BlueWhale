@@ -16,6 +16,7 @@ interface TicketPurchaseModalProps {
     totalTickets: number | null;
     soldTickets: number | null;
   };
+  isProcessing?: boolean;
 }
 
 export default function TicketPurchaseModal({
@@ -23,6 +24,7 @@ export default function TicketPurchaseModal({
   onClose,
   onPurchase,
   competition,
+  isProcessing: externalProcessing,
 }: TicketPurchaseModalProps) {
   const { title, ticketPrice, maxTicketsPerUser, totalTickets, soldTickets } = competition;
   
@@ -32,7 +34,10 @@ export default function TicketPurchaseModal({
   const actualMaxTickets = Math.min(maxTickets, availableTickets);
   
   const [ticketCount, setTicketCount] = useState(1);
-  const [isProcessing, setIsProcessing] = useState(false);
+  const [internalProcessing, setInternalProcessing] = useState(false);
+  
+  // Use external processing state if provided, otherwise use internal
+  const isProcessing = externalProcessing !== undefined ? externalProcessing : internalProcessing;
   
   const handleTicketCountChange = (value: number[]) => {
     setTicketCount(value[0]);
@@ -46,7 +51,10 @@ export default function TicketPurchaseModal({
   };
   
   const handlePurchase = () => {
-    setIsProcessing(true);
+    // Only update internal state if we're not using external state
+    if (externalProcessing === undefined) {
+      setInternalProcessing(true);
+    }
     onPurchase(ticketCount);
   };
   

@@ -183,8 +183,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const sortBy = req.query.sortBy as string;
       const tab = req.query.tab as string;
       
-      // For demo purposes, we'll use user ID 1
-      const userId = 1;
+      // Get user ID from session if authenticated, otherwise use 1 for demo
+      const userId = req.isAuthenticated() ? req.user!.id : 1;
       
       const competitions = await storage.getCompetitionsWithUserStatus(
         userId,
@@ -196,6 +196,54 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(competitions);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch competitions" });
+    }
+  });
+  
+  // Get a single competition by ID
+  app.get("/api/competitions/:id", async (req, res) => {
+    try {
+      const competitionId = parseInt(req.params.id);
+      if (isNaN(competitionId)) {
+        return res.status(400).json({ message: "Invalid competition ID" });
+      }
+      
+      // Get user ID from session if authenticated, otherwise use 1 for demo
+      const userId = req.isAuthenticated() ? req.user!.id : 1;
+      
+      // Get the competition
+      const competition = await storage.getCompetition(competitionId);
+      
+      if (!competition) {
+        return res.status(404).json({ message: "Competition not found" });
+      }
+      
+      // Get user-specific status for this competition
+      const userEntry = await storage.getUserEntry(userId, competitionId);
+      const userWin = await storage.getUserWins(userId).then(wins => 
+        wins.find(win => win.competitionId === competitionId)
+      );
+      
+      // Combine competition data with user-specific status
+      const competitionWithStatus = {
+        ...competition,
+        isEntered: !!userEntry,
+        entryProgress: userEntry ? userEntry.entryProgress : [],
+        isBookmarked: userEntry ? userEntry.isBookmarked : false,
+        isLiked: userEntry ? userEntry.isLiked : false,
+        ticketCount: userEntry ? userEntry.ticketCount : 0,
+        ticketNumbers: userEntry ? userEntry.ticketNumbers : [],
+        
+        // Win information if applicable
+        winDate: userWin ? userWin.createdAt.toISOString() : undefined,
+        claimByDate: userWin ? userWin.claimByDate?.toISOString() : undefined,
+        prizeReceived: userWin ? userWin.prizeReceived : undefined,
+        receivedDate: userWin ? userWin.receivedDate?.toISOString() : undefined,
+      };
+      
+      res.json(competitionWithStatus);
+    } catch (error) {
+      console.error("Error fetching competition:", error);
+      res.status(500).json({ message: "Failed to fetch competition details" });
     }
   });
   
