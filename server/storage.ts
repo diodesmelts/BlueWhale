@@ -95,8 +95,8 @@ export class MemStorage implements IStorage {
     const user: User = { 
       ...insertUser, 
       id, 
-      isPremium: false,
-      isAdmin: false,
+      isPremium: insertUser.isPremium !== undefined ? insertUser.isPremium : false,
+      isAdmin: insertUser.isAdmin !== undefined ? insertUser.isAdmin : false,
       createdAt: now 
     };
     this.users.set(id, user);
