@@ -15,7 +15,7 @@ import {
   ArrowLeft
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import EntryProgress from "@/components/dashboard/EntryProgress";
+
 import { useToast } from "@/hooks/use-toast";
 import { usePayment } from "@/hooks/use-payment";
 import TicketPurchaseModal from "@/components/payments/TicketPurchaseModal";
@@ -319,42 +319,7 @@ export default function CompetitionDetailPage() {
             </div>
           </div>
 
-          {/* Ticket information */}
-          {competition.ticketPrice > 0 && (
-            <div className="mb-6 p-4 border border-blue-200 bg-blue-50 rounded-lg">
-              <h3 className="text-lg font-semibold text-blue-800 mb-2">Ticket Information</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
-                  <p className="text-sm text-gray-600">Price per ticket</p>
-                  <p className="text-lg font-bold text-blue-600">${(competition.ticketPrice / 100).toFixed(2)}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">Available tickets</p>
-                  <p className="text-lg font-bold text-blue-600">
-                    {competition.totalTickets - competition.soldTickets} / {competition.totalTickets}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">Maximum per user</p>
-                  <p className="text-lg font-bold text-blue-600">{competition.maxTicketsPerUser}</p>
-                </div>
-              </div>
-              
-              {competition.isEntered && competition.ticketCount && competition.ticketNumbers && (
-                <div className="mt-4 pt-4 border-t border-blue-200">
-                  <h4 className="text-md font-semibold text-blue-800 mb-2">Your Tickets</h4>
-                  <p className="text-sm mb-2">You have {competition.ticketCount} ticket{competition.ticketCount !== 1 ? 's' : ''}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {competition.ticketNumbers.map(number => (
-                      <span key={number} className="px-3 py-1 bg-white border border-blue-300 rounded-full text-sm font-medium text-blue-600">
-                        #{number}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
+          {/* Ticket information - simplified and included in the "Get Tickets" section */}
 
           {/* Description */}
           <div className="mb-6">
@@ -362,40 +327,38 @@ export default function CompetitionDetailPage() {
             <p className="text-gray-600">{competition.description}</p>
           </div>
 
-          {/* Entry steps */}
+          {/* Get Tickets Section */}
           <div className="mb-6">
-            <h2 className="text-xl font-bold text-gray-800 mb-3">How to Enter</h2>
+            <h2 className="text-xl font-bold text-gray-800 mb-3">Get Tickets</h2>
             
-            {competition.isEntered ? (
-              <EntryProgress 
-                steps={competition.entrySteps}
-                progress={competition.entryProgress}
-                onComplete={() => handleCompleteEntry(competition.id)}
-              />
+            {competition.isEntered && competition.ticketCount && competition.ticketCount > 0 ? (
+              <div className="bg-blue-50 rounded-lg p-4 border border-blue-100">
+                <h3 className="text-lg font-semibold text-blue-800 mb-2">Your Tickets</h3>
+                <p className="text-sm mb-2">You have {competition.ticketCount} ticket{competition.ticketCount !== 1 ? 's' : ''} for this prize draw</p>
+                {competition.ticketNumbers && competition.ticketNumbers.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mt-3">
+                    {competition.ticketNumbers.map(number => (
+                      <span key={number} className="px-3 py-1 bg-white border border-blue-300 rounded-full text-sm font-medium text-blue-600">
+                        #{number}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                <Button
+                  onClick={() => setIsTicketModalOpen(true)}
+                  className="mt-4 w-full md:w-auto bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700"
+                >
+                  Buy More Tickets
+                </Button>
+              </div>
             ) : (
-              <div>
-                <ol className="list-decimal pl-5 mb-4 space-y-2">
-                  {competition.entrySteps.map((step, index) => (
-                    <li key={index} className="text-gray-600">
-                      {step.description}
-                      {step.link && (
-                        <a 
-                          href={step.link} 
-                          target="_blank" 
-                          rel="noreferrer"
-                          className="text-blue-500 hover:text-blue-700 ml-1"
-                        >
-                          (Link)
-                        </a>
-                      )}
-                    </li>
-                  ))}
-                </ol>
+              <div className="bg-amber-50 rounded-lg p-4 border border-amber-100">
+                <p className="text-amber-800 mb-4">Enter this prize draw by purchasing tickets. The more tickets you buy, the higher your chances of winning!</p>
                 
                 <Button
                   onClick={handleEnterCompetition}
                   disabled={isEnded || isProcessing}
-                  className="w-full md:w-auto bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700"
+                  className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700"
                 >
                   {isProcessing ? (
                     <>
@@ -404,10 +367,7 @@ export default function CompetitionDetailPage() {
                     </>
                   ) : (
                     <>
-                      {competition.ticketPrice && competition.ticketPrice > 0 
-                        ? `Get Tickets - $${(competition.ticketPrice/100).toFixed(2)}` 
-                        : "Enter Now"
-                      }
+                      Get Tickets - ${(competition.ticketPrice ? competition.ticketPrice/100 : 9.99).toFixed(2)} each
                     </>
                   )}
                 </Button>

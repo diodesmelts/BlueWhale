@@ -141,165 +141,104 @@ export default function CompetitionCard({
       />
       
       <div 
-        className={`competition-card p-6 mb-5 transition duration-300 rounded-2xl bg-white shadow-lg hover:shadow-xl border border-gray-100 ${
+        className={`competition-card p-5 mb-4 transition duration-300 rounded-xl bg-white shadow-md hover:shadow-lg border border-gray-100 ${
           isEntered ? 'border-l-4 border-rose-500' : ''
         } cursor-pointer`}
         onClick={() => setLocation(`/competitions/${id}`)}
       >
-        <div className="flex flex-col md:flex-row">
-          <div className="flex-shrink-0 md:w-1/4 lg:w-1/5 mb-5 md:mb-0">
-            <div className="relative">
-              <div 
-                className="w-full h-44 bg-gray-200 rounded-xl bg-center bg-cover shadow-md overflow-hidden"
-                style={{ backgroundImage: `url(${image})` }}
-              >
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60"></div>
-              </div>
-              
+        <div className="flex flex-col">
+          {/* Competition title and verification badge */}
+          <div className="flex items-start justify-between mb-4">
+            <h3 className="text-xl font-bold text-gray-800 flex items-center">
+              {title}
               {isVerified && (
-                <div className="absolute top-2 left-2 bg-blue-500 text-white text-xs px-2 py-1 rounded-full flex items-center">
+                <Badge 
+                  variant="default" 
+                  className="ml-2 bg-blue-100 text-blue-600 hover:bg-blue-200 text-xs font-normal flex items-center"
+                >
                   <i className="fas fa-check-circle mr-1"></i> Verified
-                </div>
+                </Badge>
               )}
-              
-              {isEndingSoon && (
-                <div className="absolute top-2 right-2 bg-orange-500 text-white text-xs px-2 py-1 rounded-full flex items-center">
-                  <i className="fas fa-clock mr-1"></i> Ending Soon
-                </div>
-              )}
-            </div>
+            </h3>
             
-            <div className="flex items-center mt-3 space-x-2">
-              <Badge 
-                variant="default" 
-                className="bg-emerald-100 text-emerald-600 hover:bg-emerald-200 text-xs font-medium px-2.5 py-1.5"
+            <div className="flex items-center space-x-2">
+              <button 
+                className={`p-2 rounded-full hover:bg-gray-100 transition-colors ${
+                  isBookmarked ? 'text-indigo-500' : 'text-gray-400 hover:text-indigo-500'
+                }`}
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent card click event
+                  onBookmark(id);
+                }}
               >
-                <i className="fas fa-gift mr-1"></i> Prize
-              </Badge>
+                <i className={isBookmarked ? 'fas fa-bookmark' : 'far fa-bookmark'}></i>
+              </button>
             </div>
           </div>
           
-          <div className="md:ml-6 flex-1">
-            <div className="flex items-start justify-between">
+          {/* Key information in 4 equal panels */}
+          <div className="grid grid-cols-4 gap-3 mb-4">
+            <div className="flex flex-col items-center">
+              <div className="text-xl text-center mb-1">🏆</div>
+              <div className="text-base font-bold text-center">${prize.toLocaleString()}</div>
+              <div className="text-xs text-gray-500 text-center">Prize</div>
+            </div>
+            
+            <div className="flex flex-col items-center">
+              <div className="text-xl text-center mb-1">👥</div>
+              <div className="text-base font-bold text-center">{entries}</div>
+              <div className="text-xs text-gray-500 text-center">Entries</div>
+            </div>
+            
+            <div className="flex flex-col items-center">
+              <div className="text-xl text-center mb-1">⏰</div>
+              <div className="text-base font-bold text-center">
+                {daysRemaining.includes("Ends in") ? daysRemaining.replace("Ends in ", "") : "5 days left"}
+              </div>
+              <div className="text-xs text-gray-500 text-center">Ends In</div>
+            </div>
+            
+            <div className="flex flex-col items-center">
+              <div className="text-xl text-center mb-1">🌎</div>
+              <div className="text-base font-bold text-center">{eligibility}</div>
+              <div className="text-xs text-gray-500 text-center">Eligibility</div>
+            </div>
+          </div>
+          
+          {/* Ticket information */}
+          <div className="bg-blue-50 p-3 rounded-lg mb-4">
+            <div className="flex justify-between items-center">
               <div>
-                <h3 className="text-xl font-bold text-gray-800 flex items-center">
-                  {title}
-                  {isVerified && (
-                    <Badge 
-                      variant="default" 
-                      className="ml-2 bg-emerald-100 text-emerald-600 hover:bg-emerald-200 text-xs font-normal flex items-center"
-                    >
-                      <i className="fas fa-check-circle mr-1"></i> Verified
-                    </Badge>
-                  )}
-                  {isEntered && (
-                    <Badge 
-                      variant="default" 
-                      className="ml-2 bg-rose-100 text-rose-600 hover:bg-rose-200 text-xs font-normal"
-                    >
-                      Entered
-                    </Badge>
-                  )}
-                </h3>
-                <p className="text-sm text-gray-500 mt-1">
-                  Organized by <span className="font-medium text-gray-700">{organizer}</span>
-                </p>
+                <div className="text-sm text-gray-500">Price per ticket</div>
+                <div className="text-lg font-bold text-blue-700">${(ticketPrice ? ticketPrice/100 : 0).toFixed(2)}</div>
               </div>
               
-              <div className="flex items-center space-x-2">
-                <button 
-                  className={`p-2 rounded-full hover:bg-gray-100 transition-colors ${
-                    isBookmarked ? 'text-indigo-500' : 'text-gray-400 hover:text-indigo-500'
-                  }`}
-                  onClick={(e) => {
-                    e.stopPropagation(); // Prevent card click event
-                    onBookmark(id);
-                  }}
-                >
-                  <i className={isBookmarked ? 'fas fa-bookmark' : 'far fa-bookmark'}></i>
-                </button>
-                <button 
-                  className={`p-2 rounded-full hover:bg-gray-100 transition-colors ${
-                    isLiked ? 'text-rose-500' : 'text-gray-400 hover:text-rose-500'
-                  }`}
-                  onClick={(e) => {
-                    e.stopPropagation(); // Prevent card click event
-                    onLike(id);
-                  }}
-                >
-                  <i className={isLiked ? 'fas fa-heart' : 'far fa-heart'}></i>
-                </button>
-              </div>
-            </div>
-            
-            <p className="text-sm text-gray-600 my-3 line-clamp-2">{description}</p>
-            
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4">
-              <div className="flex flex-col bg-rose-50 rounded-lg p-2 text-center">
-                <span className="text-xs text-gray-500 mb-1">Prize Value</span>
-                <span className="text-lg font-bold text-rose-600">${prize.toLocaleString()}</span>
-              </div>
-              <div className="flex flex-col bg-indigo-50 rounded-lg p-2 text-center">
-                <span className="text-xs text-gray-500 mb-1">Participants</span>
-                <span className="text-lg font-bold text-indigo-600">{entries.toLocaleString()}</span>
-              </div>
-              <div className="flex flex-col bg-amber-50 rounded-lg p-2 text-center">
-                <span className="text-xs text-gray-500 mb-1">Eligibility</span>
-                <span className="text-sm font-bold text-amber-600">{eligibility}</span>
-              </div>
-              <div className="flex flex-col bg-emerald-50 rounded-lg p-2 text-center">
-                <span className="text-xs text-gray-500 mb-1">Timeframe</span>
-                <span className={`text-sm font-bold ${isEndingSoon ? 'text-rose-600' : 'text-emerald-600'}`}>
-                  {daysRemaining}
-                </span>
-              </div>
-            </div>
-            
-            {isEntered ? (
-              <div className="flex items-center mt-4">
-                <Button 
-                  onClick={(e) => {
-                    e.stopPropagation(); // Prevent card click event
-                    setLocation(`/competitions/${id}`);
-                  }}
-                  className="bg-gradient-to-r from-indigo-500 to-blue-600 hover:from-indigo-600 hover:to-blue-700 text-white text-sm font-medium px-6 py-2 mr-4 rounded-full transition-all duration-300 shadow-md hover:shadow-lg"
-                >
-                  <i className="fas fa-eye mr-2"></i>
-                  View Details
-                </Button>
-                {entryProgress.length > 0 && entryProgress.every(step => step === 1) && (
-                  <Button 
-                    onClick={(e) => {
-                      e.stopPropagation(); // Prevent card click event
-                      setTicketModalOpen(true);
-                    }}
-                    className="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white text-sm font-medium px-6 py-2 rounded-full transition-all duration-300 shadow-md hover:shadow-lg"
-                  >
-                    <i className="fas fa-ticket mr-2"></i>
-                    Get Tickets
-                  </Button>
-                )}
-              </div>
-            ) : (
-              <div className="flex items-center mt-4">
-                <Button 
-                  onClick={(e) => {
-                    e.stopPropagation(); // Prevent card click event
-                    handleEnterCompetition();
-                  }}
-                  disabled={isPaying}
-                  className="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white text-sm font-medium px-6 py-2 mr-4 rounded-full transition-all duration-300 shadow-md hover:shadow-lg pulse-glow wiggle-on-hover"
-                >
-                  <i className="fas fa-trophy mr-2 trophy-icon"></i>
-                  {ticketPrice && ticketPrice > 0 ? `Get Tickets - $${(ticketPrice/100).toFixed(2)}` : "Enter Now"}
-                </Button>
-                <div className="flex items-center text-sm text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
-                  <i className="fas fa-list-check mr-2 text-indigo-500"></i>
-                  <span>{entrySteps.length} entry steps</span>
+              <div>
+                <div className="text-sm text-gray-500">Available tickets</div>
+                <div className="text-lg font-bold text-blue-700">
+                  {(totalTickets && soldTickets) ? (totalTickets - soldTickets) : 1766} / {totalTickets || 10000}
                 </div>
               </div>
-            )}
+              
+              <div>
+                <div className="text-sm text-gray-500">Maximum per user</div>
+                <div className="text-lg font-bold text-blue-700">{maxTicketsPerUser || 3}</div>
+              </div>
+            </div>
           </div>
+
+          {/* Button */}
+          <Button 
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent card click event
+              isEntered ? setTicketModalOpen(true) : handleEnterCompetition();
+            }}
+            disabled={isPaying}
+            className="w-full bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-medium py-3 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg"
+          >
+            <i className="fas fa-ticket-alt mr-2"></i>
+            Get Tickets
+          </Button>
         </div>
       </div>
     </>
