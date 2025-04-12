@@ -3,9 +3,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Loader2, Plus, Shield, Trophy } from "lucide-react";
+import { useAdmin } from "@/hooks/use-admin";
 import { 
   Card, 
-  CardContent, 
+  CardContent,
   CardDescription, 
   CardFooter, 
   CardHeader, 
@@ -92,7 +93,7 @@ export default function AdminPage() {
   };
 
   const onSubmit = async (data: CompetitionFormValues) => {
-    setIsLoading(true);
+    setFormLoading(true);
     
     try {
       // Format the date as ISO string
@@ -125,7 +126,7 @@ export default function AdminPage() {
         variant: "destructive",
       });
     } finally {
-      setIsLoading(false);
+      setFormLoading(false);
     }
   };
 
@@ -425,7 +426,7 @@ export default function AdminPage() {
                 <Button 
                   type="submit" 
                   className="bg-blue-700 hover:bg-blue-800"
-                  disabled={isLoading}
+                  disabled={formLoading}
                 >
                   {formLoading ? (
                     <>
