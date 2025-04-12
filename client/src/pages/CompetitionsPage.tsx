@@ -6,13 +6,17 @@ import CompetitionCard from "@/components/dashboard/CompetitionCard";
 import { CompetitionWithEntryStatus } from "@shared/types";
 
 export default function CompetitionsPage() {
-  const [platform, setPlatform] = useState("all");
-  const [type, setType] = useState("all");
+  const [prizeValue, setPrizeValue] = useState("all");
   const [sortBy, setSortBy] = useState("popularity");
+  // For backward compatibility, keeping these available but not using them
+  const type = prizeValue;
+  const setType = setPrizeValue;
+  const platform = "all";
+  const setPlatform = () => {}; // Empty function since we're not using platform anymore
 
   // Fetch competitions
-  const { data: competitions, isLoading } = useQuery({
-    queryKey: ["/api/competitions", platform, type, sortBy],
+  const { data: competitions, isLoading } = useQuery<CompetitionWithEntryStatus[]>({
+    queryKey: ["/api/competitions", prizeValue, sortBy],
   });
 
   // Handle competition entry
@@ -66,33 +70,18 @@ export default function CompetitionsPage() {
       {/* Filters */}
       <div className="bg-white p-4 rounded-t-lg border-b border-gray flex flex-wrap items-center gap-4">
         <div className="flex items-center">
-          <span className="text-sm font-medium text-gray-600 mr-2">Platform:</span>
-          <Select value={platform} onValueChange={setPlatform}>
-            <SelectTrigger className="border-gray rounded-md text-sm h-8 w-[140px]">
-              <SelectValue placeholder="All Platforms" />
+          <span className="text-sm font-medium text-gray-600 mr-2">
+            <i className="fas fa-gift text-amber-500 mr-1"></i> Prize Value:
+          </span>
+          <Select value={prizeValue} onValueChange={setPrizeValue}>
+            <SelectTrigger className="border-gray rounded-md text-sm h-8 w-[180px]">
+              <SelectValue placeholder="All Prize Values" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Platforms</SelectItem>
-              <SelectItem value="instagram">Instagram</SelectItem>
-              <SelectItem value="facebook">Facebook</SelectItem>
-              <SelectItem value="twitter">Twitter</SelectItem>
-              <SelectItem value="tiktok">TikTok</SelectItem>
-              <SelectItem value="website">Website</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-        
-        <div className="flex items-center">
-          <span className="text-sm font-medium text-gray-600 mr-2">Type:</span>
-          <Select value={type} onValueChange={setType}>
-            <SelectTrigger className="border-gray rounded-md text-sm h-8 w-[140px]">
-              <SelectValue placeholder="All Types" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Types</SelectItem>
-              <SelectItem value="giveaway">Giveaway</SelectItem>
-              <SelectItem value="sweepstakes">Sweepstakes</SelectItem>
-              <SelectItem value="contest">Contest</SelectItem>
+              <SelectItem value="all">All Prize Values</SelectItem>
+              <SelectItem value="high">High Value ($1000+)</SelectItem>
+              <SelectItem value="medium">Medium Value ($100-$999)</SelectItem>
+              <SelectItem value="low">Low Value (Under $100)</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -117,8 +106,7 @@ export default function CompetitionsPage() {
             variant="ghost" 
             className="text-[#153B84] hover:bg-gray-100 text-sm font-medium h-8"
             onClick={() => {
-              setPlatform("all");
-              setType("all");
+              setPrizeValue("all");
               setSortBy("popularity");
             }}
           >
