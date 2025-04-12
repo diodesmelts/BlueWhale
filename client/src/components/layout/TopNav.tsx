@@ -25,8 +25,8 @@ export default function TopNav() {
   const isActive = (path: string) => location === path;
 
   return (
-    <header className="sticky top-0 transition-all duration-300 bg-gradient-to-r from-rose-500 to-pink-600 text-white z-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header className="sticky top-0 shadow-md transition-all duration-300 bg-rose-500 text-white z-20">
+      <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-8">
             {/* Logo */}

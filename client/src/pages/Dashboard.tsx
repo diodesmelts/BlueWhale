@@ -63,11 +63,11 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div className="container mx-auto px-4 py-6">
       {/* Dashboard Header */}
-      <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-8">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-8 bg-white p-6 rounded-xl shadow-md border-l-4 border-rose-500">
         <div>
-          <h1 className="text-3xl font-bold text-gray-800">Competition Dashboard</h1>
+          <h1 className="text-2xl font-bold text-gray-900">Competition Dashboard</h1>
           <p className="text-base text-gray-600 mt-1">Discover trending competitions and track your entries</p>
         </div>
         <div className="mt-4 md:mt-0">
