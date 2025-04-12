@@ -42,12 +42,27 @@ export default function EntryProgress({ steps, progress, onComplete, competition
     setShowTicketModal(true);
   };
   
-  // If steps are already complete and button is clicked, 
-  // automatically open ticket modal on render
-  // Using the fixed competition object with ticket price
-  // Force show ticket modal when component mounts if entry is complete
+  // Close modal and reset processing states
+  const closeTicketModal = () => {
+    setShowTicketModal(false);
+    setIsPurchaseProcessing(false);
+  };
+  
+  // Handle clicks outside the modal and esc key
   useEffect(() => {
-    // If entry is fully completed, show the modal directly
+    const handleEscKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && showTicketModal) {
+        closeTicketModal();
+      }
+    };
+    
+    window.addEventListener('keydown', handleEscKey);
+    return () => window.removeEventListener('keydown', handleEscKey);
+  }, [showTicketModal]);
+  
+  // If steps are fully completed, show the ticket modal
+  useEffect(() => {
+    // Show modal only when steps are complete and it's not already visible
     if (isFullyCompleted && !showTicketModal) {
       const timer = setTimeout(() => {
         setShowTicketModal(true);
@@ -137,7 +152,7 @@ export default function EntryProgress({ steps, progress, onComplete, competition
       {competitionWithTicket && (
         <TicketPurchaseModal
           isOpen={showTicketModal}
-          onClose={() => setShowTicketModal(false)}
+          onClose={closeTicketModal}
           onPurchase={handlePurchaseTickets}
           isProcessing={isPurchaseProcessing}
           competition={{
