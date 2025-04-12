@@ -133,10 +133,16 @@ export class MemStorage implements IStorage {
   async listCompetitions(
     filter?: { platform?: string; type?: string; },
     sort?: string,
-    tab?: string
+    tab?: string,
+    includeDeleted: boolean = false
   ): Promise<Competition[]> {
-    // Get all competitions, but filter out any deleted ones
-    let competitions = Array.from(this.competitions.values()).filter(comp => !comp.isDeleted);
+    // Get all competitions, filter out deleted ones unless includeDeleted is true
+    let competitions = Array.from(this.competitions.values());
+    
+    // Only filter out deleted competitions if includeDeleted is false
+    if (!includeDeleted) {
+      competitions = competitions.filter(comp => !comp.isDeleted);
+    }
     
     // Apply filters
     if (filter) {
