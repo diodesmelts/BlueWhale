@@ -122,7 +122,12 @@ export class MemStorage implements IStorage {
   
   // Competition methods
   async getCompetition(id: number): Promise<Competition | undefined> {
-    return this.competitions.get(id);
+    const competition = this.competitions.get(id);
+    // Return undefined if either competition doesn't exist or is deleted
+    if (!competition || competition.isDeleted) {
+      return undefined;
+    }
+    return competition;
   }
   
   async listCompetitions(
@@ -209,20 +214,14 @@ export class MemStorage implements IStorage {
       return false;
     }
     
-    // Delete the competition
-    this.competitions.delete(id);
-    
-    // Also delete any related user entries and wins
-    for (const [entryId, entry] of this.userEntries.entries()) {
-      if (entry.competitionId === id) {
-        this.userEntries.delete(entryId);
-      }
-    }
-    
-    for (const [winId, win] of this.userWins.entries()) {
-      if (win.competitionId === id) {
-        this.userWins.delete(winId);
-      }
+    // Instead of deleting, mark as deleted
+    const competition = this.competitions.get(id);
+    if (competition) {
+      const updatedCompetition = { 
+        ...competition, 
+        isDeleted: true 
+      };
+      this.competitions.set(id, updatedCompetition);
     }
     
     return true;

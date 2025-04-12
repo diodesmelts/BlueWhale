@@ -15,6 +15,7 @@ export interface CompetitionWithEntryStatus {
   endDate: string;
   entrySteps: EntryStep[];
   isVerified: boolean;
+  isDeleted?: boolean; // Flag to indicate if competition has been deleted
   createdAt: string;
   
   // Ticket-related fields

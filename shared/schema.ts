@@ -34,6 +34,7 @@ export const competitions = pgTable("competitions", {
   endDate: timestamp("end_date").notNull(),
   entrySteps: jsonb("entry_steps").notNull().$type<EntryStep[]>(),
   isVerified: boolean("is_verified").default(false),
+  isDeleted: boolean("is_deleted").default(false), // Flag for soft deletion
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -110,6 +111,7 @@ export const insertCompetitionSchema = createInsertSchema(competitions).pick({
   endDate: true,
   entrySteps: true,
   isVerified: true,
+  isDeleted: true,
 });
 
 export const insertUserEntrySchema = createInsertSchema(userEntries).pick({
