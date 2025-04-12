@@ -112,16 +112,21 @@ export default function EntryProgress({ steps, progress, onComplete, competition
         const responseData = await res.json();
         
         // If we get a 400 error with "Already entered this competition"
-        // Redirect to payment endpoint directly
+        // Continue processing as a direct ticket purchase
         if (res.status === 400 && responseData?.message === "Already entered this competition") {
-          // This competition is already entered, so let's directly redirect to payment
-          toast({
-            title: 'Already Entered',
-            description: "You've already entered this competition. Redirecting to payment...",
-          });
-          
-          // Simulate successful completion
-          setTimeout(() => {
+          // Make a direct ticket purchase instead
+          apiRequest('POST', `/api/competitions/${competitionWithTicket.id}/purchase-tickets`, {
+            ticketCount,
+            ticketPrice: competitionWithTicket.ticketPrice
+          })
+          .then(async (purchaseRes) => {
+            // Handle the ticket purchase response
+            if (!purchaseRes.ok) {
+              const errorData = await purchaseRes.json();
+              throw new Error(errorData?.message || 'Failed to purchase tickets');
+            }
+            
+            // Successful ticket purchase
             const totalPrice = (competitionWithTicket.ticketPrice * ticketCount) / 100;
             toast({
               title: 'Tickets Purchased',
@@ -140,9 +145,21 @@ export default function EntryProgress({ steps, progress, onComplete, competition
               });
               window.dispatchEvent(event);
             }
-          }, 1500);
+            
+            return;
+          })
+          .catch(purchaseError => {
+            // If there's an error with direct purchase, show it
+            console.error('Error purchasing tickets:', purchaseError);
+            toast({
+              title: 'Error',
+              description: purchaseError.message,
+              variant: 'destructive',
+            });
+            setIsPurchaseProcessing(false);
+          });
           
-          return; // Don't throw error for this case
+          return; // Don't continue processing, we're handling it with the direct purchase
         }
         
         // For other errors, throw them to be caught by the catch block
