@@ -29,6 +29,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.status(200).json({ isAdmin: true });
   });
   
+  // User management routes (admin only)
+  app.get("/api/admin/users", isAdmin, async (req, res) => {
+    try {
+      const users = await storage.listUsers();
+      res.status(200).json(users);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch users" });
+    }
+  });
+  
+  // Update user permissions
+  app.patch("/api/admin/users/:id", isAdmin, async (req, res) => {
+    try {
+      const userId = parseInt(req.params.id);
+      const updateSchema = z.object({
+        isPremium: z.boolean().optional(),
+        isAdmin: z.boolean().optional()
+      });
+
+      const validatedData = updateSchema.parse(req.body);
+      const updatedUser = await storage.updateUser(userId, validatedData);
+      res.status(200).json(updatedUser);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ message: "Invalid update data", errors: error.errors });
+      } else {
+        res.status(500).json({ message: "Failed to update user" });
+      }
+    }
+  });
+  
   app.post("/api/admin/competitions", isAdmin, async (req, res) => {
     try {
       const validatedData = insertCompetitionSchema.parse(req.body);
