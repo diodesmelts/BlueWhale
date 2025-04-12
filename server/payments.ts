@@ -9,13 +9,19 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
 
 // Configure Apple Pay
 try {
-  stripe.applePayDomains.create({
-    domain_name: process.env.APP_DOMAIN || 'localhost',
-  }).then(() => {
-    console.log('Apple Pay domain registration successful');
-  }).catch(err => {
-    console.warn('Apple Pay domain registration failed:', err.message);
-  });
+  // For development environment, we'll skip domain registration
+  // In production, you would use a proper domain like 'example.com'
+  if (process.env.NODE_ENV === 'production' && process.env.APP_DOMAIN) {
+    stripe.applePayDomains.create({
+      domain_name: process.env.APP_DOMAIN,
+    }).then(() => {
+      console.log('Apple Pay domain registration successful');
+    }).catch(err => {
+      console.warn('Apple Pay domain registration failed:', err.message);
+    });
+  } else {
+    console.log('Skipping Apple Pay domain registration in development environment');
+  }
 } catch (error) {
   console.warn('Error setting up Apple Pay:', error);
 }
@@ -364,8 +370,8 @@ export function setupPaymentRoutes(app: Express) {
 
       // Create the payment - $9.99 for premium upgrade
       const paymentIntent = await stripe.paymentIntents.create({
-        amount: 999, // $9.99 in cents
-        currency: "usd",
+        amount: 999, // £9.99 in pence
+        currency: "gbp",
         customer: user.stripeCustomerId,
         payment_method: paymentMethodId,
         off_session: true,
@@ -492,8 +498,8 @@ export function setupPaymentRoutes(app: Express) {
       
       // Create the payment
       const paymentIntent = await stripe.paymentIntents.create({
-        amount: totalAmount, // amount in cents
-        currency: "usd",
+        amount: totalAmount, // amount in pence
+        currency: "gbp",
         customer: user.stripeCustomerId,
         payment_method: paymentMethodId,
         off_session: true,
@@ -595,8 +601,8 @@ export function setupPaymentRoutes(app: Express) {
 
       // Validate the amount
       const amountInCents = Math.round(parseFloat(amount) * 100);
-      if (isNaN(amountInCents) || amountInCents < 500) { // Minimum $5.00
-        return res.status(400).json({ error: "Invalid amount. Minimum funding amount is $5.00" });
+      if (isNaN(amountInCents) || amountInCents < 500) { // Minimum £5.00
+        return res.status(400).json({ error: "Invalid amount. Minimum funding amount is £5.00" });
       }
       
       // Get user for Stripe customer ID
@@ -627,7 +633,7 @@ export function setupPaymentRoutes(app: Express) {
       // Create the payment
       const paymentIntent = await stripe.paymentIntents.create({
         amount: amountInCents,
-        currency: "usd",
+        currency: "gbp",
         customer: user.stripeCustomerId,
         payment_method: paymentMethodId,
         off_session: true,
@@ -637,14 +643,14 @@ export function setupPaymentRoutes(app: Express) {
           type: "wallet_funding",
           amount: amountInCents.toString()
         },
-        description: `Wallet funding ($${(amountInCents / 100).toFixed(2)})`
+        description: `Wallet funding (£${(amountInCents / 100).toFixed(2)})`
       });
 
       // If payment is successful, update the user's wallet balance
       if (paymentIntent.status === "succeeded") {
         // Get user's current wallet balance
         const currentBalance = user.walletBalance || 0;
-        const newBalance = currentBalance + (amountInCents / 100); // Convert back to dollars
+        const newBalance = currentBalance + (amountInCents / 100); // Convert back to pounds
 
         await storage.updateUser(userId, {
           walletBalance: newBalance
