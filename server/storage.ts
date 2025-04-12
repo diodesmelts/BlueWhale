@@ -362,6 +362,10 @@ export class MemStorage implements IStorage {
     };
     const user = await this.createUser(demoUser);
     
+    // Update user to have admin privileges
+    const updatedUser = { ...user, isAdmin: true };
+    this.users.set(user.id, updatedUser);
+    
     // Create demo competitions
     const competitionData: InsertCompetition[] = [
       {
