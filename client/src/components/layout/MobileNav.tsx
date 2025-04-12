@@ -1,15 +1,22 @@
 import { Link, useLocation } from "wouter";
+import { useAdmin } from "@/hooks/use-admin";
 
 export default function MobileNav() {
   const [location] = useLocation();
+  const { isAdmin } = useAdmin();
   
-  const navItems = [
+  // Base navigation items
+  const baseNavItems = [
     { icon: "fas fa-home", label: "Home", path: "/" },
     { icon: "fas fa-trophy", label: "Competitions", path: "/competitions" },
     { icon: "fas fa-clipboard-check", label: "Entries", path: "/my-entries" },
     { icon: "fas fa-medal", label: "Wins", path: "/my-wins" },
-    { icon: "fas fa-user", label: "Profile", path: "/profile" },
   ];
+
+  // Add admin or profile as the last icon
+  const navItems = isAdmin 
+    ? [...baseNavItems, { icon: "fas fa-shield-alt", label: "Admin", path: "/admin" }]
+    : [...baseNavItems, { icon: "fas fa-user", label: "Profile", path: "/profile" }];
 
   const isActive = (path: string) => location === path;
 

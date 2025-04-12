@@ -9,18 +9,26 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Bell, Crown } from "lucide-react";
+import { Bell, Crown, ShieldCheck } from "lucide-react";
+import { useAdmin } from "@/hooks/use-admin";
 
 export default function TopNav() {
   const [location] = useLocation();
+  const { isAdmin } = useAdmin();
 
-  const navItems = [
+  // Base navigation items
+  const baseNavItems = [
     { icon: "fas fa-home", label: "Dashboard", path: "/" },
     { icon: "fas fa-trophy", label: "Competitions", path: "/competitions" },
     { icon: "fas fa-clipboard-check", label: "My Entries", path: "/my-entries" },
     { icon: "fas fa-medal", label: "My Wins", path: "/my-wins" },
     { icon: "fas fa-chart-line", label: "Leaderboard", path: "/leaderboard" },
   ];
+
+  // Add admin link if user is admin
+  const navItems = isAdmin 
+    ? [...baseNavItems, { icon: "fas fa-shield-alt", label: "Admin", path: "/admin" }]
+    : baseNavItems;
 
   const isActive = (path: string) => location === path;
 

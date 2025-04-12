@@ -45,12 +45,19 @@ const competitionSchema = z.object({
 type CompetitionFormValues = z.infer<typeof competitionSchema>;
 
 export default function AdminPage() {
-  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [formLoading, setFormLoading] = useState(false);
   const [entrySteps, setEntrySteps] = useState([
     { id: 1, description: "", link: "" }
   ]);
   const [, setLocation] = useLocation();
+  const { isAdmin, isLoading: adminLoading, error } = useAdmin();
+
+  // Redirect if not admin
+  useEffect(() => {
+    if (!adminLoading && isAdmin === false) {
+      setLocation("/");
+    }
+  }, [isAdmin, adminLoading, setLocation]);
 
   const form = useForm<CompetitionFormValues>({
     resolver: zodResolver(competitionSchema),
@@ -69,27 +76,6 @@ export default function AdminPage() {
       isVerified: false
     }
   });
-
-  // Check if user is admin
-  useEffect(() => {
-    const checkAdminStatus = async () => {
-      try {
-        const response = await fetch("/api/admin/check");
-        if (response.ok) {
-          setIsAdmin(true);
-        } else {
-          setIsAdmin(false);
-          setLocation("/");
-        }
-      } catch (error) {
-        console.error("Failed to check admin status:", error);
-        setIsAdmin(false);
-        setLocation("/");
-      }
-    };
-
-    checkAdminStatus();
-  }, [setLocation]);
 
   const addEntryStep = () => {
     const newStep = {
@@ -441,7 +427,7 @@ export default function AdminPage() {
                   className="bg-blue-700 hover:bg-blue-800"
                   disabled={isLoading}
                 >
-                  {isLoading ? (
+                  {formLoading ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                       Creating...
