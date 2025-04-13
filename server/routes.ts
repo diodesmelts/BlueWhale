@@ -123,7 +123,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const competitionId = parseInt(req.params.id);
       
-      // Custom update schema with specific handling for endDate
+      // Custom update schema with specific handling for endDate and drawTime
       const updateSchema = z.object({
         title: z.string().optional(),
         organizer: z.string().optional(),
@@ -142,6 +142,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
         endDate: z.string()
           .transform(dateStr => {
             // Create a Date object from the string
+            const date = new Date(dateStr);
+            if (isNaN(date.getTime())) {
+              throw new Error("Invalid date format");
+            }
+            return date;
+          })
+          .optional(),
+        // Add drawTime field with same validation as endDate
+        drawTime: z.string()
+          .transform(dateStr => {
             const date = new Date(dateStr);
             if (isNaN(date.getTime())) {
               throw new Error("Invalid date format");
