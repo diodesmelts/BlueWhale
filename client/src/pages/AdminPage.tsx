@@ -32,10 +32,12 @@ const competitionSchema = z.object({
   // Platform is now optional with a default value
   platform: z.string().default("Other"),
   type: z.string().min(1, "Type is required"),
+  category: z.string().default("other"), // Added category field for family, appliances, cash, other
   prize: z.coerce.number().min(1, "Prize must be at least $1"),
   entries: z.coerce.number().default(0),
   eligibility: z.string().min(1, "Eligibility is required"),
   endDate: z.coerce.date().refine(date => date > new Date(), "End date must be in the future"),
+  drawTime: z.coerce.date().refine(date => date > new Date(), "Draw date must be in the future"), // Added draw time
   // Entry steps are now optional with an empty default array
   entrySteps: z.array(
     z.object({
@@ -45,6 +47,10 @@ const competitionSchema = z.object({
     })
   ).default([]),
   isVerified: z.boolean().default(false),
+  ticketPrice: z.coerce.number().default(0), // Added ticket price
+  maxTicketsPerUser: z.coerce.number().default(10), // Added max tickets per user
+  totalTickets: z.coerce.number().default(1000), // Added total tickets
+  soldTickets: z.coerce.number().default(0), // Added sold tickets
 });
 
 type CompetitionFormValues = z.infer<typeof competitionSchema>;
@@ -70,12 +76,18 @@ export default function AdminPage() {
       image: "",
       platform: "Other", // Default, but hidden from UI
       type: "Giveaway",
+      category: "other", // Default category
       prize: 0,
       entries: 0,
       eligibility: "Worldwide",
       endDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
+      drawTime: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
       entrySteps: [], // Empty array as we're removing this field
-      isVerified: false
+      isVerified: false,
+      ticketPrice: 0,
+      maxTicketsPerUser: 10,
+      totalTickets: 1000,
+      soldTickets: 0
     }
   });
 
@@ -83,10 +95,11 @@ export default function AdminPage() {
     setFormLoading(true);
     
     try {
-      // Format the date as ISO string
+      // Format the dates as ISO strings
       const formattedData = {
         ...data,
         endDate: data.endDate.toISOString(),
+        drawTime: data.drawTime.toISOString(),
       };
 
       const response = await apiRequest("POST", "/api/admin/competitions", formattedData);
@@ -240,6 +253,38 @@ export default function AdminPage() {
                 
                 <FormField
                   control={form.control}
+                  name="category"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Category</FormLabel>
+                      <Select 
+                        onValueChange={field.onChange} 
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select category" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="family">Family</SelectItem>
+                          <SelectItem value="cash">Cash</SelectItem>
+                          <SelectItem value="appliances">Appliances</SelectItem>
+                          <SelectItem value="other">Other</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormDescription>
+                        Competition category determines which section it appears in
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <FormField
+                  control={form.control}
                   name="eligibility"
                   render={({ field }) => (
                     <FormItem>
@@ -261,6 +306,28 @@ export default function AdminPage() {
                           <SelectItem value="Asia">Asia</SelectItem>
                         </SelectContent>
                       </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                
+                <FormField
+                  control={form.control}
+                  name="ticketPrice"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Ticket Price (p)</FormLabel>
+                      <FormControl>
+                        <Input 
+                          type="number" 
+                          min="0" 
+                          placeholder="0" 
+                          {...field} 
+                        />
+                      </FormControl>
+                      <FormDescription>
+                        Price per ticket in pence (e.g. 500 = £5.00)
+                      </FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}

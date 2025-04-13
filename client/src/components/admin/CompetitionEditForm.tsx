@@ -24,6 +24,7 @@ const competitionUpdateSchema = z.object({
   image: z.string().min(1, "Image is required"), // Changed from URL validation to allow file uploads
   platform: z.string().default("Other"),
   // Removed type field as requested
+  category: z.string().default("other"), // Added category field for family, appliances, cash, other
   prize: z.coerce.number().min(1, "Prize must be at least £1"),
   entries: z.coerce.number().default(0),
   // Removed eligibility field as requested
@@ -89,6 +90,7 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
       image: competition.image,
       platform: "Other", // Default value
       // Removed type field
+      category: competition.category || "other", // Category field for family, appliances, cash
       prize: competition.prize,
       entries: competition.entries || 0,
       // Removed eligibility field
@@ -373,6 +375,38 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
         />
         
         {/* Type and Eligibility fields removed as requested */}
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <FormField
+            control={form.control}
+            name="category"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Category</FormLabel>
+                <Select 
+                  onValueChange={field.onChange} 
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select category" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="family">Family</SelectItem>
+                    <SelectItem value="cash">Cash</SelectItem>
+                    <SelectItem value="appliances">Appliances</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormDescription>
+                  Competition category determines which section it appears in
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <FormField
