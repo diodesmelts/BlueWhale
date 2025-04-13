@@ -234,35 +234,16 @@ function CheckoutForm({
           defaultValue="card" 
           className="w-full"
           onValueChange={(value) => {
-            // Only set payment method if Apple Pay is available or if selecting card
-            if (value === 'card' || (value === 'apple_pay' && canUseApplePay)) {
-              setPaymentMethod(value as 'card' | 'apple_pay');
-            }
+            // Only supporting card payments now
+            setPaymentMethod('card');
           }}
         >
-          <TabsList className="grid w-full grid-cols-2">
+          <TabsList className="grid w-full grid-cols-1">
             <TabsTrigger value="card" className="flex items-center gap-2">
               <CreditCard size={16} />
               <span>Card</span>
             </TabsTrigger>
-            <TabsTrigger 
-              value="apple_pay" 
-              className={`flex items-center gap-2 ${!canUseApplePay ? 'opacity-50 cursor-not-allowed' : ''}`}
-              onClick={(e) => {
-                // Prevent tab change if Apple Pay is not available
-                if (!canUseApplePay) {
-                  e.preventDefault();
-                  toast({
-                    title: "Apple Pay Unavailable",
-                    description: applePayError || "Apple Pay is not available in this environment. Please use a card payment instead.",
-                    variant: "destructive"
-                  });
-                }
-              }}
-            >
-              <AppleIcon size={16} />
-              <span>Apple Pay</span>
-            </TabsTrigger>
+            {/* Apple Pay option removed due to Stripe account restrictions */}
           </TabsList>
           
           <TabsContent value="card" className="mt-4">

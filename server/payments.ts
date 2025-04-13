@@ -63,8 +63,8 @@ export function setupPaymentRoutes(app: Express) {
           ...metadata,
           userId
         },
-        payment_method_types: ["card", "apple_pay"],
-        // Enable this when ready for Apple Pay:
+        payment_method_types: ["card"],
+        // Use card payment only (apple_pay requires activation in Stripe dashboard)
         payment_method_options: {
           card: {
             request_three_d_secure: "automatic"
@@ -223,7 +223,7 @@ export function setupPaymentRoutes(app: Express) {
       // Create a setup intent
       const setupIntent = await stripe.setupIntents.create({
         customer: customer.id,
-        payment_method_types: ["card", "apple_pay"],
+        payment_method_types: ["card"],
       });
 
       // Return the client secret to the client
