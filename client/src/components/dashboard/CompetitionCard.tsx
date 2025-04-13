@@ -174,17 +174,17 @@ export default function CompetitionCard({
         </div>
         
         <div className="p-4">
-          {/* Draw countdown timer - more prominent */}
+          {/* Draw countdown timer - super exciting */}
           {drawTime && (
-            <div className="p-3 rounded-lg mb-4 bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 shadow-sm">
-              <div className="flex items-center mb-1">
-                <span className="text-xs font-semibold text-indigo-600 uppercase tracking-wider mr-1">Prize Draw</span>
-                <div className="h-px flex-grow bg-gradient-to-r from-blue-200 to-indigo-200"></div>
+            <div className="p-4 rounded-xl mb-5 bg-gradient-to-r from-blue-100 to-indigo-100 border-2 border-blue-300 shadow-md">
+              <div className="flex items-center mb-2">
+                <span className="text-base font-extrabold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 animate-pulse">PRIZE DRAW</span>
+                <div className="h-0.5 flex-grow bg-gradient-to-r from-blue-300 to-indigo-300 ml-2"></div>
               </div>
               <CountdownTimer 
                 targetDate={drawTime} 
                 compact={true} 
-                className="py-1"
+                className="py-1.5"
               />
             </div>
           )}

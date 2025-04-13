@@ -323,16 +323,16 @@ export default function CompetitionDetailPage() {
             </div>
           </div>
 
-          {/* Countdown timer - exciting design */}
+          {/* Countdown timer - SUPER EXCITING design */}
           {competition.drawTime && (
-            <div className="mb-8 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 rounded-xl p-6 border-2 border-blue-200 shadow-lg">
-              <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center">
-                  <Clock className="h-6 w-6 mr-2 text-blue-600 animate-pulse" />
+            <div className="mb-10 bg-gradient-to-br from-blue-100 via-indigo-100 to-purple-100 rounded-2xl p-8 border-4 border-blue-300 shadow-xl">
+              <div className="flex flex-col md:flex-row items-center justify-between mb-6">
+                <h2 className="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 flex items-center mb-4 md:mb-0">
+                  <Clock className="h-10 w-10 mr-3 text-blue-600 animate-pulse" />
                   PRIZE DRAW COUNTDOWN
                 </h2>
-                <div className="bg-blue-600 text-white text-xs font-bold uppercase tracking-wider px-2 py-1 rounded-full">
-                  WIN BIG!
+                <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-sm font-extrabold uppercase tracking-wider px-6 py-2 rounded-full transform hover:scale-105 transition-transform shadow-md animate-pulse">
+                  WIN BIG NOW!
                 </div>
               </div>
               <div className="mt-4">
@@ -342,8 +342,8 @@ export default function CompetitionDetailPage() {
                   showIcon={false}
                 />
               </div>
-              <div className="mt-4 text-center">
-                <p className="text-sm text-indigo-600 italic">Don't miss your chance to win! Get your tickets now.</p>
+              <div className="mt-8 text-center">
+                <p className="text-xl font-bold text-indigo-700 italic">🎁 Don't miss your chance to win this amazing prize! Time is running out! 🎁</p>
               </div>
             </div>
           )}

@@ -92,9 +92,9 @@ export function CountdownTimer({
   // Format display based on compact mode
   if (compact) {
     return (
-      <div className={`flex items-center gap-1.5 ${className}`}>
-        {showIcon && <Clock className="h-3.5 w-3.5 text-blue-500" />}
-        <div className="text-sm font-bold">
+      <div className={`flex items-center gap-2 ${className}`}>
+        {showIcon && <Clock className="h-5 w-5 text-blue-600 animate-pulse" />}
+        <div className="text-xl font-extrabold">
           {isExpired ? (
             <span className="text-red-500">Expired</span>
           ) : (
@@ -102,7 +102,7 @@ export function CountdownTimer({
               <span className="text-blue-700">{days}d </span>
               <span className="text-indigo-600">{hours}h </span>
               <span className="text-purple-600">{minutes}m </span>
-              <span className="text-rose-600">{seconds}s</span>
+              <span className="text-rose-600 animate-pulse">{seconds}s</span>
             </>
           )}
         </div>
@@ -110,46 +110,52 @@ export function CountdownTimer({
     );
   }
   
-  // Standard display with all time components - more exciting version
+  // Standard display with all time components - SUPER exciting version
   return (
     <div className={`${className}`}>
-      <div className="flex items-center gap-2 mb-3">
-        {showIcon && <Clock className="h-5 w-5 text-blue-600 animate-pulse" />}
-        <span className="font-bold text-lg text-blue-700">
-          {isExpired ? 'Competition closed' : 'COUNTDOWN TO DRAW!'}
+      <div className="flex items-center gap-3 mb-4">
+        {showIcon && <Clock className="h-7 w-7 text-blue-600 animate-pulse" />}
+        <span className="font-extrabold text-2xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600">
+          {isExpired ? 'COMPETITION CLOSED' : 'COUNTDOWN TO WIN!'}
         </span>
       </div>
       
       {!isExpired && (
-        <div className="grid grid-cols-4 gap-3 text-center">
-          <div className="flex flex-col">
-            <div className="bg-gradient-to-b from-blue-500 to-blue-700 rounded-lg px-2 py-3 text-2xl font-bold text-white shadow-md transform hover:scale-105 transition-transform">
-              {days}
+        <>
+          <div className="grid grid-cols-4 gap-4 text-center">
+            <div className="flex flex-col">
+              <div className="bg-gradient-to-b from-blue-500 to-blue-700 rounded-xl px-3 py-6 text-4xl font-extrabold text-white shadow-lg transform hover:scale-105 transition-transform border-4 border-blue-400">
+                {days}
+              </div>
+              <span className="text-base mt-2 font-bold text-blue-800 uppercase">Days</span>
             </div>
-            <span className="text-sm mt-2 font-semibold text-blue-800">Days</span>
+            
+            <div className="flex flex-col">
+              <div className="bg-gradient-to-b from-indigo-500 to-indigo-700 rounded-xl px-3 py-6 text-4xl font-extrabold text-white shadow-lg transform hover:scale-105 transition-transform border-4 border-indigo-400">
+                {hours}
+              </div>
+              <span className="text-base mt-2 font-bold text-indigo-800 uppercase">Hours</span>
+            </div>
+            
+            <div className="flex flex-col">
+              <div className="bg-gradient-to-b from-purple-500 to-purple-700 rounded-xl px-3 py-6 text-4xl font-extrabold text-white shadow-lg transform hover:scale-105 transition-transform border-4 border-purple-400">
+                {minutes}
+              </div>
+              <span className="text-base mt-2 font-bold text-purple-800 uppercase">Mins</span>
+            </div>
+            
+            <div className="flex flex-col">
+              <div className="bg-gradient-to-b from-rose-500 to-rose-700 rounded-xl px-3 py-6 text-4xl font-extrabold text-white shadow-lg animate-pulse border-4 border-rose-400">
+                {seconds}
+              </div>
+              <span className="text-base mt-2 font-bold text-rose-800 uppercase">Secs</span>
+            </div>
           </div>
           
-          <div className="flex flex-col">
-            <div className="bg-gradient-to-b from-indigo-500 to-indigo-700 rounded-lg px-2 py-3 text-2xl font-bold text-white shadow-md transform hover:scale-105 transition-transform">
-              {hours}
-            </div>
-            <span className="text-sm mt-2 font-semibold text-indigo-800">Hours</span>
+          <div className="mt-5 text-center">
+            <p className="text-lg font-bold text-indigo-600 italic animate-pulse">Don't miss your chance to win! Time is running out!</p>
           </div>
-          
-          <div className="flex flex-col">
-            <div className="bg-gradient-to-b from-purple-500 to-purple-700 rounded-lg px-2 py-3 text-2xl font-bold text-white shadow-md transform hover:scale-105 transition-transform">
-              {minutes}
-            </div>
-            <span className="text-sm mt-2 font-semibold text-purple-800">Mins</span>
-          </div>
-          
-          <div className="flex flex-col">
-            <div className="bg-gradient-to-b from-rose-500 to-rose-700 rounded-lg px-2 py-3 text-2xl font-bold text-white shadow-md animate-pulse">
-              {seconds}
-            </div>
-            <span className="text-sm mt-2 font-semibold text-rose-800">Secs</span>
-          </div>
-        </div>
+        </>
       )}
     </div>
   );
