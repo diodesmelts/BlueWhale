@@ -29,6 +29,7 @@ const competitionUpdateSchema = z.object({
   // Removed eligibility field as requested
   // Keep endDate as a simple string - server will validate and convert
   endDate: z.string().min(1, "End date is required"),
+  drawTime: z.string().optional(),
   entrySteps: z.array(
     z.object({
       id: z.number(),
@@ -93,6 +94,7 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
       entries: competition.entries || 0,
       // Removed eligibility field
       endDate: getDateString(competition.endDate),
+      drawTime: competition.drawTime ? competition.drawTime.toString().substring(0, 16) : '', // Format as YYYY-MM-DDThh:mm
       entrySteps: [], // Empty array as we're removing this field
       isVerified: competition.isVerified || false,
       ticketPrice: competition.ticketPrice || 0,

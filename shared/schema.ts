@@ -32,6 +32,7 @@ export const competitions = pgTable("competitions", {
   entries: integer("entries").default(0), // total number of participants
   eligibility: text("eligibility").notNull(), // worldwide, US only, etc.
   endDate: timestamp("end_date").notNull(),
+  drawTime: timestamp("draw_time"), // When the competition draw will occur
   entrySteps: jsonb("entry_steps").notNull().$type<EntryStep[]>(),
   isVerified: boolean("is_verified").default(false),
   isDeleted: boolean("is_deleted").default(false), // Flag for soft deletion
@@ -109,6 +110,7 @@ export const insertCompetitionSchema = createInsertSchema(competitions).pick({
   entries: true,
   eligibility: true,
   endDate: true,
+  drawTime: true,
   entrySteps: true,
   isVerified: true,
   isDeleted: true,
