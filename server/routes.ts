@@ -276,9 +276,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = req.isAuthenticated() ? req.user!.id : 1;
       
       // Use the existing getCompetitionsWithUserStatus method but filter by category
+      const filter: { platform?: string; type?: string; category?: string } = { category };
+      
       const competitions = await storage.getCompetitionsWithUserStatus(
         userId,
-        { category },
+        filter,
         sortBy
       );
       
@@ -324,10 +326,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         ticketNumbers: userEntry ? userEntry.ticketNumbers : [],
         
         // Win information if applicable
-        winDate: userWin ? userWin.createdAt.toISOString() : undefined,
-        claimByDate: userWin ? userWin.claimByDate?.toISOString() : undefined,
-        prizeReceived: userWin ? userWin.prizeReceived : undefined,
-        receivedDate: userWin ? userWin.receivedDate?.toISOString() : undefined,
+        winDate: userWin && userWin.createdAt ? userWin.createdAt.toISOString() : undefined,
+        claimByDate: userWin && userWin.claimByDate ? userWin.claimByDate.toISOString() : undefined,
+        prizeReceived: userWin ? userWin.prizeReceived || false : false,
+        receivedDate: userWin && userWin.receivedDate ? userWin.receivedDate.toISOString() : undefined,
       };
       
       res.json(competitionWithStatus);
