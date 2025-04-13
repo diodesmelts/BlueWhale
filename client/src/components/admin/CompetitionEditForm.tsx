@@ -27,9 +27,8 @@ const competitionUpdateSchema = z.object({
   prize: z.coerce.number().min(1, "Prize must be at least £1"),
   entries: z.coerce.number().default(0),
   // Removed eligibility field as requested
-  // Keep endDate as a simple string - server will validate and convert
-  endDate: z.string().min(1, "End date is required"),
-  drawTime: z.string().optional(),
+  // Removed endDate - we only use drawTime for countdown functionality
+  drawTime: z.string().min(1, "Draw date and time is required"),
   entrySteps: z.array(
     z.object({
       id: z.number(),
@@ -60,8 +59,8 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   // Debug logging to understand the data types we're working with
-  console.log('Competition endDate type:', typeof competition.endDate);
-  console.log('Competition endDate value:', competition.endDate);
+  console.log('Competition drawTime type:', typeof competition.drawTime);
+  console.log('Competition drawTime value:', competition.drawTime);
   
   // Get YYYY-MM-DD from a date object or ISO date string
   function getDateString(dateValue: string | Date | null | undefined): string {
@@ -93,7 +92,7 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
       prize: competition.prize,
       entries: competition.entries || 0,
       // Removed eligibility field
-      endDate: getDateString(competition.endDate),
+      // Removed endDate - we now use drawTime only
       drawTime: competition.drawTime ? competition.drawTime.toString().substring(0, 16) : '', // Format as YYYY-MM-DDThh:mm
       entrySteps: [], // Empty array as we're removing this field
       isVerified: competition.isVerified || false,
@@ -427,24 +426,7 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
           />
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <FormField
-            control={form.control}
-            name="endDate"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>End Date</FormLabel>
-                <FormControl>
-                  <Input 
-                    type="date" 
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          
+        <div>
           <FormField
             control={form.control}
             name="drawTime"
