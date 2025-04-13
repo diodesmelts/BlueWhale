@@ -243,9 +243,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Get user ID from session if authenticated, otherwise use 1 for demo
       const userId = req.isAuthenticated() ? req.user!.id : 1;
       
+      const filter: { platform?: string; type?: string; category?: string } = {};
+      if (platform) filter.platform = platform;
+      if (type) filter.type = type;
+      if (category) filter.category = category;
+      
       const competitions = await storage.getCompetitionsWithUserStatus(
         userId,
-        { platform, type, category },
+        filter,
         sortBy,
         tab
       );

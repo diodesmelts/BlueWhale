@@ -421,16 +421,17 @@ export class MemStorage implements IStorage {
       return {
         ...competition,
         endDate: competition.endDate.toISOString(), // Convert to string for JSON
-        createdAt: competition.createdAt.toISOString(), // Convert to string for JSON
+        drawTime: competition.drawTime ? competition.drawTime.toISOString() : competition.endDate.toISOString(), // Convert to string or use endDate as fallback
+        createdAt: competition.createdAt ? competition.createdAt.toISOString() : new Date().toISOString(), // Convert to string for JSON
         isEntered: !!userEntry,
         entryProgress: userEntry?.entryProgress || Array(competition.entrySteps.length).fill(0),
         isBookmarked: userEntry?.isBookmarked || false,
         isLiked: userEntry?.isLiked || false,
         // Win info if applicable
-        winDate: userWin?.winDate.toISOString(),
-        claimByDate: userWin?.claimByDate.toISOString(),
-        prizeReceived: userWin?.prizeReceived,
-        receivedDate: userWin?.receivedDate?.toISOString()
+        winDate: userWin?.winDate ? userWin.winDate.toISOString() : undefined,
+        claimByDate: userWin?.claimByDate ? userWin.claimByDate.toISOString() : undefined,
+        prizeReceived: userWin?.prizeReceived || false,
+        receivedDate: userWin?.receivedDate ? userWin.receivedDate.toISOString() : undefined
       };
     });
   }
