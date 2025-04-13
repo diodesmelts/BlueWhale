@@ -94,14 +94,15 @@ export function CountdownTimer({
     return (
       <div className={`flex items-center gap-1.5 ${className}`}>
         {showIcon && <Clock className="h-3.5 w-3.5 text-blue-500" />}
-        <div className="text-xs font-medium">
+        <div className="text-sm font-bold">
           {isExpired ? (
             <span className="text-red-500">Expired</span>
           ) : (
             <>
-              <span>{days}d </span>
-              <span>{hours}h </span>
-              <span>{minutes}m</span>
+              <span className="text-blue-700">{days}d </span>
+              <span className="text-indigo-600">{hours}h </span>
+              <span className="text-purple-600">{minutes}m </span>
+              <span className="text-rose-600">{seconds}s</span>
             </>
           )}
         </div>
@@ -109,44 +110,44 @@ export function CountdownTimer({
     );
   }
   
-  // Standard display with all time components
+  // Standard display with all time components - more exciting version
   return (
     <div className={`${className}`}>
-      <div className="flex items-center gap-2 mb-1.5">
-        {showIcon && <Clock className="h-4 w-4 text-blue-500" />}
-        <span className="font-medium text-sm">
-          {isExpired ? 'Competition closed' : 'Draw in:'}
+      <div className="flex items-center gap-2 mb-3">
+        {showIcon && <Clock className="h-5 w-5 text-blue-600 animate-pulse" />}
+        <span className="font-bold text-lg text-blue-700">
+          {isExpired ? 'Competition closed' : 'COUNTDOWN TO DRAW!'}
         </span>
       </div>
       
       {!isExpired && (
-        <div className="grid grid-cols-4 gap-1 text-center">
+        <div className="grid grid-cols-4 gap-3 text-center">
           <div className="flex flex-col">
-            <div className="bg-blue-100 rounded px-2 py-1.5 text-lg font-semibold text-blue-800">
+            <div className="bg-gradient-to-b from-blue-500 to-blue-700 rounded-lg px-2 py-3 text-2xl font-bold text-white shadow-md transform hover:scale-105 transition-transform">
               {days}
             </div>
-            <span className="text-xs mt-1">Days</span>
+            <span className="text-sm mt-2 font-semibold text-blue-800">Days</span>
           </div>
           
           <div className="flex flex-col">
-            <div className="bg-blue-100 rounded px-2 py-1.5 text-lg font-semibold text-blue-800">
+            <div className="bg-gradient-to-b from-indigo-500 to-indigo-700 rounded-lg px-2 py-3 text-2xl font-bold text-white shadow-md transform hover:scale-105 transition-transform">
               {hours}
             </div>
-            <span className="text-xs mt-1">Hours</span>
+            <span className="text-sm mt-2 font-semibold text-indigo-800">Hours</span>
           </div>
           
           <div className="flex flex-col">
-            <div className="bg-blue-100 rounded px-2 py-1.5 text-lg font-semibold text-blue-800">
+            <div className="bg-gradient-to-b from-purple-500 to-purple-700 rounded-lg px-2 py-3 text-2xl font-bold text-white shadow-md transform hover:scale-105 transition-transform">
               {minutes}
             </div>
-            <span className="text-xs mt-1">Mins</span>
+            <span className="text-sm mt-2 font-semibold text-purple-800">Mins</span>
           </div>
           
           <div className="flex flex-col">
-            <div className="bg-blue-100 rounded px-2 py-1.5 text-lg font-semibold text-blue-800">
+            <div className="bg-gradient-to-b from-rose-500 to-rose-700 rounded-lg px-2 py-3 text-2xl font-bold text-white shadow-md animate-pulse">
               {seconds}
             </div>
-            <span className="text-xs mt-1">Secs</span>
+            <span className="text-sm mt-2 font-semibold text-rose-800">Secs</span>
           </div>
         </div>
       )}

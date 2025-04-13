@@ -323,17 +323,28 @@ export default function CompetitionDetailPage() {
             </div>
           </div>
 
-          {/* Countdown timer - only shown if there's a draw time */}
+          {/* Countdown timer - exciting design */}
           {competition.drawTime && (
-            <div className="mb-6 bg-blue-50 rounded-lg p-5 border border-blue-100">
-              <h2 className="text-xl font-bold text-gray-800 mb-3 flex items-center">
-                <Clock className="h-5 w-5 mr-2 text-blue-600" />
-                Prize Draw Countdown
-              </h2>
-              <CountdownTimer 
-                targetDate={competition.drawTime} 
-                className="mt-2"
-              />
+            <div className="mb-8 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 rounded-xl p-6 border-2 border-blue-200 shadow-lg">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center">
+                  <Clock className="h-6 w-6 mr-2 text-blue-600 animate-pulse" />
+                  PRIZE DRAW COUNTDOWN
+                </h2>
+                <div className="bg-blue-600 text-white text-xs font-bold uppercase tracking-wider px-2 py-1 rounded-full">
+                  WIN BIG!
+                </div>
+              </div>
+              <div className="mt-4">
+                <CountdownTimer 
+                  targetDate={competition.drawTime} 
+                  className="mt-2"
+                  showIcon={false}
+                />
+              </div>
+              <div className="mt-4 text-center">
+                <p className="text-sm text-indigo-600 italic">Don't miss your chance to win! Get your tickets now.</p>
+              </div>
             </div>
           )}
 
