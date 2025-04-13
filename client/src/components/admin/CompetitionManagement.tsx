@@ -255,8 +255,8 @@ export default function CompetitionManagement() {
                   <p className="mt-1">{selectedCompetition.isVerified ? "Yes" : "No"}</p>
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium text-gray-500">Entry Fee</h3>
-                  <p className="mt-1">{selectedCompetition.entryFee ? `$${selectedCompetition.entryFee}` : "Free"}</p>
+                  <h3 className="text-sm font-medium text-gray-500">Ticket Price</h3>
+                  <p className="mt-1">{selectedCompetition.ticketPrice ? `$${(selectedCompetition.ticketPrice/100).toFixed(2)}` : "Free"}</p>
                 </div>
               </div>
               

@@ -155,23 +155,10 @@ export default function CompetitionCard({
         >
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
           
-          {/* Bookmark button - top right */}
-          <button 
-            className={`absolute top-2 right-2 p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors ${
-              isBookmarked ? 'text-yellow-400' : 'text-white hover:text-yellow-400'
-            }`}
-            onClick={(e) => {
-              e.stopPropagation(); // Prevent card click event
-              onBookmark(id);
-            }}
-          >
-            <i className={isBookmarked ? 'fas fa-bookmark' : 'far fa-bookmark'}></i>
-          </button>
-          
           {/* Title overlaid on image - bottom */}
           <div className="absolute bottom-0 left-0 right-0 p-3 text-white">
-            <div className="flex items-center justify-between">
-              <h3 className="text-lg font-bold flex items-center">
+            <div className="flex items-center">
+              <h3 className="text-xl font-bold flex items-center">
                 {title}
                 {isVerified && (
                   <Badge 
@@ -187,53 +174,34 @@ export default function CompetitionCard({
         </div>
         
         <div className="p-4">
-          {/* Key competition info */}
-          <div className="grid grid-cols-3 gap-2 mb-4">
-            <div className="flex flex-col items-center">
-              <div className="text-xl text-center mb-1">🏆</div>
-              <div className="text-base font-bold text-center">${prize.toLocaleString()}</div>
-              <div className="text-xs text-gray-500 text-center">Prize</div>
-            </div>
-            
-            <div className="flex flex-col items-center">
-              <div className="text-xl text-center mb-1">👥</div>
-              <div className="text-base font-bold text-center">{entries}</div>
-              <div className="text-xs text-gray-500 text-center">Entries</div>
-            </div>
-            
-            <div className="flex flex-col items-center">
-              <div className="text-xl text-center mb-1">⏰</div>
-              <div className="text-base font-bold text-center">
-                {daysRemaining.includes("Ends in") 
-                  ? daysRemaining.replace("Ends in ", "") 
-                  : daysRemaining === "Ends tomorrow" 
-                    ? "1 day" 
-                    : "5 days"}
-              </div>
-              <div className="text-xs text-gray-500 text-center">Ends In</div>
-            </div>
-          </div>
-          
-          {/* Draw countdown timer - only show if drawTime is set */}
+          {/* Draw countdown timer */}
           {drawTime && (
             <div className="border border-blue-100 p-3 rounded-lg mb-4 bg-blue-50/50">
               <CountdownTimer 
                 targetDate={drawTime} 
                 compact={true} 
-                className="mb-2"
+                className=""
               />
             </div>
           )}
           
-          {/* Ticket information with progress bar */}
-          <div className="bg-blue-50 p-3 rounded-lg mb-4">
+          {/* Simplified ticket information */}
+          <div className="mb-4">
             <div className="flex justify-between items-center mb-2">
-              <div className="text-sm font-medium text-blue-800">
+              <div className="text-base font-medium text-blue-800">
                 <i className="fas fa-ticket-alt mr-1 text-blue-700"></i> ${(ticketPrice ? ticketPrice/100 : 0).toFixed(2)} per ticket
               </div>
-              <div className="text-xs font-medium text-gray-600">
-                Max {maxTicketsPerUser || 3} per user
-              </div>
+            </div>
+            
+            <div className="flex justify-between items-center text-sm">
+              <span className="text-gray-600">
+                <span className="font-semibold text-blue-700">{(totalTickets && soldTickets) ? 
+                  (totalTickets - soldTickets).toLocaleString() : 950}</span> tickets available
+              </span>
+              <span className="text-gray-600">
+                Total: <span className="font-semibold text-blue-700">{totalTickets ? 
+                  totalTickets.toLocaleString() : 1000}</span>
+              </span>
             </div>
             
             {/* Ticket sales progress bar */}
@@ -243,25 +211,10 @@ export default function CompetitionCard({
                   className="h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full"
                   style={{ 
                     width: `${(totalTickets && soldTickets) ? 
-                    Math.min(100, Math.round((soldTickets / totalTickets) * 100)) : 30}%` 
+                    Math.min(100, Math.round((soldTickets / totalTickets) * 100)) : 5}%` 
                   }}
                 ></div>
               </div>
-            </div>
-            
-            <div className="flex justify-between text-xs">
-              <span className="text-gray-600">
-                <span className="font-semibold text-blue-700">{(totalTickets && soldTickets) ? 
-                  (totalTickets - soldTickets).toLocaleString() : 1766}</span> available
-              </span>
-              <span className="text-gray-600">
-                <span className="font-semibold text-blue-700">{(totalTickets && soldTickets) ? 
-                  Math.min(100, Math.round((soldTickets / totalTickets) * 100)) : 30}%</span> sold
-              </span>
-              <span className="text-gray-600">
-                Total: <span className="font-semibold text-blue-700">{totalTickets ? 
-                  totalTickets.toLocaleString() : 10000}</span>
-              </span>
             </div>
           </div>
 
