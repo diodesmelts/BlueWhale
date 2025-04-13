@@ -226,7 +226,7 @@ export default function Dashboard() {
               className={`text-sm px-6 py-4 font-medium text-center transition-all duration-200 border-b-2 ${
                 activeTab === "trending" 
                   ? "text-blue-500 border-blue-500 font-semibold" 
-                  : "text-gray-500 hover:text-blue-400 border-transparent"
+                  : "text-gray-500 hover:text-blue-500 border-transparent"
               }`}
               onClick={(e) => { e.preventDefault(); setActiveTab("trending"); }}
             >
@@ -238,7 +238,7 @@ export default function Dashboard() {
               className={`text-sm px-6 py-4 font-medium text-center transition-all duration-200 border-b-2 ${
                 activeTab === "my-entries" 
                   ? "text-blue-500 border-blue-500 font-semibold" 
-                  : "text-gray-500 hover:text-blue-400 border-transparent"
+                  : "text-gray-500 hover:text-blue-500 border-transparent"
               }`}
               onClick={(e) => { e.preventDefault(); setActiveTab("my-entries"); }}
             >
@@ -250,7 +250,7 @@ export default function Dashboard() {
               className={`text-sm px-6 py-4 font-medium text-center transition-all duration-200 border-b-2 ${
                 activeTab === "ending-soon" 
                   ? "text-blue-500 border-blue-500 font-semibold" 
-                  : "text-gray-500 hover:text-blue-400 border-transparent"
+                  : "text-gray-500 hover:text-blue-500 border-transparent"
               }`}
               onClick={(e) => { e.preventDefault(); setActiveTab("ending-soon"); }}
             >
@@ -262,7 +262,7 @@ export default function Dashboard() {
               className={`text-sm px-6 py-4 font-medium text-center transition-all duration-200 border-b-2 ${
                 activeTab === "high-value" 
                   ? "text-blue-500 border-blue-500 font-semibold" 
-                  : "text-gray-500 hover:text-blue-400 border-transparent"
+                  : "text-gray-500 hover:text-blue-500 border-transparent"
               }`}
               onClick={(e) => { e.preventDefault(); setActiveTab("high-value"); }}
             >
@@ -327,7 +327,7 @@ export default function Dashboard() {
       <div className="bg-white p-6 rounded-xl shadow">
         {isLoadingCompetitions ? (
           <div className="p-8 text-center">
-            <div className="animate-spin w-8 h-8 border-4 border-rose-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+            <div className="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
             <p className="text-gray-500">Loading competitions...</p>
           </div>
         ) : competitions?.length === 0 ? (
