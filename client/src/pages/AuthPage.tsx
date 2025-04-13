@@ -94,11 +94,11 @@ export default function AuthPage() {
   return (
     <div className="container grid flex-1 h-screen items-center justify-center md:grid-cols-2 lg:max-w-none lg:grid-cols-2 lg:px-0">
       <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-900 to-blue-700">
+        <div className="absolute inset-0 bg-gradient-to-b from-blue-500 to-cyan-600">
           <div className="h-full w-full p-10 flex flex-col justify-between">
             <div className="flex items-center text-lg font-medium">
               <Trophy className="h-6 w-6 mr-2" />
-              <span>CompetePro</span>
+              <span>Blue Whale</span>
             </div>
             
             <div className="space-y-4">
@@ -125,7 +125,7 @@ export default function AuthPage() {
             </div>
 
             <p className="text-sm opacity-70">
-              &copy; CompetePro Inc. {new Date().getFullYear()}
+              &copy; Blue Whale Competitions {new Date().getFullYear()}
             </p>
           </div>
         </div>
@@ -192,7 +192,7 @@ export default function AuthPage() {
                       />
                       <Button 
                         type="submit" 
-                        className="w-full bg-blue-700 hover:bg-blue-800"
+                        className="w-full bg-blue-500 hover:bg-blue-600"
                         disabled={isLoading}
                       >
                         {isLoading ? (
@@ -286,7 +286,7 @@ export default function AuthPage() {
                       />
                       <Button 
                         type="submit" 
-                        className="w-full bg-blue-700 hover:bg-blue-800"
+                        className="w-full bg-blue-500 hover:bg-blue-600"
                         disabled={isLoading}
                       >
                         {isLoading ? (

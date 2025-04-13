@@ -13,31 +13,31 @@ const CATEGORY_DETAILS = {
     name: "Family Competitions",
     description: "Win amazing prizes for your family - from vacations to toys and experiences.",
     color: "yellow",
-    gradient: "from-yellow-600 to-amber-500",
+    gradient: "from-yellow-500 to-amber-400",
     lightGradient: "from-yellow-50 to-amber-50",
     borderColor: "border-yellow-300",
     icon: "fas fa-users",
-    accentTextColor: "text-yellow-700"
+    accentTextColor: "text-yellow-600"
   },
   appliances: {
     name: "Appliance Competitions",
     description: "Win the latest home appliances - from kitchen gadgets to smart home tech.",
     color: "pink",
-    gradient: "from-pink-600 to-rose-500",
+    gradient: "from-pink-500 to-rose-400",
     lightGradient: "from-pink-50 to-rose-50",
     borderColor: "border-pink-300",
     icon: "fas fa-blender",
-    accentTextColor: "text-pink-700"
+    accentTextColor: "text-pink-600"
   },
   cash: {
     name: "Cash Competitions",
     description: "Win cash prizes and gift cards - direct to your bank account or wallet.",
     color: "green",
-    gradient: "from-green-600 to-emerald-500",
+    gradient: "from-green-500 to-emerald-400",
     lightGradient: "from-green-50 to-emerald-50",
     borderColor: "border-green-300",
     icon: "fas fa-money-bill-wave",
-    accentTextColor: "text-green-700"
+    accentTextColor: "text-green-600"
   }
 };
 
