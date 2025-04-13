@@ -149,7 +149,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             return date;
           })
           .optional(),
-        // Add drawTime field with same validation as endDate
+        // drawTime field is required for competition draw countdown
         drawTime: z.string()
           .transform(dateStr => {
             const date = new Date(dateStr);
@@ -157,8 +157,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
               throw new Error("Invalid date format");
             }
             return date;
-          })
-          .optional(),
+          }),
         entrySteps: z.array(
           z.object({
             id: z.number(),
@@ -342,6 +341,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             entries: competition.entries,
             eligibility: competition.eligibility,
             endDate: competition.endDate.toISOString(),
+            drawTime: competition.drawTime.toISOString(),
             entrySteps: competition.entrySteps,
             isVerified: competition.isVerified,
             createdAt: competition.createdAt ? competition.createdAt.toISOString() : new Date().toISOString(),
