@@ -6,6 +6,9 @@ import NotFound from "@/pages/not-found";
 import Dashboard from "@/pages/Dashboard";
 import CompetitionsPage from "@/pages/CompetitionsPage";
 import CompetitionDetailPage from "@/pages/CompetitionDetailPage";
+import FamilyCompetitionsPage from "@/pages/FamilyCompetitionsPage";
+import AppliancesCompetitionsPage from "@/pages/AppliancesCompetitionsPage";
+import CashCompetitionsPage from "@/pages/CashCompetitionsPage";
 import MyEntries from "@/pages/MyEntries";
 import MyWins from "@/pages/MyWins";
 import Leaderboard from "@/pages/Leaderboard";
@@ -24,6 +27,9 @@ function Router() {
       <Route path="/" component={Dashboard} />
       <Route path="/competitions" component={CompetitionsPage} />
       <Route path="/competitions/:id" component={CompetitionDetailPage} />
+      <Route path="/competitions/family" component={FamilyCompetitionsPage} />
+      <Route path="/competitions/appliances" component={AppliancesCompetitionsPage} />
+      <Route path="/competitions/cash" component={CashCompetitionsPage} />
       <Route path="/leaderboard" component={Leaderboard} />
       <Route path="/auth" component={AuthPage} />
       

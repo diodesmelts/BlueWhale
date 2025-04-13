@@ -15,6 +15,7 @@ interface CompetitionCardProps {
   onBookmark: (id: number) => void;
   onLike: (id: number) => void;
   onCompleteEntry: (id: number) => void;
+  categoryTheme?: 'family' | 'appliances' | 'cash';
 }
 
 export default function CompetitionCard({ 
@@ -22,7 +23,8 @@ export default function CompetitionCard({
   onEnter, 
   onBookmark, 
   onLike, 
-  onCompleteEntry 
+  onCompleteEntry,
+  categoryTheme
 }: CompetitionCardProps) {
   const { user } = useAuth();
   const { showPaymentModal } = usePaymentContext();
@@ -126,6 +128,84 @@ export default function CompetitionCard({
 
   const daysRemaining = getDaysRemaining();
   const isEndingSoon = daysRemaining === "Ends tomorrow" || daysRemaining.includes("Ends in 3 days");
+  
+  // Category-specific theme colors
+  const getCategoryThemeColors = () => {
+    if (!categoryTheme) return {
+      gradient: 'from-blue-100 to-indigo-100',
+      border: 'border-blue-300',
+      textGradient: 'from-blue-600 to-indigo-600',
+      lineGradient: 'from-blue-300 to-indigo-300',
+      progressBg: 'bg-blue-200',
+      progressFill: 'from-blue-500 to-indigo-600',
+      ticketTextColor: 'text-blue-800',
+      ticketIconColor: 'text-blue-700',
+      highlightTextColor: 'text-blue-700',
+      buttonGradient: 'from-rose-500 to-pink-600',
+      buttonHoverGradient: 'from-rose-600 to-pink-700'
+    };
+    
+    switch(categoryTheme) {
+      case 'family':
+        return {
+          gradient: 'from-yellow-100 to-amber-100',
+          border: 'border-yellow-300',
+          textGradient: 'from-yellow-600 to-amber-600',
+          lineGradient: 'from-yellow-300 to-amber-300',
+          progressBg: 'bg-yellow-200',
+          progressFill: 'from-yellow-500 to-amber-600',
+          ticketTextColor: 'text-yellow-800',
+          ticketIconColor: 'text-yellow-700',
+          highlightTextColor: 'text-yellow-700',
+          buttonGradient: 'from-yellow-500 to-amber-600',
+          buttonHoverGradient: 'from-yellow-600 to-amber-700'
+        };
+      case 'appliances':
+        return {
+          gradient: 'from-pink-100 to-rose-100',
+          border: 'border-pink-300',
+          textGradient: 'from-pink-600 to-rose-600',
+          lineGradient: 'from-pink-300 to-rose-300',
+          progressBg: 'bg-pink-200',
+          progressFill: 'from-pink-500 to-rose-600',
+          ticketTextColor: 'text-pink-800',
+          ticketIconColor: 'text-pink-700',
+          highlightTextColor: 'text-pink-700',
+          buttonGradient: 'from-pink-500 to-rose-600',
+          buttonHoverGradient: 'from-pink-600 to-rose-700'
+        };
+      case 'cash':
+        return {
+          gradient: 'from-green-100 to-emerald-100',
+          border: 'border-green-300',
+          textGradient: 'from-green-600 to-emerald-600',
+          lineGradient: 'from-green-300 to-emerald-300',
+          progressBg: 'bg-green-200',
+          progressFill: 'from-green-500 to-emerald-600',
+          ticketTextColor: 'text-green-800',
+          ticketIconColor: 'text-green-700',
+          highlightTextColor: 'text-green-700',
+          buttonGradient: 'from-green-500 to-emerald-600',
+          buttonHoverGradient: 'from-green-600 to-emerald-700'
+        };
+      default:
+        return {
+          gradient: 'from-blue-100 to-indigo-100',
+          border: 'border-blue-300',
+          textGradient: 'from-blue-600 to-indigo-600',
+          lineGradient: 'from-blue-300 to-indigo-300',
+          progressBg: 'bg-blue-200',
+          progressFill: 'from-blue-500 to-indigo-600',
+          ticketTextColor: 'text-blue-800',
+          ticketIconColor: 'text-blue-700',
+          highlightTextColor: 'text-blue-700',
+          buttonGradient: 'from-rose-500 to-pink-600',
+          buttonHoverGradient: 'from-rose-600 to-pink-700'
+        };
+    }
+  };
+  
+  const theme = getCategoryThemeColors();
 
   return (
     <>
@@ -176,10 +256,10 @@ export default function CompetitionCard({
         <div className="p-4">
           {/* Draw countdown timer - super exciting */}
           {drawTime && (
-            <div className="p-4 rounded-xl mb-5 bg-gradient-to-r from-blue-100 to-indigo-100 border-2 border-blue-300 shadow-md">
+            <div className={`p-4 rounded-xl mb-5 bg-gradient-to-r ${theme.gradient} border-2 ${theme.border} shadow-md`}>
               <div className="flex items-center mb-2">
-                <span className="text-base font-extrabold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 animate-pulse">PRIZE DRAW</span>
-                <div className="h-0.5 flex-grow bg-gradient-to-r from-blue-300 to-indigo-300 ml-2"></div>
+                <span className={`text-base font-extrabold tracking-wide text-transparent bg-clip-text bg-gradient-to-r ${theme.textGradient} animate-pulse`}>PRIZE DRAW</span>
+                <div className={`h-0.5 flex-grow bg-gradient-to-r ${theme.lineGradient} ml-2`}></div>
               </div>
               <CountdownTimer 
                 targetDate={drawTime} 
@@ -192,27 +272,27 @@ export default function CompetitionCard({
           {/* Simplified ticket information */}
           <div className="mb-4">
             <div className="flex justify-between items-center mb-2">
-              <div className="text-base font-medium text-blue-800">
-                <i className="fas fa-ticket-alt mr-1 text-blue-700"></i> ${(ticketPrice ? ticketPrice/100 : 0).toFixed(2)} per ticket
+              <div className={`text-base font-medium ${theme.ticketTextColor}`}>
+                <i className={`fas fa-ticket-alt mr-1 ${theme.ticketIconColor}`}></i> ${(ticketPrice ? ticketPrice/100 : 0).toFixed(2)} per ticket
               </div>
             </div>
             
             <div className="flex justify-between items-center text-sm">
               <span className="text-gray-600">
-                <span className="font-semibold text-blue-700">{(totalTickets && soldTickets) ? 
+                <span className={`font-semibold ${theme.highlightTextColor}`}>{(totalTickets && soldTickets) ? 
                   (totalTickets - soldTickets).toLocaleString() : 950}</span> tickets available
               </span>
               <span className="text-gray-600">
-                Total: <span className="font-semibold text-blue-700">{totalTickets ? 
+                Total: <span className={`font-semibold ${theme.highlightTextColor}`}>{totalTickets ? 
                   totalTickets.toLocaleString() : 1000}</span>
               </span>
             </div>
             
             {/* Ticket sales progress bar */}
             <div className="mt-2 mb-1">
-              <div className="h-2.5 w-full bg-blue-200 rounded-full overflow-hidden">
+              <div className={`h-2.5 w-full ${theme.progressBg} rounded-full overflow-hidden`}>
                 <div 
-                  className="h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full"
+                  className={`h-full bg-gradient-to-r ${theme.progressFill} rounded-full`}
                   style={{ 
                     width: `${(totalTickets && soldTickets) ? 
                     Math.min(100, Math.round((soldTickets / totalTickets) * 100)) : 5}%` 
@@ -230,7 +310,7 @@ export default function CompetitionCard({
               setTicketModalOpen(true);
             }}
             disabled={isPaying}
-            className="w-full bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-medium py-2.5 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg"
+            className={`w-full bg-gradient-to-r ${theme.buttonGradient} hover:${theme.buttonHoverGradient} text-white font-medium py-2.5 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg`}
           >
             <i className="fas fa-ticket-alt mr-2"></i>
             Get Tickets

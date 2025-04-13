@@ -24,6 +24,7 @@ export const competitions = pgTable("competitions", {
   image: text("image").notNull(),
   platform: text("platform").notNull(), // instagram, facebook, tiktok, twitter, website
   type: text("type").notNull(), // competition, contest
+  category: text("category").default("other"), // family, appliances, cash, other
   prize: integer("prize").notNull(), // value in USD
   ticketPrice: integer("ticket_price").default(0), // price per ticket in cents
   maxTicketsPerUser: integer("max_tickets_per_user").default(10), // limit per user
@@ -102,6 +103,7 @@ export const insertCompetitionSchema = createInsertSchema(competitions).pick({
   image: true,
   platform: true,
   type: true,
+  category: true,
   prize: true,
   ticketPrice: true,
   maxTicketsPerUser: true,
