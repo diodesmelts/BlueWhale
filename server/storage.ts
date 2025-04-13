@@ -468,10 +468,12 @@ export class MemStorage implements IStorage {
         image: 'https://images.unsplash.com/photo-1611930022073-84f59b13927e?auto=format&fit=crop&w=800&q=80',
         platform: 'Tech Expo',
         type: 'Prize Draw',
+        category: 'appliances',
         prize: 2999,
         entries: 2456,
         eligibility: 'Worldwide',
         endDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // 3 days from now
+        drawTime: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // Same as endDate for now
         entrySteps: [],
         isVerified: true,
         ticketPrice: 999, // $9.99
@@ -486,10 +488,12 @@ export class MemStorage implements IStorage {
         image: 'https://images.unsplash.com/photo-1581417478175-a9ef18f210c2?auto=format&fit=crop&w=800&q=80',
         platform: 'Travel Expo',
         type: 'Prize Draw',
+        category: 'family',
         prize: 5000,
         entries: 4891,
         eligibility: 'US & Canada',
         endDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
+        drawTime: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // Same as endDate for now
         entrySteps: [],
         isVerified: true,
         ticketPrice: 1999, // $19.99
@@ -504,10 +508,12 @@ export class MemStorage implements IStorage {
         image: 'https://images.unsplash.com/photo-1599751449028-36bb110148ef?auto=format&fit=crop&w=800&q=80',
         platform: 'Gaming Expo',
         type: 'Tournament',
+        category: 'other',
         prize: 3500,
         entries: 8234,
         eligibility: 'Worldwide',
         endDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000), // 5 days from now
+        drawTime: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000), // Same as endDate for now
         entrySteps: [],
         isVerified: false,
         ticketPrice: 1499, // $14.99
