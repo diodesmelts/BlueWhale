@@ -124,14 +124,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   app.post("/api/admin/competitions", isAdmin, async (req, res) => {
     try {
+      // Log the raw request body for debugging
+      console.log("Competition create request:", JSON.stringify(req.body, null, 2));
+      
       const validatedData = insertCompetitionSchema.parse(req.body);
-      const competition = await storage.createCompetition(validatedData);
-      res.status(201).json(competition);
+      
+      // Log the validated data
+      console.log("Validated competition data:", JSON.stringify(validatedData, null, 2));
+      
+      // Create the competition with more detailed error handling
+      try {
+        const competition = await storage.createCompetition(validatedData);
+        res.status(201).json(competition);
+      } catch (dbError: any) {
+        console.error("Database error creating competition:", dbError);
+        res.status(500).json({ 
+          message: "Database error creating competition", 
+          error: dbError.message || "Unknown database error"
+        });
+      }
     } catch (error) {
+      console.error("Error in competition creation:", error);
+      
       if (error instanceof z.ZodError) {
+        console.log("Validation error:", JSON.stringify(error.errors, null, 2));
         res.status(400).json({ message: "Validation error", errors: error.errors });
       } else {
-        res.status(500).json({ message: "Failed to create competition" });
+        const errorMessage = error instanceof Error ? error.message : "Unknown error";
+        console.error("Non-validation error:", errorMessage);
+        res.status(500).json({ message: "Failed to create competition", error: errorMessage });
       }
     }
   });
