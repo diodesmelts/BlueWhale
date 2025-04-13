@@ -202,8 +202,8 @@ export default function CompetitionDetailPage() {
     if (!competition) return '';
     
     const now = new Date();
-    const endDate = new Date(competition.endDate);
-    const diffTime = endDate.getTime() - now.getTime();
+    const drawDate = competition.drawTime ? new Date(competition.drawTime) : new Date();
+    const diffTime = drawDate.getTime() - now.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     
     if (diffDays < 0) {
@@ -244,7 +244,7 @@ export default function CompetitionDetailPage() {
     );
   }
 
-  const isEnded = new Date(competition.endDate) < new Date();
+  const isEnded = competition.drawTime ? new Date(competition.drawTime) < new Date() : false;
 
   return (
     <div className="container mx-auto py-8 px-4">
@@ -402,9 +402,9 @@ export default function CompetitionDetailPage() {
               <span className="font-medium text-gray-800">{competition.type}</span>
             </div>
             <div>
-              <span className="text-sm text-gray-500 block">End Date</span>
+              <span className="text-sm text-gray-500 block">Draw Date</span>
               <span className="font-medium text-gray-800">
-                {new Date(competition.endDate).toLocaleDateString()}
+                {competition.drawTime ? new Date(competition.drawTime).toLocaleDateString() : 'Not set'}
               </span>
             </div>
             {competition.isVerified && (
