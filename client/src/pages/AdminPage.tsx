@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Loader2, Plus, Shield, Trophy, Users, List } from "lucide-react";
+import { Loader2, Plus, Shield, Trophy, Users, List, FileUp, UploadCloud } from "lucide-react";
 import { useAdmin } from "@/hooks/use-admin";
 import { 
   Card, 
@@ -28,16 +28,13 @@ const competitionSchema = z.object({
   title: z.string().min(5, "Title must be at least 5 characters"),
   organizer: z.string().min(2, "Organizer must be at least 2 characters"),
   description: z.string().min(10, "Description must be at least 10 characters"),
-  image: z.string().url("Must be a valid URL"),
+  image: z.string().min(1, "Image is required"),
   // Platform is now optional with a default value
   platform: z.string().default("Other"),
-  type: z.string().min(1, "Type is required"),
-  category: z.string().default("other"), // Added category field for family, appliances, cash, other
-  prize: z.coerce.number().min(1, "Prize must be at least $1"),
+  category: z.string().default("other"), // Category field for family, appliances, cash, other
+  prize: z.coerce.number().min(1, "Prize must be at least £1"),
   entries: z.coerce.number().default(0),
-  eligibility: z.string().min(1, "Eligibility is required"),
-  endDate: z.coerce.date().refine(date => date > new Date(), "End date must be in the future"),
-  drawTime: z.coerce.date().refine(date => date > new Date(), "Draw date must be in the future"), // Added draw time
+  drawTime: z.coerce.date().refine(date => date > new Date(), "Draw date must be in the future"),
   // Entry steps are now optional with an empty default array
   entrySteps: z.array(
     z.object({
@@ -47,16 +44,19 @@ const competitionSchema = z.object({
     })
   ).default([]),
   isVerified: z.boolean().default(false),
-  ticketPrice: z.coerce.number().default(0), // Added ticket price
-  maxTicketsPerUser: z.coerce.number().default(10), // Added max tickets per user
-  totalTickets: z.coerce.number().default(1000), // Added total tickets
-  soldTickets: z.coerce.number().default(0), // Added sold tickets
+  ticketPrice: z.coerce.number().default(0), // Ticket price
+  maxTicketsPerUser: z.coerce.number().default(10), // Max tickets per user
+  totalTickets: z.coerce.number().default(1000), // Total tickets
+  soldTickets: z.coerce.number().default(0), // Sold tickets
 });
 
 type CompetitionFormValues = z.infer<typeof competitionSchema>;
 
 export default function AdminPage() {
   const [formLoading, setFormLoading] = useState(false);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [, setLocation] = useLocation();
   const { isAdmin, isLoading: adminLoading, error } = useAdmin();
 
@@ -66,6 +66,25 @@ export default function AdminPage() {
       setLocation("/");
     }
   }, [isAdmin, adminLoading, setLocation]);
+  
+  // Handle image upload
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // Update the image file state
+      setImageFile(file);
+      
+      // Update the form field with a temporary value
+      form.setValue("image", file.name);
+      
+      // Create preview
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const form = useForm<CompetitionFormValues>({
     resolver: zodResolver(competitionSchema),
@@ -75,12 +94,9 @@ export default function AdminPage() {
       description: "",
       image: "",
       platform: "Other", // Default, but hidden from UI
-      type: "Giveaway",
       category: "other", // Default category
       prize: 0,
       entries: 0,
-      eligibility: "Worldwide",
-      endDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
       drawTime: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
       entrySteps: [], // Empty array as we're removing this field
       isVerified: false,
@@ -95,10 +111,9 @@ export default function AdminPage() {
     setFormLoading(true);
     
     try {
-      // Format the dates as ISO strings
+      // Format the date as ISO string
       const formattedData = {
         ...data,
-        endDate: data.endDate.toISOString(),
         drawTime: data.drawTime.toISOString(),
       };
 
@@ -227,32 +242,6 @@ export default function AdminPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <FormField
                   control={form.control}
-                  name="type"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Type</FormLabel>
-                      <Select 
-                        onValueChange={field.onChange} 
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select type" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="Giveaway">Giveaway</SelectItem>
-                          <SelectItem value="Sweepstakes">Sweepstakes</SelectItem>
-                          <SelectItem value="Contest">Contest</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={form.control}
                   name="category"
                   render={({ field }) => (
                     <FormItem>
@@ -276,36 +265,6 @@ export default function AdminPage() {
                       <FormDescription>
                         Competition category determines which section it appears in
                       </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <FormField
-                  control={form.control}
-                  name="eligibility"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Eligibility</FormLabel>
-                      <Select 
-                        onValueChange={field.onChange} 
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select eligibility" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="Worldwide">Worldwide</SelectItem>
-                          <SelectItem value="US Only">US Only</SelectItem>
-                          <SelectItem value="US & Canada">US & Canada</SelectItem>
-                          <SelectItem value="Europe">Europe</SelectItem>
-                          <SelectItem value="Asia">Asia</SelectItem>
-                        </SelectContent>
-                      </Select>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -334,7 +293,7 @@ export default function AdminPage() {
                 />
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <FormField
                   control={form.control}
                   name="prize"
@@ -343,24 +302,6 @@ export default function AdminPage() {
                       <FormLabel>Prize Value (GBP)</FormLabel>
                       <FormControl>
                         <Input type="number" min="0" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={form.control}
-                  name="endDate"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>End Date</FormLabel>
-                      <FormControl>
-                        <Input 
-                          type="date" 
-                          {...field} 
-                          value={field.value instanceof Date ? field.value.toISOString().split('T')[0] : ''} 
-                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
