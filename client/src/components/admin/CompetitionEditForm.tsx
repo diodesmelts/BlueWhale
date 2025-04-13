@@ -163,10 +163,11 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
       const previewUrl = URL.createObjectURL(file);
       setUploadedImagePreview(previewUrl);
       
-      // Upload the file to the server
-      const response = await fetch('/api/upload-image', {
+      // Upload the file to the server using our new endpoint
+      const response = await fetch('/api/upload', {
         method: 'POST',
         body: formData,
+        credentials: 'include', // Include credentials for admin authorization
       });
       
       if (!response.ok) {

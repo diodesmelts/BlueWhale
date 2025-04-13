@@ -123,6 +123,7 @@ export default function AdminPage() {
         const uploadResponse = await fetch('/api/upload', {
           method: 'POST',
           body: formData,
+          credentials: 'include', // Include credentials for admin authorization
         });
         
         if (!uploadResponse.ok) {
