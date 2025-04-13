@@ -96,7 +96,8 @@ export const insertUserSchema = createInsertSchema(users).pick({
   isPremium: true,
 });
 
-export const insertCompetitionSchema = createInsertSchema(competitions).pick({
+// Create the base schema from drizzle
+const baseInsertCompetitionSchema = createInsertSchema(competitions).pick({
   title: true,
   organizer: true,
   description: true,
@@ -111,11 +112,22 @@ export const insertCompetitionSchema = createInsertSchema(competitions).pick({
   soldTickets: true,
   entries: true,
   eligibility: true,
-  endDate: true,
-  drawTime: true,
-  entrySteps: true,
   isVerified: true,
   isDeleted: true,
+});
+
+// Create a custom schema that extends the base with string date handling
+export const insertCompetitionSchema = baseInsertCompetitionSchema.extend({
+  // Override the date fields to accept strings (ISO format) and convert them to Date objects
+  endDate: z.string().transform(date => new Date(date)),
+  drawTime: z.string().transform(date => new Date(date)),
+  entrySteps: z.array(
+    z.object({
+      id: z.number(),
+      description: z.string(),
+      link: z.string().optional(),
+    })
+  ),
 });
 
 export const insertUserEntrySchema = createInsertSchema(userEntries).pick({
