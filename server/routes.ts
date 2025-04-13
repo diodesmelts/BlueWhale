@@ -131,6 +131,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         image: z.string().optional(),
         platform: z.string().optional(),
         type: z.string().optional(),
+        category: z.string().optional(),
         prize: z.number().optional(),
         ticketPrice: z.number().optional(),
         maxTicketsPerUser: z.number().optional(),
@@ -251,6 +252,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(competitions);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch competitions" });
+    }
+  });
+  
+  // Get competitions by category
+  app.get("/api/competitions/category/:category", async (req, res) => {
+    try {
+      const category = req.params.category;
+      const sortBy = req.query.sortBy as string;
+      
+      // Validate category
+      if (!['family', 'appliances', 'cash', 'other'].includes(category)) {
+        return res.status(400).json({ message: "Invalid category" });
+      }
+      
+      // Get user ID from session if authenticated, otherwise use 1 for demo
+      const userId = req.isAuthenticated() ? req.user!.id : 1;
+      
+      // Use the existing getCompetitionsWithUserStatus method but filter by category
+      const competitions = await storage.getCompetitionsWithUserStatus(
+        userId,
+        { category },
+        sortBy
+      );
+      
+      res.json(competitions);
+    } catch (error) {
+      console.error("Failed to fetch category competitions:", error);
+      res.status(500).json({ message: "Failed to fetch category competitions" });
     }
   });
   

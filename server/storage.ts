@@ -22,7 +22,7 @@ export interface IStorage {
   // Competition methods
   getCompetition(id: number): Promise<Competition | undefined>;
   listCompetitions(
-    filter?: { platform?: string; type?: string; }, 
+    filter?: { platform?: string; type?: string; category?: string; }, 
     sort?: string, 
     tab?: string,
     includeDeleted?: boolean
@@ -49,7 +49,7 @@ export interface IStorage {
   // Combined queries
   getCompetitionsWithUserStatus(
     userId: number, 
-    filter?: { platform?: string; type?: string; }, 
+    filter?: { platform?: string; type?: string; category?: string; }, 
     sort?: string, 
     tab?: string
   ): Promise<CompetitionWithEntryStatus[]>;
@@ -143,7 +143,7 @@ export class MemStorage implements IStorage {
   }
   
   async listCompetitions(
-    filter?: { platform?: string; type?: string; },
+    filter?: { platform?: string; type?: string; category?: string; },
     sort?: string,
     tab?: string,
     includeDeleted: boolean = false
@@ -164,6 +164,10 @@ export class MemStorage implements IStorage {
       
       if (filter.type && filter.type !== 'all') {
         competitions = competitions.filter(comp => comp.type.toLowerCase() === filter.type?.toLowerCase());
+      }
+      
+      if (filter.category && filter.category !== 'all') {
+        competitions = competitions.filter(comp => comp.category?.toLowerCase() === filter.category.toLowerCase());
       }
     }
     
@@ -383,7 +387,7 @@ export class MemStorage implements IStorage {
   // Combined queries
   async getCompetitionsWithUserStatus(
     userId: number,
-    filter?: { platform?: string; type?: string; },
+    filter?: { platform?: string; type?: string; category?: string; },
     sort?: string,
     tab?: string
   ): Promise<CompetitionWithEntryStatus[]> {
