@@ -109,12 +109,15 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
   const updateMutation = useMutation({
     mutationFn: async (data: CompetitionUpdateFormValues) => {
       // The endDate is already transformed into an ISO string by the zod schema
-      // Format the data for the API
+      // Format the data for the API with required fields
+      // Add the missing fields that are required in the database schema
       const formattedData = {
         ...data,
         platform: "Other",
         entrySteps: [],
-        // The endDate is already in ISO format thanks to our schema transform
+        type: "competition", // Required field (removed from UI)
+        eligibility: "worldwide", // Required field (removed from UI)
+        endDate: new Date(data.drawTime).toISOString(), // Required field (using drawTime)
       };
       
       console.log('Submission data:', formattedData);

@@ -135,10 +135,14 @@ export default function AdminPage() {
       }
       
       // Format the date as ISO string and include the image URL
+      // Also add required fields that are no longer in the form
       const formattedData = {
         ...data,
         image: imageUrl,
         drawTime: data.drawTime.toISOString(),
+        type: "competition", // Default value for required type field
+        eligibility: "worldwide", // Default value for required eligibility field
+        endDate: data.drawTime.toISOString(), // Use drawTime as endDate to satisfy database constraints
       };
 
       const response = await apiRequest("POST", "/api/admin/competitions", formattedData);
