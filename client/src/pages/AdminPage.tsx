@@ -111,9 +111,32 @@ export default function AdminPage() {
     setFormLoading(true);
     
     try {
-      // Format the date as ISO string
+      // If we have an image file, we need to upload it first
+      let imageUrl = data.image;
+      
+      if (imageFile) {
+        // Create FormData for file upload
+        const formData = new FormData();
+        formData.append('file', imageFile);
+        
+        // Upload the image file
+        const uploadResponse = await fetch('/api/upload', {
+          method: 'POST',
+          body: formData,
+        });
+        
+        if (!uploadResponse.ok) {
+          throw new Error('Failed to upload image');
+        }
+        
+        const uploadResult = await uploadResponse.json();
+        imageUrl = uploadResult.url; // Get the URL from the response
+      }
+      
+      // Format the date as ISO string and include the image URL
       const formattedData = {
         ...data,
+        image: imageUrl,
         drawTime: data.drawTime.toISOString(),
       };
 
@@ -227,12 +250,84 @@ export default function AdminPage() {
                 name="image"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Image URL</FormLabel>
-                    <FormControl>
-                      <Input placeholder="https://example.com/image.jpg" {...field} />
-                    </FormControl>
+                    <FormLabel>Competition Image</FormLabel>
+                    <div className="space-y-4">
+                      {/* Hidden input field for the form handling */}
+                      <Input 
+                        type="hidden" 
+                        {...field} 
+                      />
+                      
+                      {/* Custom file upload UI */}
+                      <div 
+                        className="border-2 border-dashed border-slate-300 rounded-lg p-6 flex flex-col items-center justify-center cursor-pointer hover:border-blue-500 transition-colors"
+                        onClick={() => fileInputRef.current?.click()}
+                      >
+                        {imagePreview ? (
+                          <div className="space-y-3 text-center">
+                            <img 
+                              src={imagePreview} 
+                              alt="Competition Preview" 
+                              className="mx-auto max-h-[200px] rounded-md object-contain"
+                            />
+                            <Button 
+                              variant="outline"
+                              size="sm"
+                              className="text-sm"
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setImagePreview(null);
+                                setImageFile(null);
+                                field.onChange("");
+                              }}
+                            >
+                              Remove Image
+                            </Button>
+                          </div>
+                        ) : (
+                          <>
+                            <UploadCloud className="h-10 w-10 text-slate-400 mb-2" />
+                            <p className="text-sm font-medium mb-1">
+                              Click to upload or drag and drop
+                            </p>
+                            <p className="text-xs text-slate-500">
+                              PNG, JPG, or JPEG (max. 5MB, 700x700px recommended)
+                            </p>
+                          </>
+                        )}
+                        
+                        <input 
+                          ref={fileInputRef}
+                          type="file" 
+                          accept="image/png, image/jpeg, image/jpg"
+                          className="hidden"
+                          onChange={handleImageUpload}
+                        />
+                      </div>
+                      
+                      <div className="flex items-center space-x-2">
+                        <div className="flex-1 h-px bg-slate-200"></div>
+                        <p className="text-xs text-slate-500 font-medium">OR</p>
+                        <div className="flex-1 h-px bg-slate-200"></div>
+                      </div>
+                      
+                      <Input
+                        type="text"
+                        placeholder="Enter an image URL instead (e.g. https://example.com/image.jpg)"
+                        value={!imageFile ? field.value : ''}
+                        onChange={(e) => {
+                          field.onChange(e.target.value);
+                          // Clear file upload if URL is entered
+                          if (e.target.value) {
+                            setImagePreview(null);
+                            setImageFile(null);
+                          }
+                        }}
+                      />
+                    </div>
                     <FormDescription>
-                      Enter a URL to an image that represents this competition
+                      Upload an image or enter a URL for the competition (700x700px recommended)
                     </FormDescription>
                     <FormMessage />
                   </FormItem>

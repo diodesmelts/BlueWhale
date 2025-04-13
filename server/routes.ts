@@ -18,6 +18,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Set up payment routes
   setupPaymentRoutes(app);
   
+  // Configure multer for file uploads
+  const diskStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      const uploadDir = path.join(process.cwd(), 'public', 'uploads');
+      // Create uploads directory if it doesn't exist
+      if (!fs.existsSync(uploadDir)) {
+        fs.mkdirSync(uploadDir, { recursive: true });
+      }
+      cb(null, uploadDir);
+    },
+    filename: (req, file, cb) => {
+      // Create a unique filename with proper extension
+      const ext = path.extname(file.originalname).toLowerCase();
+      const uniqueFilename = `${uuidv4()}${ext}`;
+      cb(null, uniqueFilename);
+    },
+  });
+  
+  // File filter for images
+  const fileFilter = (req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
+    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+    if (allowedMimeTypes.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error('Invalid file type. Only JPEG, JPG, and PNG are allowed.'));
+    }
+  };
+  
+  const fileUpload = multer({ 
+    storage: diskStorage, 
+    fileFilter,
+    limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
+  });
+  
   // Special development route to make SDK an admin user (would be removed in production)
   app.get("/api/dev/make-sdk-admin", async (req, res) => {
     try {
@@ -730,7 +764,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   
   // Create multer upload instance
-  const upload = multer({
+  const imageUpload = multer({
     storage: multerStorage,
     limits: {
       fileSize: 5 * 1024 * 1024, // 5MB limit
@@ -745,7 +779,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   
   // Image upload endpoint with Sharp image processing
-  app.post('/api/upload-image', isAdmin, upload.single('file'), async (req, res) => {
+  app.post('/api/upload-image', isAdmin, imageUpload.single('file'), async (req, res) => {
     try {
       if (!req.file) {
         return res.status(400).json({ message: 'No file uploaded' });
@@ -789,6 +823,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ 
         message: 'Failed to upload file',
         error: error instanceof Error ? error.message : 'Unknown error'
+      });
+    }
+  });
+  
+  // File upload route for competition images
+  app.post("/api/upload", isAdmin, imageUpload.single('file'), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ message: "No file uploaded" });
+      }
+      
+      // Get the uploaded file details
+      const file = req.file;
+      const filePath = file.path;
+      
+      // Process the image with sharp (resize to 700x700 to match requirements)
+      const outputPath = path.join(process.cwd(), 'public', 'uploads', `optimized-${file.filename}`);
+      await sharp(filePath)
+        .resize(700, 700, {
+          fit: 'inside',
+          withoutEnlargement: true
+        })
+        .toFile(outputPath);
+      
+      // Return the URL of the optimized image
+      const imageUrl = `/uploads/optimized-${file.filename}`;
+      
+      res.status(200).json({
+        message: "File uploaded successfully",
+        url: imageUrl,
+        originalName: file.originalname,
+        size: file.size
+      });
+    } catch (error) {
+      console.error("File upload error:", error);
+      res.status(500).json({ 
+        message: "Failed to upload file", 
+        error: error instanceof Error ? error.message : "Unknown error" 
       });
     }
   });
