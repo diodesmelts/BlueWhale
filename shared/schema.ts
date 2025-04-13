@@ -31,8 +31,8 @@ export const competitions = pgTable("competitions", {
   soldTickets: integer("sold_tickets").default(0), // number of tickets sold so far
   entries: integer("entries").default(0), // total number of participants
   eligibility: text("eligibility").notNull(), // worldwide, US only, etc.
-  endDate: timestamp("end_date").notNull(),
-  drawTime: timestamp("draw_time"), // When the competition draw will occur
+  endDate: timestamp("end_date").notNull(), // Legacy field - will be removed in future version
+  drawTime: timestamp("draw_time").notNull(), // When the competition draw will occur - used for countdown timer
   entrySteps: jsonb("entry_steps").notNull().$type<EntryStep[]>(),
   isVerified: boolean("is_verified").default(false),
   isDeleted: boolean("is_deleted").default(false), // Flag for soft deletion
