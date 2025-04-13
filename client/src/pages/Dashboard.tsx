@@ -381,7 +381,7 @@ export default function Dashboard() {
             Community Leaderboard
           </h2>
           <Link href="/leaderboard">
-            <span className="inline-flex items-center text-blue-700 hover:text-blue-800 text-sm font-medium transition-colors">
+            <span className="inline-flex items-center text-blue-500 hover:text-blue-600 text-sm font-medium transition-colors">
               View Complete Leaderboard 
               <i className="fas fa-arrow-right ml-1"></i>
             </span>

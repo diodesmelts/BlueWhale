@@ -77,7 +77,7 @@ export default function TopNav() {
   };
 
   return (
-    <header className="sticky top-0 shadow-md transition-all duration-300 bg-gradient-to-r from-blue-900 to-indigo-800 text-white z-20">
+    <header className="sticky top-0 shadow-md transition-all duration-300 bg-gradient-to-r from-blue-500 to-cyan-600 text-white z-20">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-8">
@@ -88,7 +88,7 @@ export default function TopNav() {
                   viewBox="0 0 24 24" 
                   fill="none" 
                   xmlns="http://www.w3.org/2000/svg" 
-                  className="w-8 h-8 text-blue-700"
+                  className="w-8 h-8 text-blue-500"
                 >
                   <path
                     d="M20 8C19.7434 7.06353 19.066 6.30821 18.1552 5.90911C17.2444 5.51002 16.1944 5.50169 15.277 5.88578C13.3814 3.05655 9.38141 3.05655 7.21676 5.39134C5.05211 7.72613 5.42816 11.4315 8.19748 13.3765C4.50803 13.7524 2 16.0872 2 19V21H22V8Z"
@@ -169,11 +169,11 @@ export default function TopNav() {
               <DropdownMenuTrigger asChild>
                 <button className="relative p-1.5 rounded-full focus:outline-none transition-all text-white hover:bg-white/20">
                   <Bell className="h-6 w-6" />
-                  <span className="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-amber-300 ring-2 ring-blue-800"></span>
+                  <span className="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-amber-300 ring-2 ring-cyan-600"></span>
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-80 p-1">
-                <DropdownMenuLabel className="px-4 py-2 text-lg font-semibold text-blue-800">
+                <DropdownMenuLabel className="px-4 py-2 text-lg font-semibold text-blue-500">
                   Notifications
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
@@ -215,7 +215,7 @@ export default function TopNav() {
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <div className="p-2">
-                  <Button variant="outline" className="w-full text-sm font-medium text-blue-700 border-blue-200 hover:bg-blue-50">
+                  <Button variant="outline" className="w-full text-sm font-medium text-blue-500 border-blue-200 hover:bg-blue-50">
                     View all notifications
                   </Button>
                 </div>
@@ -271,7 +271,7 @@ export default function TopNav() {
                   )}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem 
-                    className="py-2 cursor-pointer focus:bg-blue-50 rounded-md text-blue-700"
+                    className="py-2 cursor-pointer focus:bg-blue-50 rounded-md text-blue-500"
                     onClick={handleLogout}
                   >
                     <i className="fas fa-sign-out-alt mr-2"></i> Logout
