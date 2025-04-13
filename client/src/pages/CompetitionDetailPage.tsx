@@ -12,13 +12,15 @@ import {
   Timer, 
   Globe, 
   Loader2,
-  ArrowLeft
+  ArrowLeft,
+  Clock
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 import { useToast } from "@/hooks/use-toast";
 import { usePayment } from "@/hooks/use-payment";
 import TicketPurchaseModal from "@/components/payments/TicketPurchaseModal";
+import { CountdownTimer } from "@/components/ui/countdown-timer";
 
 export default function CompetitionDetailPage() {
   const [, setLocation] = useLocation();
@@ -321,7 +323,19 @@ export default function CompetitionDetailPage() {
             </div>
           </div>
 
-          {/* Ticket information - simplified and included in the "Get Tickets" section */}
+          {/* Countdown timer - only shown if there's a draw time */}
+          {competition.drawTime && (
+            <div className="mb-6 bg-blue-50 rounded-lg p-5 border border-blue-100">
+              <h2 className="text-xl font-bold text-gray-800 mb-3 flex items-center">
+                <Clock className="h-5 w-5 mr-2 text-blue-600" />
+                Prize Draw Countdown
+              </h2>
+              <CountdownTimer 
+                targetDate={competition.drawTime} 
+                className="mt-2"
+              />
+            </div>
+          )}
 
           {/* Description */}
           <div className="mb-6">

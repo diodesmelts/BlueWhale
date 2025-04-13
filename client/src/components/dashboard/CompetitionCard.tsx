@@ -42,6 +42,7 @@ export default function CompetitionCard({
     entries,
     eligibility,
     endDate,
+    drawTime,
     entrySteps,
     isVerified,
     isEntered,
@@ -212,6 +213,17 @@ export default function CompetitionCard({
               <div className="text-xs text-gray-500 text-center">Ends In</div>
             </div>
           </div>
+          
+          {/* Draw countdown timer - only show if drawTime is set */}
+          {drawTime && (
+            <div className="border border-blue-100 p-3 rounded-lg mb-4 bg-blue-50/50">
+              <CountdownTimer 
+                targetDate={drawTime} 
+                compact={true} 
+                className="mb-2"
+              />
+            </div>
+          )}
           
           {/* Ticket information with progress bar */}
           <div className="bg-blue-50 p-3 rounded-lg mb-4">

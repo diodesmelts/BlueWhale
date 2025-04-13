@@ -243,6 +243,14 @@ export default function CompetitionManagement() {
                   <p className="mt-1">{formatDate(selectedCompetition.endDate)}</p>
                 </div>
                 <div>
+                  <h3 className="text-sm font-medium text-gray-500">Draw Time</h3>
+                  <p className="mt-1">
+                    {selectedCompetition.drawTime 
+                      ? new Date(selectedCompetition.drawTime).toLocaleString() 
+                      : "Not set"}
+                  </p>
+                </div>
+                <div>
                   <h3 className="text-sm font-medium text-gray-500">Verified</h3>
                   <p className="mt-1">{selectedCompetition.isVerified ? "Yes" : "No"}</p>
                 </div>
