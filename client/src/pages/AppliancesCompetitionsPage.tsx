@@ -156,9 +156,13 @@ export default function AppliancesCompetitionsPage() {
         <PaymentModal
           isOpen={showPaymentModal}
           onClose={() => setShowPaymentModal(false)}
-          competition={selectedCompetition}
-          ticketCount={ticketCount}
-          setTicketCount={setTicketCount}
+          amount={selectedCompetition.ticketPrice * ticketCount}
+          description={`${ticketCount} ticket${ticketCount > 1 ? 's' : ''} for ${selectedCompetition.title}`}
+          actionText="Pay Now"
+          metadata={{
+            competitionId: selectedCompetition.id.toString(),
+            ticketCount: ticketCount.toString()
+          }}
         />
       )}
     </div>

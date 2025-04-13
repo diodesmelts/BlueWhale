@@ -528,10 +528,12 @@ export class MemStorage implements IStorage {
         image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80',
         platform: 'Fitness Expo',
         type: 'Prize Draw',
+        category: 'cash',
         prize: 299,
         entries: 1245,
         eligibility: 'US Only',
         endDate: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000), // 1 day from now
+        drawTime: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000), // Same as endDate for now
         entrySteps: [],
         isVerified: false,
         ticketPrice: 499, // $4.99

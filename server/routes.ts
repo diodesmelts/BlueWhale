@@ -236,6 +236,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const platform = req.query.platform as string;
       const type = req.query.type as string;
+      const category = req.query.category as string;
       const sortBy = req.query.sortBy as string;
       const tab = req.query.tab as string;
       
@@ -244,7 +245,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const competitions = await storage.getCompetitionsWithUserStatus(
         userId,
-        { platform, type },
+        { platform, type, category },
         sortBy,
         tab
       );
