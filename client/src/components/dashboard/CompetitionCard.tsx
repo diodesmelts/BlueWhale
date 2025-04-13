@@ -7,6 +7,7 @@ import { usePaymentContext } from "@/components/payments/PaymentProvider";
 import { useAuth } from "@/hooks/use-auth";
 import TicketPurchaseModal from "@/components/payments/TicketPurchaseModal";
 import { useLocation } from "wouter";
+import { CountdownTimer } from "@/components/ui/countdown-timer";
 
 interface CompetitionCardProps {
   competition: CompetitionWithEntryStatus;

@@ -427,22 +427,44 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
           />
         </div>
         
-        <FormField
-          control={form.control}
-          name="endDate"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>End Date</FormLabel>
-              <FormControl>
-                <Input 
-                  type="date" 
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <FormField
+            control={form.control}
+            name="endDate"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>End Date</FormLabel>
+                <FormControl>
+                  <Input 
+                    type="date" 
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          
+          <FormField
+            control={form.control}
+            name="drawTime"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Draw Date & Time</FormLabel>
+                <FormControl>
+                  <Input 
+                    type="datetime-local" 
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>
+                  When will the competition be drawn? Used for countdown timer.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
         
         {/* Entry Steps section removed as requested */}
         

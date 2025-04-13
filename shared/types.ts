@@ -13,6 +13,7 @@ export interface CompetitionWithEntryStatus {
   entries: number;
   eligibility: string;
   endDate: string;
+  drawTime?: string; // When the competition will be drawn
   entrySteps: EntryStep[];
   isVerified: boolean;
   isDeleted?: boolean; // Flag to indicate if competition has been deleted
