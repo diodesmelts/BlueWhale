@@ -334,7 +334,7 @@ export default function AdminPage() {
                 />
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <FormField
                   control={form.control}
                   name="prize"
@@ -366,9 +366,83 @@ export default function AdminPage() {
                     </FormItem>
                   )}
                 />
+                
+                <FormField
+                  control={form.control}
+                  name="drawTime"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Draw Date & Time</FormLabel>
+                      <FormControl>
+                        <Input 
+                          type="datetime-local" 
+                          {...field}
+                          value={field.value instanceof Date ? field.value.toISOString().substring(0, 16) : ''}
+                        />
+                      </FormControl>
+                      <FormDescription>
+                        When will the competition be drawn? Used for countdown timer.
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
               
               {/* Entry Steps section removed as requested */}
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <FormField
+                  control={form.control}
+                  name="totalTickets"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Total Tickets</FormLabel>
+                      <FormControl>
+                        <Input type="number" min="1" {...field} />
+                      </FormControl>
+                      <FormDescription>
+                        Maximum number of tickets available for this competition
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                
+                <FormField
+                  control={form.control}
+                  name="maxTicketsPerUser"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Max Tickets Per User</FormLabel>
+                      <FormControl>
+                        <Input type="number" min="1" {...field} />
+                      </FormControl>
+                      <FormDescription>
+                        Maximum number of tickets a user can purchase
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                
+                <FormField
+                  control={form.control}
+                  name="soldTickets"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Sold Tickets</FormLabel>
+                      <FormControl>
+                        <Input type="number" min="0" {...field} />
+                      </FormControl>
+                      <FormDescription>
+                        Number of tickets already sold (usually starts at 0)
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
               
               <FormField
                 control={form.control}
