@@ -13,20 +13,46 @@ import { Bell, Crown, LogIn, User } from "lucide-react";
 import { useAdmin } from "@/hooks/use-admin";
 import { useAuth } from "@/hooks/use-auth";
 
+// Define TypeScript interfaces for navigation items
+interface DropdownItem {
+  label: string;
+  path: string;
+  color?: string;
+}
+
+interface NavItem {
+  icon: string;
+  label: string;
+  path: string;
+  hasDropdown?: boolean;
+  dropdownItems?: DropdownItem[];
+}
+
 export default function TopNav() {
   const [location, setLocation] = useLocation();
   const { isAdmin } = useAdmin();
   const { user, logoutUser, isLoading } = useAuth();
 
   // Public navigation items available to all users
-  const publicNavItems = [
+  const publicNavItems: NavItem[] = [
     { icon: "fas fa-home", label: "Dashboard", path: "/" },
-    { icon: "fas fa-trophy", label: "Competitions", path: "/competitions" },
+    { 
+      icon: "fas fa-trophy", 
+      label: "Competitions", 
+      path: "/competitions",
+      hasDropdown: true,
+      dropdownItems: [
+        { label: "All Competitions", path: "/competitions" },
+        { label: "Family", path: "/competitions/family", color: "text-amber-500" },
+        { label: "Appliances", path: "/competitions/appliances", color: "text-pink-500" },
+        { label: "Cash", path: "/competitions/cash", color: "text-green-500" },
+      ] 
+    },
     { icon: "fas fa-chart-line", label: "Leaderboard", path: "/leaderboard" },
   ];
   
   // User-specific navigation items available only when logged in
-  const userNavItems = user ? [
+  const userNavItems: NavItem[] = user ? [
     { icon: "fas fa-clipboard-check", label: "My Entries", path: "/my-entries" },
     { icon: "fas fa-medal", label: "My Wins", path: "/my-wins" },
   ] : [];
@@ -41,7 +67,14 @@ export default function TopNav() {
     setLocation('/');
   };
 
-  const isActive = (path: string) => location === path;
+  const isActive = (path: string) => {
+    // For competitions path, check if location starts with it
+    if (path === '/competitions') {
+      return location === path || location.startsWith(`${path}/`);
+    }
+    // For other paths, exact match
+    return location === path;
+  };
 
   return (
     <header className="sticky top-0 shadow-md transition-all duration-300 bg-gradient-to-r from-blue-900 to-indigo-800 text-white z-20">
@@ -81,18 +114,44 @@ export default function TopNav() {
             {/* Desktop Navigation */}
             <nav className="hidden md:flex space-x-1">
               {navItems.map((item) => (
-                <Link key={item.path} href={item.path}>
-                  <span
-                    className={`px-4 py-2 rounded-xl text-sm flex items-center transition-all duration-200 cursor-pointer ${
-                      isActive(item.path)
-                        ? 'bg-white/25 text-white font-medium backdrop-blur-sm'
-                        : 'text-white hover:bg-white/10'
-                    }`}
-                  >
-                    <i className={`${item.icon} mr-2`}></i>
-                    {item.label}
-                  </span>
-                </Link>
+                item.hasDropdown ? (
+                  <DropdownMenu key={item.path}>
+                    <DropdownMenuTrigger asChild>
+                      <span
+                        className={`px-4 py-2 rounded-xl text-sm flex items-center transition-all duration-200 cursor-pointer ${
+                          location.startsWith(item.path)
+                            ? 'bg-white/25 text-white font-medium backdrop-blur-sm'
+                            : 'text-white hover:bg-white/10'
+                        }`}
+                      >
+                        <i className={`${item.icon} mr-2`}></i>
+                        {item.label}
+                      </span>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-56 p-1">
+                      {item.dropdownItems?.map((dropdownItem) => (
+                        <Link key={dropdownItem.path} href={dropdownItem.path}>
+                          <DropdownMenuItem className="py-2 cursor-pointer focus:bg-blue-50 rounded-md">
+                            <span className={dropdownItem.color || ""}>{dropdownItem.label}</span>
+                          </DropdownMenuItem>
+                        </Link>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                ) : (
+                  <Link key={item.path} href={item.path}>
+                    <span
+                      className={`px-4 py-2 rounded-xl text-sm flex items-center transition-all duration-200 cursor-pointer ${
+                        isActive(item.path)
+                          ? 'bg-white/25 text-white font-medium backdrop-blur-sm'
+                          : 'text-white hover:bg-white/10'
+                      }`}
+                    >
+                      <i className={`${item.icon} mr-2`}></i>
+                      {item.label}
+                    </span>
+                  </Link>
+                )
               ))}
             </nav>
           </div>
