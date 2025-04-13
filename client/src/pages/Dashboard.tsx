@@ -159,10 +159,10 @@ export default function Dashboard() {
         <div className="flex flex-col md:flex-row justify-between items-center relative z-10">
           <div className="text-white">
             <h1 className="text-5xl font-extrabold tracking-tight mb-2">
-              <span className="wiggle-on-hover inline-block">READY TO</span> <span className="text-yellow-300 pulse-glow inline-block">WIN BIG?</span>
+              <span className="wiggle-on-hover inline-block">BLUE WHALE</span> <span className="text-yellow-300 pulse-glow inline-block">COMPETITIONS</span>
             </h1>
             <p className="text-xl font-medium text-white/90 max-w-xl">
-              Your competition hub for <span className="underline decoration-yellow-300 decoration-wavy decoration-2 underline-offset-2">discovering</span> and <span className="underline decoration-yellow-300 decoration-wavy decoration-2 underline-offset-2">tracking</span> the best prize opportunities!
+              Your ultimate hub for <span className="underline decoration-yellow-300 decoration-wavy decoration-2 underline-offset-2">discovering</span>, <span className="underline decoration-yellow-300 decoration-wavy decoration-2 underline-offset-2">entering</span>, and <span className="underline decoration-yellow-300 decoration-wavy decoration-2 underline-offset-2">winning</span> amazing prizes!
             </p>
             
             <div className="mt-6 flex items-center space-x-4">

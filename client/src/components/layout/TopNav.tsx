@@ -50,23 +50,32 @@ export default function TopNav() {
           <div className="flex items-center space-x-8">
             {/* Logo */}
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-full flex items-center justify-center bg-white shadow-md">
+              <div className="w-12 h-12 rounded-full flex items-center justify-center bg-white shadow-md">
                 <svg 
-                  className="w-6 h-6 text-blue-800" 
                   viewBox="0 0 24 24" 
                   fill="none" 
-                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns="http://www.w3.org/2000/svg" 
+                  className="w-8 h-8 text-blue-700"
                 >
-                  <path 
-                    d="M18 6H16V4C16 2.89 15.11 2 14 2H10C8.89 2 8 2.89 8 4V6H6C4.89 6 4 6.89 4 8V20C4 21.11 4.89 22 6 22H18C19.11 22 20 21.11 20 20V8C20 6.89 19.11 6 18 6ZM10 4H14V6H10V4ZM12 19L8 15L9.41 13.59L11 15.17L14.59 11.59L16 13L12 19Z" 
+                  <path
+                    d="M20 8C19.7434 7.06353 19.066 6.30821 18.1552 5.90911C17.2444 5.51002 16.1944 5.50169 15.277 5.88578C13.3814 3.05655 9.38141 3.05655 7.21676 5.39134C5.05211 7.72613 5.42816 11.4315 8.19748 13.3765C4.50803 13.7524 2 16.0872 2 19V21H22V8Z"
                     fill="currentColor"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
+                  <circle cx="9" cy="10" r="1.5" fill="white" />
                 </svg>
               </div>
-              <h1 className="text-xl font-bold tracking-tight text-white">
-                CompetePro
-                <span className="text-white ml-1">+</span>
-              </h1>
+              <div>
+                <h1 className="text-xl font-bold tracking-tight text-white">
+                  Blue Whale
+                </h1>
+                <h2 className="text-sm font-medium tracking-wide text-blue-200">
+                  Competitions
+                </h2>
+              </div>
             </div>
 
             {/* Desktop Navigation */}
