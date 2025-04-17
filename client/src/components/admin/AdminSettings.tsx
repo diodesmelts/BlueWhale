@@ -179,7 +179,7 @@ export default function AdminSettings() {
             <Button
               type="button"
               variant="outline"
-              className="mr-2 border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white"
+              className="mr-2 border-gray-300 text-gray-700 hover:bg-gray-50 hover:text-gray-900"
               onClick={() => {
                 setPreviewImage(null);
                 setSelectedFile(null);
@@ -192,7 +192,7 @@ export default function AdminSettings() {
               type="button"
               disabled={!selectedFile || isUploading}
               onClick={handleUpload}
-              className="bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-700 hover:to-purple-700 text-white border-0"
+              className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white shadow-sm"
             >
               {isUploading ? (
                 <>
@@ -209,8 +209,8 @@ export default function AdminSettings() {
       
       {/* Additional settings could be added here */}
       <div>
-        <Label className="text-lg font-medium text-purple-400 mb-3 block">Other Settings</Label>
-        <p className="text-gray-400 mb-4 text-sm">
+        <Label className="text-lg font-medium text-cyan-600 mb-3 block">Other Settings</Label>
+        <p className="text-gray-500 mb-4 text-sm">
           Additional site settings will be available in future updates.
         </p>
       </div>
