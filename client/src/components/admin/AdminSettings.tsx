@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Upload } from "lucide-react";
+import { Loader2, Upload } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useQuery } from "@tanstack/react-query";
@@ -196,7 +196,7 @@ export default function AdminSettings() {
             >
               {isUploading ? (
                 <>
-                  <span className="mr-2 h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin inline-block"></span>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin text-white" />
                   Uploading...
                 </>
               ) : (
