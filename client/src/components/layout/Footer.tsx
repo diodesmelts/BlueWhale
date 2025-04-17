@@ -15,9 +15,10 @@ export default function Footer() {
           <div>
             <div className="mb-6">
               <img 
-                src="/blue-whale-brand.png" 
+                src="/logo.png" 
                 alt="Blue Whale Competitions" 
                 className="h-12 mb-4"
+                style={{ maxWidth: '180px', background: 'transparent' }}
               />
             </div>
             <p className="text-gray-400 mb-6 text-sm">
