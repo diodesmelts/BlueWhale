@@ -222,18 +222,22 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 text-gray-300">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 text-gray-800">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormField
             control={form.control}
             name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Competition Title</FormLabel>
+                <FormLabel className="text-gray-700 font-medium">Competition Title</FormLabel>
                 <FormControl>
-                  <Input placeholder="e.g. Ultimate Gaming Setup Giveaway" {...field} />
+                  <Input 
+                    placeholder="e.g. Ultimate Gaming Setup Giveaway" 
+                    {...field} 
+                    className="bg-white border border-gray-200 focus:ring-cyan-500 focus:border-cyan-500"
+                  />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-rose-500" />
               </FormItem>
             )}
           />
@@ -243,11 +247,15 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
             name="organizer"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Organizer</FormLabel>
+                <FormLabel className="text-gray-700 font-medium">Organizer</FormLabel>
                 <FormControl>
-                  <Input placeholder="e.g. TechReviewer" {...field} />
+                  <Input 
+                    placeholder="e.g. TechReviewer" 
+                    {...field} 
+                    className="bg-white border border-gray-200 focus:ring-cyan-500 focus:border-cyan-500"
+                  />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-rose-500" />
               </FormItem>
             )}
           />
@@ -258,15 +266,15 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Description</FormLabel>
+              <FormLabel className="text-gray-700 font-medium">Description</FormLabel>
               <FormControl>
                 <Textarea 
                   placeholder="Describe the competition and what the winner will receive" 
-                  className="min-h-[120px]" 
+                  className="min-h-[120px] bg-white border border-gray-200 focus:ring-cyan-500 focus:border-cyan-500" 
                   {...field} 
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-rose-500" />
             </FormItem>
           )}
         />

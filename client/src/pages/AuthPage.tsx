@@ -93,38 +93,40 @@ export default function AuthPage() {
 
   return (
     <div className="container grid flex-1 h-screen items-center justify-center md:grid-cols-2 lg:max-w-none lg:grid-cols-2 lg:px-0">
-      <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-500 to-cyan-600">
+      <div className="relative hidden h-full flex-col bg-black p-10 text-white dark:border-r lg:flex">
+        <div className="absolute inset-0 bg-black">
           <div className="h-full w-full p-10 flex flex-col justify-between">
             <div className="flex items-center text-lg font-medium">
-              <Trophy className="h-6 w-6 mr-2" />
-              <span>Blue Whale</span>
+              <div className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-600 flex items-center font-bold text-xl">
+                <Trophy className="h-6 w-6 mr-2 text-cyan-400" />
+                <span>BLUE WHALE COMPETITIONS</span>
+              </div>
             </div>
             
-            <div className="space-y-4">
-              <h1 className="text-4xl font-bold tracking-tight">
+            <div className="space-y-6">
+              <h1 className="text-5xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600">
                 Your Competition Hub
               </h1>
-              <p className="text-lg">
+              <p className="text-lg text-gray-300">
                 Track, enter, and win competitions across the web. 
               </p>
-              <ul className="space-y-2">
+              <ul className="space-y-3">
                 <li className="flex items-center">
-                  <span className="mr-2">✓</span> Discover new competitions daily
+                  <span className="mr-2 text-cyan-400 font-bold">✓</span> Discover new competitions daily
                 </li>
                 <li className="flex items-center">
-                  <span className="mr-2">✓</span> Track your entry progress 
+                  <span className="mr-2 text-cyan-400 font-bold">✓</span> Track your entry progress 
                 </li>
                 <li className="flex items-center">
-                  <span className="mr-2">✓</span> Manage your wins and prizes
+                  <span className="mr-2 text-cyan-400 font-bold">✓</span> Manage your wins and prizes
                 </li>
                 <li className="flex items-center">
-                  <span className="mr-2">✓</span> See your ranking on leaderboards
+                  <span className="mr-2 text-cyan-400 font-bold">✓</span> See your ranking on leaderboards
                 </li>
               </ul>
             </div>
 
-            <p className="text-sm opacity-70">
+            <p className="text-sm text-gray-400">
               &copy; Blue Whale Competitions {new Date().getFullYear()}
             </p>
           </div>
@@ -145,9 +147,9 @@ export default function AuthPage() {
           </div>
 
           <Tabs defaultValue="login" value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="login">Login</TabsTrigger>
-              <TabsTrigger value="register">Register</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-2 border border-gray-200 bg-gray-100 p-0.5">
+              <TabsTrigger value="login" className="font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-cyan-500 data-[state=active]:to-purple-600 data-[state=active]:text-white">Login</TabsTrigger>
+              <TabsTrigger value="register" className="font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-cyan-500 data-[state=active]:to-purple-600 data-[state=active]:text-white">Register</TabsTrigger>
             </TabsList>
             
             {/* Login Form */}
@@ -192,7 +194,7 @@ export default function AuthPage() {
                       />
                       <Button 
                         type="submit" 
-                        className="w-full bg-blue-500 hover:bg-blue-600"
+                        className="w-full bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white font-medium shadow-md"
                         disabled={isLoading}
                       >
                         {isLoading ? (
