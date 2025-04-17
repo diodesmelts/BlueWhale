@@ -329,31 +329,63 @@ export default function Dashboard() {
         </div>
 
         {/* Live Competitions Header */}
-        <div className="text-center mb-8 relative">
-          <div className="flex items-center justify-center">
-            <div className="h-px flex-grow bg-gray-200 mx-4"></div>
-            <h2 className="font-bold text-xl px-4 tracking-wide uppercase">
-              <span className="text-blue-600">LIVE</span> <span className="text-gray-800">COMPETITIONS</span>
-            </h2>
-            <div className="h-px flex-grow bg-gray-200 mx-4"></div>
+        <div className="text-center mb-10 mt-4 relative">
+          <div className="relative py-6">
+            {/* Decorative elements */}
+            <div className="absolute left-0 top-1/2 transform -translate-y-1/2 w-16 h-16 md:w-24 md:h-24 bg-blue-500/10 rounded-full -ml-8 blur-xl"></div>
+            <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-16 h-16 md:w-24 md:h-24 bg-blue-500/10 rounded-full -mr-8 blur-xl"></div>
+            
+            {/* Main header with animated gradient background */}
+            <div className="bg-gradient-to-r from-blue-600 via-blue-700 to-blue-600 rounded-lg shadow-lg py-4 px-8 inline-block mx-auto gradient-animate hover-scale">
+              <h2 className="font-extrabold text-2xl md:text-3xl tracking-wide uppercase text-white flex items-center">
+                <span className="mr-3 animate-pulse">
+                  <i className="fas fa-broadcast-tower"></i>
+                </span>
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-200">LIVE</span>
+                <span className="ml-2 text-shadow">COMPETITIONS</span>
+                <span className="ml-3 animate-pulse">
+                  <i className="fas fa-trophy trophy-icon"></i>
+                </span>
+              </h2>
+            </div>
+            
+            {/* Underlining effect */}
+            <div className="h-1 bg-gradient-to-r from-blue-400 via-blue-500 to-blue-400 w-32 mx-auto mt-2 rounded-full"></div>
           </div>
         </div>
         
         {/* Competition Listings */}
-        <div className="bg-white px-6 py-8 rounded-lg shadow-sm">
+        <div className="bg-gradient-to-b from-white to-blue-50 px-6 py-8 rounded-2xl shadow-lg border border-blue-100 relative overflow-hidden">
+          {/* Decorative elements */}
+          <div className="absolute top-0 left-0 w-32 h-32 bg-blue-500/5 rounded-full -translate-x-16 -translate-y-16"></div>
+          <div className="absolute bottom-0 right-0 w-48 h-48 bg-blue-500/5 rounded-full translate-x-24 translate-y-12"></div>
+          
           {isLoadingCompetitions ? (
             <div className="p-8 text-center">
-              <div className="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
-              <p className="text-gray-500">Loading competitions...</p>
+              <div className="animate-spin w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+              <p className="text-gray-500 font-medium">Loading exciting competitions...</p>
             </div>
           ) : competitions?.length === 0 ? (
             <div className="p-8 text-center">
+              <div className="w-20 h-20 mx-auto mb-4 text-blue-300">
+                <i className="fas fa-search-minus text-6xl"></i>
+              </div>
               <p className="text-gray-600">No competitions found matching your criteria.</p>
+              <Button 
+                variant="outline" 
+                className="mt-4 border-blue-200 text-blue-600 hover:bg-blue-50"
+                onClick={() => {
+                  setPrizeValue("all");
+                  setSortBy("popularity");
+                }}
+              >
+                <i className="fas fa-sync-alt mr-2"></i> Reset Filters
+              </Button>
             </div>
           ) : (
             <>
               {/* Grid layout with 3 columns on larger screens */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8 relative z-10">
                 {competitions?.map((competition: CompetitionWithEntryStatus) => (
                   <CompetitionCard
                     key={competition.id}
@@ -366,22 +398,28 @@ export default function Dashboard() {
                 ))}
               </div>
               
-              {/* Pagination */}
+              {/* Pagination - redesigned with pill style */}
               <div className="mt-10 flex flex-col md:flex-row items-center justify-between gap-4">
-                <div className="flex items-center text-sm text-gray-500 order-2 md:order-1">
-                  <span>
-                    Showing <span className="font-medium text-blue-600">{competitions?.length || 0}</span> competitions
+                <div className="flex items-center bg-white/60 backdrop-blur-sm p-2 px-4 rounded-full shadow-sm border border-blue-100 order-2 md:order-1">
+                  <i className="fas fa-ticket-alt text-blue-400 mr-2"></i>
+                  <span className="text-sm font-medium text-gray-600">
+                    Showing <span className="font-bold text-blue-600">{competitions?.length || 0}</span> exciting competitions
                   </span>
                 </div>
-                <div className="flex items-center space-x-1 order-1 md:order-2 w-full md:w-auto justify-center md:justify-end">
-                  <Button variant="outline" size="sm" className="text-gray-700 border-gray-200 hover:bg-blue-50 rounded-md px-2 md:px-3">
-                    <i className="fas fa-chevron-left text-xs mr-1"></i> <span className="hidden sm:inline">Prev</span>
+                
+                <div className="flex items-center bg-white/80 backdrop-blur-sm p-1.5 rounded-full shadow-sm border border-blue-100 order-1 md:order-2">
+                  <Button variant="ghost" size="sm" className="rounded-full text-gray-600 hover:text-blue-600 hover:bg-blue-50 px-3">
+                    <i className="fas fa-chevron-left text-xs"></i>
                   </Button>
-                  <Button size="sm" className="px-3 md:px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white border-0 rounded-md">1</Button>
-                  <Button variant="outline" size="sm" className="text-gray-700 border-gray-200 hover:bg-blue-50 rounded-md px-3 md:px-4 py-1.5">2</Button>
-                  <Button variant="outline" size="sm" className="text-gray-700 border-gray-200 hover:bg-blue-50 rounded-md px-3 md:px-4 py-1.5 hidden sm:block">3</Button>
-                  <Button variant="outline" size="sm" className="text-gray-700 border-gray-200 hover:bg-blue-50 rounded-md px-2 md:px-3">
-                    <span className="hidden sm:inline">Next</span> <i className="fas fa-chevron-right text-xs ml-1"></i>
+                  
+                  <div className="flex space-x-1 px-1">
+                    <Button size="sm" className="rounded-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white w-8 h-8 p-0">1</Button>
+                    <Button variant="ghost" size="sm" className="rounded-full text-gray-700 hover:text-blue-600 hover:bg-blue-50 w-8 h-8 p-0">2</Button>
+                    <Button variant="ghost" size="sm" className="rounded-full text-gray-700 hover:text-blue-600 hover:bg-blue-50 w-8 h-8 p-0 hidden xs:inline-flex">3</Button>
+                  </div>
+                  
+                  <Button variant="ghost" size="sm" className="rounded-full text-gray-600 hover:text-blue-600 hover:bg-blue-50 px-3">
+                    <i className="fas fa-chevron-right text-xs"></i>
                   </Button>
                 </div>
               </div>

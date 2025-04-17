@@ -282,24 +282,38 @@ export default function CompetitionCard({
         }}
       />
       
-      <div className="competition-card mb-2 overflow-hidden rounded-lg bg-white shadow-lg cursor-pointer border border-gray-100"
+      <div 
+        className="competition-card mb-2 overflow-hidden rounded-2xl bg-white shadow-xl cursor-pointer border border-gray-100 transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 relative"
         onClick={() => setLocation(`/competitions/${id}`)}
       >
+        {/* Badge ribbon - only shown for first card or special competitions */}
+        {id === 1 && (
+          <div className="absolute -right-12 top-6 bg-gradient-to-r from-amber-500 to-orange-500 text-white py-1 px-12 transform rotate-45 z-20 shadow-md">
+            <span className="font-bold text-xs">FEATURED</span>
+          </div>
+        )}
+        
         {/* Top section with image */}
         <div 
-          className="w-full h-48 bg-center bg-cover relative overflow-hidden"
+          className="w-full h-52 bg-center bg-cover relative overflow-hidden group"
           style={{ backgroundImage: `url(${image})` }}
         >
-          {/* Overlay with price */}
-          <div className="absolute top-0 left-0 right-0 bg-black/70 backdrop-blur-sm p-3 flex items-center justify-between">
-            <span className="text-cyan-300 text-2xl font-bold">£{(prize/100).toLocaleString()}</span>
-            <span className="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-full">
-              {soldTickets || 50}/{totalTickets || 100}
-            </span>
+          {/* Shine effect overlay */}
+          <div className="absolute inset-0 shine-effect opacity-60"></div>
+          
+          {/* Overlay with price tag - styled like a real price tag */}
+          <div className="absolute top-4 left-0 bg-gradient-to-r from-blue-600 to-cyan-600 text-white py-1.5 pl-4 pr-6 rounded-r-full shadow-md transform group-hover:scale-110 transition-transform duration-300">
+            <span className="text-2xl font-extrabold font-mono">£{(prize/100).toLocaleString()}</span>
+          </div>
+          
+          {/* Tickets counter */}
+          <div className="absolute top-4 right-4 bg-black/80 backdrop-blur-sm text-white rounded-full px-3 py-1.5 flex items-center shadow-md">
+            <i className="fas fa-ticket-alt text-cyan-400 mr-2"></i>
+            <span className="font-medium text-sm">{soldTickets || 50}/{totalTickets || 1000}</span>
           </div>
           
           {/* Darkened bottom section with product name */}
-          <div className="absolute bottom-0 left-0 right-0 bg-black/70 backdrop-blur-sm p-4">
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent backdrop-blur-sm p-4">
             <h3 className="text-2xl font-bold text-white">
               {title}
             </h3>
@@ -308,64 +322,65 @@ export default function CompetitionCard({
         
         {/* Name + Verified */}
         <div className="px-4 pt-3 pb-1 flex items-center justify-between">
-          <h3 className="text-base font-semibold text-gray-800">
+          <h3 className="text-base font-semibold text-gray-800 truncate">
             {title}
           </h3>
           {isVerified && (
             <Badge 
               variant="default" 
-              className="bg-blue-100 text-blue-600 text-xs font-medium"
+              className="bg-gradient-to-r from-green-100 to-teal-100 text-green-600 text-xs font-medium border border-green-200"
             >
-              <i className="fas fa-check-circle mr-1"></i> Verified
+              <i className="fas fa-check-circle text-green-500 mr-1"></i> Verified
             </Badge>
           )}
         </div>
         
-        {/* Countdown timer section - clean design */}
+        {/* Countdown timer section - styled with gradients and animations */}
         {drawTime && (
-          <div className="px-4 pt-1 pb-3 grid grid-cols-4 gap-2">
+          <div className="px-4 pt-1 pb-4 grid grid-cols-4 gap-2.5">
             <div className="flex flex-col items-center">
-              <div className="w-full bg-blue-600 text-white rounded flex items-center justify-center">
-                <span className="text-lg font-bold py-2">
+              <div className="w-full bg-gradient-to-br from-blue-500 to-blue-700 text-white rounded-lg shadow-inner flex items-center justify-center border border-blue-600">
+                <span className="text-xl font-bold py-2 font-mono">
                   {timeRemaining?.days.toString().padStart(2, '0') || '00'}
                 </span>
               </div>
-              <span className="text-xs text-gray-500 mt-1">DAYS</span>
+              <span className="text-xs font-semibold text-gray-500 mt-1">DAYS</span>
             </div>
             <div className="flex flex-col items-center">
-              <div className="w-full bg-blue-600 text-white rounded flex items-center justify-center">
-                <span className="text-lg font-bold py-2">
+              <div className="w-full bg-gradient-to-br from-blue-500 to-blue-700 text-white rounded-lg shadow-inner flex items-center justify-center border border-blue-600">
+                <span className="text-xl font-bold py-2 font-mono">
                   {timeRemaining?.hours.toString().padStart(2, '0') || '00'}
                 </span>
               </div>
-              <span className="text-xs text-gray-500 mt-1">HOURS</span>
+              <span className="text-xs font-semibold text-gray-500 mt-1">HOURS</span>
             </div>
             <div className="flex flex-col items-center">
-              <div className="w-full bg-blue-600 text-white rounded flex items-center justify-center">
-                <span className="text-lg font-bold py-2">
+              <div className="w-full bg-gradient-to-br from-blue-500 to-blue-700 text-white rounded-lg shadow-inner flex items-center justify-center border border-blue-600">
+                <span className="text-xl font-bold py-2 font-mono">
                   {timeRemaining?.minutes.toString().padStart(2, '0') || '00'}
                 </span>
               </div>
-              <span className="text-xs text-gray-500 mt-1">MINS</span>
+              <span className="text-xs font-semibold text-gray-500 mt-1">MINS</span>
             </div>
             <div className="flex flex-col items-center">
-              <div className="w-full bg-blue-600 text-white rounded flex items-center justify-center animate-pulse">
-                <span className="text-lg font-bold py-2">
+              <div className="w-full bg-gradient-to-br from-blue-500 to-blue-700 text-white rounded-lg shadow-inner flex items-center justify-center border border-blue-600 animate-pulse">
+                <span className="text-xl font-bold py-2 font-mono">
                   {timeRemaining?.seconds.toString().padStart(2, '0') || '00'}
                 </span>
               </div>
-              <span className="text-xs text-gray-500 mt-1">SECS</span>
+              <span className="text-xs font-semibold text-gray-500 mt-1">SECS</span>
             </div>
           </div>
         )}
         
-        {/* Footer section with pricing and button */}
-        <div className="border-t border-gray-100 flex items-center">
+        {/* Footer section with pricing and button - with gradient button */}
+        <div className="border-t border-gray-200 flex items-center bg-gray-50 rounded-b-2xl overflow-hidden">
           <div className="flex-1 pl-4 py-3">
-            <span className="text-xl font-bold text-blue-600">£{(ticketPrice ? ticketPrice/100 : 0).toFixed(2)}</span>
-            <span className="text-xs text-gray-500 block">
+            <span className="text-xl font-extrabold text-blue-600">£{(ticketPrice ? ticketPrice/100 : 0).toFixed(2)}</span>
+            <span className="text-xs text-gray-500 font-medium block">
+              <i className="fas fa-layer-group text-blue-400 mr-1"></i>
               {(totalTickets && soldTickets) ? 
-                (totalTickets - soldTickets) : 950} left
+                (totalTickets - soldTickets) : 950} tickets left
             </span>
           </div>
           <Button 
@@ -374,9 +389,10 @@ export default function CompetitionCard({
               setTicketModalOpen(true);
             }}
             disabled={isPaying}
-            className="px-6 py-3 h-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm transition-colors duration-200 rounded-none"
+            className="px-6 py-3 h-full bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white font-bold text-sm transition-all duration-300 rounded-none shadow-md wiggle-on-hover"
           >
-            BUY TICKET
+            <i className="fas fa-ticket-alt mr-2"></i>
+            GET TICKETS
           </Button>
         </div>
       </div>

@@ -69,6 +69,18 @@
   }
 }
 
+@keyframes gradient-pulse {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 /* Visual styles and effects */
 .float-animation {
   animation: float 6s ease-in-out infinite;
@@ -102,6 +114,19 @@
   );
   transform: rotate(30deg);
   animation: shine 3s infinite linear;
+}
+
+.gradient-animate {
+  background-size: 200% 200%;
+  animation: gradient-pulse 3s ease infinite;
+}
+
+.hover-scale {
+  transition: transform 0.3s ease-out;
+}
+
+.hover-scale:hover {
+  transform: scale(1.03);
 }
 
 /* Fun interactive elements */
