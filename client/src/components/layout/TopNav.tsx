@@ -77,9 +77,9 @@ export default function TopNav() {
   };
 
   return (
-    <header className="sticky top-0 shadow-lg transition-all duration-300 bg-blue-700 text-white z-20">
+    <header className="sticky top-0 shadow-lg transition-all duration-300 bg-black text-white z-20">
       {/* Top stripe */}
-      <div className="h-1.5 w-full bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600"></div>
+      <div className="h-1.5 w-full bg-gradient-to-r from-blue-400 via-cyan-500 to-purple-500"></div>
       
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-20">
@@ -89,8 +89,8 @@ export default function TopNav() {
               <div className="flex items-center group">
                 <div className="transform transition-all duration-300 group-hover:translate-x-1">
                   <h1 className="text-xl md:text-2xl font-bold tracking-tight text-white flex flex-col">
-                    <span className="text-white font-extrabold">BLUE WHALE</span> 
-                    <span className="text-blue-200 text-xs md:text-base font-light tracking-wider -mt-1">
+                    <span className="text-cyan-400 font-extrabold">BLUE WHALE</span> 
+                    <span className="text-purple-300 text-xs md:text-base font-light tracking-wider -mt-1">
                       COMPETITIONS
                     </span>
                   </h1>
@@ -107,8 +107,8 @@ export default function TopNav() {
                       <button
                         className={`px-4 py-2.5 rounded-full text-sm flex items-center transition-all duration-200 ${
                           location.startsWith(item.path)
-                            ? 'bg-blue-800 text-white shadow-md font-medium'
-                            : 'text-white hover:bg-blue-600'
+                            ? 'bg-cyan-900 text-cyan-300 shadow-md font-medium'
+                            : 'text-gray-300 hover:bg-gray-800'
                         }`}
                       >
                         <i className={`${item.icon} mr-2`}></i>
@@ -116,10 +116,10 @@ export default function TopNav() {
                         <i className="fas fa-chevron-down ml-2 text-xs opacity-70"></i>
                       </button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-56 p-1 rounded-xl shadow-xl border-blue-100">
+                    <DropdownMenuContent className="w-56 p-1 rounded-xl shadow-xl border-gray-800">
                       {item.dropdownItems?.map((dropdownItem) => (
                         <Link key={dropdownItem.path} href={dropdownItem.path}>
-                          <DropdownMenuItem className="py-2.5 px-3 cursor-pointer focus:bg-blue-50 rounded-lg my-0.5 transition-colors">
+                          <DropdownMenuItem className="py-2.5 px-3 cursor-pointer focus:bg-gray-50 rounded-lg my-0.5 transition-colors">
                             <span className={`${dropdownItem.color || ""} font-medium`}>{dropdownItem.label}</span>
                           </DropdownMenuItem>
                         </Link>
@@ -131,8 +131,8 @@ export default function TopNav() {
                     <button
                       className={`px-4 py-2.5 rounded-full text-sm flex items-center transition-all duration-200 ${
                         isActive(item.path)
-                          ? 'bg-blue-800 text-white shadow-md font-medium'
-                          : 'text-white hover:bg-blue-600'
+                          ? 'bg-cyan-900 text-cyan-300 shadow-md font-medium'
+                          : 'text-gray-300 hover:bg-gray-800'
                       }`}
                     >
                       <i className={`${item.icon} mr-2`}></i>
@@ -149,20 +149,20 @@ export default function TopNav() {
             {/* Notifications */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="relative p-2 rounded-full focus:outline-none transition-all text-white hover:bg-blue-600 bg-blue-800">
-                  <Bell className="h-5 w-5" />
-                  <span className="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-amber-400 ring-2 ring-blue-700"></span>
+                <button className="relative p-2 rounded-full focus:outline-none transition-all text-white hover:bg-gray-800 bg-cyan-900">
+                  <Bell className="h-5 w-5 text-cyan-300" />
+                  <span className="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-purple-400 ring-2 ring-black"></span>
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-80 p-2 rounded-xl shadow-xl">
-                <DropdownMenuLabel className="px-4 py-3 text-lg font-semibold text-blue-600 flex items-center border-b border-blue-100 pb-3">
-                  <i className="fas fa-bell mr-2 text-blue-500"></i>
+                <DropdownMenuLabel className="px-4 py-3 text-lg font-semibold text-cyan-600 flex items-center border-b border-gray-200 pb-3">
+                  <i className="fas fa-bell mr-2 text-cyan-500"></i>
                   Notifications
                 </DropdownMenuLabel>
                 <div className="max-h-[320px] overflow-y-auto py-1">
-                  <DropdownMenuItem className="p-4 cursor-pointer focus:bg-blue-50 rounded-xl my-1 hover:bg-blue-50 transition-colors">
+                  <DropdownMenuItem className="p-4 cursor-pointer focus:bg-cyan-50 rounded-xl my-1 hover:bg-cyan-50 transition-colors">
                     <div className="flex space-x-3">
-                      <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 shrink-0">
+                      <div className="w-10 h-10 bg-cyan-100 rounded-full flex items-center justify-center text-cyan-600 shrink-0">
                         <i className="fas fa-gift"></i>
                       </div>
                       <div className="flex flex-col space-y-1">
@@ -172,7 +172,7 @@ export default function TopNav() {
                       </div>
                     </div>
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="p-4 cursor-pointer focus:bg-blue-50 rounded-xl my-1 hover:bg-blue-50 transition-colors">
+                  <DropdownMenuItem className="p-4 cursor-pointer focus:bg-cyan-50 rounded-xl my-1 hover:bg-cyan-50 transition-colors">
                     <div className="flex space-x-3">
                       <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600 shrink-0">
                         <i className="fas fa-check-circle"></i>
@@ -184,9 +184,9 @@ export default function TopNav() {
                       </div>
                     </div>
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="p-4 cursor-pointer focus:bg-blue-50 rounded-xl my-1 hover:bg-blue-50 transition-colors">
+                  <DropdownMenuItem className="p-4 cursor-pointer focus:bg-purple-50 rounded-xl my-1 hover:bg-purple-50 transition-colors">
                     <div className="flex space-x-3">
-                      <div className="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center text-amber-600 shrink-0">
+                      <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 shrink-0">
                         <i className="fas fa-trophy"></i>
                       </div>
                       <div className="flex flex-col space-y-1">
@@ -197,8 +197,8 @@ export default function TopNav() {
                     </div>
                   </DropdownMenuItem>
                 </div>
-                <div className="p-2 mt-2 border-t border-blue-100 pt-3">
-                  <Button className="w-full text-sm font-medium bg-blue-100 hover:bg-blue-200 text-blue-700 border-0">
+                <div className="p-2 mt-2 border-t border-gray-200 pt-3">
+                  <Button className="w-full text-sm font-medium bg-cyan-100 hover:bg-cyan-200 text-cyan-700 border-0">
                     View all notifications
                   </Button>
                 </div>
@@ -210,30 +210,30 @@ export default function TopNav() {
               // User is logged in - show profile dropdown
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <div className="flex items-center space-x-2 cursor-pointer rounded-full pl-2 pr-4 py-1.5 transition-all bg-blue-800 hover:bg-blue-600">
-                    <Avatar className="h-9 w-9 shadow-md bg-white text-blue-700 border-2 border-blue-300">
+                  <div className="flex items-center space-x-2 cursor-pointer rounded-full pl-2 pr-4 py-1.5 transition-all bg-cyan-900 hover:bg-gray-800">
+                    <Avatar className="h-9 w-9 shadow-md bg-black text-cyan-400 border-2 border-cyan-600">
                       <span className="text-sm font-bold">
                         {user.username.substring(0, 2).toUpperCase()}
                       </span>
                     </Avatar>
-                    <span className="text-sm font-medium hidden md:block text-white">
+                    <span className="text-sm font-medium hidden md:block text-cyan-300">
                       {user.username}
                     </span>
-                    <i className="fas fa-chevron-down text-xs opacity-70 text-blue-200 hidden md:block"></i>
+                    <i className="fas fa-chevron-down text-xs opacity-70 text-cyan-200 hidden md:block"></i>
                   </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-60 p-2 rounded-xl shadow-xl">
-                  <div className="p-3 mb-1 bg-blue-50 rounded-lg">
-                    <div className="font-semibold text-gray-900">{user.username}</div>
-                    <div className="text-xs text-gray-500 mt-0.5">{user.email}</div>
+                  <div className="p-3 mb-1 bg-black rounded-lg">
+                    <div className="font-semibold text-cyan-400">{user.username}</div>
+                    <div className="text-xs text-gray-400 mt-0.5">{user.email}</div>
                     <div className="flex mt-2 items-center space-x-2">
                       {isAdmin && (
-                        <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
+                        <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-purple-900 text-purple-300">
                           <i className="fas fa-shield-alt mr-1"></i> Admin
                         </span>
                       )}
                       {user.isPremium && (
-                        <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-amber-100 text-amber-800">
+                        <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-cyan-900 text-cyan-300">
                           <i className="fas fa-crown mr-1"></i> Premium
                         </span>
                       )}
@@ -241,23 +241,23 @@ export default function TopNav() {
                   </div>
                   {isAdmin && (
                     <Link href="/admin">
-                      <DropdownMenuItem className="py-2.5 px-3 cursor-pointer focus:bg-blue-50 rounded-lg my-0.5 hover:bg-blue-50 transition-colors">
-                        <i className="fas fa-shield-alt mr-2 text-rose-600"></i> Admin Dashboard
+                      <DropdownMenuItem className="py-2.5 px-3 cursor-pointer focus:bg-purple-50 rounded-lg my-0.5 hover:bg-purple-50 transition-colors">
+                        <i className="fas fa-shield-alt mr-2 text-purple-600"></i> Admin Dashboard
                       </DropdownMenuItem>
                     </Link>
                   )}
-                  <DropdownMenuItem className="py-2.5 px-3 cursor-pointer focus:bg-blue-50 rounded-lg my-0.5 hover:bg-blue-50 transition-colors">
-                    <i className="fas fa-user mr-2 text-blue-600"></i> My Profile
+                  <DropdownMenuItem className="py-2.5 px-3 cursor-pointer focus:bg-cyan-50 rounded-lg my-0.5 hover:bg-cyan-50 transition-colors">
+                    <i className="fas fa-user mr-2 text-cyan-600"></i> My Profile
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="py-2.5 px-3 cursor-pointer focus:bg-blue-50 rounded-lg my-0.5 hover:bg-blue-50 transition-colors">
+                  <DropdownMenuItem className="py-2.5 px-3 cursor-pointer focus:bg-cyan-50 rounded-lg my-0.5 hover:bg-cyan-50 transition-colors">
                     <i className="fas fa-wallet mr-2 text-green-600"></i> My Balance
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="py-2.5 px-3 cursor-pointer focus:bg-blue-50 rounded-lg my-0.5 hover:bg-blue-50 transition-colors">
+                  <DropdownMenuItem className="py-2.5 px-3 cursor-pointer focus:bg-cyan-50 rounded-lg my-0.5 hover:bg-cyan-50 transition-colors">
                     <i className="fas fa-cog mr-2 text-gray-600"></i> Account Settings
                   </DropdownMenuItem>
                   {!user.isPremium && (
-                    <DropdownMenuItem className="py-2.5 px-3 cursor-pointer focus:bg-amber-50 rounded-lg my-0.5 hover:bg-amber-50 transition-colors">
-                      <i className="fas fa-crown mr-2 text-amber-500"></i> Upgrade to Premium
+                    <DropdownMenuItem className="py-2.5 px-3 cursor-pointer focus:bg-purple-50 rounded-lg my-0.5 hover:bg-purple-50 transition-colors">
+                      <i className="fas fa-crown mr-2 text-purple-500"></i> Upgrade to Premium
                     </DropdownMenuItem>
                   )}
                   <DropdownMenuSeparator className="my-1.5" />
@@ -272,7 +272,7 @@ export default function TopNav() {
             ) : (
               // User is not logged in - show login button
               <Link href="/auth">
-                <Button className="flex items-center bg-blue-800 hover:bg-blue-900 text-white border-0 shadow-md">
+                <Button className="flex items-center bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-700 hover:to-purple-700 text-white border-0 shadow-md">
                   <LogIn className="h-4 w-4 mr-1.5" />
                   <span className="text-sm font-medium">Sign In</span>
                 </Button>
