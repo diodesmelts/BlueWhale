@@ -42,10 +42,11 @@ export default function TopNav() {
       path: "/competitions",
       hasDropdown: true,
       dropdownItems: [
-        { label: "All Competitions", path: "/competitions" },
+        { label: "Cash", path: "/competitions/cash", color: "text-green-500" },
+        { label: "All Competitions", path: "/competitions", color: "text-blue-500" },
         { label: "Family", path: "/competitions/family", color: "text-amber-500" },
         { label: "Appliances", path: "/competitions/appliances", color: "text-pink-500" },
-        { label: "Cash", path: "/competitions/cash", color: "text-green-500" },
+        { label: "Featured Competitions", path: "/competitions", color: "text-purple-500" },
       ] 
     },
     { icon: "fas fa-chart-line", label: "Leaderboard", path: "/leaderboard" },
@@ -120,7 +121,10 @@ export default function TopNav() {
                       {item.dropdownItems?.map((dropdownItem) => (
                         <Link key={dropdownItem.path} href={dropdownItem.path}>
                           <DropdownMenuItem className="py-2.5 px-3 cursor-pointer focus:bg-gray-50 rounded-lg my-0.5 transition-colors">
-                            <span className={`${dropdownItem.color || ""} font-medium`}>{dropdownItem.label}</span>
+                            <span className="flex items-center">
+                              <span className={`w-1.5 h-1.5 rounded-full mr-2 ${dropdownItem.color.replace("text-", "bg-")}`}></span>
+                              <span className={`${dropdownItem.color || ""} font-medium`}>{dropdownItem.label}</span>
+                            </span>
                           </DropdownMenuItem>
                         </Link>
                       ))}
