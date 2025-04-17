@@ -79,20 +79,20 @@ export default function UserManagement() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+      <div className="flex items-center justify-center h-64 bg-gray-900 text-white rounded-lg shadow-md border border-gray-700 p-6">
+        <Loader2 className="h-8 w-8 animate-spin text-cyan-500" />
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="text-center text-red-600 p-4">
+      <div className="text-center text-red-400 p-4 bg-gray-900 text-white rounded-lg shadow-md border border-gray-700">
         <p>Error loading users</p>
         <Button 
           variant="outline"
           onClick={() => queryClient.invalidateQueries({ queryKey: ["/api/admin/users"] })}
-          className="mt-2"
+          className="mt-2 border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white"
         >
           Retry
         </Button>
@@ -110,56 +110,58 @@ export default function UserManagement() {
   };
 
   return (
-    <Card className="bg-white shadow-md border-blue-100">
-      <CardHeader className="border-b pb-3">
+    <Card className="bg-gray-900 text-white shadow-md border-gray-700">
+      <CardHeader className="border-b border-gray-700 pb-3">
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-2">
-            <User className="h-5 w-5 text-blue-600" />
-            <CardTitle className="text-xl">User Management</CardTitle>
+            <User className="h-5 w-5 text-cyan-500" />
+            <CardTitle className="text-xl text-cyan-400">User Management</CardTitle>
           </div>
           <Button
             variant="outline"
-            className={`text-sm ${editMode ? 'border-green-600 text-green-600' : 'border-blue-600 text-blue-600'}`}
+            className={`text-sm ${editMode ? 
+              'border-green-500 text-green-400 hover:bg-gray-800' : 
+              'border-cyan-600 text-cyan-400 hover:bg-gray-800'}`}
             onClick={() => setEditMode(!editMode)}
           >
             {editMode ? 'Save Changes' : 'Edit Users'}
           </Button>
         </div>
-        <CardDescription>
+        <CardDescription className="text-gray-400">
           View and manage all user accounts and permissions on the platform.
         </CardDescription>
       </CardHeader>
       <CardContent className="p-0">
         <div className="overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-slate-50">
-                <TableHead>User</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Joined</TableHead>
-                <TableHead className="text-center">Premium Status</TableHead>
-                <TableHead className="text-center">Admin Access</TableHead>
+          <Table className="text-gray-300">
+            <TableHeader className="bg-gray-800">
+              <TableRow className="border-gray-700 hover:bg-gray-800">
+                <TableHead className="text-cyan-400">User</TableHead>
+                <TableHead className="text-cyan-400">Email</TableHead>
+                <TableHead className="text-cyan-400">Joined</TableHead>
+                <TableHead className="text-center text-cyan-400">Premium Status</TableHead>
+                <TableHead className="text-center text-cyan-400">Admin Access</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {users?.map((user) => (
-                <TableRow key={user.id} className="hover:bg-slate-50">
+                <TableRow key={user.id} className="border-gray-700 hover:bg-gray-800">
                   <TableCell className="font-medium">
                     <div className="flex items-center space-x-3">
-                      <Avatar className={`h-8 w-8 ${user.isPremium ? 'bg-amber-100 text-amber-700' : 'bg-blue-100 text-blue-700'}`}>
+                      <Avatar className={`h-8 w-8 ${user.isPremium ? 'bg-purple-900 text-purple-300' : 'bg-gray-800 text-cyan-300'}`}>
                         <AvatarFallback>{getInitials(user.username)}</AvatarFallback>
                       </Avatar>
                       <div>
                         <div className="font-medium flex items-center">
                           {user.username}
                           {user.isPremium && (
-                            <Badge variant="outline" className="ml-2 bg-amber-50 text-amber-700 border-amber-200">
-                              <Star className="h-3 w-3 mr-1 fill-amber-500 text-amber-500" /> 
+                            <Badge variant="outline" className="ml-2 bg-purple-900 text-purple-300 border-purple-700">
+                              <Star className="h-3 w-3 mr-1 fill-purple-400 text-purple-400" /> 
                               Premium
                             </Badge>
                           )}
                         </div>
-                        <div className="text-xs text-muted-foreground">ID: {user.id}</div>
+                        <div className="text-xs text-gray-500">ID: {user.id}</div>
                       </div>
                     </div>
                   </TableCell>
@@ -180,16 +182,16 @@ export default function UserManagement() {
                               <Switch
                                 checked={user.isPremium || false}
                                 onCheckedChange={(checked) => handlePermissionChange(user, "isPremium", checked)}
-                                className="data-[state=checked]:bg-amber-500"
+                                className="data-[state=checked]:bg-purple-500"
                               />
                             ) : (
-                              <div className={`p-1 rounded-full ${user.isPremium ? 'bg-amber-100 text-amber-600' : 'bg-slate-100 text-slate-400'}`}>
-                                <Star className={`h-4 w-4 ${user.isPremium ? 'fill-amber-500' : ''}`} />
+                              <div className={`p-1 rounded-full ${user.isPremium ? 'bg-purple-900 text-purple-400' : 'bg-gray-800 text-gray-500'}`}>
+                                <Star className={`h-4 w-4 ${user.isPremium ? 'fill-purple-500' : ''}`} />
                               </div>
                             )}
                           </div>
                         </TooltipTrigger>
-                        <TooltipContent>
+                        <TooltipContent className="bg-gray-900 text-gray-300 border-gray-700">
                           <p>{user.isPremium ? 'Premium User' : 'Standard User'}</p>
                         </TooltipContent>
                       </Tooltip>
@@ -204,16 +206,16 @@ export default function UserManagement() {
                               <Switch
                                 checked={user.isAdmin || false}
                                 onCheckedChange={(checked) => handlePermissionChange(user, "isAdmin", checked)}
-                                className="data-[state=checked]:bg-blue-600"
+                                className="data-[state=checked]:bg-cyan-600"
                               />
                             ) : (
-                              <div className={`p-1 rounded-full ${user.isAdmin ? 'bg-blue-100 text-blue-600' : 'bg-slate-100 text-slate-400'}`}>
+                              <div className={`p-1 rounded-full ${user.isAdmin ? 'bg-cyan-900 text-cyan-400' : 'bg-gray-800 text-gray-500'}`}>
                                 {user.isAdmin ? <ShieldCheck className="h-4 w-4" /> : <ShieldAlert className="h-4 w-4" />}
                               </div>
                             )}
                           </div>
                         </TooltipTrigger>
-                        <TooltipContent>
+                        <TooltipContent className="bg-gray-900 text-gray-300 border-gray-700">
                           <p>{user.isAdmin ? 'Admin User' : 'No Admin Access'}</p>
                         </TooltipContent>
                       </Tooltip>

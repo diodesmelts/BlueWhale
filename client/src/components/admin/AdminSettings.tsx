@@ -114,24 +114,24 @@ export default function AdminSettings() {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6">
-      <h2 className="text-xl font-bold mb-4">Site Settings</h2>
+    <div className="bg-gray-900 text-white rounded-lg shadow-md border border-gray-700 p-6">
+      <h2 className="text-xl font-bold text-cyan-400 mb-4">Site Settings</h2>
       
-      <div className="border-b pb-5 mb-5">
-        <Label className="text-lg font-medium mb-3 block">Hero Banner</Label>
-        <p className="text-gray-500 mb-4 text-sm">
+      <div className="border-b border-gray-700 pb-5 mb-5">
+        <Label className="text-lg font-medium text-purple-400 mb-3 block">Hero Banner</Label>
+        <p className="text-gray-400 mb-4 text-sm">
           Upload a hero banner image for the dashboard page. For best results, use a landscape image with dimensions of 1920×600 pixels.
         </p>
         
         {/* Display current banner if available */}
         {currentBannerUrl && (
-          <div className="bg-gray-50 p-4 rounded-lg mb-4">
-            <h3 className="text-sm font-medium text-gray-700 mb-2">Current Banner:</h3>
+          <div className="bg-gray-800 p-4 rounded-lg mb-4 border border-gray-700">
+            <h3 className="text-sm font-medium text-cyan-400 mb-2">Current Banner:</h3>
             <div className="flex justify-center">
               <img 
                 src={currentBannerUrl} 
                 alt="Current Banner" 
-                className="max-h-40 rounded-md object-cover shadow-sm border border-gray-200" 
+                className="max-h-40 rounded-md object-cover shadow-md border border-gray-600" 
               />
             </div>
           </div>
@@ -141,7 +141,7 @@ export default function AdminSettings() {
           {/* File upload area */}
           <div
             className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-all ${
-              selectedFile ? 'border-blue-400 bg-blue-50' : 'border-gray-300 hover:border-blue-500'
+              selectedFile ? 'border-cyan-600 bg-gray-800' : 'border-gray-600 hover:border-cyan-500'
             }`}
             onClick={() => fileInputRef.current?.click()}
             onDragOver={handleDragOver}
@@ -154,15 +154,15 @@ export default function AdminSettings() {
                   alt="Preview" 
                   className="max-h-48 mx-auto rounded-md object-cover"
                 />
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-300">
                   {selectedFile?.name} ({selectedFile ? Math.round((selectedFile.size || 0) / 1024) : 0} KB)
                 </p>
               </div>
             ) : (
               <>
-                <Upload className="h-10 w-10 text-gray-400 mx-auto mb-2" />
-                <p className="text-sm text-gray-600 mb-1">Click to upload or drag and drop</p>
-                <p className="text-xs text-gray-500">PNG, JPG or WebP (max 5MB)</p>
+                <Upload className="h-10 w-10 text-cyan-500 mx-auto mb-2" />
+                <p className="text-sm text-gray-300 mb-1">Click to upload or drag and drop</p>
+                <p className="text-xs text-gray-400">PNG, JPG or WebP (max 5MB)</p>
               </>
             )}
             <input 
@@ -179,7 +179,7 @@ export default function AdminSettings() {
             <Button
               type="button"
               variant="outline"
-              className="mr-2"
+              className="mr-2 border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white"
               onClick={() => {
                 setPreviewImage(null);
                 setSelectedFile(null);
@@ -192,7 +192,7 @@ export default function AdminSettings() {
               type="button"
               disabled={!selectedFile || isUploading}
               onClick={handleUpload}
-              className="bg-blue-600 hover:bg-blue-700"
+              className="bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-700 hover:to-purple-700 text-white border-0"
             >
               {isUploading ? (
                 <>
@@ -209,8 +209,8 @@ export default function AdminSettings() {
       
       {/* Additional settings could be added here */}
       <div>
-        <Label className="text-lg font-medium mb-3 block">Other Settings</Label>
-        <p className="text-gray-500 mb-4 text-sm">
+        <Label className="text-lg font-medium text-purple-400 mb-3 block">Other Settings</Label>
+        <p className="text-gray-400 mb-4 text-sm">
           Additional site settings will be available in future updates.
         </p>
       </div>

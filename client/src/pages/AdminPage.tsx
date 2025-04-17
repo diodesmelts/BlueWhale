@@ -532,15 +532,15 @@ export default function AdminPage() {
       {/* Competition Management Section */}
       <div className="mt-8 mb-8">
         <div className="flex items-center space-x-2 mb-4">
-          <List className="h-6 w-6 text-blue-700" />
-          <h2 className="text-2xl font-bold">Competition Management</h2>
+          <List className="h-6 w-6 text-cyan-500" />
+          <h2 className="text-2xl font-bold bg-gradient-to-r from-cyan-500 to-purple-600 text-transparent bg-clip-text">Competition Management</h2>
         </div>
-        <Card className="bg-white shadow-lg border-blue-100">
-          <CardHeader className="border-b pb-3">
-            <CardTitle className="text-xl">
+        <Card className="bg-gray-900 shadow-lg border-cyan-800 text-white">
+          <CardHeader className="border-b border-gray-800 pb-3">
+            <CardTitle className="text-xl text-cyan-400">
               Manage Existing Competitions
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-gray-400">
               View, edit, or delete competitions from the platform.
             </CardDescription>
           </CardHeader>
@@ -553,8 +553,8 @@ export default function AdminPage() {
       {/* User Management Section */}
       <div className="mt-8 mb-8">
         <div className="flex items-center space-x-2 mb-4">
-          <Users className="h-6 w-6 text-blue-700" />
-          <h2 className="text-2xl font-bold">User Management</h2>
+          <Users className="h-6 w-6 text-cyan-500" />
+          <h2 className="text-2xl font-bold bg-gradient-to-r from-cyan-500 to-purple-600 text-transparent bg-clip-text">User Management</h2>
         </div>
         <UserManagement />
       </div>
@@ -562,8 +562,8 @@ export default function AdminPage() {
       {/* Site Settings Section */}
       <div className="mt-8 mb-8">
         <div className="flex items-center space-x-2 mb-4">
-          <i className="fas fa-cog h-6 w-6 text-blue-700 flex items-center justify-center"></i>
-          <h2 className="text-2xl font-bold">Site Settings</h2>
+          <i className="fas fa-cog h-6 w-6 text-cyan-500 flex items-center justify-center"></i>
+          <h2 className="text-2xl font-bold bg-gradient-to-r from-cyan-500 to-purple-600 text-transparent bg-clip-text">Site Settings</h2>
         </div>
         <AdminSettings />
       </div>
