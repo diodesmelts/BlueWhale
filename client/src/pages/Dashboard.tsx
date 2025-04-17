@@ -6,8 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import CompetitionCard from "@/components/dashboard/CompetitionCard";
-import LeaderboardTable from "@/components/dashboard/LeaderboardTable";
-import { CompetitionWithEntryStatus, LeaderboardUser, UserStats } from "@shared/types";
+import { CompetitionWithEntryStatus, UserStats } from "@shared/types";
 import { useToast } from "@/hooks/use-toast";
 import { useAdmin } from "@/hooks/use-admin";
 import { apiRequest } from "@/lib/queryClient";
@@ -361,29 +360,8 @@ export default function Dashboard() {
           )}
         </div>
 
-        {/* Leaderboard Section */}
-        <div className="mt-10 mb-10">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-5 gap-2">
-            <h2 className="text-xl font-bold text-gray-800 flex items-center">
-              <i className="fas fa-trophy text-amber-500 mr-2"></i>
-              Community Leaderboard
-            </h2>
-            <Link href="/leaderboard">
-              <span className="inline-flex items-center text-blue-500 hover:text-blue-600 text-sm font-medium transition-colors">
-                View Complete Leaderboard 
-                <i className="fas fa-arrow-right ml-1"></i>
-              </span>
-            </Link>
-          </div>
-          {leaderboard && (
-            <div className="overflow-x-auto rounded-lg">
-              <LeaderboardTable 
-                users={leaderboard} 
-                currentUserId={1} // This would come from auth context in a real app
-              />
-            </div>
-          )}
-        </div>
+        {/* Extra spacing at the bottom */}
+        <div className="py-6"></div>
       </div>
 
       {/* Banner Upload Modal */}
