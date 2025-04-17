@@ -11,6 +11,21 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
+interface NavItem {
+  icon: string;
+  label: string;
+  path: string;
+  hasSubmenu?: boolean;
+  action?: () => void;
+}
+
+interface CategoryItem {
+  label: string;
+  path: string;
+  color: string;
+  id: string;
+}
+
 export default function MobileNav() {
   const [location] = useLocation();
   const { isAdmin } = useAdmin();
@@ -18,7 +33,7 @@ export default function MobileNav() {
   const [isCompetitionsOpen, setIsCompetitionsOpen] = useState(false);
   
   // Competition categories
-  const competitionCategories = [
+  const competitionCategories: CategoryItem[] = [
     { label: "Cash", path: "/competitions/cash", color: "bg-green-500", id: "cash" },
     { label: "All Competitions", path: "/competitions", color: "bg-blue-500", id: "all" },
     { label: "Family", path: "/competitions/family", color: "bg-amber-500", id: "family" },
@@ -27,7 +42,7 @@ export default function MobileNav() {
   ];
   
   // Public navigation items available to all users
-  const publicNavItems = [
+  const publicNavItems: NavItem[] = [
     { icon: "fas fa-home", label: "Home", path: "/" },
     { 
       icon: "fas fa-trophy", 
@@ -40,22 +55,22 @@ export default function MobileNav() {
   ];
   
   // User-specific navigation items only when logged in
-  const userNavItems = user ? [
+  const userNavItems: NavItem[] = user ? [
     { icon: "fas fa-clipboard-check", label: "Entries", path: "/my-entries" },
     { icon: "fas fa-medal", label: "Wins", path: "/my-wins" },
   ] : [];
   
   // Authentication navigation item (login/profile)
-  const authNavItem = user
+  const authNavItem: NavItem = user
     ? { icon: "fas fa-user", label: "Profile", path: "/profile" } // This will be handled in the dropdown
     : { icon: "fas fa-sign-in-alt", label: "Login", path: "/auth" };
   
   // Build navigation items
-  let navItems = [...publicNavItems, ...userNavItems];
+  let navItems: NavItem[] = [...publicNavItems, ...userNavItems];
   
   // Always add admin as its own icon if admin, otherwise add the auth item
   if (user && isAdmin) {
-    navItems.push({ icon: "fas fa-shield-alt", label: "Admin", path: "/admin" });
+    navItems.push({ icon: "fas fa-shield-alt", label: "Admin", path: "/admin" } as NavItem);
   } 
   
   // Always add login/profile item

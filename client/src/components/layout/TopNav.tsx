@@ -122,7 +122,7 @@ export default function TopNav() {
                         <Link key={dropdownItem.path} href={dropdownItem.path}>
                           <DropdownMenuItem className="py-2.5 px-3 cursor-pointer focus:bg-gray-50 rounded-lg my-0.5 transition-colors">
                             <span className="flex items-center">
-                              <span className={`w-1.5 h-1.5 rounded-full mr-2 ${dropdownItem.color.replace("text-", "bg-")}`}></span>
+                              <span className={`w-1.5 h-1.5 rounded-full mr-2 ${dropdownItem.color ? dropdownItem.color.replace("text-", "bg-") : ""}`}></span>
                               <span className={`${dropdownItem.color || ""} font-medium`}>{dropdownItem.label}</span>
                             </span>
                           </DropdownMenuItem>
