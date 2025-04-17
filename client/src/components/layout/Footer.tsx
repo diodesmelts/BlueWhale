@@ -37,39 +37,39 @@ export default function Footer() {
             <h3 className="text-lg font-bold mb-6 text-cyan-300">Competitions</h3>
             <ul className="space-y-3">
               <li>
-                <Link href="/category/cash">
+                <Link href="/competitions/cash">
                   <span className="text-gray-400 hover:text-white transition-colors text-sm flex items-center cursor-pointer">
                     <span className="w-1.5 h-1.5 bg-green-500 rounded-full inline-block mr-2"></span>
-                    Cash Competitions
+                    Cash
                   </span>
                 </Link>
               </li>
               <li>
-                <Link href="/category/tech">
+                <Link href="/competitions">
                   <span className="text-gray-400 hover:text-white transition-colors text-sm flex items-center cursor-pointer">
                     <span className="w-1.5 h-1.5 bg-blue-500 rounded-full inline-block mr-2"></span>
-                    Tech Prizes
+                    All Competitions
                   </span>
                 </Link>
               </li>
               <li>
-                <Link href="/category/family">
+                <Link href="/competitions/family">
                   <span className="text-gray-400 hover:text-white transition-colors text-sm flex items-center cursor-pointer">
-                    <span className="w-1.5 h-1.5 bg-yellow-500 rounded-full inline-block mr-2"></span>
-                    Family Prizes
+                    <span className="w-1.5 h-1.5 bg-amber-500 rounded-full inline-block mr-2"></span>
+                    Family
                   </span>
                 </Link>
               </li>
               <li>
-                <Link href="/category/appliances">
+                <Link href="/competitions/appliances">
                   <span className="text-gray-400 hover:text-white transition-colors text-sm flex items-center cursor-pointer">
                     <span className="w-1.5 h-1.5 bg-pink-500 rounded-full inline-block mr-2"></span>
-                    Home Appliances
+                    Appliances
                   </span>
                 </Link>
               </li>
               <li>
-                <Link href="/featured">
+                <Link href="/competitions">
                   <span className="text-gray-400 hover:text-white transition-colors text-sm flex items-center cursor-pointer">
                     <span className="w-1.5 h-1.5 bg-purple-500 rounded-full inline-block mr-2"></span>
                     Featured Competitions
