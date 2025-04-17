@@ -870,6 +870,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // Get logo image API endpoint
+  app.get('/api/settings/logo', async (req, res) => {
+    try {
+      const settingsPath = path.join(process.cwd(), 'public', 'settings', 'logo.json');
+      
+      if (fs.existsSync(settingsPath)) {
+        const logoData = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+        return res.status(200).json(logoData);
+      }
+      
+      // If no logo is set yet, return a default
+      return res.status(200).json({ 
+        imageUrl: null, 
+        updatedAt: null 
+      });
+    } catch (error) {
+      console.error('Error fetching logo settings:', error);
+      res.status(500).json({ message: 'Error fetching logo settings' });
+    }
+  });
+  
   // Banner image upload endpoint for hero section
   app.post('/api/uploads/banner', isAdmin, imageUpload.single('image'), async (req, res) => {
     try {
@@ -927,6 +948,64 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Error in banner upload:', error);
       res.status(500).json({ message: 'Error uploading banner image' });
+    }
+  });
+
+  // Logo upload endpoint
+  app.post('/api/uploads/logo', isAdmin, imageUpload.single('image'), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ message: 'No image file provided' });
+      }
+      
+      const file = req.file;
+      const filePath = file.path;
+      
+      // Process the logo image - optimize but maintain transparency and quality
+      try {
+        await sharp(filePath)
+          .resize({
+            width: 300, // Logo should be reasonably sized
+            height: 100,
+            fit: 'contain', // Preserve aspect ratio without cropping
+            background: { r: 0, g: 0, b: 0, alpha: 0 } // Transparent background
+          })
+          .toBuffer()
+          .then(data => {
+            fs.writeFileSync(filePath, data);
+          });
+      } catch (err) {
+        console.error('Error processing logo image:', err);
+        // Continue even if image processing fails
+      }
+      
+      // Generate URL path to access the file
+      const baseUrl = `${req.protocol}://${req.get('host')}`;
+      const imageUrl = `${baseUrl}/uploads/${file.filename}`;
+      
+      // Store the logo URL in settings
+      try {
+        const settingsDir = path.join(process.cwd(), 'public', 'settings');
+        if (!fs.existsSync(settingsDir)) {
+          fs.mkdirSync(settingsDir, { recursive: true });
+        }
+        
+        // Write the URL to a file
+        fs.writeFileSync(
+          path.join(settingsDir, 'logo.json'), 
+          JSON.stringify({ imageUrl, updatedAt: new Date().toISOString() })
+        );
+      } catch (settingsError) {
+        console.error('Error saving logo settings:', settingsError);
+      }
+      
+      res.status(200).json({ 
+        message: 'Logo image uploaded successfully',
+        imageUrl
+      });
+    } catch (error) {
+      console.error('Error in logo upload:', error);
+      res.status(500).json({ message: 'Error uploading logo image' });
     }
   });
 
