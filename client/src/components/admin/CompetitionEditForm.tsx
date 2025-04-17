@@ -222,7 +222,7 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 text-gray-300">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormField
             control={form.control}
@@ -304,10 +304,10 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
                   <TabsContent value="upload" className="pt-4">
                     <div className="space-y-4">
                       <div className="grid gap-4">
-                        <Card className="overflow-hidden">
+                        <Card className="overflow-hidden bg-gray-800 border border-gray-700">
                           <CardContent className="p-0">
                             <div 
-                              className="bg-slate-100 w-full h-48 flex items-center justify-center border-b" 
+                              className="bg-gray-900 w-full h-48 flex items-center justify-center border-b border-gray-700" 
                             >
                               {uploadedImagePreview ? (
                                 <img 
@@ -316,7 +316,7 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
                                   className="h-full w-full object-contain"
                                 />
                               ) : (
-                                <ImageIcon className="h-12 w-12 text-slate-300" />
+                                <ImageIcon className="h-12 w-12 text-cyan-500" />
                               )}
                             </div>
                             <div className="p-4">
@@ -346,7 +346,7 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
                                 )}
                               </Button>
                               {uploadedFile && (
-                                <p className="text-sm text-slate-500 mt-2 truncate">
+                                <p className="text-sm text-gray-400 mt-2 truncate">
                                   Selected: {uploadedFile.name}
                                 </p>
                               )}
@@ -492,7 +492,7 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
           control={form.control}
           name="isVerified"
           render={({ field }) => (
-            <FormItem className="flex flex-row items-center justify-between p-4 border rounded-md bg-slate-50">
+            <FormItem className="flex flex-row items-center justify-between p-4 border border-gray-700 rounded-md bg-gray-800">
               <div className="space-y-0.5">
                 <FormLabel className="text-base">Verified Competition</FormLabel>
                 <FormDescription>
