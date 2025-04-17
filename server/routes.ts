@@ -241,7 +241,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (error instanceof z.ZodError) {
         res.status(400).json({ message: "Validation error", errors: error.errors });
       } else {
-        res.status(500).json({ message: "Failed to update competition", error: error.message });
+        const errorMessage = error instanceof Error ? error.message : "Unknown error";
+        res.status(500).json({ message: "Failed to update competition", error: errorMessage });
       }
     }
   });

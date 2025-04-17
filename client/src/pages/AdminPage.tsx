@@ -23,6 +23,7 @@ import { useLocation } from "wouter";
 import { apiRequest } from "@/lib/queryClient";
 import UserManagement from "@/components/admin/UserManagement";
 import CompetitionManagement from "@/components/admin/CompetitionManagement";
+import AdminSettings from "@/components/admin/AdminSettings";
 
 const competitionSchema = z.object({
   title: z.string().min(5, "Title must be at least 5 characters"),
@@ -556,6 +557,15 @@ export default function AdminPage() {
           <h2 className="text-2xl font-bold">User Management</h2>
         </div>
         <UserManagement />
+      </div>
+
+      {/* Site Settings Section */}
+      <div className="mt-8 mb-8">
+        <div className="flex items-center space-x-2 mb-4">
+          <i className="fas fa-cog h-6 w-6 text-blue-700 flex items-center justify-center"></i>
+          <h2 className="text-2xl font-bold">Site Settings</h2>
+        </div>
+        <AdminSettings />
       </div>
     </div>
   );

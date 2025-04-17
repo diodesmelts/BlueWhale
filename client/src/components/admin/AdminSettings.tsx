@@ -124,7 +124,7 @@ export default function AdminSettings() {
                   className="max-h-48 mx-auto rounded-md object-cover"
                 />
                 <p className="text-sm text-gray-600">
-                  {selectedFile?.name} ({Math.round(selectedFile?.size / 1024)} KB)
+                  {selectedFile?.name} ({selectedFile ? Math.round((selectedFile.size || 0) / 1024) : 0} KB)
                 </p>
               </div>
             ) : (
