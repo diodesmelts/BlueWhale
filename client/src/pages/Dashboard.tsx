@@ -269,27 +269,17 @@ export default function Dashboard() {
       <div className="container mx-auto px-4 py-8">
 
         {/* Competition Listings with Integrated Header */}
-        <div className="bg-gradient-to-b from-white to-blue-50 px-6 pt-10 pb-8 rounded-2xl shadow-lg border border-blue-100 relative overflow-hidden">
-          {/* Decorative elements */}
-          <div className="absolute top-0 left-0 w-32 h-32 bg-blue-500/5 rounded-full -translate-x-16 -translate-y-16"></div>
-          <div className="absolute bottom-0 right-0 w-48 h-48 bg-blue-500/5 rounded-full translate-x-24 translate-y-12"></div>
+        <div className="px-6 pt-10 pb-8 relative overflow-hidden">
+          {/* Decorative elements removed for cleaner background */}
           
-          {/* Integrated header at the top of the section */}
+          {/* Simplified header at the top of the section */}
           <div className="mb-8 relative z-10">
             <div className="flex items-center justify-center">
-              <div className="h-px flex-grow bg-blue-200"></div>
-              <div className="bg-gray-800/90 backdrop-blur-sm rounded-lg shadow-md py-3 px-6 mx-4 border border-gray-700">
-                <h2 className="font-medium text-lg md:text-xl tracking-wide flex items-center justify-center">
-                  <span className="mr-2 text-cyan-400">
-                    <i className="fas fa-broadcast-tower"></i>
-                  </span>
-                  <span className="text-gray-200">Live Competitions</span>
-                  <span className="ml-2 text-cyan-400">
-                    <i className="fas fa-trophy"></i>
-                  </span>
-                </h2>
-              </div>
-              <div className="h-px flex-grow bg-blue-200"></div>
+              <div className="h-px flex-grow bg-gray-200"></div>
+              <h2 className="font-medium text-lg md:text-xl tracking-wide flex items-center justify-center px-4 text-gray-700">
+                Live Competitions
+              </h2>
+              <div className="h-px flex-grow bg-gray-200"></div>
             </div>
           </div>
           
@@ -336,25 +326,25 @@ export default function Dashboard() {
               
               {/* Pagination - redesigned with pill style */}
               <div className="mt-10 flex flex-col md:flex-row items-center justify-between gap-4">
-                <div className="flex items-center bg-white/60 backdrop-blur-sm p-2 px-4 rounded-full shadow-sm border border-blue-100 order-2 md:order-1">
+                <div className="flex items-center p-2 px-4 order-2 md:order-1">
                   <i className="fas fa-ticket-alt text-blue-400 mr-2"></i>
                   <span className="text-sm font-medium text-gray-600">
                     Showing <span className="font-bold text-blue-600">{competitions?.length || 0}</span> exciting competitions
                   </span>
                 </div>
                 
-                <div className="flex items-center bg-white/80 backdrop-blur-sm p-1.5 rounded-full shadow-sm border border-blue-100 order-1 md:order-2">
-                  <Button variant="ghost" size="sm" className="rounded-full text-gray-600 hover:text-blue-600 hover:bg-blue-50 px-3">
+                <div className="flex items-center p-1.5 order-1 md:order-2">
+                  <Button variant="ghost" size="sm" className="rounded-full text-gray-600 hover:text-blue-600 hover:bg-blue-50/50 px-3">
                     <i className="fas fa-chevron-left text-xs"></i>
                   </Button>
                   
                   <div className="flex space-x-1 px-1">
                     <Button size="sm" className="rounded-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white w-8 h-8 p-0">1</Button>
-                    <Button variant="ghost" size="sm" className="rounded-full text-gray-700 hover:text-blue-600 hover:bg-blue-50 w-8 h-8 p-0">2</Button>
-                    <Button variant="ghost" size="sm" className="rounded-full text-gray-700 hover:text-blue-600 hover:bg-blue-50 w-8 h-8 p-0 hidden xs:inline-flex">3</Button>
+                    <Button variant="ghost" size="sm" className="rounded-full text-gray-700 hover:text-blue-600 hover:bg-blue-50/50 w-8 h-8 p-0">2</Button>
+                    <Button variant="ghost" size="sm" className="rounded-full text-gray-700 hover:text-blue-600 hover:bg-blue-50/50 w-8 h-8 p-0 hidden xs:inline-flex">3</Button>
                   </div>
                   
-                  <Button variant="ghost" size="sm" className="rounded-full text-gray-600 hover:text-blue-600 hover:bg-blue-50 px-3">
+                  <Button variant="ghost" size="sm" className="rounded-full text-gray-600 hover:text-blue-600 hover:bg-blue-50/50 px-3">
                     <i className="fas fa-chevron-right text-xs"></i>
                   </Button>
                 </div>
