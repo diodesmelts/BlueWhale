@@ -59,14 +59,16 @@ export default function Dashboard() {
   });
   
   // Fetch banner image settings
-  const { data: bannerSettings } = useQuery({
+  const { data: bannerSettings } = useQuery<{ imageUrl: string | null }>({
     queryKey: ["/api/settings/banner"],
-    onSuccess: (data) => {
-      if (data?.imageUrl) {
-        setBannerImage(data.imageUrl);
-      }
-    }
   });
+  
+  // Update banner image when settings change
+  useEffect(() => {
+    if (bannerSettings?.imageUrl) {
+      setBannerImage(bannerSettings.imageUrl);
+    }
+  }, [bannerSettings]);
 
   // Handle competition entry
   const handleEnterCompetition = (id: number) => {

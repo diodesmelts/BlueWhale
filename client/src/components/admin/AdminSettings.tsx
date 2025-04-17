@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Upload } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from "@/lib/queryClient";
+import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useQuery } from "@tanstack/react-query";
 
 export default function AdminSettings() {
@@ -84,6 +84,14 @@ export default function AdminSettings() {
       
       const data = await res.json();
       
+      // Update current banner URL from the response
+      if (data.imageUrl) {
+        setCurrentBannerUrl(data.imageUrl);
+      }
+
+      // Invalidate both the admin settings and dashboard banner queries
+      queryClient.invalidateQueries({ queryKey: ["/api/settings/banner"] });
+      
       toast({
         title: 'Banner Updated',
         description: 'Hero banner has been successfully updated.',
@@ -92,11 +100,6 @@ export default function AdminSettings() {
       // Reset the form
       setPreviewImage(null);
       setSelectedFile(null);
-      
-      // Reload the page to show the new banner
-      setTimeout(() => {
-        window.location.href = '/';
-      }, 1500);
       
     } catch (error) {
       console.error('Error uploading banner:', error);
@@ -119,6 +122,20 @@ export default function AdminSettings() {
         <p className="text-gray-500 mb-4 text-sm">
           Upload a hero banner image for the dashboard page. For best results, use a landscape image with dimensions of 1920×600 pixels.
         </p>
+        
+        {/* Display current banner if available */}
+        {currentBannerUrl && (
+          <div className="bg-gray-50 p-4 rounded-lg mb-4">
+            <h3 className="text-sm font-medium text-gray-700 mb-2">Current Banner:</h3>
+            <div className="flex justify-center">
+              <img 
+                src={currentBannerUrl} 
+                alt="Current Banner" 
+                className="max-h-40 rounded-md object-cover shadow-sm border border-gray-200" 
+              />
+            </div>
+          </div>
+        )}
         
         <div className="space-y-4">
           {/* File upload area */}
