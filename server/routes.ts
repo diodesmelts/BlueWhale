@@ -49,7 +49,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   const fileUpload = multer({ 
     storage: diskStorage, 
     fileFilter,
-    limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
+    limits: { fileSize: 10 * 1024 * 1024 } // 10MB limit
   });
   
   // Special development route to make SDK an admin user (would be removed in production)
@@ -849,6 +849,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // Get banner image API endpoint
+  app.get('/api/settings/banner', async (req, res) => {
+    try {
+      const settingsPath = path.join(process.cwd(), 'public', 'settings', 'banner.json');
+      
+      if (fs.existsSync(settingsPath)) {
+        const bannerData = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+        return res.status(200).json(bannerData);
+      }
+      
+      // If no banner is set yet, return a default
+      return res.status(200).json({ 
+        imageUrl: null, 
+        updatedAt: null 
+      });
+    } catch (error) {
+      console.error('Error fetching banner settings:', error);
+      res.status(500).json({ message: 'Error fetching banner settings' });
+    }
+  });
+  
   // Banner image upload endpoint for hero section
   app.post('/api/uploads/banner', isAdmin, imageUpload.single('image'), async (req, res) => {
     try {
@@ -878,7 +899,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       // Generate URL path to access the file
-      const imageUrl = `/uploads/${file.filename}`;
+      const baseUrl = `${req.protocol}://${req.get('host')}`;
+      const imageUrl = `${baseUrl}/uploads/${file.filename}`;
+      
+      // Store the banner URL in the database/storage
+      try {
+        // Update the admin settings with the banner URL
+        // For now, just creating a simple file to store the banner URL
+        const settingsDir = path.join(process.cwd(), 'public', 'settings');
+        if (!fs.existsSync(settingsDir)) {
+          fs.mkdirSync(settingsDir, { recursive: true });
+        }
+        
+        // Write the URL to a file
+        fs.writeFileSync(
+          path.join(settingsDir, 'banner.json'), 
+          JSON.stringify({ imageUrl, updatedAt: new Date().toISOString() })
+        );
+      } catch (settingsError) {
+        console.error('Error saving banner settings:', settingsError);
+      }
       
       res.status(200).json({ 
         message: 'Banner image uploaded successfully',
