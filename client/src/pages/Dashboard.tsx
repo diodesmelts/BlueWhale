@@ -349,8 +349,8 @@ export default function Dashboard() {
             </div>
           </div>
           
-          {/* Enhanced CTA button with glow effect */}
-          <div className="mt-12 flex justify-center">
+          {/* Enhanced CTA button with glow effect - adjusted position to fix overlap */}
+          <div className="mt-12 mb-16 flex justify-center relative z-20">
             <button 
               onClick={() => {
                 const competitionsSection = document.querySelector('.live-competitions-section');
@@ -370,8 +370,8 @@ export default function Dashboard() {
         </div>
       </div>
       
-      {/* Enhanced transition blur element with decorative effects */}
-      <div className="h-24 bg-gradient-to-b from-transparent to-gray-900 relative overflow-hidden mt-[-6rem] z-10">
+      {/* Enhanced transition blur element with decorative effects - adjusted position */}
+      <div className="h-24 bg-gradient-to-b from-transparent to-gray-900 relative overflow-hidden mt-[-4rem] z-10">
         <div className="absolute inset-0 backdrop-blur-xl"></div>
         
         {/* Subtle decorative elements that span across both sections */}
