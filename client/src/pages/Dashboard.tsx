@@ -365,7 +365,7 @@ export default function Dashboard() {
             <div className="p-5 flex items-center justify-between bg-white rounded-xl shadow mt-6">
               <div className="flex items-center text-sm text-gray-600">
                 <span>
-                  Showing <span className="font-semibold text-blue-500">1</span> to <span className="font-semibold text-blue-500">{competitions.length}</span> of <span className="font-semibold text-blue-500">{competitions.length}</span> competitions
+                  Showing <span className="font-semibold text-blue-500">1</span> to <span className="font-semibold text-blue-500">{competitions?.length || 0}</span> of <span className="font-semibold text-blue-500">{competitions?.length || 0}</span> competitions
                 </span>
               </div>
               <div className="flex items-center space-x-2">
