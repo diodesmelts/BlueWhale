@@ -151,36 +151,35 @@ export default function Dashboard() {
   return (
     <div className="container mx-auto px-4 py-6">
       {/* Hero Welcome Section */}
-      <div className="bg-gradient-to-r from-blue-500 to-cyan-600 p-10 rounded-2xl shadow-xl mb-8 overflow-hidden relative">
-        {/* Decorative elements */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-200 opacity-20 rounded-full -mt-20 -mr-20"></div>
-        <div className="absolute bottom-0 left-0 w-40 h-40 bg-cyan-100 opacity-20 rounded-full -mb-10 -ml-10"></div>
+      <div className="bg-blue-600 px-8 py-12 rounded-lg shadow-md mb-12 overflow-hidden relative">
+        {/* Subtle background pattern */}
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0djZoNnYtNmgtNnptMCAwdi02aC02djZoNnptNiAwaDZ2LTZoLTZ2NnptLTEyIDBoLTZ2Nmg2di02em0tNi02aC02djZoNnYtNnoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-30"></div>
         
-        <div className="flex flex-col md:flex-row justify-between items-center relative z-10">
-          <div className="text-white">
-            <h1 className="text-5xl font-extrabold tracking-tight mb-2">
-              <span className="wiggle-on-hover inline-block">BLUE WHALE</span> <span className="text-yellow-300 pulse-glow inline-block">COMPETITIONS</span>
+        <div className="flex flex-col md:flex-row justify-between items-center relative z-10 mx-auto max-w-6xl">
+          <div className="text-white md:pr-8">
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-3">
+              <span className="text-white">BLUE WHALE</span> <span className="text-white font-light">COMPETITIONS</span>
             </h1>
-            <p className="text-xl font-medium text-white/90 max-w-xl">
-              Your ultimate hub for <span className="underline decoration-yellow-300 decoration-wavy decoration-2 underline-offset-2">discovering</span>, <span className="underline decoration-yellow-300 decoration-wavy decoration-2 underline-offset-2">entering</span>, and <span className="underline decoration-yellow-300 decoration-wavy decoration-2 underline-offset-2">winning</span> amazing prizes!
+            <p className="text-lg font-normal text-white/90 max-w-xl">
+              Your premier destination for discovering, participating in, and winning exclusive competitions across multiple platforms.
             </p>
             
-            <div className="mt-6 flex items-center space-x-4">
-              <Button className="bg-white text-blue-600 hover:bg-yellow-300 hover:text-blue-500 py-2.5 px-6 rounded-full shadow-lg font-bold transition-all duration-300 text-lg">
-                <i className="fas fa-trophy mr-2 text-amber-500"></i>
-                <span>Start Winning</span>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <Button className="bg-white text-blue-600 hover:bg-blue-50 py-2 px-6 rounded-md shadow-sm font-semibold transition-colors">
+                <i className="fas fa-trophy mr-2 text-blue-600"></i>
+                <span>View Competitions</span>
               </Button>
-              <Button variant="outline" className="bg-transparent border-2 border-white text-white hover:bg-blue-400/40 py-2.5 px-6 rounded-full font-medium transition-all">
-                <i className="fas fa-plus-circle mr-2 text-cyan-100"></i>
-                <span>Add Competition</span>
+              <Button variant="outline" className="bg-transparent border border-white/30 text-white hover:bg-white/10 py-2 px-6 rounded-md font-medium transition-colors">
+                <i className="fas fa-plus-circle mr-2"></i>
+                <span>My Entries</span>
               </Button>
             </div>
           </div>
           
-          <div className="mt-8 md:mt-0">
-            <div className="w-48 h-48 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center p-2 float-animation pulse-glow">
-              <div className="w-full h-full rounded-full bg-white flex items-center justify-center p-5 shine-effect">
-                <svg className="w-28 h-28 trophy-icon wiggle-on-hover" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <div className="hidden md:block">
+            <div className="w-52 h-52 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center p-3">
+              <div className="w-full h-full rounded-full bg-white/90 flex items-center justify-center p-5">
+                <svg className="w-28 h-28 text-blue-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M21 4H18V3C18 2.45 17.55 2 17 2H7C6.45 2 6 2.45 6 3V4H3C2.45 4 2 4.45 2 5V12C2 13.1 2.9 14 4 14H7.55C7.21 14.91 7 15.94 7 17C7 20.31 9.69 23 13 23C16.31 23 19 20.31 19 17C19 15.94 18.79 14.91 18.45 14H22C23.1 14 24 13.1 24 12V5C24 4.45 23.55 4 23 4H21ZM13 21C10.79 21 9 19.21 9 17C9 14.79 10.79 13 13 13C15.21 13 17 14.79 17 17C17 19.21 15.21 21 13 21ZM22 10H17.83C16.53 8.19 14.31 7 12 7C9.69 7 7.47 8.19 6.17 10H2V6H22V10Z" fill="currentColor"/>
                 </svg>
               </div>
@@ -324,18 +323,18 @@ export default function Dashboard() {
       </div>
 
       {/* Live Competitions Header */}
-      <div className="text-center mb-6 relative">
+      <div className="text-center mb-8 relative">
         <div className="flex items-center justify-center">
-          <div className="h-0.5 flex-grow bg-gray-200 mx-4"></div>
-          <h2 className="font-extrabold text-2xl text-gray-800 px-4 tracking-widest">
-            <span className="text-blue-600">LIVE</span> COMPETITIONS
+          <div className="h-px flex-grow bg-gray-200 mx-4"></div>
+          <h2 className="font-bold text-xl px-4 tracking-wide uppercase">
+            <span className="text-blue-600">LIVE</span> <span className="text-gray-800">COMPETITIONS</span>
           </h2>
-          <div className="h-0.5 flex-grow bg-gray-200 mx-4"></div>
+          <div className="h-px flex-grow bg-gray-200 mx-4"></div>
         </div>
       </div>
       
       {/* Competition Listings */}
-      <div className="bg-amber-50 px-4 py-6 rounded-xl shadow">
+      <div className="bg-white px-6 py-8 rounded-lg shadow-sm">
         {isLoadingCompetitions ? (
           <div className="p-8 text-center">
             <div className="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
@@ -362,21 +361,21 @@ export default function Dashboard() {
             </div>
             
             {/* Pagination */}
-            <div className="p-5 flex items-center justify-between bg-white rounded-xl shadow mt-6">
-              <div className="flex items-center text-sm text-gray-600">
+            <div className="mt-10 flex items-center justify-between">
+              <div className="flex items-center text-sm text-gray-500">
                 <span>
-                  Showing <span className="font-semibold text-blue-500">1</span> to <span className="font-semibold text-blue-500">{competitions?.length || 0}</span> of <span className="font-semibold text-blue-500">{competitions?.length || 0}</span> competitions
+                  Showing <span className="font-medium text-blue-600">{competitions?.length || 0}</span> competitions
                 </span>
               </div>
-              <div className="flex items-center space-x-2">
-                <Button variant="outline" size="sm" className="text-gray-600 border-gray-200 hover:bg-blue-50 rounded-md">
-                  <i className="fas fa-chevron-left mr-1"></i> Previous
+              <div className="flex items-center space-x-1">
+                <Button variant="outline" size="sm" className="text-gray-700 border-gray-200 hover:bg-blue-50 rounded-md px-3">
+                  <i className="fas fa-chevron-left text-xs mr-1"></i> Prev
                 </Button>
-                <Button size="sm" className="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white border-0 rounded-md">1</Button>
-                <Button variant="outline" size="sm" className="text-blue-500 border-blue-200 hover:bg-blue-50 rounded-md">2</Button>
-                <Button variant="outline" size="sm" className="text-blue-500 border-blue-200 hover:bg-blue-50 rounded-md">3</Button>
-                <Button variant="outline" size="sm" className="text-gray-600 border-gray-200 hover:bg-blue-50 rounded-md">
-                  Next <i className="fas fa-chevron-right ml-1"></i>
+                <Button size="sm" className="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white border-0 rounded-md">1</Button>
+                <Button variant="outline" size="sm" className="text-gray-700 border-gray-200 hover:bg-blue-50 rounded-md px-4 py-1.5">2</Button>
+                <Button variant="outline" size="sm" className="text-gray-700 border-gray-200 hover:bg-blue-50 rounded-md px-4 py-1.5">3</Button>
+                <Button variant="outline" size="sm" className="text-gray-700 border-gray-200 hover:bg-blue-50 rounded-md px-3">
+                  Next <i className="fas fa-chevron-right text-xs ml-1"></i>
                 </Button>
               </div>
             </div>

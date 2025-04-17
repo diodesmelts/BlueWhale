@@ -282,114 +282,103 @@ export default function CompetitionCard({
         }}
       />
       
-      <div className="competition-card mb-5 overflow-hidden rounded-xl bg-amber-50 shadow-md cursor-pointer"
+      <div className="competition-card mb-2 overflow-hidden rounded-lg bg-white shadow-lg cursor-pointer border border-gray-100"
         onClick={() => setLocation(`/competitions/${id}`)}
       >
-        {/* Top section with image or colored background */}
+        {/* Top section with image */}
         <div 
-          className="w-full h-56 bg-center bg-cover relative overflow-hidden"
+          className="w-full h-48 bg-center bg-cover relative overflow-hidden"
           style={{ backgroundImage: `url(${image})` }}
         >
-          {/* Tickets sold indicator */}
-          <div className="absolute top-2 left-2 bg-blue-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-            {soldTickets || 50}/{totalTickets || 100} tickets sold
+          {/* Overlay with price */}
+          <div className="absolute top-0 left-0 right-0 bg-black/70 backdrop-blur-sm p-3 flex items-center justify-between">
+            <span className="text-cyan-300 text-2xl font-bold">£{(prize/100).toLocaleString()}</span>
+            <span className="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-full">
+              {soldTickets || 50}/{totalTickets || 100}
+            </span>
           </div>
           
-          {/* Title overlaid on image - centered */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="bg-black/40 backdrop-blur-sm p-4 rounded-lg text-center w-4/5">
-              <h3 className="text-3xl font-extrabold text-white">
-                {prize > 0 && (
-                  <span className="block mb-1 text-cyan-300">£{(prize/100).toLocaleString()}</span>
-                )}
-                {title}
-              </h3>
-            </div>
+          {/* Darkened bottom section with product name */}
+          <div className="absolute bottom-0 left-0 right-0 bg-black/70 backdrop-blur-sm p-4">
+            <h3 className="text-2xl font-bold text-white">
+              {title}
+            </h3>
           </div>
         </div>
         
-        {/* Title box below image */}
-        <div className="bg-white p-3 text-center border-b border-gray-200">
-          <h3 className="text-base font-bold text-gray-800 line-clamp-2">
+        {/* Name + Verified */}
+        <div className="px-4 pt-3 pb-1 flex items-center justify-between">
+          <h3 className="text-base font-semibold text-gray-800">
             {title}
-            {isVerified && (
-              <Badge 
-                variant="default" 
-                className="ml-2 bg-blue-100/80 text-blue-600 hover:bg-blue-200 text-xs font-normal inline-flex items-center"
-              >
-                <i className="fas fa-check-circle mr-1"></i> Verified
-              </Badge>
-            )}
           </h3>
-        </div>
-        
-        {/* Countdown timer section */}
-        <div className="bg-amber-100 py-2 px-3">
-          {drawTime && (
-            <div className="flex justify-center space-x-1 mb-1">
-              <div className="countdown-box">
-                <div className="w-8 h-10 bg-blue-500 text-white rounded-md flex items-center justify-center text-xl font-bold">
-                  {Math.floor(timeRemaining?.days / 10) || 0}
-                </div>
-                <div className="w-8 h-10 bg-blue-500 text-white rounded-md flex items-center justify-center text-xl font-bold">
-                  {timeRemaining?.days % 10 || 0}
-                </div>
-              </div>
-              <div className="text-blue-700 font-bold flex items-center">:</div>
-              <div className="countdown-box">
-                <div className="w-8 h-10 bg-blue-500 text-white rounded-md flex items-center justify-center text-xl font-bold">
-                  {Math.floor(timeRemaining?.hours / 10) || 0}
-                </div>
-                <div className="w-8 h-10 bg-blue-500 text-white rounded-md flex items-center justify-center text-xl font-bold">
-                  {timeRemaining?.hours % 10 || 0}
-                </div>
-              </div>
-              <div className="text-blue-700 font-bold flex items-center">:</div>
-              <div className="countdown-box">
-                <div className="w-8 h-10 bg-blue-500 text-white rounded-md flex items-center justify-center text-xl font-bold">
-                  {Math.floor(timeRemaining?.minutes / 10) || 0}
-                </div>
-                <div className="w-8 h-10 bg-blue-500 text-white rounded-md flex items-center justify-center text-xl font-bold">
-                  {timeRemaining?.minutes % 10 || 0}
-                </div>
-              </div>
-              <div className="text-blue-700 font-bold flex items-center">:</div>
-              <div className="countdown-box">
-                <div className="w-8 h-10 bg-cyan-600 text-white rounded-md flex items-center justify-center text-xl font-bold animate-pulse">
-                  {Math.floor(timeRemaining?.seconds / 10) || 0}
-                </div>
-                <div className="w-8 h-10 bg-cyan-600 text-white rounded-md flex items-center justify-center text-xl font-bold animate-pulse">
-                  {timeRemaining?.seconds % 10 || 0}
-                </div>
-              </div>
-            </div>
+          {isVerified && (
+            <Badge 
+              variant="default" 
+              className="bg-blue-100 text-blue-600 text-xs font-medium"
+            >
+              <i className="fas fa-check-circle mr-1"></i> Verified
+            </Badge>
           )}
         </div>
         
-        {/* Ticket information */}
-        <div className="bg-white py-2 px-3 text-center">
-          <div className="flex justify-between items-center px-2">
-            <div className="flex">
-              <span className="text-xl font-bold text-blue-600">£{(ticketPrice ? ticketPrice/100 : 0).toFixed(2)}</span>
+        {/* Countdown timer section - clean design */}
+        {drawTime && (
+          <div className="px-4 pt-1 pb-3 grid grid-cols-4 gap-2">
+            <div className="flex flex-col items-center">
+              <div className="w-full bg-blue-600 text-white rounded flex items-center justify-center">
+                <span className="text-lg font-bold py-2">
+                  {timeRemaining?.days.toString().padStart(2, '0') || '00'}
+                </span>
+              </div>
+              <span className="text-xs text-gray-500 mt-1">DAYS</span>
             </div>
-            <div className="text-xs text-gray-600 font-medium">
-              {(totalTickets && soldTickets) ? 
-                (totalTickets - soldTickets) : 50} left
+            <div className="flex flex-col items-center">
+              <div className="w-full bg-blue-600 text-white rounded flex items-center justify-center">
+                <span className="text-lg font-bold py-2">
+                  {timeRemaining?.hours.toString().padStart(2, '0') || '00'}
+                </span>
+              </div>
+              <span className="text-xs text-gray-500 mt-1">HOURS</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="w-full bg-blue-600 text-white rounded flex items-center justify-center">
+                <span className="text-lg font-bold py-2">
+                  {timeRemaining?.minutes.toString().padStart(2, '0') || '00'}
+                </span>
+              </div>
+              <span className="text-xs text-gray-500 mt-1">MINS</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="w-full bg-blue-600 text-white rounded flex items-center justify-center animate-pulse">
+                <span className="text-lg font-bold py-2">
+                  {timeRemaining?.seconds.toString().padStart(2, '0') || '00'}
+                </span>
+              </div>
+              <span className="text-xs text-gray-500 mt-1">SECS</span>
             </div>
           </div>
-        </div>
+        )}
         
-        {/* Button */}
-        <Button 
-          onClick={(e) => {
-            e.stopPropagation(); // Prevent card click event
-            setTicketModalOpen(true);
-          }}
-          disabled={isPaying}
-          className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold py-3 text-base border-none rounded-none transition-all duration-300"
-        >
-          BUY TICKET
-        </Button>
+        {/* Footer section with pricing and button */}
+        <div className="border-t border-gray-100 flex items-center">
+          <div className="flex-1 pl-4 py-3">
+            <span className="text-xl font-bold text-blue-600">£{(ticketPrice ? ticketPrice/100 : 0).toFixed(2)}</span>
+            <span className="text-xs text-gray-500 block">
+              {(totalTickets && soldTickets) ? 
+                (totalTickets - soldTickets) : 950} left
+            </span>
+          </div>
+          <Button 
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent card click event
+              setTicketModalOpen(true);
+            }}
+            disabled={isPaying}
+            className="px-6 py-3 h-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm transition-colors duration-200 rounded-none"
+          >
+            BUY TICKET
+          </Button>
+        </div>
       </div>
     </>
   );
