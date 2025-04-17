@@ -324,29 +324,13 @@ export default function Dashboard() {
                 ))}
               </div>
               
-              {/* Pagination - redesigned with pill style */}
-              <div className="mt-10 flex flex-col md:flex-row items-center justify-between gap-4">
-                <div className="flex items-center p-2 px-4 order-2 md:order-1">
+              {/* Competition count indicator only */}
+              <div className="mt-10 flex justify-center">
+                <div className="flex items-center p-2 px-4">
                   <i className="fas fa-ticket-alt text-blue-400 mr-2"></i>
                   <span className="text-sm font-medium text-gray-600">
                     Showing <span className="font-bold text-blue-600">{competitions?.length || 0}</span> exciting competitions
                   </span>
-                </div>
-                
-                <div className="flex items-center p-1.5 order-1 md:order-2">
-                  <Button variant="ghost" size="sm" className="rounded-full text-gray-600 hover:text-blue-600 hover:bg-blue-50/50 px-3">
-                    <i className="fas fa-chevron-left text-xs"></i>
-                  </Button>
-                  
-                  <div className="flex space-x-1 px-1">
-                    <Button size="sm" className="rounded-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white w-8 h-8 p-0">1</Button>
-                    <Button variant="ghost" size="sm" className="rounded-full text-gray-700 hover:text-blue-600 hover:bg-blue-50/50 w-8 h-8 p-0">2</Button>
-                    <Button variant="ghost" size="sm" className="rounded-full text-gray-700 hover:text-blue-600 hover:bg-blue-50/50 w-8 h-8 p-0 hidden xs:inline-flex">3</Button>
-                  </div>
-                  
-                  <Button variant="ghost" size="sm" className="rounded-full text-gray-600 hover:text-blue-600 hover:bg-blue-50/50 px-3">
-                    <i className="fas fa-chevron-right text-xs"></i>
-                  </Button>
                 </div>
               </div>
             </>
