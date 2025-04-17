@@ -12,7 +12,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           {/* Company Info */}
           <div>
-            <h3 className="text-lg font-bold mb-6 text-cyan-300">Blue Whale Competitions</h3>
+            <div className="mb-6">
+              <img 
+                src="/blue-whale-logo.png" 
+                alt="Blue Whale Competitions" 
+                className="h-12 mb-4"
+              />
+            </div>
             <p className="text-gray-400 mb-6 text-sm">
               Your premier destination for discovering and winning the best competitions across the UK.
             </p>
