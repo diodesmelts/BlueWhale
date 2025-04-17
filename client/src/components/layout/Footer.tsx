@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { BlueWhaleLogo } from "@/components/ui/blue-whale-logo";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -13,11 +14,7 @@ export default function Footer() {
           {/* Company Info */}
           <div>
             <div className="mb-6">
-              <img 
-                src="/blue-whale.png" 
-                alt="Blue Whale Competitions" 
-                className="h-12 mb-4"
-              />
+              <BlueWhaleLogo height={48} className="mb-4" />
             </div>
             <p className="text-gray-400 mb-6 text-sm">
               Your premier destination for discovering and winning the best competitions across the UK.
