@@ -283,12 +283,37 @@ export default function CompetitionCard({
       />
       
       <div 
-        className="competition-card mb-2 overflow-hidden rounded-2xl bg-gray-800/70 shadow-2xl cursor-pointer border border-gray-700/40 transform transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,0,0,0.7)] hover:-translate-y-1 relative backdrop-blur-sm dark-card-hover"
+        className="competition-card mb-2 overflow-hidden rounded-2xl bg-gray-900/90 shadow-2xl cursor-pointer border border-gray-700/40 transform transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,0,0,0.7)] hover:-translate-y-1 relative backdrop-blur-lg group dark-card-hover"
         onClick={() => setLocation(`/competitions/${id}`)}
       >
+        {/* Card Glow Effect - conditional based on category */}
+        <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none ${
+          categoryTheme === 'family' ? 'bg-amber-900/5' : 
+          categoryTheme === 'appliances' ? 'bg-pink-900/5' : 
+          categoryTheme === 'cash' ? 'bg-green-900/5' : 
+          'bg-cyan-900/5'
+        }`}></div>
         
-        {/* Tickets remaining banner */}
-        <div className="w-full bg-gradient-to-r from-gray-900/90 to-gray-800/90 backdrop-blur-sm text-white py-2 px-4 flex items-center justify-center font-medium border-b border-gray-700/50">
+        {/* Border Gradient Effect on Hover */}
+        <div className="absolute inset-0 rounded-2xl border border-transparent group-hover:border-opacity-100 transition-all duration-500 pointer-events-none" 
+          style={{
+            background: 'transparent',
+            borderImage: categoryTheme === 'family' 
+              ? 'linear-gradient(to bottom right, rgba(251, 191, 36, 0.4), rgba(245, 158, 11, 0.1)) 1'
+              : categoryTheme === 'appliances'
+              ? 'linear-gradient(to bottom right, rgba(236, 72, 153, 0.4), rgba(225, 29, 72, 0.1)) 1'
+              : categoryTheme === 'cash'
+              ? 'linear-gradient(to bottom right, rgba(16, 185, 129, 0.4), rgba(5, 150, 105, 0.1)) 1'
+              : 'linear-gradient(to bottom right, rgba(14, 165, 233, 0.4), rgba(79, 70, 229, 0.1)) 1'
+          }}
+        ></div>
+        
+        {/* Tickets remaining banner - Enhanced with gradient effect */}
+        <div className={`w-full backdrop-blur-sm text-white py-2 px-4 flex items-center justify-center font-medium border-b border-gray-700/50
+          ${categoryTheme === 'family' ? 'bg-gradient-to-r from-amber-900/80 to-gray-900/90' : 
+           categoryTheme === 'appliances' ? 'bg-gradient-to-r from-pink-900/80 to-gray-900/90' : 
+           categoryTheme === 'cash' ? 'bg-gradient-to-r from-green-900/80 to-gray-900/90' : 
+           'bg-gradient-to-r from-cyan-900/80 to-gray-900/90'}`}>
           <i className={`fas fa-ticket-alt mr-2 
             ${categoryTheme === 'family' ? 'text-amber-400' : 
              categoryTheme === 'appliances' ? 'text-pink-400' : 
@@ -303,8 +328,12 @@ export default function CompetitionCard({
           style={{ backgroundImage: `url(${image})` }}
         >
           
-          {/* Tickets counter only - price tag removed */}
-          <div className="absolute top-4 right-4 bg-black/80 backdrop-blur-sm text-white rounded-full px-3 py-1.5 flex items-center shadow-md">
+          {/* Tickets counter - enhanced with category-themed styling */}
+          <div className={`absolute top-4 right-4 backdrop-blur-md px-3 py-1.5 flex items-center shadow-md border border-gray-700/50 rounded-full
+            ${categoryTheme === 'family' ? 'bg-gradient-to-r from-amber-900/70 to-black/70 text-white' : 
+             categoryTheme === 'appliances' ? 'bg-gradient-to-r from-pink-900/70 to-black/70 text-white' : 
+             categoryTheme === 'cash' ? 'bg-gradient-to-r from-green-900/70 to-black/70 text-white' : 
+             'bg-gradient-to-r from-cyan-900/70 to-black/70 text-white'}`}>
             <i className={`fas fa-ticket-alt mr-2 
               ${categoryTheme === 'family' ? 'text-amber-400' : 
                categoryTheme === 'appliances' ? 'text-pink-400' : 
@@ -313,10 +342,30 @@ export default function CompetitionCard({
             <span className="font-medium text-sm">{soldTickets || 50}/{totalTickets || 1000}</span>
           </div>
           
-          {/* Darkened bottom section with product name */}
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent backdrop-blur-sm p-4">
-            <h3 className="text-2xl font-bold text-white">
-              {title}
+          {/* Enhanced overlay with category-specific gradient and title glow */}
+          <div className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/95 via-black/80 to-transparent p-4 backdrop-blur-sm
+            ${categoryTheme === 'family' ? 'from-amber-950/95' : 
+             categoryTheme === 'appliances' ? 'from-pink-950/95' : 
+             categoryTheme === 'cash' ? 'from-green-950/95' : 
+             'from-cyan-950/95'}`}>
+            <h3 className="text-2xl font-bold relative">
+              <span className={`relative z-10 ${
+                categoryTheme === 'family' ? 'text-transparent bg-clip-text bg-gradient-to-r from-white to-amber-100' : 
+                categoryTheme === 'appliances' ? 'text-transparent bg-clip-text bg-gradient-to-r from-white to-pink-100' : 
+                categoryTheme === 'cash' ? 'text-transparent bg-clip-text bg-gradient-to-r from-white to-green-100' : 
+                'text-transparent bg-clip-text bg-gradient-to-r from-white to-cyan-100'
+              }`}>
+                {title}
+              </span>
+              {/* Title glow effect */}
+              <span className={`absolute inset-0 blur-sm opacity-60 ${
+                categoryTheme === 'family' ? 'text-amber-300/30' : 
+                categoryTheme === 'appliances' ? 'text-pink-300/30' : 
+                categoryTheme === 'cash' ? 'text-green-300/30' : 
+                'text-cyan-300/30'
+              }`}>
+                {title}
+              </span>
             </h3>
           </div>
         </div>
@@ -390,23 +439,36 @@ export default function CompetitionCard({
           </div>
         )}
         
-        {/* Footer section with pricing and button - with gradient button */}
-        <div className="border-t border-gray-700/30 flex items-center bg-gray-800/90 backdrop-blur-sm rounded-b-2xl overflow-hidden">
+        {/* Enhanced footer section with premium price display and glowing button */}
+        <div className={`border-t border-gray-700/30 flex items-center backdrop-blur-sm rounded-b-2xl overflow-hidden 
+          ${categoryTheme === 'family' ? 'bg-gradient-to-br from-gray-900/95 to-amber-950/20' : 
+           categoryTheme === 'appliances' ? 'bg-gradient-to-br from-gray-900/95 to-pink-950/20' : 
+           categoryTheme === 'cash' ? 'bg-gradient-to-br from-gray-900/95 to-green-950/20' : 
+           'bg-gradient-to-br from-gray-900/95 to-cyan-950/20'}`}>
           <div className="flex-1 pl-4 py-3">
-            <span className={`text-xl font-extrabold 
-              ${categoryTheme === 'family' ? 'text-amber-400' : 
-               categoryTheme === 'appliances' ? 'text-pink-400' : 
-               categoryTheme === 'cash' ? 'text-green-400' : 
-               'text-cyan-400'}`}>
-              £{(ticketPrice ? ticketPrice/100 : 0).toFixed(2)}
-            </span>
-            <span className="text-xs text-gray-400 font-medium block">
-              <i className={`fas fa-tag mr-1 
+            <div className="flex items-baseline">
+              <span className={`text-2xl font-extrabold tracking-tight 
+                ${categoryTheme === 'family' ? 'text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500' : 
+                 categoryTheme === 'appliances' ? 'text-transparent bg-clip-text bg-gradient-to-r from-pink-300 to-pink-500' : 
+                 categoryTheme === 'cash' ? 'text-transparent bg-clip-text bg-gradient-to-r from-green-300 to-green-500' : 
+                 'text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-cyan-500'}`}>
+                £{(ticketPrice ? ticketPrice/100 : 0).toFixed(2)}
+              </span>
+              <span className={`text-sm ml-1 
+                ${categoryTheme === 'family' ? 'text-amber-300/70' : 
+                 categoryTheme === 'appliances' ? 'text-pink-300/70' : 
+                 categoryTheme === 'cash' ? 'text-green-300/70' : 
+                 'text-cyan-300/70'}`}>
+                per ticket
+              </span>
+            </div>
+            <span className="text-xs text-gray-400 font-medium block mt-0.5">
+              <i className={`fas fa-ticket-alt mr-1 
                 ${categoryTheme === 'family' ? 'text-amber-400/80' : 
                  categoryTheme === 'appliances' ? 'text-pink-400/80' : 
                  categoryTheme === 'cash' ? 'text-green-400/80' : 
                  'text-cyan-400/80'}`}></i>
-              per ticket
+              {(totalTickets && soldTickets) ? (totalTickets - soldTickets) : 950} available
             </span>
           </div>
           <Button 
@@ -415,11 +477,11 @@ export default function CompetitionCard({
               setTicketModalOpen(true);
             }}
             disabled={isPaying}
-            className={`px-6 py-3 h-full text-white font-bold text-sm transition-all duration-300 rounded-none shadow-md wiggle-on-hover
-              ${categoryTheme === 'family' ? 'bg-gradient-to-r from-amber-600 to-amber-800 hover:from-amber-700 hover:to-amber-900' : 
-               categoryTheme === 'appliances' ? 'bg-gradient-to-r from-pink-600 to-pink-800 hover:from-pink-700 hover:to-pink-900' : 
-               categoryTheme === 'cash' ? 'bg-gradient-to-r from-green-600 to-green-800 hover:from-green-700 hover:to-green-900' : 
-               'bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900'}`}
+            className={`px-6 py-3 h-full text-white font-bold text-sm transition-all duration-300 rounded-none shadow-lg 
+              ${categoryTheme === 'family' ? 'bg-gradient-to-r from-amber-600 to-amber-800 hover:from-amber-700 hover:to-amber-900 hover:shadow-[0_0_15px_rgba(251,191,36,0.5)]' : 
+               categoryTheme === 'appliances' ? 'bg-gradient-to-r from-pink-600 to-pink-800 hover:from-pink-700 hover:to-pink-900 hover:shadow-[0_0_15px_rgba(236,72,153,0.5)]' : 
+               categoryTheme === 'cash' ? 'bg-gradient-to-r from-green-600 to-green-800 hover:from-green-700 hover:to-green-900 hover:shadow-[0_0_15px_rgba(16,185,129,0.5)]' : 
+               'bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 hover:shadow-[0_0_15px_rgba(14,165,233,0.5)]'}`}
           >
             <i className="fas fa-ticket-alt mr-2"></i>
             GET TICKETS
