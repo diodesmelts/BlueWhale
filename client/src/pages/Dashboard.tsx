@@ -323,8 +323,19 @@ export default function Dashboard() {
         </div>
       </div>
 
+      {/* Live Competitions Header */}
+      <div className="text-center mb-6 relative">
+        <div className="flex items-center justify-center">
+          <div className="h-0.5 flex-grow bg-gray-200 mx-4"></div>
+          <h2 className="font-extrabold text-2xl text-gray-800 px-4 tracking-widest">
+            <span className="text-blue-600">LIVE</span> COMPETITIONS
+          </h2>
+          <div className="h-0.5 flex-grow bg-gray-200 mx-4"></div>
+        </div>
+      </div>
+      
       {/* Competition Listings */}
-      <div className="bg-white p-6 rounded-xl shadow">
+      <div className="bg-amber-50 px-4 py-6 rounded-xl shadow">
         {isLoadingCompetitions ? (
           <div className="p-8 text-center">
             <div className="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
@@ -337,7 +348,7 @@ export default function Dashboard() {
         ) : (
           <>
             {/* Grid layout with 3 columns on larger screens */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-0">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-6">
               {competitions?.map((competition: CompetitionWithEntryStatus) => (
                 <CompetitionCard
                   key={competition.id}
@@ -354,17 +365,17 @@ export default function Dashboard() {
             <div className="p-5 flex items-center justify-between bg-white rounded-xl shadow mt-6">
               <div className="flex items-center text-sm text-gray-600">
                 <span>
-                  Showing <span className="font-semibold text-blue-500">1</span> to <span className="font-semibold text-blue-500">4</span> of <span className="font-semibold text-blue-500">42</span> competitions
+                  Showing <span className="font-semibold text-blue-500">1</span> to <span className="font-semibold text-blue-500">{competitions.length}</span> of <span className="font-semibold text-blue-500">{competitions.length}</span> competitions
                 </span>
               </div>
               <div className="flex items-center space-x-2">
-                <Button variant="outline" size="sm" className="text-gray-600 border-gray-200 hover:bg-gray-50 rounded-md">
+                <Button variant="outline" size="sm" className="text-gray-600 border-gray-200 hover:bg-blue-50 rounded-md">
                   <i className="fas fa-chevron-left mr-1"></i> Previous
                 </Button>
                 <Button size="sm" className="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white border-0 rounded-md">1</Button>
                 <Button variant="outline" size="sm" className="text-blue-500 border-blue-200 hover:bg-blue-50 rounded-md">2</Button>
                 <Button variant="outline" size="sm" className="text-blue-500 border-blue-200 hover:bg-blue-50 rounded-md">3</Button>
-                <Button variant="outline" size="sm" className="text-gray-600 border-gray-200 hover:bg-gray-50 rounded-md">
+                <Button variant="outline" size="sm" className="text-gray-600 border-gray-200 hover:bg-blue-50 rounded-md">
                   Next <i className="fas fa-chevron-right ml-1"></i>
                 </Button>
               </div>

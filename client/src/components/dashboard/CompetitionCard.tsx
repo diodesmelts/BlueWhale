@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import EntryProgress from "./EntryProgress";
@@ -18,6 +18,14 @@ interface CompetitionCardProps {
   categoryTheme?: 'family' | 'appliances' | 'cash';
 }
 
+interface TimeRemaining {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+  isExpired: boolean;
+}
+
 export default function CompetitionCard({ 
   competition, 
   onEnter, 
@@ -31,6 +39,13 @@ export default function CompetitionCard({
   const [isPaying, setIsPaying] = useState(false);
   const [ticketModalOpen, setTicketModalOpen] = useState(false);
   const [, setLocation] = useLocation();
+  const [timeRemaining, setTimeRemaining] = useState<TimeRemaining>({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+    isExpired: false
+  });
   
   const {
     id,
@@ -129,6 +144,51 @@ export default function CompetitionCard({
   const daysRemaining = getDaysRemaining();
   const isEndingSoon = daysRemaining === "Ends tomorrow" || daysRemaining.includes("Ends in 3 days");
   
+  // Calculate time remaining for countdown display
+  useEffect(() => {
+    if (!drawTime) return;
+    
+    const targetDateTime = new Date(drawTime).getTime();
+    
+    const calculateTimeRemaining = () => {
+      const now = new Date().getTime();
+      const difference = targetDateTime - now;
+      
+      if (difference <= 0) {
+        setTimeRemaining({
+          days: 0,
+          hours: 0,
+          minutes: 0,
+          seconds: 0,
+          isExpired: true
+        });
+        return;
+      }
+      
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+      
+      setTimeRemaining({
+        days,
+        hours,
+        minutes,
+        seconds,
+        isExpired: false
+      });
+    };
+    
+    // Initial calculation
+    calculateTimeRemaining();
+    
+    // Update every second
+    const interval = setInterval(calculateTimeRemaining, 1000);
+    
+    // Clean up interval on unmount
+    return () => clearInterval(interval);
+  }, [drawTime]);
+  
   // Category-specific theme colors
   const getCategoryThemeColors = () => {
     if (!categoryTheme) return {
@@ -222,100 +282,114 @@ export default function CompetitionCard({
         }}
       />
       
-      <div 
-        className={`competition-card mb-5 transition duration-300 rounded-xl bg-white shadow-md hover:shadow-lg border border-gray-100 overflow-hidden ${
-          isEntered ? 'border-l-4 border-rose-500' : ''
-        } cursor-pointer`}
+      <div className="competition-card mb-5 overflow-hidden rounded-xl bg-amber-50 shadow-md cursor-pointer"
         onClick={() => setLocation(`/competitions/${id}`)}
       >
-        {/* Competition image at the top - square format */}
+        {/* Top section with image or colored background */}
         <div 
-          className="aspect-square w-full bg-center bg-cover relative"
+          className="w-full h-56 bg-center bg-cover relative overflow-hidden"
           style={{ backgroundImage: `url(${image})` }}
         >
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+          {/* Tickets sold indicator */}
+          <div className="absolute top-2 left-2 bg-blue-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+            {soldTickets || 50}/{totalTickets || 100} tickets sold
+          </div>
           
-          {/* Title overlaid on image - bottom */}
-          <div className="absolute bottom-0 left-0 right-0 p-3 text-white">
-            <div className="flex items-center">
-              <h3 className="text-xl font-bold flex items-center">
-                {title}
-                {isVerified && (
-                  <Badge 
-                    variant="default" 
-                    className="ml-2 bg-blue-100/80 text-blue-600 hover:bg-blue-200 text-xs font-normal flex items-center"
-                  >
-                    <i className="fas fa-check-circle mr-1"></i> Verified
-                  </Badge>
+          {/* Title overlaid on image - centered */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="bg-black/40 backdrop-blur-sm p-4 rounded-lg text-center w-4/5">
+              <h3 className="text-3xl font-extrabold text-white">
+                {prize > 0 && (
+                  <span className="block mb-1 text-cyan-300">£{(prize/100).toLocaleString()}</span>
                 )}
+                {title}
               </h3>
             </div>
           </div>
         </div>
         
-        <div className="p-4">
-          {/* Draw countdown timer - super exciting */}
+        {/* Title box below image */}
+        <div className="bg-white p-3 text-center border-b border-gray-200">
+          <h3 className="text-base font-bold text-gray-800 line-clamp-2">
+            {title}
+            {isVerified && (
+              <Badge 
+                variant="default" 
+                className="ml-2 bg-blue-100/80 text-blue-600 hover:bg-blue-200 text-xs font-normal inline-flex items-center"
+              >
+                <i className="fas fa-check-circle mr-1"></i> Verified
+              </Badge>
+            )}
+          </h3>
+        </div>
+        
+        {/* Countdown timer section */}
+        <div className="bg-amber-100 py-2 px-3">
           {drawTime && (
-            <div className={`p-4 rounded-xl mb-5 bg-gradient-to-r ${theme.gradient} border-2 ${theme.border} shadow-md`}>
-              <div className="flex items-center mb-2">
-                <span className={`text-base font-extrabold tracking-wide text-transparent bg-clip-text bg-gradient-to-r ${theme.textGradient} animate-pulse`}>PRIZE DRAW</span>
-                <div className={`h-0.5 flex-grow bg-gradient-to-r ${theme.lineGradient} ml-2`}></div>
+            <div className="flex justify-center space-x-1 mb-1">
+              <div className="countdown-box">
+                <div className="w-8 h-10 bg-blue-500 text-white rounded-md flex items-center justify-center text-xl font-bold">
+                  {Math.floor(timeRemaining?.days / 10) || 0}
+                </div>
+                <div className="w-8 h-10 bg-blue-500 text-white rounded-md flex items-center justify-center text-xl font-bold">
+                  {timeRemaining?.days % 10 || 0}
+                </div>
               </div>
-              <CountdownTimer 
-                targetDate={drawTime} 
-                compact={true} 
-                className="py-1.5"
-              />
+              <div className="text-blue-700 font-bold flex items-center">:</div>
+              <div className="countdown-box">
+                <div className="w-8 h-10 bg-blue-500 text-white rounded-md flex items-center justify-center text-xl font-bold">
+                  {Math.floor(timeRemaining?.hours / 10) || 0}
+                </div>
+                <div className="w-8 h-10 bg-blue-500 text-white rounded-md flex items-center justify-center text-xl font-bold">
+                  {timeRemaining?.hours % 10 || 0}
+                </div>
+              </div>
+              <div className="text-blue-700 font-bold flex items-center">:</div>
+              <div className="countdown-box">
+                <div className="w-8 h-10 bg-blue-500 text-white rounded-md flex items-center justify-center text-xl font-bold">
+                  {Math.floor(timeRemaining?.minutes / 10) || 0}
+                </div>
+                <div className="w-8 h-10 bg-blue-500 text-white rounded-md flex items-center justify-center text-xl font-bold">
+                  {timeRemaining?.minutes % 10 || 0}
+                </div>
+              </div>
+              <div className="text-blue-700 font-bold flex items-center">:</div>
+              <div className="countdown-box">
+                <div className="w-8 h-10 bg-cyan-600 text-white rounded-md flex items-center justify-center text-xl font-bold animate-pulse">
+                  {Math.floor(timeRemaining?.seconds / 10) || 0}
+                </div>
+                <div className="w-8 h-10 bg-cyan-600 text-white rounded-md flex items-center justify-center text-xl font-bold animate-pulse">
+                  {timeRemaining?.seconds % 10 || 0}
+                </div>
+              </div>
             </div>
           )}
-          
-          {/* Simplified ticket information */}
-          <div className="mb-4">
-            <div className="flex justify-between items-center mb-2">
-              <div className={`text-base font-medium ${theme.ticketTextColor}`}>
-                <i className={`fas fa-ticket-alt mr-1 ${theme.ticketIconColor}`}></i> ${(ticketPrice ? ticketPrice/100 : 0).toFixed(2)} per ticket
-              </div>
+        </div>
+        
+        {/* Ticket information */}
+        <div className="bg-white py-2 px-3 text-center">
+          <div className="flex justify-between items-center px-2">
+            <div className="flex">
+              <span className="text-xl font-bold text-blue-600">£{(ticketPrice ? ticketPrice/100 : 0).toFixed(2)}</span>
             </div>
-            
-            <div className="flex justify-between items-center text-sm">
-              <span className="text-gray-600">
-                <span className={`font-semibold ${theme.highlightTextColor}`}>{(totalTickets && soldTickets) ? 
-                  (totalTickets - soldTickets).toLocaleString() : 950}</span> tickets available
-              </span>
-              <span className="text-gray-600">
-                Total: <span className={`font-semibold ${theme.highlightTextColor}`}>{totalTickets ? 
-                  totalTickets.toLocaleString() : 1000}</span>
-              </span>
-            </div>
-            
-            {/* Ticket sales progress bar */}
-            <div className="mt-2 mb-1">
-              <div className={`h-2.5 w-full ${theme.progressBg} rounded-full overflow-hidden`}>
-                <div 
-                  className={`h-full bg-gradient-to-r ${theme.progressFill} rounded-full`}
-                  style={{ 
-                    width: `${(totalTickets && soldTickets) ? 
-                    Math.min(100, Math.round((soldTickets / totalTickets) * 100)) : 5}%` 
-                  }}
-                ></div>
-              </div>
+            <div className="text-xs text-gray-600 font-medium">
+              {(totalTickets && soldTickets) ? 
+                (totalTickets - soldTickets) : 50} left
             </div>
           </div>
-
-          {/* Button */}
-          <Button 
-            onClick={(e) => {
-              e.stopPropagation(); // Prevent card click event
-              // Always open the ticket modal when the "Get Tickets" button is clicked
-              setTicketModalOpen(true);
-            }}
-            disabled={isPaying}
-            className={`w-full bg-gradient-to-r ${theme.buttonGradient} hover:${theme.buttonHoverGradient} text-white font-medium py-2.5 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg`}
-          >
-            <i className="fas fa-ticket-alt mr-2"></i>
-            Get Tickets
-          </Button>
         </div>
+        
+        {/* Button */}
+        <Button 
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent card click event
+            setTicketModalOpen(true);
+          }}
+          disabled={isPaying}
+          className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold py-3 text-base border-none rounded-none transition-all duration-300"
+        >
+          BUY TICKET
+        </Button>
       </div>
     </>
   );
