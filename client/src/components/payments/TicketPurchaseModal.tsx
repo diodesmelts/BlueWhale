@@ -15,6 +15,7 @@ interface TicketPurchaseModalProps {
     maxTicketsPerUser: number | null;
     totalTickets: number | null;
     soldTickets: number | null;
+    type?: string;
   };
   isProcessing?: boolean;
 }
@@ -103,28 +104,52 @@ export default function TicketPurchaseModal({
             className="my-4"
           />
           
-          <div className="bg-gray-50 p-4 rounded-lg">
+          <div className={`p-4 rounded-lg
+            ${competition.type === 'family' ? 'bg-amber-50/50' : 
+             competition.type === 'appliances' ? 'bg-pink-50/50' : 
+             competition.type === 'cash' ? 'bg-green-50/50' : 
+             'bg-gray-50'}`}>
             <div className="flex justify-between mb-2">
               <span>Price per ticket:</span>
-              <span className="font-semibold">${pricePerTicket.toFixed(2)}</span>
+              <span className={`font-semibold
+                ${competition.type === 'family' ? 'text-amber-700' : 
+                 competition.type === 'appliances' ? 'text-pink-700' : 
+                 competition.type === 'cash' ? 'text-green-700' : 
+                 'text-gray-700'}`}>£{pricePerTicket.toFixed(2)}</span>
             </div>
             <div className="flex justify-between mb-2">
               <span>Number of tickets:</span>
-              <span className="font-semibold">{ticketCount}</span>
+              <span className={`font-semibold
+                ${competition.type === 'family' ? 'text-amber-700' : 
+                 competition.type === 'appliances' ? 'text-pink-700' : 
+                 competition.type === 'cash' ? 'text-green-700' : 
+                 'text-gray-700'}`}>{ticketCount}</span>
             </div>
             <div className="flex justify-between text-lg font-bold border-t pt-2 mt-2">
               <span>Total:</span>
-              <span className="text-primary">${totalPrice}</span>
+              <span className={`
+                ${competition.type === 'family' ? 'text-amber-700' : 
+                 competition.type === 'appliances' ? 'text-pink-700' : 
+                 competition.type === 'cash' ? 'text-green-700' : 
+                 'text-primary'}`}>£{totalPrice}</span>
             </div>
           </div>
           
-          <div className="bg-blue-50 p-3 rounded-lg text-sm text-blue-700">
+          <div className={`p-3 rounded-lg text-sm
+            ${competition.type === 'family' ? 'bg-amber-50 text-amber-700' : 
+             competition.type === 'appliances' ? 'bg-pink-50 text-pink-700' : 
+             competition.type === 'cash' ? 'bg-green-50 text-green-700' : 
+             'bg-blue-50 text-blue-700'}`}>
             <p className="flex items-center">
               <i className="fas fa-info-circle mr-2"></i>
               Maximum tickets per user: {maxTickets}
             </p>
             <p className="mt-1 flex items-center">
-              <i className="fas fa-ticket-alt mr-2"></i>
+              <i className={`fas fa-ticket-alt mr-2
+                ${competition.type === 'family' ? 'text-amber-600' : 
+                 competition.type === 'appliances' ? 'text-pink-600' : 
+                 competition.type === 'cash' ? 'text-green-600' : 
+                 'text-blue-600'}`}></i>
               Available tickets: {availableTickets}
             </p>
           </div>
@@ -144,7 +169,11 @@ export default function TicketPurchaseModal({
           <Button 
             onClick={handlePurchase} 
             disabled={isProcessing}
-            className="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700"
+            className={`text-white
+              ${competition.type === 'family' ? 'bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700' : 
+               competition.type === 'appliances' ? 'bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700' : 
+               competition.type === 'cash' ? 'bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700' : 
+               'bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700'}`}
           >
             {isProcessing ? (
               <>

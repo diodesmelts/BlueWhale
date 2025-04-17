@@ -296,42 +296,106 @@ export default function CompetitionDetailPage() {
 
         {/* Content */}
         <div className="p-6">
-          {/* Competition stats */}
+          {/* Competition stats with category-specific colors */}
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-6">
-            <div className="flex flex-col items-center p-4 bg-blue-50 rounded-lg">
-              <Trophy className="h-6 w-6 text-blue-500 mb-2" />
+            <div className={`flex flex-col items-center p-4 rounded-lg
+              ${competition.type === 'family' ? 'bg-amber-50' : 
+               competition.type === 'appliances' ? 'bg-pink-50' : 
+               competition.type === 'cash' ? 'bg-green-50' : 
+               'bg-blue-50'}`}>
+              <Trophy className={`h-6 w-6 mb-2
+                ${competition.type === 'family' ? 'text-amber-500' : 
+                 competition.type === 'appliances' ? 'text-pink-500' : 
+                 competition.type === 'cash' ? 'text-green-500' : 
+                 'text-blue-500'}`} />
               <span className="text-sm text-gray-500">Prize</span>
-              <span className="text-lg font-bold text-blue-700">${competition.prize.toLocaleString()}</span>
+              <span className={`text-lg font-bold
+                ${competition.type === 'family' ? 'text-amber-700' : 
+                 competition.type === 'appliances' ? 'text-pink-700' : 
+                 competition.type === 'cash' ? 'text-green-700' : 
+                 'text-blue-700'}`}>£{competition.prize.toLocaleString()}</span>
             </div>
             
-            <div className="flex flex-col items-center p-4 bg-green-50 rounded-lg">
-              <Users className="h-6 w-6 text-green-500 mb-2" />
+            <div className={`flex flex-col items-center p-4 rounded-lg
+              ${competition.type === 'family' ? 'bg-orange-50' : 
+               competition.type === 'appliances' ? 'bg-rose-50' : 
+               competition.type === 'cash' ? 'text-emerald-50 bg-lime-50' : 
+               'bg-green-50'}`}>
+              <Users className={`h-6 w-6 mb-2
+                ${competition.type === 'family' ? 'text-orange-500' : 
+                 competition.type === 'appliances' ? 'text-rose-500' : 
+                 competition.type === 'cash' ? 'text-lime-500' : 
+                 'text-green-500'}`} />
               <span className="text-sm text-gray-500">Entries</span>
-              <span className="text-lg font-bold text-green-700">{competition.entries}</span>
+              <span className={`text-lg font-bold
+                ${competition.type === 'family' ? 'text-orange-700' : 
+                 competition.type === 'appliances' ? 'text-rose-700' : 
+                 competition.type === 'cash' ? 'text-lime-700' : 
+                 'text-green-700'}`}>{competition.entries}</span>
             </div>
             
-            <div className="flex flex-col items-center p-4 bg-amber-50 rounded-lg">
-              <Timer className="h-6 w-6 text-amber-500 mb-2" />
+            <div className={`flex flex-col items-center p-4 rounded-lg
+              ${competition.type === 'family' ? 'bg-yellow-50' : 
+               competition.type === 'appliances' ? 'bg-purple-50' : 
+               competition.type === 'cash' ? 'bg-teal-50' : 
+               'bg-amber-50'}`}>
+              <Timer className={`h-6 w-6 mb-2
+                ${competition.type === 'family' ? 'text-yellow-500' : 
+                 competition.type === 'appliances' ? 'text-purple-500' : 
+                 competition.type === 'cash' ? 'text-teal-500' : 
+                 'text-amber-500'}`} />
               <span className="text-sm text-gray-500">Ends In</span>
-              <span className="text-lg font-bold text-amber-700">{getDaysRemaining()}</span>
+              <span className={`text-lg font-bold
+                ${competition.type === 'family' ? 'text-yellow-700' : 
+                 competition.type === 'appliances' ? 'text-purple-700' : 
+                 competition.type === 'cash' ? 'text-teal-700' : 
+                 'text-amber-700'}`}>{getDaysRemaining()}</span>
             </div>
             
-            <div className="flex flex-col items-center p-4 bg-purple-50 rounded-lg">
-              <Globe className="h-6 w-6 text-purple-500 mb-2" />
+            <div className={`flex flex-col items-center p-4 rounded-lg
+              ${competition.type === 'family' ? 'bg-red-50' : 
+               competition.type === 'appliances' ? 'bg-fuchsia-50' : 
+               competition.type === 'cash' ? 'bg-emerald-50' : 
+               'bg-purple-50'}`}>
+              <Globe className={`h-6 w-6 mb-2
+                ${competition.type === 'family' ? 'text-red-500' : 
+                 competition.type === 'appliances' ? 'text-fuchsia-500' : 
+                 competition.type === 'cash' ? 'text-emerald-500' : 
+                 'text-purple-500'}`} />
               <span className="text-sm text-gray-500">Eligibility</span>
-              <span className="text-lg font-bold text-purple-700">{competition.eligibility}</span>
+              <span className={`text-lg font-bold
+                ${competition.type === 'family' ? 'text-red-700' : 
+                 competition.type === 'appliances' ? 'text-fuchsia-700' : 
+                 competition.type === 'cash' ? 'text-emerald-700' : 
+                 'text-purple-700'}`}>{competition.eligibility}</span>
             </div>
           </div>
 
-          {/* Countdown timer - SUPER EXCITING design */}
+          {/* Countdown timer - Category-themed design */}
           {competition.drawTime && (
-            <div className="mb-10 bg-gradient-to-br from-blue-100 via-indigo-100 to-purple-100 rounded-2xl p-8 border-4 border-blue-300 shadow-xl">
+            <div className={`mb-10 rounded-2xl p-8 border-4 shadow-xl
+              ${competition.type === 'family' ? 'bg-gradient-to-br from-amber-100 via-yellow-100 to-amber-100 border-amber-300' : 
+               competition.type === 'appliances' ? 'bg-gradient-to-br from-pink-100 via-rose-100 to-pink-100 border-pink-300' : 
+               competition.type === 'cash' ? 'bg-gradient-to-br from-green-100 via-emerald-100 to-lime-100 border-green-300' : 
+               'bg-gradient-to-br from-blue-100 via-indigo-100 to-purple-100 border-blue-300'}`}>
               <div className="flex flex-col md:flex-row items-center justify-between mb-6">
-                <h2 className="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 flex items-center mb-4 md:mb-0">
-                  <Clock className="h-10 w-10 mr-3 text-blue-600 animate-pulse" />
+                <h2 className={`text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text flex items-center mb-4 md:mb-0
+                  ${competition.type === 'family' ? 'bg-gradient-to-r from-amber-600 via-orange-600 to-yellow-600' : 
+                   competition.type === 'appliances' ? 'bg-gradient-to-r from-pink-600 via-rose-600 to-pink-500' : 
+                   competition.type === 'cash' ? 'bg-gradient-to-r from-green-600 via-emerald-600 to-lime-600' : 
+                   'bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600'}`}>
+                  <Clock className={`h-10 w-10 mr-3 animate-pulse
+                    ${competition.type === 'family' ? 'text-amber-600' : 
+                     competition.type === 'appliances' ? 'text-pink-600' : 
+                     competition.type === 'cash' ? 'text-green-600' : 
+                     'text-blue-600'}`} />
                   PRIZE DRAW COUNTDOWN
                 </h2>
-                <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-sm font-extrabold uppercase tracking-wider px-6 py-2 rounded-full transform hover:scale-105 transition-transform shadow-md animate-pulse">
+                <div className={`text-white text-sm font-extrabold uppercase tracking-wider px-6 py-2 rounded-full transform hover:scale-105 transition-transform shadow-md animate-pulse
+                  ${competition.type === 'family' ? 'bg-gradient-to-r from-amber-600 to-orange-600' : 
+                   competition.type === 'appliances' ? 'bg-gradient-to-r from-pink-600 to-rose-600' : 
+                   competition.type === 'cash' ? 'bg-gradient-to-r from-green-600 to-emerald-600' : 
+                   'bg-gradient-to-r from-blue-600 to-indigo-600'}`}>
                   WIN BIG NOW!
                 </div>
               </div>
@@ -340,10 +404,22 @@ export default function CompetitionDetailPage() {
                   targetDate={competition.drawTime} 
                   className="mt-2"
                   showIcon={false}
+                  categoryTheme={
+                    competition.type === 'family' ? 'family' :
+                    competition.type === 'appliances' ? 'appliances' :
+                    competition.type === 'cash' ? 'cash' : 
+                    undefined
+                  }
                 />
               </div>
               <div className="mt-8 text-center">
-                <p className="text-xl font-bold text-indigo-700 italic">🎁 Don't miss your chance to win this amazing prize! Time is running out! 🎁</p>
+                <p className={`text-xl font-bold italic
+                  ${competition.type === 'family' ? 'text-amber-700' : 
+                   competition.type === 'appliances' ? 'text-pink-700' : 
+                   competition.type === 'cash' ? 'text-green-700' : 
+                   'text-indigo-700'}`}>
+                  🎁 Don't miss your chance to win this amazing prize! Time is running out! 🎁
+                </p>
               </div>
             </div>
           )}
@@ -359,13 +435,27 @@ export default function CompetitionDetailPage() {
             <h2 className="text-xl font-bold text-gray-800 mb-3">Get Tickets</h2>
             
             {competition.isEntered && competition.ticketCount && competition.ticketCount > 0 ? (
-              <div className="bg-blue-50 rounded-lg p-4 border border-blue-100">
-                <h3 className="text-lg font-semibold text-blue-800 mb-2">Your Tickets</h3>
+              <div className={`rounded-lg p-4 border
+                ${competition.type === 'family' ? 'bg-amber-50 border-amber-100' : 
+                 competition.type === 'appliances' ? 'bg-pink-50 border-pink-100' : 
+                 competition.type === 'cash' ? 'bg-green-50 border-green-100' : 
+                 'bg-blue-50 border-blue-100'}`}>
+                <h3 className={`text-lg font-semibold mb-2
+                  ${competition.type === 'family' ? 'text-amber-800' : 
+                   competition.type === 'appliances' ? 'text-pink-800' : 
+                   competition.type === 'cash' ? 'text-green-800' : 
+                   'text-blue-800'}`}>
+                  Your Tickets
+                </h3>
                 <p className="text-sm mb-2">You have {competition.ticketCount} ticket{competition.ticketCount !== 1 ? 's' : ''} for this prize draw</p>
                 {competition.ticketNumbers && competition.ticketNumbers.length > 0 && (
                   <div className="flex flex-wrap gap-2 mt-3">
                     {competition.ticketNumbers.map(number => (
-                      <span key={number} className="px-3 py-1 bg-white border border-blue-300 rounded-full text-sm font-medium text-blue-600">
+                      <span key={number} className={`px-3 py-1 bg-white rounded-full text-sm font-medium border
+                        ${competition.type === 'family' ? 'border-amber-300 text-amber-600' : 
+                         competition.type === 'appliances' ? 'border-pink-300 text-pink-600' : 
+                         competition.type === 'cash' ? 'border-green-300 text-green-600' : 
+                         'border-blue-300 text-blue-600'}`}>
                         #{number}
                       </span>
                     ))}
@@ -373,19 +463,37 @@ export default function CompetitionDetailPage() {
                 )}
                 <Button
                   onClick={() => setIsTicketModalOpen(true)}
-                  className="mt-4 w-full md:w-auto bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700"
+                  className={`mt-4 w-full md:w-auto text-white
+                    ${competition.type === 'family' ? 'bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700' : 
+                     competition.type === 'appliances' ? 'bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700' : 
+                     competition.type === 'cash' ? 'bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700' : 
+                     'bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700'}`}
                 >
                   Buy More Tickets
                 </Button>
               </div>
             ) : (
-              <div className="bg-amber-50 rounded-lg p-4 border border-amber-100">
-                <p className="text-amber-800 mb-4">Enter this prize draw by purchasing tickets. The more tickets you buy, the higher your chances of winning!</p>
+              <div className={`rounded-lg p-4 border
+                ${competition.type === 'family' ? 'bg-amber-50 border-amber-100' : 
+                 competition.type === 'appliances' ? 'bg-pink-50 border-pink-100' : 
+                 competition.type === 'cash' ? 'bg-green-50 border-green-100' : 
+                 'bg-amber-50 border-amber-100'}`}>
+                <p className={`mb-4
+                  ${competition.type === 'family' ? 'text-amber-800' : 
+                   competition.type === 'appliances' ? 'text-pink-800' : 
+                   competition.type === 'cash' ? 'text-green-800' : 
+                   'text-amber-800'}`}>
+                  Enter this prize draw by purchasing tickets. The more tickets you buy, the higher your chances of winning!
+                </p>
                 
                 <Button
                   onClick={handleEnterCompetition}
                   disabled={isEnded || isProcessing}
-                  className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700"
+                  className={`w-full text-white
+                    ${competition.type === 'family' ? 'bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700' : 
+                     competition.type === 'appliances' ? 'bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700' : 
+                     competition.type === 'cash' ? 'bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700' : 
+                     'bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700'}`}
                 >
                   {isProcessing ? (
                     <>
@@ -394,7 +502,7 @@ export default function CompetitionDetailPage() {
                     </>
                   ) : (
                     <>
-                      Get Tickets - ${(competition.ticketPrice ? competition.ticketPrice/100 : 9.99).toFixed(2)} each
+                      Get Tickets - £{(competition.ticketPrice ? competition.ticketPrice/100 : 9.99).toFixed(2)} each
                     </>
                   )}
                 </Button>
