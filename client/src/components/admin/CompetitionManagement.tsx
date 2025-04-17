@@ -124,35 +124,35 @@ export default function CompetitionManagement() {
 
   return (
     <div className="space-y-4">
-      <div className="rounded-md border border-gray-700">
-        <Table className="text-gray-300">
-          <TableHeader className="bg-gray-800">
-            <TableRow className="border-gray-700 hover:bg-gray-900">
-              <TableHead className="text-cyan-400">Title</TableHead>
-              <TableHead className="text-cyan-400">Platform</TableHead>
-              <TableHead className="text-cyan-400">Category</TableHead>
-              <TableHead className="text-right text-cyan-400">Prize</TableHead>
-              <TableHead className="text-cyan-400">Draw Date</TableHead>
-              <TableHead className="text-cyan-400">Status</TableHead>
-              <TableHead className="text-right text-cyan-400">Actions</TableHead>
+      <div className="rounded-md border border-gray-200 shadow-sm overflow-hidden">
+        <Table className="text-gray-700">
+          <TableHeader className="bg-gray-50">
+            <TableRow className="border-gray-200 hover:bg-gray-100">
+              <TableHead className="text-gray-700 font-semibold">Title</TableHead>
+              <TableHead className="text-gray-700 font-semibold">Platform</TableHead>
+              <TableHead className="text-gray-700 font-semibold">Category</TableHead>
+              <TableHead className="text-right text-gray-700 font-semibold">Prize</TableHead>
+              <TableHead className="text-gray-700 font-semibold">Draw Date</TableHead>
+              <TableHead className="text-gray-700 font-semibold">Status</TableHead>
+              <TableHead className="text-right text-gray-700 font-semibold">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {competitions && competitions.length > 0 ? (
               competitions.map((competition: Competition) => (
-                <TableRow key={competition.id} className="border-gray-700 hover:bg-gray-800">
+                <TableRow key={competition.id} className="border-gray-200 hover:bg-gray-50">
                   <TableCell className="font-medium">{competition.title}</TableCell>
                   <TableCell>{competition.platform}</TableCell>
                   <TableCell className="capitalize">{competition.category || "Other"}</TableCell>
-                  <TableCell className="text-right">£{competition.prize}</TableCell>
+                  <TableCell className="text-right font-medium">£{competition.prize}</TableCell>
                   <TableCell>{formatDate(competition.drawTime || competition.endDate)}</TableCell>
                   <TableCell>
                     {new Date(competition.endDate) > new Date() ? (
-                      <span className="px-2 py-1 rounded-full text-xs font-medium bg-cyan-900 text-cyan-300 border border-cyan-700">
+                      <span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">
                         Active
                       </span>
                     ) : (
-                      <span className="px-2 py-1 rounded-full text-xs font-medium bg-gray-800 text-gray-300 border border-gray-700">
+                      <span className="px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 border border-gray-200">
                         Ended
                       </span>
                     )}
@@ -160,23 +160,23 @@ export default function CompetitionManagement() {
                   <TableCell className="text-right">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="sm" className="text-cyan-400 hover:text-white hover:bg-gray-700">
+                        <Button variant="ghost" size="sm" className="text-gray-500 hover:text-gray-900 hover:bg-gray-100">
                           <MoreHorizontal className="h-4 w-4" />
                           <span className="sr-only">Actions</span>
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="bg-gray-900 border-gray-700 text-gray-300">
-                        <DropdownMenuItem onClick={() => handleView(competition)} className="hover:bg-gray-800 focus:bg-gray-800">
-                          <Eye className="mr-2 h-4 w-4 text-cyan-400" />
+                      <DropdownMenuContent align="end" className="bg-white border-gray-200 text-gray-700 shadow-md">
+                        <DropdownMenuItem onClick={() => handleView(competition)} className="hover:bg-gray-50 focus:bg-gray-50">
+                          <Eye className="mr-2 h-4 w-4 text-cyan-600" />
                           View
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => handleEdit(competition)} className="hover:bg-gray-800 focus:bg-gray-800">
-                          <Pencil className="mr-2 h-4 w-4 text-purple-400" />
+                        <DropdownMenuItem onClick={() => handleEdit(competition)} className="hover:bg-gray-50 focus:bg-gray-50">
+                          <Pencil className="mr-2 h-4 w-4 text-purple-600" />
                           Edit
                         </DropdownMenuItem>
                         <DropdownMenuItem 
                           onClick={() => handleDelete(competition)}
-                          className="text-red-400 hover:text-red-300 hover:bg-gray-800 focus:bg-gray-800"
+                          className="text-red-600 hover:text-red-700 hover:bg-red-50 focus:bg-red-50"
                         >
                           <Trash2 className="mr-2 h-4 w-4" />
                           Delete
@@ -187,8 +187,8 @@ export default function CompetitionManagement() {
                 </TableRow>
               ))
             ) : (
-              <TableRow className="border-gray-700 hover:bg-gray-800">
-                <TableCell colSpan={7} className="text-center py-6 text-gray-400">
+              <TableRow className="border-gray-200 hover:bg-gray-50">
+                <TableCell colSpan={7} className="text-center py-8 text-gray-500">
                   No competitions found
                 </TableCell>
               </TableRow>
@@ -199,10 +199,10 @@ export default function CompetitionManagement() {
 
       {/* View Competition Modal */}
       <Dialog open={isViewModalOpen} onOpenChange={setIsViewModalOpen}>
-        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto bg-gray-900 text-white border-gray-700">
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto bg-white text-gray-800 border-gray-200 shadow-lg">
           <DialogHeader>
-            <DialogTitle className="text-cyan-400 text-xl">Competition Details</DialogTitle>
-            <DialogDescription className="text-gray-400">
+            <DialogTitle className="text-gray-800 text-xl font-semibold">Competition Details</DialogTitle>
+            <DialogDescription className="text-gray-500">
               View all details for this competition.
             </DialogDescription>
           </DialogHeader>
@@ -211,63 +211,68 @@ export default function CompetitionManagement() {
             <div className="space-y-4 mt-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <h3 className="text-sm font-medium text-cyan-400">Title</h3>
-                  <p className="mt-1 text-gray-300">{selectedCompetition.title}</p>
+                  <h3 className="text-sm font-medium text-gray-700">Title</h3>
+                  <p className="mt-1 text-gray-600">{selectedCompetition.title}</p>
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium text-cyan-400">Organizer</h3>
-                  <p className="mt-1 text-gray-300">{selectedCompetition.organizer}</p>
+                  <h3 className="text-sm font-medium text-gray-700">Organizer</h3>
+                  <p className="mt-1 text-gray-600">{selectedCompetition.organizer}</p>
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium text-cyan-400">Platform</h3>
-                  <p className="mt-1 text-gray-300">{selectedCompetition.platform}</p>
+                  <h3 className="text-sm font-medium text-gray-700">Platform</h3>
+                  <p className="mt-1 text-gray-600">{selectedCompetition.platform}</p>
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium text-cyan-400">Category</h3>
-                  <p className="mt-1 text-gray-300 capitalize">{selectedCompetition.category || "Other"}</p>
+                  <h3 className="text-sm font-medium text-gray-700">Category</h3>
+                  <p className="mt-1 text-gray-600 capitalize">{selectedCompetition.category || "Other"}</p>
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium text-cyan-400">Prize</h3>
-                  <p className="mt-1 text-gray-300">£{selectedCompetition.prize}</p>
+                  <h3 className="text-sm font-medium text-gray-700">Prize</h3>
+                  <p className="mt-1 text-gray-600 font-semibold">£{selectedCompetition.prize}</p>
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium text-cyan-400">Entries</h3>
-                  <p className="mt-1 text-gray-300">{selectedCompetition.entries}</p>
+                  <h3 className="text-sm font-medium text-gray-700">Entries</h3>
+                  <p className="mt-1 text-gray-600">{selectedCompetition.entries}</p>
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium text-cyan-400">Eligibility</h3>
-                  <p className="mt-1 text-gray-300">{selectedCompetition.eligibility}</p>
+                  <h3 className="text-sm font-medium text-gray-700">Eligibility</h3>
+                  <p className="mt-1 text-gray-600">{selectedCompetition.eligibility}</p>
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium text-cyan-400">End Date</h3>
-                  <p className="mt-1 text-gray-300">{formatDate(selectedCompetition.endDate)}</p>
+                  <h3 className="text-sm font-medium text-gray-700">End Date</h3>
+                  <p className="mt-1 text-gray-600">{formatDate(selectedCompetition.endDate)}</p>
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium text-cyan-400">Draw Time</h3>
-                  <p className="mt-1 text-gray-300">
+                  <h3 className="text-sm font-medium text-gray-700">Draw Time</h3>
+                  <p className="mt-1 text-gray-600">
                     {selectedCompetition.drawTime 
                       ? new Date(selectedCompetition.drawTime).toLocaleString() 
                       : "Not set"}
                   </p>
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium text-cyan-400">Verified</h3>
-                  <p className="mt-1 text-gray-300">{selectedCompetition.isVerified ? "Yes" : "No"}</p>
+                  <h3 className="text-sm font-medium text-gray-700">Verified</h3>
+                  <p className="mt-1 text-gray-600">
+                    {selectedCompetition.isVerified ? 
+                      <span className="text-cyan-600 font-medium">Yes</span> : 
+                      <span className="text-gray-500">No</span>
+                    }
+                  </p>
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium text-cyan-400">Ticket Price</h3>
-                  <p className="mt-1 text-gray-300">{selectedCompetition.ticketPrice ? `£${(selectedCompetition.ticketPrice/100).toFixed(2)}` : "Free"}</p>
+                  <h3 className="text-sm font-medium text-gray-700">Ticket Price</h3>
+                  <p className="mt-1 text-gray-600 font-semibold">{selectedCompetition.ticketPrice ? `£${(selectedCompetition.ticketPrice/100).toFixed(2)}` : "Free"}</p>
                 </div>
               </div>
               
               <div>
-                <h3 className="text-sm font-medium text-cyan-400">Description</h3>
-                <p className="mt-1 text-gray-300">{selectedCompetition.description}</p>
+                <h3 className="text-sm font-medium text-gray-700">Description</h3>
+                <p className="mt-1 text-gray-600 bg-gray-50 p-3 rounded-md border border-gray-100">{selectedCompetition.description}</p>
               </div>
               
               <div>
-                <h3 className="text-sm font-medium text-cyan-400">Image</h3>
-                <div className="mt-1 rounded-md overflow-hidden w-full h-40 bg-gray-800 border border-gray-700">
+                <h3 className="text-sm font-medium text-gray-700">Image</h3>
+                <div className="mt-1 rounded-md overflow-hidden w-full h-40 bg-white border border-gray-200 shadow-sm">
                   <img 
                     src={selectedCompetition.image} 
                     alt={selectedCompetition.title}
@@ -277,19 +282,19 @@ export default function CompetitionManagement() {
               </div>
               
               <div>
-                <h3 className="text-sm font-medium text-cyan-400">Entry Steps</h3>
+                <h3 className="text-sm font-medium text-gray-700">Entry Steps</h3>
                 <ul className="mt-2 space-y-2">
                   {selectedCompetition.entrySteps && selectedCompetition.entrySteps.length > 0 ? (
                     selectedCompetition.entrySteps.map((step) => (
-                      <li key={step.id} className="p-3 bg-gray-800 rounded-md border border-gray-700">
-                        <div className="font-medium text-purple-400">Step {step.id}</div>
-                        <div className="text-gray-300">{step.description}</div>
+                      <li key={step.id} className="p-3 bg-white rounded-md border border-gray-200 shadow-sm">
+                        <div className="font-medium text-cyan-600">Step {step.id}</div>
+                        <div className="text-gray-600">{step.description}</div>
                         {step.link && (
                           <a 
                             href={step.link}
                             target="_blank"
                             rel="noreferrer"
-                            className="text-cyan-400 hover:text-cyan-300 text-sm mt-1 block"
+                            className="text-blue-500 hover:text-blue-600 text-sm mt-1 block"
                           >
                             {step.link}
                           </a>
@@ -308,7 +313,7 @@ export default function CompetitionManagement() {
             <Button 
               variant="outline" 
               onClick={() => setIsViewModalOpen(false)}
-              className="border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white"
+              className="border-gray-300 text-gray-700 hover:bg-gray-50 hover:text-gray-900"
             >
               Close
             </Button>
@@ -319,7 +324,7 @@ export default function CompetitionManagement() {
                   handleEdit(selectedCompetition);
                 }
               }}
-              className="bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-700 hover:to-purple-700 text-white"
+              className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white shadow-sm"
             >
               Edit
             </Button>
@@ -329,10 +334,10 @@ export default function CompetitionManagement() {
 
       {/* Edit Competition Modal */}
       <Dialog open={isEditModalOpen} onOpenChange={setIsEditModalOpen}>
-        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto bg-gray-900 text-white border-gray-700">
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto bg-white text-gray-800 border-gray-200 shadow-lg">
           <DialogHeader>
-            <DialogTitle className="text-cyan-400 text-xl">Edit Competition</DialogTitle>
-            <DialogDescription className="text-gray-400">
+            <DialogTitle className="text-gray-800 text-xl font-semibold">Edit Competition</DialogTitle>
+            <DialogDescription className="text-gray-500">
               Make changes to the competition details.
             </DialogDescription>
           </DialogHeader>
@@ -348,20 +353,20 @@ export default function CompetitionManagement() {
 
       {/* Delete Confirmation Alert */}
       <AlertDialog open={isDeleteAlertOpen} onOpenChange={setIsDeleteAlertOpen}>
-        <AlertDialogContent className="bg-gray-900 text-white border-gray-700">
+        <AlertDialogContent className="bg-white text-gray-800 border-gray-200 shadow-lg">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-xl text-cyan-400">Are you sure?</AlertDialogTitle>
-            <AlertDialogDescription className="text-gray-300">
+            <AlertDialogTitle className="text-xl text-gray-800 font-semibold">Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription className="text-gray-600">
               This action cannot be undone. This will permanently delete the competition
-              "<span className="text-purple-400 font-medium">{selectedCompetition?.title}</span>" and remove all associated entries and data.
+              "<span className="text-cyan-600 font-medium">{selectedCompetition?.title}</span>" and remove all associated entries and data.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="bg-gray-800 text-gray-300 border-gray-700 hover:bg-gray-700 hover:text-white">
+            <AlertDialogCancel className="bg-white text-gray-700 border-gray-300 hover:bg-gray-50 hover:text-gray-900">
               Cancel
             </AlertDialogCancel>
             <AlertDialogAction 
-              className="bg-red-600 hover:bg-red-700 border-0"
+              className="bg-red-500 hover:bg-red-600 border-0 text-white shadow-sm"
               onClick={confirmDelete}
               disabled={deleteMutation.isPending}
             >
