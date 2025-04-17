@@ -469,7 +469,7 @@ export default function Dashboard() {
                     
                     setIsUploading(true);
                     
-                    apiRequest('POST', '/api/uploads/banner', formData, true)
+                    apiRequest('POST', '/api/uploads/banner', formData, { isFormData: true })
                       .then(res => {
                         if (!res.ok) throw new Error('Failed to upload banner image');
                         return res.json();

@@ -848,6 +848,47 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // Banner image upload endpoint for hero section
+  app.post('/api/uploads/banner', isAdmin, imageUpload.single('image'), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ message: 'No image file provided' });
+      }
+      
+      const file = req.file;
+      const filePath = file.path;
+      
+      // Process the banner image - maintain aspect ratio but ensure it's high quality
+      try {
+        await sharp(filePath)
+          .resize({
+            width: 1920,
+            height: 600,
+            fit: 'cover',
+            position: 'center'
+          })
+          .toBuffer()
+          .then(data => {
+            fs.writeFileSync(filePath, data);
+          });
+      } catch (err) {
+        console.error('Error processing banner image:', err);
+        // Continue even if image processing fails
+      }
+      
+      // Generate URL path to access the file
+      const imageUrl = `/uploads/${file.filename}`;
+      
+      res.status(200).json({ 
+        message: 'Banner image uploaded successfully',
+        imageUrl
+      });
+    } catch (error) {
+      console.error('Error in banner upload:', error);
+      res.status(500).json({ message: 'Error uploading banner image' });
+    }
+  });
+
   // File upload route for competition images
   app.post("/api/upload", isAdmin, imageUpload.single('file'), async (req, res) => {
     try {
