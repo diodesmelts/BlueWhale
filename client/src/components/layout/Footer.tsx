@@ -15,7 +15,7 @@ export default function Footer() {
           <div>
             <div className="mb-6">
               <img 
-                src="/blue-whale-logo.png" 
+                src="/blue-whale-brand.png" 
                 alt="Blue Whale Competitions" 
                 className="h-12 mb-4"
               />
