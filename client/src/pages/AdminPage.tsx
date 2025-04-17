@@ -185,17 +185,17 @@ export default function AdminPage() {
   return (
     <div className="container mx-auto py-6 px-4 max-w-5xl">
       <div className="flex items-center space-x-2 mb-6">
-        <Shield className="h-8 w-8 text-blue-700" />
-        <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+        <Shield className="h-8 w-8 text-cyan-500" />
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-cyan-500 to-purple-600 text-transparent bg-clip-text">Admin Dashboard</h1>
       </div>
       
-      <Card className="bg-white shadow-lg border-blue-100 mb-8">
-        <CardHeader className="border-b pb-3">
+      <Card className="bg-gray-900 shadow-lg border-cyan-800 mb-8 text-white">
+        <CardHeader className="border-b border-gray-800 pb-3">
           <CardTitle className="text-2xl flex items-center">
-            <Trophy className="mr-2 h-6 w-6 text-blue-600" />
+            <Trophy className="mr-2 h-6 w-6 text-cyan-400" />
             Create New Competition
           </CardTitle>
-          <CardDescription>
+          <CardDescription className="text-gray-400">
             Add a new competition to the platform. All fields are required unless specified.
           </CardDescription>
         </CardHeader>
@@ -508,10 +508,10 @@ export default function AdminPage() {
                 )}
               />
 
-              <CardFooter className="border-t pt-6 pb-0 flex justify-end px-0">
+              <CardFooter className="border-t border-gray-800 pt-6 pb-0 flex justify-end px-0">
                 <Button 
                   type="submit" 
-                  className="bg-blue-700 hover:bg-blue-800"
+                  className="bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-700 hover:to-purple-700 text-white"
                   disabled={formLoading}
                 >
                   {formLoading ? (
