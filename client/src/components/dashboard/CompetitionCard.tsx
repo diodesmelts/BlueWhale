@@ -287,6 +287,12 @@ export default function CompetitionCard({
         onClick={() => setLocation(`/competitions/${id}`)}
       >
         
+        {/* Tickets remaining banner */}
+        <div className="w-full bg-gray-900/90 backdrop-blur-sm text-white py-2 px-4 flex items-center justify-center font-medium border-b border-gray-800">
+          <i className="fas fa-ticket-alt text-cyan-400 mr-2"></i>
+          <span className="text-sm">{(totalTickets && soldTickets) ? (totalTickets - soldTickets) : 950} tickets remaining</span>
+        </div>
+        
         {/* Top section with much taller image */}
         <div 
           className="w-full h-96 bg-center bg-cover relative overflow-hidden group"
@@ -367,9 +373,8 @@ export default function CompetitionCard({
           <div className="flex-1 pl-4 py-3">
             <span className="text-xl font-extrabold text-blue-600">£{(ticketPrice ? ticketPrice/100 : 0).toFixed(2)}</span>
             <span className="text-xs text-gray-500 font-medium block">
-              <i className="fas fa-layer-group text-blue-400 mr-1"></i>
-              {(totalTickets && soldTickets) ? 
-                (totalTickets - soldTickets) : 950} tickets left
+              <i className="fas fa-tag text-blue-400 mr-1"></i>
+              per ticket
             </span>
           </div>
           <Button 
