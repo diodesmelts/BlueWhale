@@ -293,9 +293,9 @@ export default function CompetitionCard({
           </div>
         )}
         
-        {/* Top section with image */}
+        {/* Top section with larger image */}
         <div 
-          className="w-full h-52 bg-center bg-cover relative overflow-hidden group"
+          className="w-full h-64 bg-center bg-cover relative overflow-hidden group"
           style={{ backgroundImage: `url(${image})` }}
         >
           {/* Shine effect overlay */}

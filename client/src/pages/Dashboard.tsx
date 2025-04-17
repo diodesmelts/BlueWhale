@@ -328,37 +328,30 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Live Competitions Header */}
-        <div className="text-center mb-10 mt-4 relative">
-          <div className="relative py-6">
-            {/* Decorative elements */}
-            <div className="absolute left-0 top-1/2 transform -translate-y-1/2 w-16 h-16 md:w-24 md:h-24 bg-blue-500/10 rounded-full -ml-8 blur-xl"></div>
-            <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-16 h-16 md:w-24 md:h-24 bg-blue-500/10 rounded-full -mr-8 blur-xl"></div>
-            
-            {/* Main header with animated gradient background */}
-            <div className="bg-gradient-to-r from-blue-600 via-blue-700 to-blue-600 rounded-lg shadow-lg py-4 px-8 inline-block mx-auto gradient-animate hover-scale">
-              <h2 className="font-extrabold text-2xl md:text-3xl tracking-wide uppercase text-white flex items-center">
-                <span className="mr-3 animate-pulse">
-                  <i className="fas fa-broadcast-tower"></i>
-                </span>
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-200">LIVE</span>
-                <span className="ml-2 text-shadow">COMPETITIONS</span>
-                <span className="ml-3 animate-pulse">
-                  <i className="fas fa-trophy trophy-icon"></i>
-                </span>
-              </h2>
-            </div>
-            
-            {/* Underlining effect */}
-            <div className="h-1 bg-gradient-to-r from-blue-400 via-blue-500 to-blue-400 w-32 mx-auto mt-2 rounded-full"></div>
-          </div>
-        </div>
-        
-        {/* Competition Listings */}
-        <div className="bg-gradient-to-b from-white to-blue-50 px-6 py-8 rounded-2xl shadow-lg border border-blue-100 relative overflow-hidden">
+        {/* Competition Listings with Integrated Header */}
+        <div className="bg-gradient-to-b from-white to-blue-50 px-6 pt-10 pb-8 rounded-2xl shadow-lg border border-blue-100 relative overflow-hidden">
           {/* Decorative elements */}
           <div className="absolute top-0 left-0 w-32 h-32 bg-blue-500/5 rounded-full -translate-x-16 -translate-y-16"></div>
           <div className="absolute bottom-0 right-0 w-48 h-48 bg-blue-500/5 rounded-full translate-x-24 translate-y-12"></div>
+          
+          {/* Integrated header at the top of the section */}
+          <div className="mb-8 relative z-10">
+            <div className="flex items-center justify-center">
+              <div className="h-px flex-grow bg-blue-200"></div>
+              <div className="bg-gradient-to-r from-blue-600 via-blue-700 to-blue-600 rounded-full shadow-md py-3 px-6 mx-4 gradient-animate">
+                <h2 className="font-extrabold text-xl md:text-2xl tracking-wide uppercase text-white flex items-center">
+                  <span className="mr-2 text-blue-200">
+                    <i className="fas fa-broadcast-tower"></i>
+                  </span>
+                  <span className="text-white">LIVE COMPETITIONS</span>
+                  <span className="ml-2 text-blue-200">
+                    <i className="fas fa-trophy"></i>
+                  </span>
+                </h2>
+              </div>
+              <div className="h-px flex-grow bg-blue-200"></div>
+            </div>
+          </div>
           
           {isLoadingCompetitions ? (
             <div className="p-8 text-center">
@@ -384,8 +377,8 @@ export default function Dashboard() {
             </div>
           ) : (
             <>
-              {/* Grid layout with 3 columns on larger screens */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8 relative z-10">
+              {/* Grid layout with 3 columns on larger screens - increased spacing */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10 relative z-10">
                 {competitions?.map((competition: CompetitionWithEntryStatus) => (
                   <CompetitionCard
                     key={competition.id}
