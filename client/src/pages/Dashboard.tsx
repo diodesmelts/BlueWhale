@@ -220,113 +220,54 @@ export default function Dashboard() {
         </div>
       </div>
       
-      <div className="container mx-auto px-4 py-6">
-
-        {/* Tabs */}
-        <div className="bg-white rounded-xl shadow overflow-hidden mb-6">
-          <div className="border-b border-gray-100">
-            <nav className="flex flex-wrap px-2">
-              <a 
-                href="#" 
-                className={`text-sm px-3 md:px-6 py-4 font-medium text-center transition-all duration-200 border-b-2 flex-1 min-w-[100px] ${
-                  activeTab === "trending" 
-                    ? "text-blue-500 border-blue-500 font-semibold" 
-                    : "text-gray-500 hover:text-blue-500 border-transparent"
-                }`}
-                onClick={(e) => { e.preventDefault(); setActiveTab("trending"); }}
-              >
-                <i className="fas fa-fire mr-1 md:mr-2 text-amber-500"></i>
-                <span className="hidden xs:inline">Trending</span><span className="md:inline hidden">Competitions</span>
-              </a>
-              <a 
-                href="#" 
-                className={`text-sm px-3 md:px-6 py-4 font-medium text-center transition-all duration-200 border-b-2 flex-1 min-w-[100px] ${
-                  activeTab === "my-entries" 
-                    ? "text-blue-500 border-blue-500 font-semibold" 
-                    : "text-gray-500 hover:text-blue-500 border-transparent"
-                }`}
-                onClick={(e) => { e.preventDefault(); setActiveTab("my-entries"); }}
-              >
-                <i className="fas fa-clipboard-check mr-1 md:mr-2 text-emerald-500"></i>
-                <span>My Entries</span>
-              </a>
-              <a 
-                href="#" 
-                className={`text-sm px-3 md:px-6 py-4 font-medium text-center transition-all duration-200 border-b-2 flex-1 min-w-[100px] ${
-                  activeTab === "ending-soon" 
-                    ? "text-blue-500 border-blue-500 font-semibold" 
-                    : "text-gray-500 hover:text-blue-500 border-transparent"
-                }`}
-                onClick={(e) => { e.preventDefault(); setActiveTab("ending-soon"); }}
-              >
-                <i className="fas fa-clock mr-1 md:mr-2 text-orange-500"></i>
-                <span className="hidden xs:inline">Ending Soon</span>
-              </a>
-              <a 
-                href="#" 
-                className={`text-sm px-3 md:px-6 py-4 font-medium text-center transition-all duration-200 border-b-2 flex-1 min-w-[100px] ${
-                  activeTab === "high-value" 
-                    ? "text-blue-500 border-blue-500 font-semibold" 
-                    : "text-gray-500 hover:text-blue-500 border-transparent"
-                }`}
-                onClick={(e) => { e.preventDefault(); setActiveTab("high-value"); }}
-              >
-                <i className="fas fa-gem mr-1 md:mr-2 text-violet-500"></i>
-                <span className="hidden xs:inline">High Value</span>
-              </a>
-            </nav>
+      {/* How to Play Section */}
+      <div className="bg-gradient-to-r from-blue-50 to-blue-100 py-12">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center text-blue-800 mb-10">
+            <span className="relative inline-block">
+              How to Play
+              <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-blue-300 rounded-full"></span>
+            </span>
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow p-6 text-center relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/10 rounded-full -mr-8 -mt-8"></div>
+              <div className="w-16 h-16 bg-blue-500 text-white flex items-center justify-center rounded-full mx-auto mb-4 relative z-10">
+                <i className="fas fa-search text-2xl"></i>
+              </div>
+              <h3 className="text-xl font-bold text-blue-700 mb-3">1. Browse Competitions</h3>
+              <p className="text-gray-600">
+                Explore our wide range of exciting competitions across various categories and prize values.
+              </p>
+            </div>
+            
+            <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow p-6 text-center relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/10 rounded-full -mr-8 -mt-8"></div>
+              <div className="w-16 h-16 bg-blue-500 text-white flex items-center justify-center rounded-full mx-auto mb-4 relative z-10">
+                <i className="fas fa-ticket-alt text-2xl"></i>
+              </div>
+              <h3 className="text-xl font-bold text-blue-700 mb-3">2. Get Your Tickets</h3>
+              <p className="text-gray-600">
+                Purchase tickets for the competitions you want to enter. More tickets means more chances to win!
+              </p>
+            </div>
+            
+            <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow p-6 text-center relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/10 rounded-full -mr-8 -mt-8"></div>
+              <div className="w-16 h-16 bg-blue-500 text-white flex items-center justify-center rounded-full mx-auto mb-4 relative z-10 wiggle-on-hover">
+                <i className="fas fa-trophy text-2xl"></i>
+              </div>
+              <h3 className="text-xl font-bold text-blue-700 mb-3">3. Win Amazing Prizes</h3>
+              <p className="text-gray-600">
+                Wait for the draw date and check if you've won! Winners are notified immediately after the draw.
+              </p>
+            </div>
           </div>
         </div>
-
-        {/* Filters */}
-        <div className="bg-white p-4 md:p-5 rounded-xl shadow flex flex-wrap items-center gap-3 md:gap-5 mb-6">
-          <div className="flex items-center w-full md:w-auto mb-2 md:mb-0">
-            <span className="text-sm font-medium text-gray-700 mr-2">
-              <i className="fas fa-gift text-amber-500 mr-1"></i> Prize:
-            </span>
-            <Select value={prizeValue} onValueChange={setPrizeValue}>
-              <SelectTrigger className="border-gray-200 rounded-lg text-sm h-9 w-full md:w-[150px] bg-gray-50 focus:ring-blue-500">
-                <SelectValue placeholder="All Prizes" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Prizes</SelectItem>
-                <SelectItem value="high">High (£1000+)</SelectItem>
-                <SelectItem value="medium">Medium (£100-£999)</SelectItem>
-                <SelectItem value="low">Low (Under £100)</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          
-          <div className="flex items-center w-full md:w-auto">
-            <span className="text-sm font-medium text-gray-700 mr-2">
-              <i className="fas fa-sort text-emerald-500 mr-1"></i> Sort:
-            </span>
-            <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger className="border-gray-200 rounded-lg text-sm h-9 w-full md:w-[130px] bg-gray-50 focus:ring-blue-500">
-                <SelectValue placeholder="Popularity" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="popularity">Popularity</SelectItem>
-                <SelectItem value="endDate">End Date</SelectItem>
-                <SelectItem value="prizeValue">Prize Value</SelectItem>
-                <SelectItem value="newest">Newest</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          
-          <div className="flex items-center w-full md:w-auto md:ml-auto mt-2 md:mt-0">
-            <Button 
-              variant="outline" 
-              className="text-blue-500 border-blue-200 hover:bg-blue-50 text-sm font-medium h-9 rounded-lg w-full md:w-auto"
-              onClick={() => {
-                setPrizeValue("all");
-                setSortBy("popularity");
-              }}
-            >
-              <i className="fas fa-sync-alt mr-2"></i> Reset Filters
-            </Button>
-          </div>
-        </div>
+      </div>
+      
+      <div className="container mx-auto px-4 py-8">
 
         {/* Competition Listings with Integrated Header */}
         <div className="bg-gradient-to-b from-white to-blue-50 px-6 pt-10 pb-8 rounded-2xl shadow-lg border border-blue-100 relative overflow-hidden">
