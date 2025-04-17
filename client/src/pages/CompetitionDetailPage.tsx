@@ -248,10 +248,14 @@ export default function CompetitionDetailPage() {
 
   return (
     <div className="container mx-auto py-8 px-4">
-      {/* Back button */}
+      {/* Back button with category-specific styling */}
       <Button
         variant="ghost"
-        className="mb-4 text-gray-600"
+        className={`mb-4
+          ${competition.type === 'family' ? 'text-amber-600' : 
+           competition.type === 'appliances' ? 'text-pink-600' : 
+           competition.type === 'cash' ? 'text-green-600' : 
+           'text-gray-600'}`}
         onClick={() => setLocation('/competitions')}
       >
         <ArrowLeft className="h-4 w-4 mr-2" />
@@ -275,7 +279,13 @@ export default function CompetitionDetailPage() {
                 <Button 
                   variant="ghost" 
                   size="icon" 
-                  className={`rounded-full bg-white/20 hover:bg-white/30 ${competition.isBookmarked ? 'text-yellow-400' : 'text-white'}`}
+                  className={`rounded-full bg-white/20 hover:bg-white/30 ${
+                    competition.isBookmarked ? 
+                      competition.type === 'family' ? 'text-amber-400' : 
+                      competition.type === 'appliances' ? 'text-pink-400' : 
+                      competition.type === 'cash' ? 'text-green-400' : 
+                      'text-yellow-400' : 
+                    'text-white'}`}
                   onClick={() => handleBookmark(competition.id)}
                 >
                   <i className={competition.isBookmarked ? 'fas fa-bookmark' : 'far fa-bookmark'}></i>
@@ -283,7 +293,13 @@ export default function CompetitionDetailPage() {
                 <Button 
                   variant="ghost" 
                   size="icon" 
-                  className={`rounded-full bg-white/20 hover:bg-white/30 ${competition.isLiked ? 'text-rose-500' : 'text-white'}`}
+                  className={`rounded-full bg-white/20 hover:bg-white/30 ${
+                    competition.isLiked ? 
+                      competition.type === 'family' ? 'text-amber-500' : 
+                      competition.type === 'appliances' ? 'text-pink-500' : 
+                      competition.type === 'cash' ? 'text-green-500' : 
+                      'text-rose-500' : 
+                    'text-white'}`}
                   onClick={() => handleLike(competition.id)}
                 >
                   <i className={competition.isLiked ? 'fas fa-heart' : 'far fa-heart'}></i>
@@ -424,15 +440,33 @@ export default function CompetitionDetailPage() {
             </div>
           )}
 
-          {/* Description */}
+          {/* Description with category-specific styling */}
           <div className="mb-6">
-            <h2 className="text-xl font-bold text-gray-800 mb-3">About This Competition</h2>
-            <p className="text-gray-600">{competition.description}</p>
+            <h2 className={`text-xl font-bold mb-3
+              ${competition.type === 'family' ? 'text-amber-800' : 
+               competition.type === 'appliances' ? 'text-pink-800' : 
+               competition.type === 'cash' ? 'text-green-800' : 
+               'text-gray-800'}`}>
+              About This Competition
+            </h2>
+            <p className={`
+              ${competition.type === 'family' ? 'text-amber-700/80' : 
+               competition.type === 'appliances' ? 'text-pink-700/80' : 
+               competition.type === 'cash' ? 'text-green-700/80' : 
+               'text-gray-600'}`}>
+              {competition.description}
+            </p>
           </div>
 
-          {/* Get Tickets Section */}
+          {/* Get Tickets Section with category-specific heading */}
           <div className="mb-6">
-            <h2 className="text-xl font-bold text-gray-800 mb-3">Get Tickets</h2>
+            <h2 className={`text-xl font-bold mb-3
+              ${competition.type === 'family' ? 'text-amber-800' : 
+               competition.type === 'appliances' ? 'text-pink-800' : 
+               competition.type === 'cash' ? 'text-green-800' : 
+               'text-gray-800'}`}>
+              Get Tickets
+            </h2>
             
             {competition.isEntered && competition.ticketCount && competition.ticketCount > 0 ? (
               <div className={`rounded-lg p-4 border
@@ -510,24 +544,44 @@ export default function CompetitionDetailPage() {
             )}
           </div>
 
-          {/* Platform info */}
-          <div className="p-4 bg-gray-50 rounded-lg flex items-center justify-between">
+          {/* Platform info with category-specific styling */}
+          <div className={`p-4 rounded-lg flex items-center justify-between
+            ${competition.type === 'family' ? 'bg-amber-50/70' : 
+             competition.type === 'appliances' ? 'bg-pink-50/70' : 
+             competition.type === 'cash' ? 'bg-green-50/70' : 
+             'bg-gray-50'}`}>
             <div>
               <span className="text-sm text-gray-500 block">Platform</span>
-              <span className="font-medium text-gray-800">{competition.platform}</span>
+              <span className={`font-medium
+                ${competition.type === 'family' ? 'text-amber-800' : 
+                 competition.type === 'appliances' ? 'text-pink-800' : 
+                 competition.type === 'cash' ? 'text-green-800' : 
+                 'text-gray-800'}`}>{competition.platform}</span>
             </div>
             <div>
               <span className="text-sm text-gray-500 block">Type</span>
-              <span className="font-medium text-gray-800">{competition.type}</span>
+              <span className={`font-medium 
+                ${competition.type === 'family' ? 'text-amber-800' : 
+                 competition.type === 'appliances' ? 'text-pink-800' : 
+                 competition.type === 'cash' ? 'text-green-800' : 
+                 'text-gray-800'}`}>{competition.type}</span>
             </div>
             <div>
               <span className="text-sm text-gray-500 block">Draw Date</span>
-              <span className="font-medium text-gray-800">
+              <span className={`font-medium 
+                ${competition.type === 'family' ? 'text-amber-800' : 
+                 competition.type === 'appliances' ? 'text-pink-800' : 
+                 competition.type === 'cash' ? 'text-green-800' : 
+                 'text-gray-800'}`}>
                 {competition.drawTime ? new Date(competition.drawTime).toLocaleDateString() : 'Not set'}
               </span>
             </div>
             {competition.isVerified && (
-              <div className="flex items-center text-blue-600">
+              <div className={`flex items-center
+                ${competition.type === 'family' ? 'text-amber-600' : 
+                 competition.type === 'appliances' ? 'text-pink-600' : 
+                 competition.type === 'cash' ? 'text-green-600' : 
+                 'text-blue-600'}`}>
                 <CheckCircle2 className="h-4 w-4 mr-1" />
                 <span className="text-sm font-medium">Verified</span>
               </div>
