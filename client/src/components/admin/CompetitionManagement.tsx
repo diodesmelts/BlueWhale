@@ -117,7 +117,7 @@ export default function CompetitionManagement() {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-48">
-        <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+        <Loader2 className="h-8 w-8 animate-spin text-cyan-500" />
       </div>
     );
   }
@@ -367,7 +367,7 @@ export default function CompetitionManagement() {
             >
               {deleteMutation.isPending ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin text-white" />
                   Deleting...
                 </>
               ) : (

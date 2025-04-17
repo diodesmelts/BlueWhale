@@ -495,7 +495,7 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
             <FormItem className="flex flex-row items-center justify-between p-4 border border-gray-700 rounded-md bg-gray-800">
               <div className="space-y-0.5">
                 <FormLabel className="text-base">Verified Competition</FormLabel>
-                <FormDescription>
+                <FormDescription className="text-gray-400">
                   Mark this competition as verified (displays a verified badge)
                 </FormDescription>
               </div>
@@ -527,7 +527,7 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
           >
             {loading ? (
               <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <Loader2 className="mr-2 h-4 w-4 animate-spin text-white" />
                 Updating...
               </>
             ) : (

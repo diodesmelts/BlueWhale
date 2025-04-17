@@ -460,7 +460,7 @@ export default function AdminPage() {
                       <FormControl>
                         <Input type="number" min="1" {...field} />
                       </FormControl>
-                      <FormDescription>
+                      <FormDescription className="text-gray-400">
                         Maximum number of tickets a user can purchase
                       </FormDescription>
                       <FormMessage />
@@ -477,7 +477,7 @@ export default function AdminPage() {
                       <FormControl>
                         <Input type="number" min="0" {...field} />
                       </FormControl>
-                      <FormDescription>
+                      <FormDescription className="text-gray-400">
                         Number of tickets already sold (usually starts at 0)
                       </FormDescription>
                       <FormMessage />
@@ -490,7 +490,7 @@ export default function AdminPage() {
                 control={form.control}
                 name="isVerified"
                 render={({ field }) => (
-                  <FormItem className="flex flex-row items-center justify-between p-4 border rounded-md bg-slate-50">
+                  <FormItem className="flex flex-row items-center justify-between p-4 border border-gray-700 rounded-md bg-gray-800">
                     <div className="space-y-0.5">
                       <FormLabel className="text-base">Verified Competition</FormLabel>
                       <FormDescription>
