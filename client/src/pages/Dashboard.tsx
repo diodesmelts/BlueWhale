@@ -174,16 +174,16 @@ export default function Dashboard() {
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0djZoNnYtNmgtNnptMCAwdi02aC02djZoNnptNiAwaDZ2LTZoLTZ2NnptLTEyIDBoLTZ2Nmg2di02em0tNi02aC02djZoNnYtNnoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-30"></div>
         
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center relative z-10 mx-auto max-w-6xl">
-            <div className="text-white md:pr-8">
+          <div className="flex flex-col justify-center items-center relative z-10 mx-auto max-w-6xl">
+            <div className="text-white text-center">
               <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-3">
                 <span className="text-white">BLUE WHALE</span> <span className="text-white font-light">COMPETITIONS</span>
               </h1>
-              <p className="text-lg font-normal text-white/90 max-w-xl">
+              <p className="text-lg font-normal text-white/90 max-w-xl mx-auto">
                 Your premier destination for discovering, participating in, and winning exclusive competitions across multiple platforms.
               </p>
               
-              <div className="mt-8 flex flex-wrap gap-4">
+              <div className="mt-8 flex flex-wrap gap-4 justify-center">
                 <Button className="bg-white text-blue-600 hover:bg-blue-50 py-2 px-6 rounded-md shadow-sm font-semibold transition-colors">
                   <i className="fas fa-trophy mr-2 text-blue-600"></i>
                   <span>View Competitions</span>
@@ -202,16 +202,6 @@ export default function Dashboard() {
                     <span>Change Banner</span>
                   </Button>
                 )}
-              </div>
-            </div>
-            
-            <div className="hidden md:block">
-              <div className="w-52 h-52 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center p-3">
-                <div className="w-full h-full rounded-full bg-white/90 flex items-center justify-center p-5">
-                  <svg className="w-28 h-28 text-blue-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M21 4H18V3C18 2.45 17.55 2 17 2H7C6.45 2 6 2.45 6 3V4H3C2.45 4 2 4.45 2 5V12C2 13.1 2.9 14 4 14H7.55C7.21 14.91 7 15.94 7 17C7 20.31 9.69 23 13 23C16.31 23 19 20.31 19 17C19 15.94 18.79 14.91 18.45 14H22C23.1 14 24 13.1 24 12V5C24 4.45 23.55 4 23 4H21ZM13 21C10.79 21 9 19.21 9 17C9 14.79 10.79 13 13 13C15.21 13 17 14.79 17 17C17 19.21 15.21 21 13 21ZM22 10H17.83C16.53 8.19 14.31 7 12 7C9.69 7 7.47 8.19 6.17 10H2V6H22V10Z" fill="currentColor"/>
-                  </svg>
-                </div>
               </div>
             </div>
           </div>

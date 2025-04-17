@@ -84,27 +84,9 @@ export default function TopNav() {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-20">
           <div className="flex items-center space-x-10">
-            {/* Logo */}
+            {/* Logo - Text Only */}
             <Link href="/">
-              <div className="flex items-center space-x-3 group">
-                <div className="w-14 h-14 rounded-full flex items-center justify-center bg-white shadow-lg transform transition-all duration-300 group-hover:scale-105">
-                  <svg 
-                    viewBox="0 0 24 24" 
-                    fill="none" 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    className="w-9 h-9 text-blue-600"
-                  >
-                    <path
-                      d="M20 8C19.7434 7.06353 19.066 6.30821 18.1552 5.90911C17.2444 5.51002 16.1944 5.50169 15.277 5.88578C13.3814 3.05655 9.38141 3.05655 7.21676 5.39134C5.05211 7.72613 5.42816 11.4315 8.19748 13.3765C4.50803 13.7524 2 16.0872 2 19V21H22V8Z"
-                      fill="currentColor"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <circle cx="9" cy="10" r="1.5" fill="white" />
-                  </svg>
-                </div>
+              <div className="flex items-center group">
                 <div className="transform transition-all duration-300 group-hover:translate-x-1">
                   <h1 className="text-2xl font-bold tracking-tight text-white flex flex-col">
                     <span className="text-white font-extrabold">BLUE WHALE</span> 
