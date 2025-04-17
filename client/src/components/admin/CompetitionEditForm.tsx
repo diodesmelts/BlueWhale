@@ -279,12 +279,12 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
               <FormLabel>Competition Image</FormLabel>
               <div className="space-y-4">
                 <Tabs defaultValue="url" className="w-full">
-                  <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="url">
+                  <TabsList className="grid w-full grid-cols-2 bg-gray-800">
+                    <TabsTrigger value="url" className="data-[state=active]:bg-cyan-900 data-[state=active]:text-cyan-300">
                       <Link className="h-4 w-4 mr-2" />
                       Image URL
                     </TabsTrigger>
-                    <TabsTrigger value="upload">
+                    <TabsTrigger value="upload" className="data-[state=active]:bg-cyan-900 data-[state=active]:text-cyan-300">
                       <Upload className="h-4 w-4 mr-2" />
                       Upload File
                     </TabsTrigger>
@@ -297,7 +297,7 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
                         className="w-full"
                       />
                     </FormControl>
-                    <FormDescription className="mt-2">
+                    <FormDescription className="mt-2 text-gray-400">
                       Enter a URL to an image that represents this competition
                     </FormDescription>
                   </TabsContent>
@@ -330,13 +330,13 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
                               <Button 
                                 type="button" 
                                 variant="outline"
-                                className="w-full"
+                                className="w-full border-gray-700 text-cyan-400 hover:bg-gray-800 hover:text-white"
                                 onClick={() => fileInputRef.current?.click()}
                                 disabled={uploadingImage}
                               >
                                 {uploadingImage ? (
                                   <>
-                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin text-cyan-400" />
                                     Uploading...
                                   </>
                                 ) : (
@@ -354,14 +354,14 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
                           </CardContent>
                         </Card>
                       </div>
-                      <FormDescription>
+                      <FormDescription className="text-gray-400">
                         Upload an image file from your device (max 5MB)
                       </FormDescription>
                     </div>
                   </TabsContent>
                 </Tabs>
                 {field.value && field.value.startsWith('http') && (
-                  <div className="mt-2 rounded overflow-hidden border w-full h-32 bg-slate-50 flex items-center justify-center">
+                  <div className="mt-2 rounded overflow-hidden border border-gray-700 w-full h-32 bg-gray-800 flex items-center justify-center">
                     <img 
                       src={field.value} 
                       alt="Current image" 
@@ -403,7 +403,7 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
                     <SelectItem value="other">Other</SelectItem>
                   </SelectContent>
                 </Select>
-                <FormDescription>
+                <FormDescription className="text-gray-400">
                   Competition category determines which section it appears in
                 </FormDescription>
                 <FormMessage />
@@ -455,7 +455,7 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
                     {...field} 
                   />
                 </FormControl>
-                <FormDescription>
+                <FormDescription className="text-gray-400">
                   Price per ticket in pence (e.g. 500 = £5.00)
                 </FormDescription>
                 <FormMessage />
@@ -477,7 +477,7 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
                     {...field}
                   />
                 </FormControl>
-                <FormDescription>
+                <FormDescription className="text-gray-400">
                   When will the competition be drawn? Used for countdown timer.
                 </FormDescription>
                 <FormMessage />
@@ -510,18 +510,19 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
           )}
         />
 
-        <div className="flex justify-end space-x-3 pt-4 border-t">
+        <div className="flex justify-end space-x-3 pt-4 border-t border-gray-700">
           <Button 
             type="button" 
             variant="outline" 
             onClick={onClose}
             disabled={loading}
+            className="border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white"
           >
             Cancel
           </Button>
           <Button 
             type="submit" 
-            className="bg-blue-700 hover:bg-blue-800"
+            className="bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-700 hover:to-purple-700 text-white border-0"
             disabled={loading}
           >
             {loading ? (
