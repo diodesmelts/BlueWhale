@@ -236,27 +236,37 @@ export default function Dashboard() {
         </div>
       </div>
       
-      {/* How to Play Section - Enhanced & More Exciting - Now with Dark Theme */}
-      <div className="bg-gradient-to-b from-gray-800 to-gray-900 py-14 relative">
-        {/* Decorative elements to add visual excitement */}
+      {/* How to Play Section - Enhanced & More Exciting - With Dark Theme that matches Live Competitions section */}
+      <div className="bg-gradient-to-b from-gray-900 to-gray-900 py-14 relative">
+        {/* Enhanced decorative elements to match Live Competitions section */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-8 -left-8 w-24 h-24 rounded-full bg-cyan-900/30 blur-2xl"></div>
-          <div className="absolute top-1/4 right-10 w-36 h-36 rounded-full bg-purple-900/30 blur-2xl"></div>
-          <div className="absolute bottom-10 left-1/4 w-32 h-32 rounded-full bg-blue-900/30 blur-2xl"></div>
-          <div className="absolute -bottom-6 right-1/3 w-40 h-40 rounded-full bg-indigo-900/30 blur-2xl"></div>
-          <div className="absolute top-1/2 left-2/3 w-20 h-20 rounded-full bg-teal-900/30 blur-2xl"></div>
+          <div className="absolute top-0 left-1/4 w-64 h-64 bg-cyan-800/15 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-purple-800/15 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/3 right-1/6 w-40 h-40 bg-blue-800/15 rounded-full blur-3xl"></div>
+          <div className="hidden md:block absolute -top-24 -left-24 w-64 h-64 bg-gradient-to-br from-cyan-500/15 to-purple-500/15 rounded-full blur-2xl"></div>
+          <div className="hidden md:block absolute -bottom-32 -right-32 w-80 h-80 bg-gradient-to-br from-blue-500/15 to-cyan-500/15 rounded-full blur-2xl"></div>
+          <div className="absolute top-1/2 left-1/3 w-96 h-96 bg-gradient-to-br from-gray-800/20 to-gray-900/20 rounded-full blur-3xl"></div>
         </div>
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="flex flex-col items-center mb-12">
-            <span className="text-sm uppercase tracking-wider font-semibold text-cyan-400 mb-2">Easy to Get Started</span>
-            <h2 className="text-4xl font-bold text-center text-white mb-4">
+            <span className="text-xs uppercase tracking-wider font-semibold text-cyan-300 mb-2">Easy to Get Started</span>
+            <h2 className="text-4xl font-bold text-center text-white mb-4 tracking-tight relative">
               <span className="relative inline-block">
-                How to Play & Win
-                <span className="absolute -bottom-2 left-0 w-full h-1.5 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full"></span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 relative inline-block">
+                  How to Play
+                  {/* Small sparkle in the corner */}
+                  <span className="absolute -top-2 -right-2 text-yellow-300 text-sm">✨</span>
+                </span>
+                <span className="relative inline-block"> & Win</span>
+                {/* Subtle glow effect */}
+                <span className="absolute -inset-1 bg-cyan-500/5 blur-2xl rounded-full"></span>
               </span>
             </h2>
-            <p className="text-center text-gray-300 max-w-lg">Join thousands of winners who've already discovered the excitement of Blue Whale Competitions!</p>
+            <p className="text-center text-gray-300 max-w-xl mx-auto">Join thousands of winners who've already discovered the excitement of Blue Whale Competitions!</p>
+            <div className="mt-4 flex justify-center">
+              <div className="h-1 w-24 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 rounded-full shadow-[0_0_5px_rgba(34,211,238,0.5)]"></div>
+            </div>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -360,8 +370,24 @@ export default function Dashboard() {
         </div>
       </div>
       
+      {/* Enhanced transition blur element with decorative effects */}
+      <div className="h-24 bg-gradient-to-b from-transparent to-gray-900 relative overflow-hidden mt-[-6rem] z-10">
+        <div className="absolute inset-0 backdrop-blur-xl"></div>
+        
+        {/* Subtle decorative elements that span across both sections */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-0 right-1/3 w-32 h-32 bg-cyan-700/5 rounded-full blur-xl"></div>
+          <div className="absolute bottom-0 left-1/4 w-48 h-48 bg-purple-700/5 rounded-full blur-xl"></div>
+          <div className="hidden md:block absolute -bottom-12 right-1/3 w-40 h-40 bg-blue-800/10 rounded-full blur-2xl"></div>
+        </div>
+        
+        {/* Subtle curved divider to create a wave effect */}
+        <div className="absolute bottom-[-2px] left-0 right-0 h-8 bg-gray-900"></div>
+        <div className="absolute bottom-[-2px] left-[5%] right-[5%] h-16 bg-gray-900 rounded-t-[50%]"></div>
+      </div>
+      
       {/* Enhanced Live Competitions Section - with seamless transition */}
-      <div className="bg-gradient-to-b from-gray-900 to-gray-800 py-16 relative overflow-hidden mt-[-6rem] pt-[8rem]">
+      <div className="bg-gradient-to-b from-gray-900 to-gray-800 py-16 relative overflow-hidden pt-[2rem] mt-[-1px]">
         {/* Animated decorative elements - enhanced for deeper dark mode */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-0 left-1/4 w-64 h-64 bg-cyan-800/20 rounded-full blur-3xl"></div>
