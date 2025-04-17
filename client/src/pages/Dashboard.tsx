@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import CompetitionCard from "@/components/dashboard/CompetitionCard";
-import { CompetitionWithEntryStatus, UserStats } from "@shared/types";
+import { CompetitionWithEntryStatus, UserStats, LeaderboardUser } from "@shared/types";
 import { useToast } from "@/hooks/use-toast";
 import { useAdmin } from "@/hooks/use-admin";
 import { apiRequest } from "@/lib/queryClient";

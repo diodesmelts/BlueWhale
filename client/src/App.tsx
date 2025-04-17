@@ -16,6 +16,7 @@ import AdminPage from "@/pages/AdminPage";
 import AuthPage from "@/pages/AuthPage";
 import TopNav from "@/components/layout/TopNav";
 import MobileNav from "@/components/layout/MobileNav";
+import Footer from "@/components/layout/Footer";
 import { AuthProvider } from "@/hooks/use-auth";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { PaymentProvider } from "@/components/payments/PaymentProvider";
@@ -57,11 +58,12 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <PaymentProvider>
-          <div className="flex flex-col h-screen overflow-hidden">
+          <div className="flex flex-col min-h-screen">
             <TopNav />
-            <main className="flex-1 overflow-y-auto bg-gray-50 pb-20 md:pb-10">
+            <main className="flex-1 overflow-y-auto bg-gray-50 pb-20 md:pb-0">
               <Router />
             </main>
+            <Footer />
             <MobileNav />
           </div>
           <Toaster />
