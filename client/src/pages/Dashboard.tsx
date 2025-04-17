@@ -236,44 +236,44 @@ export default function Dashboard() {
         </div>
       </div>
       
-      {/* How to Play Section - Enhanced & More Exciting */}
-      <div className="bg-gradient-to-r from-blue-50 via-cyan-50 to-purple-50 py-14 relative">
+      {/* How to Play Section - Enhanced & More Exciting - Now with Dark Theme */}
+      <div className="bg-gradient-to-b from-gray-800 to-gray-900 py-14 relative">
         {/* Decorative elements to add visual excitement */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-8 -left-8 w-24 h-24 rounded-full bg-cyan-200 opacity-20"></div>
-          <div className="absolute top-1/4 right-10 w-16 h-16 rounded-full bg-purple-200 opacity-30"></div>
-          <div className="absolute bottom-10 left-1/4 w-12 h-12 rounded-full bg-blue-200 opacity-20"></div>
-          <div className="absolute -bottom-6 right-1/3 w-20 h-20 rounded-full bg-pink-200 opacity-20"></div>
-          <div className="absolute top-1/2 left-2/3 w-10 h-10 rounded-full bg-amber-200 opacity-25"></div>
+          <div className="absolute -top-8 -left-8 w-24 h-24 rounded-full bg-cyan-900/30 blur-2xl"></div>
+          <div className="absolute top-1/4 right-10 w-36 h-36 rounded-full bg-purple-900/30 blur-2xl"></div>
+          <div className="absolute bottom-10 left-1/4 w-32 h-32 rounded-full bg-blue-900/30 blur-2xl"></div>
+          <div className="absolute -bottom-6 right-1/3 w-40 h-40 rounded-full bg-indigo-900/30 blur-2xl"></div>
+          <div className="absolute top-1/2 left-2/3 w-20 h-20 rounded-full bg-teal-900/30 blur-2xl"></div>
         </div>
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="flex flex-col items-center mb-12">
-            <span className="text-sm uppercase tracking-wider font-semibold text-cyan-600 mb-2">Easy to Get Started</span>
-            <h2 className="text-4xl font-bold text-center text-gray-800 mb-4">
+            <span className="text-sm uppercase tracking-wider font-semibold text-cyan-400 mb-2">Easy to Get Started</span>
+            <h2 className="text-4xl font-bold text-center text-white mb-4">
               <span className="relative inline-block">
                 How to Play & Win
                 <span className="absolute -bottom-2 left-0 w-full h-1.5 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full"></span>
               </span>
             </h2>
-            <p className="text-center text-gray-600 max-w-lg">Join thousands of winners who've already discovered the excitement of Blue Whale Competitions!</p>
+            <p className="text-center text-gray-300 max-w-lg">Join thousands of winners who've already discovered the excitement of Blue Whale Competitions!</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {/* Card 1 - Browse */}
-            <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-8 text-center relative overflow-hidden transform hover:-translate-y-1 group">
+            <div className="bg-gray-800/70 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-[0_0_30px_rgba(0,0,0,0.7)] border border-gray-700/30 transition-all duration-300 p-8 text-center relative overflow-hidden transform hover:-translate-y-1 group">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-blue-600"></div>
               <div className="relative">
                 <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 text-white flex items-center justify-center rounded-2xl mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-md">
                   <i className="fas fa-search text-3xl"></i>
                 </div>
-                <div className="absolute top-5 right-5 w-8 h-8 rounded-full bg-blue-100 opacity-0 group-hover:opacity-50 transition-opacity"></div>
-                <div className="absolute bottom-7 left-3 w-6 h-6 rounded-full bg-cyan-100 opacity-0 group-hover:opacity-50 transition-opacity"></div>
-                <h3 className="text-2xl font-bold text-gray-800 mb-3">1. Browse Competitions</h3>
-                <p className="text-gray-600 leading-relaxed">
+                <div className="absolute top-5 right-5 w-8 h-8 rounded-full bg-blue-900/50 opacity-0 group-hover:opacity-50 transition-opacity"></div>
+                <div className="absolute bottom-7 left-3 w-6 h-6 rounded-full bg-cyan-900/50 opacity-0 group-hover:opacity-50 transition-opacity"></div>
+                <h3 className="text-2xl font-bold text-white mb-3">1. Browse Competitions</h3>
+                <p className="text-gray-300 leading-relaxed">
                   Discover our thrilling range of competitions with amazing prizes! From gadgets and holidays to cash prizes, there's something for everyone.
                 </p>
-                <Link href="/competitions" className="mt-6 text-blue-500 font-medium text-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                <Link href="/competitions" className="mt-6 text-blue-400 font-medium text-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                   <span>View All Competitions</span>
                   <i className="fas fa-arrow-right ml-2"></i>
                 </Link>
@@ -281,17 +281,17 @@ export default function Dashboard() {
             </div>
             
             {/* Card 2 - Tickets */}
-            <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-8 text-center relative overflow-hidden transform hover:-translate-y-1 group">
+            <div className="bg-gray-800/70 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-[0_0_30px_rgba(0,0,0,0.7)] border border-gray-700/30 transition-all duration-300 p-8 text-center relative overflow-hidden transform hover:-translate-y-1 group">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 to-cyan-600"></div>
               <div className="relative">
                 <div className="w-20 h-20 bg-gradient-to-br from-cyan-500 to-cyan-600 text-white flex items-center justify-center rounded-2xl mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-md relative">
                   <i className="fas fa-ticket-alt text-3xl"></i>
                   <span className="absolute -top-1 -right-1 w-6 h-6 bg-amber-500 rounded-full text-xs flex items-center justify-center animate-pulse">+1</span>
                 </div>
-                <div className="absolute top-5 right-5 w-8 h-8 rounded-full bg-cyan-100 opacity-0 group-hover:opacity-50 transition-opacity"></div>
-                <div className="absolute bottom-7 left-3 w-6 h-6 rounded-full bg-blue-100 opacity-0 group-hover:opacity-50 transition-opacity"></div>
-                <h3 className="text-2xl font-bold text-gray-800 mb-3">2. Get Your Tickets</h3>
-                <p className="text-gray-600 leading-relaxed">
+                <div className="absolute top-5 right-5 w-8 h-8 rounded-full bg-cyan-900/50 opacity-0 group-hover:opacity-50 transition-opacity"></div>
+                <div className="absolute bottom-7 left-3 w-6 h-6 rounded-full bg-blue-900/50 opacity-0 group-hover:opacity-50 transition-opacity"></div>
+                <h3 className="text-2xl font-bold text-white mb-3">2. Get Your Tickets</h3>
+                <p className="text-gray-300 leading-relaxed">
                   Pick your favorites and grab your tickets! The more tickets you have, the better your chances of winning big. Simple, secure payment options available.
                 </p>
                 <div 
@@ -301,7 +301,7 @@ export default function Dashboard() {
                       competitionsSection.scrollIntoView({ behavior: 'smooth' });
                     }
                   }}
-                  className="mt-6 text-cyan-500 font-medium text-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                  className="mt-6 text-cyan-400 font-medium text-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
                 >
                   <span>See Ticket Options</span>
                   <i className="fas fa-arrow-right ml-2"></i>
@@ -310,17 +310,17 @@ export default function Dashboard() {
             </div>
             
             {/* Card 3 - Win */}
-            <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-8 text-center relative overflow-hidden transform hover:-translate-y-1 group">
+            <div className="bg-gray-800/70 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-[0_0_30px_rgba(0,0,0,0.7)] border border-gray-700/30 transition-all duration-300 p-8 text-center relative overflow-hidden transform hover:-translate-y-1 group">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-purple-600"></div>
               <div className="relative">
                 <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-600 text-white flex items-center justify-center rounded-2xl mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-md relative wiggle-on-hover">
                   <i className="fas fa-trophy text-3xl"></i>
                   <span className="absolute -top-2 -right-2 text-2xl">✨</span>
                 </div>
-                <div className="absolute top-5 right-5 w-8 h-8 rounded-full bg-purple-100 opacity-0 group-hover:opacity-50 transition-opacity"></div>
-                <div className="absolute bottom-7 left-3 w-6 h-6 rounded-full bg-pink-100 opacity-0 group-hover:opacity-50 transition-opacity"></div>
-                <h3 className="text-2xl font-bold text-gray-800 mb-3">3. Win Amazing Prizes</h3>
-                <p className="text-gray-600 leading-relaxed">
+                <div className="absolute top-5 right-5 w-8 h-8 rounded-full bg-purple-900/50 opacity-0 group-hover:opacity-50 transition-opacity"></div>
+                <div className="absolute bottom-7 left-3 w-6 h-6 rounded-full bg-pink-900/50 opacity-0 group-hover:opacity-50 transition-opacity"></div>
+                <h3 className="text-2xl font-bold text-white mb-3">3. Win Amazing Prizes</h3>
+                <p className="text-gray-300 leading-relaxed">
                   Watch for the competition draw! Winners are picked at random and notified immediately. Could you be our next big winner?
                 </p>
                 <div 
@@ -330,7 +330,7 @@ export default function Dashboard() {
                       competitionsSection.scrollIntoView({ behavior: 'smooth' });
                     }
                   }}
-                  className="mt-6 text-purple-500 font-medium text-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                  className="mt-6 text-purple-400 font-medium text-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
                 >
                   <span>See Recent Winners</span>
                   <i className="fas fa-arrow-right ml-2"></i>
@@ -360,15 +360,16 @@ export default function Dashboard() {
         </div>
       </div>
       
-      {/* Enhanced Live Competitions Section */}
-      <div className="bg-gradient-to-b from-gray-900 to-gray-800 py-16 relative overflow-hidden">
-        {/* Animated decorative elements */}
+      {/* Enhanced Live Competitions Section - with seamless transition */}
+      <div className="bg-gradient-to-b from-gray-900 to-gray-800 py-16 relative overflow-hidden mt-[-6rem] pt-[8rem]">
+        {/* Animated decorative elements - enhanced for deeper dark mode */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-0 left-1/4 w-64 h-64 bg-cyan-900/20 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-purple-900/20 rounded-full blur-3xl"></div>
-          <div className="absolute top-1/3 right-1/6 w-40 h-40 bg-blue-900/20 rounded-full blur-3xl"></div>
-          <div className="hidden md:block absolute -top-24 -left-24 w-64 h-64 bg-gradient-to-br from-cyan-600/30 to-purple-600/30 rounded-full blur-2xl"></div>
-          <div className="hidden md:block absolute -bottom-32 -right-32 w-80 h-80 bg-gradient-to-br from-blue-600/20 to-cyan-600/20 rounded-full blur-2xl"></div>
+          <div className="absolute top-0 left-1/4 w-64 h-64 bg-cyan-800/20 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-purple-800/20 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/3 right-1/6 w-40 h-40 bg-blue-800/20 rounded-full blur-3xl"></div>
+          <div className="hidden md:block absolute -top-24 -left-24 w-64 h-64 bg-gradient-to-br from-cyan-500/20 to-purple-500/20 rounded-full blur-2xl"></div>
+          <div className="hidden md:block absolute -bottom-32 -right-32 w-80 h-80 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-full blur-2xl"></div>
+          <div className="absolute top-1/2 left-1/3 w-96 h-96 bg-gradient-to-br from-gray-800/30 to-gray-900/30 rounded-full blur-3xl"></div>
         </div>
         
         <div className="container mx-auto px-4 relative z-10">
