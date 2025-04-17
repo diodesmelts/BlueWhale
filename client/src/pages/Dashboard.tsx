@@ -1,11 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
-import { Trophy, Medal, Bolt, ChartLine, Loader2, Upload } from "lucide-react";
+import { Loader2, Upload } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import StatCard from "@/components/dashboard/StatCard";
 import CompetitionCard from "@/components/dashboard/CompetitionCard";
 import LeaderboardTable from "@/components/dashboard/LeaderboardTable";
 import { CompetitionWithEntryStatus, LeaderboardUser, UserStats } from "@shared/types";
@@ -220,33 +219,6 @@ export default function Dashboard() {
       </div>
       
       <div className="container mx-auto px-4 py-6">
-        {/* Stats Overview */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          <StatCard 
-            icon={<Trophy size={20} />}
-            iconColor="red"
-            title="Active Entries"
-            value={userStats?.activeEntries || 0}
-          />
-          <StatCard 
-            icon={<Medal size={20} />}
-            iconColor="green"
-            title="Total Wins"
-            value={userStats?.totalWins || 0}
-          />
-          <StatCard 
-            icon={<Bolt size={20} />}
-            iconColor="yellow"
-            title="Win Rate"
-            value={`${userStats?.winRate || 0}%`}
-          />
-          <StatCard 
-            icon={<ChartLine size={20} />}
-            iconColor="navy"
-            title="Competitions Entered"
-            value={userStats?.totalEntries || 0}
-          />
-        </div>
 
         {/* Tabs */}
         <div className="bg-white rounded-xl shadow overflow-hidden mb-6">

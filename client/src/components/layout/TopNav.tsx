@@ -9,7 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Bell, Crown, LogIn, User } from "lucide-react";
+import { Bell, LogIn, User } from "lucide-react";
 import { useAdmin } from "@/hooks/use-admin";
 import { useAuth } from "@/hooks/use-auth";
 
@@ -163,15 +163,6 @@ export default function TopNav() {
           </div>
 
           <div className="flex items-center space-x-6">
-            
-            {/* Premium Button */}
-            <Button 
-              variant="outline" 
-              className="hidden md:flex items-center text-white bg-gradient-to-r from-amber-500 to-amber-600 border-0 shadow-md hover:from-amber-600 hover:to-amber-700"
-            >
-              <Crown className="h-4 w-4 mr-1.5" />
-              <span className="text-sm font-bold">Go Premium</span>
-            </Button>
 
             {/* Notifications */}
             <DropdownMenu>
