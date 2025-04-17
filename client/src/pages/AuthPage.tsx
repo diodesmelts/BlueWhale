@@ -93,14 +93,11 @@ export default function AuthPage() {
 
   return (
     <div className="container grid flex-1 h-screen items-center justify-center md:grid-cols-2 lg:max-w-none lg:grid-cols-2 lg:px-0">
-      <div className="relative hidden h-full flex-col bg-black p-10 text-white dark:border-r lg:flex">
-        <div className="absolute inset-0 bg-black">
+      <div className="relative hidden h-full flex-col bg-gradient-to-br from-blue-900 to-cyan-800 p-10 text-white dark:border-r lg:flex">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-900 to-cyan-800">
           <div className="h-full w-full p-10 flex flex-col justify-between">
             <div className="flex items-center text-lg font-medium">
-              <div className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-600 flex items-center font-bold text-xl">
-                <Trophy className="h-6 w-6 mr-2 text-cyan-400" />
-                <span>BLUE WHALE COMPETITIONS</span>
-              </div>
+              {/* App name removed as it appears in the header */}
             </div>
             
             <div className="space-y-6">
@@ -288,7 +285,7 @@ export default function AuthPage() {
                       />
                       <Button 
                         type="submit" 
-                        className="w-full bg-blue-500 hover:bg-blue-600"
+                        className="w-full bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white font-medium shadow-md"
                         disabled={isLoading}
                       >
                         {isLoading ? (
