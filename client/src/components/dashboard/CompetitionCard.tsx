@@ -286,27 +286,16 @@ export default function CompetitionCard({
         className="competition-card mb-2 overflow-hidden rounded-2xl bg-white shadow-xl cursor-pointer border border-gray-100 transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 relative"
         onClick={() => setLocation(`/competitions/${id}`)}
       >
-        {/* Badge ribbon - only shown for first card or special competitions */}
-        {id === 1 && (
-          <div className="absolute -right-12 top-6 bg-gradient-to-r from-amber-500 to-orange-500 text-white py-1 px-12 transform rotate-45 z-20 shadow-md">
-            <span className="font-bold text-xs">FEATURED</span>
-          </div>
-        )}
         
-        {/* Top section with larger image */}
+        {/* Top section with much taller image */}
         <div 
-          className="w-full h-64 bg-center bg-cover relative overflow-hidden group"
+          className="w-full h-96 bg-center bg-cover relative overflow-hidden group"
           style={{ backgroundImage: `url(${image})` }}
         >
           {/* Shine effect overlay */}
           <div className="absolute inset-0 shine-effect opacity-60"></div>
           
-          {/* Overlay with price tag - styled like a real price tag */}
-          <div className="absolute top-4 left-0 bg-gradient-to-r from-blue-600 to-cyan-600 text-white py-1.5 pl-4 pr-6 rounded-r-full shadow-md transform group-hover:scale-110 transition-transform duration-300">
-            <span className="text-2xl font-extrabold font-mono">£{(prize/100).toLocaleString()}</span>
-          </div>
-          
-          {/* Tickets counter */}
+          {/* Tickets counter only - price tag removed */}
           <div className="absolute top-4 right-4 bg-black/80 backdrop-blur-sm text-white rounded-full px-3 py-1.5 flex items-center shadow-md">
             <i className="fas fa-ticket-alt text-cyan-400 mr-2"></i>
             <span className="font-medium text-sm">{soldTickets || 50}/{totalTickets || 1000}</span>
