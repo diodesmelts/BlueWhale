@@ -1,16 +1,30 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Upload } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
+import { useQuery } from "@tanstack/react-query";
 
 export default function AdminSettings() {
   const [isUploading, setIsUploading] = useState(false);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [currentBannerUrl, setCurrentBannerUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
+  
+  // Fetch current banner image
+  const { data: bannerSettings } = useQuery<{ imageUrl: string | null }>({
+    queryKey: ["/api/settings/banner"],
+  });
+  
+  // Set current banner when data is loaded
+  useEffect(() => {
+    if (bannerSettings?.imageUrl) {
+      setCurrentBannerUrl(bannerSettings.imageUrl);
+    }
+  }, [bannerSettings]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

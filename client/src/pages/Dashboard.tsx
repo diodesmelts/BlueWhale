@@ -57,6 +57,16 @@ export default function Dashboard() {
   const { data: leaderboard } = useQuery<LeaderboardUser[]>({
     queryKey: ["/api/leaderboard"],
   });
+  
+  // Fetch banner image settings
+  const { data: bannerSettings } = useQuery({
+    queryKey: ["/api/settings/banner"],
+    onSuccess: (data) => {
+      if (data?.imageUrl) {
+        setBannerImage(data.imageUrl);
+      }
+    }
+  });
 
   // Handle competition entry
   const handleEnterCompetition = (id: number) => {
