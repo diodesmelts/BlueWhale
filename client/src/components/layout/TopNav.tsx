@@ -83,14 +83,14 @@ export default function TopNav() {
       
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-20">
-          <div className="flex items-center space-x-10">
+          <div className="flex items-center space-x-4 md:space-x-10">
             {/* Logo - Text Only */}
             <Link href="/">
               <div className="flex items-center group">
                 <div className="transform transition-all duration-300 group-hover:translate-x-1">
-                  <h1 className="text-2xl font-bold tracking-tight text-white flex flex-col">
+                  <h1 className="text-xl md:text-2xl font-bold tracking-tight text-white flex flex-col">
                     <span className="text-white font-extrabold">BLUE WHALE</span> 
-                    <span className="text-blue-200 text-base font-light tracking-wider -mt-1">
+                    <span className="text-blue-200 text-xs md:text-base font-light tracking-wider -mt-1">
                       COMPETITIONS
                     </span>
                   </h1>
@@ -144,7 +144,7 @@ export default function TopNav() {
             </nav>
           </div>
 
-          <div className="flex items-center space-x-6">
+          <div className="flex items-center space-x-2 md:space-x-6">
 
             {/* Notifications */}
             <DropdownMenu>

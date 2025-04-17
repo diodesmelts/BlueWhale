@@ -188,10 +188,10 @@ export default function Dashboard() {
         <div className="container mx-auto px-4">
           <div className="flex flex-col justify-center items-center relative z-10 mx-auto max-w-6xl">
             <div className="text-white text-center">
-              <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-3">
+              <h1 className="text-3xl md:text-5xl font-bold tracking-tight mb-3">
                 <span className="text-white">BLUE WHALE</span> <span className="text-white font-light">COMPETITIONS</span>
               </h1>
-              <p className="text-lg font-normal text-white/90 max-w-xl mx-auto">
+              <p className="text-base md:text-lg font-normal text-white/90 max-w-xl mx-auto">
                 Your premier destination for discovering, participating in, and winning exclusive competitions across multiple platforms.
               </p>
               
@@ -225,84 +225,84 @@ export default function Dashboard() {
         {/* Tabs */}
         <div className="bg-white rounded-xl shadow overflow-hidden mb-6">
           <div className="border-b border-gray-100">
-            <nav className="flex px-2">
+            <nav className="flex flex-wrap px-2">
               <a 
                 href="#" 
-                className={`text-sm px-6 py-4 font-medium text-center transition-all duration-200 border-b-2 ${
+                className={`text-sm px-3 md:px-6 py-4 font-medium text-center transition-all duration-200 border-b-2 flex-1 min-w-[100px] ${
                   activeTab === "trending" 
                     ? "text-blue-500 border-blue-500 font-semibold" 
                     : "text-gray-500 hover:text-blue-500 border-transparent"
                 }`}
                 onClick={(e) => { e.preventDefault(); setActiveTab("trending"); }}
               >
-                <i className="fas fa-fire mr-2 text-amber-500"></i>
-                Trending Competitions
+                <i className="fas fa-fire mr-1 md:mr-2 text-amber-500"></i>
+                <span className="hidden xs:inline">Trending</span><span className="md:inline hidden">Competitions</span>
               </a>
               <a 
                 href="#" 
-                className={`text-sm px-6 py-4 font-medium text-center transition-all duration-200 border-b-2 ${
+                className={`text-sm px-3 md:px-6 py-4 font-medium text-center transition-all duration-200 border-b-2 flex-1 min-w-[100px] ${
                   activeTab === "my-entries" 
                     ? "text-blue-500 border-blue-500 font-semibold" 
                     : "text-gray-500 hover:text-blue-500 border-transparent"
                 }`}
                 onClick={(e) => { e.preventDefault(); setActiveTab("my-entries"); }}
               >
-                <i className="fas fa-clipboard-check mr-2 text-emerald-500"></i>
-                My Entries
+                <i className="fas fa-clipboard-check mr-1 md:mr-2 text-emerald-500"></i>
+                <span>My Entries</span>
               </a>
               <a 
                 href="#" 
-                className={`text-sm px-6 py-4 font-medium text-center transition-all duration-200 border-b-2 ${
+                className={`text-sm px-3 md:px-6 py-4 font-medium text-center transition-all duration-200 border-b-2 flex-1 min-w-[100px] ${
                   activeTab === "ending-soon" 
                     ? "text-blue-500 border-blue-500 font-semibold" 
                     : "text-gray-500 hover:text-blue-500 border-transparent"
                 }`}
                 onClick={(e) => { e.preventDefault(); setActiveTab("ending-soon"); }}
               >
-                <i className="fas fa-clock mr-2 text-orange-500"></i>
-                Ending Soon
+                <i className="fas fa-clock mr-1 md:mr-2 text-orange-500"></i>
+                <span className="hidden xs:inline">Ending Soon</span>
               </a>
               <a 
                 href="#" 
-                className={`text-sm px-6 py-4 font-medium text-center transition-all duration-200 border-b-2 ${
+                className={`text-sm px-3 md:px-6 py-4 font-medium text-center transition-all duration-200 border-b-2 flex-1 min-w-[100px] ${
                   activeTab === "high-value" 
                     ? "text-blue-500 border-blue-500 font-semibold" 
                     : "text-gray-500 hover:text-blue-500 border-transparent"
                 }`}
                 onClick={(e) => { e.preventDefault(); setActiveTab("high-value"); }}
               >
-                <i className="fas fa-gem mr-2 text-violet-500"></i>
-                High Value
+                <i className="fas fa-gem mr-1 md:mr-2 text-violet-500"></i>
+                <span className="hidden xs:inline">High Value</span>
               </a>
             </nav>
           </div>
         </div>
 
         {/* Filters */}
-        <div className="bg-white p-5 rounded-xl shadow flex flex-wrap items-center gap-5 mb-6">
-          <div className="flex items-center">
+        <div className="bg-white p-4 md:p-5 rounded-xl shadow flex flex-wrap items-center gap-3 md:gap-5 mb-6">
+          <div className="flex items-center w-full md:w-auto mb-2 md:mb-0">
             <span className="text-sm font-medium text-gray-700 mr-2">
-              <i className="fas fa-gift text-amber-500 mr-1"></i> Prize Value:
+              <i className="fas fa-gift text-amber-500 mr-1"></i> Prize:
             </span>
             <Select value={prizeValue} onValueChange={setPrizeValue}>
-              <SelectTrigger className="border-gray-200 rounded-lg text-sm h-9 w-[180px] bg-gray-50 focus:ring-rose-500">
-                <SelectValue placeholder="All Prize Values" />
+              <SelectTrigger className="border-gray-200 rounded-lg text-sm h-9 w-full md:w-[150px] bg-gray-50 focus:ring-blue-500">
+                <SelectValue placeholder="All Prizes" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Prize Values</SelectItem>
-                <SelectItem value="high">High Value ($1000+)</SelectItem>
-                <SelectItem value="medium">Medium Value ($100-$999)</SelectItem>
-                <SelectItem value="low">Low Value (Under $100)</SelectItem>
+                <SelectItem value="all">All Prizes</SelectItem>
+                <SelectItem value="high">High (£1000+)</SelectItem>
+                <SelectItem value="medium">Medium (£100-£999)</SelectItem>
+                <SelectItem value="low">Low (Under £100)</SelectItem>
               </SelectContent>
             </Select>
           </div>
           
-          <div className="flex items-center">
+          <div className="flex items-center w-full md:w-auto">
             <span className="text-sm font-medium text-gray-700 mr-2">
-              <i className="fas fa-sort text-emerald-500 mr-1"></i> Sort By:
+              <i className="fas fa-sort text-emerald-500 mr-1"></i> Sort:
             </span>
             <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger className="border-gray-200 rounded-lg text-sm h-9 w-[160px] bg-gray-50 focus:ring-rose-500">
+              <SelectTrigger className="border-gray-200 rounded-lg text-sm h-9 w-full md:w-[130px] bg-gray-50 focus:ring-blue-500">
                 <SelectValue placeholder="Popularity" />
               </SelectTrigger>
               <SelectContent>
@@ -314,10 +314,10 @@ export default function Dashboard() {
             </Select>
           </div>
           
-          <div className="flex items-center ml-auto">
+          <div className="flex items-center w-full md:w-auto md:ml-auto mt-2 md:mt-0">
             <Button 
               variant="outline" 
-              className="text-blue-500 border-blue-200 hover:bg-blue-50 text-sm font-medium h-9 rounded-lg"
+              className="text-blue-500 border-blue-200 hover:bg-blue-50 text-sm font-medium h-9 rounded-lg w-full md:w-auto"
               onClick={() => {
                 setPrizeValue("all");
                 setSortBy("popularity");
@@ -367,21 +367,21 @@ export default function Dashboard() {
               </div>
               
               {/* Pagination */}
-              <div className="mt-10 flex items-center justify-between">
-                <div className="flex items-center text-sm text-gray-500">
+              <div className="mt-10 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div className="flex items-center text-sm text-gray-500 order-2 md:order-1">
                   <span>
                     Showing <span className="font-medium text-blue-600">{competitions?.length || 0}</span> competitions
                   </span>
                 </div>
-                <div className="flex items-center space-x-1">
-                  <Button variant="outline" size="sm" className="text-gray-700 border-gray-200 hover:bg-blue-50 rounded-md px-3">
-                    <i className="fas fa-chevron-left text-xs mr-1"></i> Prev
+                <div className="flex items-center space-x-1 order-1 md:order-2 w-full md:w-auto justify-center md:justify-end">
+                  <Button variant="outline" size="sm" className="text-gray-700 border-gray-200 hover:bg-blue-50 rounded-md px-2 md:px-3">
+                    <i className="fas fa-chevron-left text-xs mr-1"></i> <span className="hidden sm:inline">Prev</span>
                   </Button>
-                  <Button size="sm" className="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white border-0 rounded-md">1</Button>
-                  <Button variant="outline" size="sm" className="text-gray-700 border-gray-200 hover:bg-blue-50 rounded-md px-4 py-1.5">2</Button>
-                  <Button variant="outline" size="sm" className="text-gray-700 border-gray-200 hover:bg-blue-50 rounded-md px-4 py-1.5">3</Button>
-                  <Button variant="outline" size="sm" className="text-gray-700 border-gray-200 hover:bg-blue-50 rounded-md px-3">
-                    Next <i className="fas fa-chevron-right text-xs ml-1"></i>
+                  <Button size="sm" className="px-3 md:px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white border-0 rounded-md">1</Button>
+                  <Button variant="outline" size="sm" className="text-gray-700 border-gray-200 hover:bg-blue-50 rounded-md px-3 md:px-4 py-1.5">2</Button>
+                  <Button variant="outline" size="sm" className="text-gray-700 border-gray-200 hover:bg-blue-50 rounded-md px-3 md:px-4 py-1.5 hidden sm:block">3</Button>
+                  <Button variant="outline" size="sm" className="text-gray-700 border-gray-200 hover:bg-blue-50 rounded-md px-2 md:px-3">
+                    <span className="hidden sm:inline">Next</span> <i className="fas fa-chevron-right text-xs ml-1"></i>
                   </Button>
                 </div>
               </div>
@@ -391,7 +391,7 @@ export default function Dashboard() {
 
         {/* Leaderboard Section */}
         <div className="mt-10 mb-10">
-          <div className="flex items-center justify-between mb-5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-5 gap-2">
             <h2 className="text-xl font-bold text-gray-800 flex items-center">
               <i className="fas fa-trophy text-amber-500 mr-2"></i>
               Community Leaderboard
@@ -404,10 +404,12 @@ export default function Dashboard() {
             </Link>
           </div>
           {leaderboard && (
-            <LeaderboardTable 
-              users={leaderboard} 
-              currentUserId={1} // This would come from auth context in a real app
-            />
+            <div className="overflow-x-auto rounded-lg">
+              <LeaderboardTable 
+                users={leaderboard} 
+                currentUserId={1} // This would come from auth context in a real app
+              />
+            </div>
           )}
         </div>
       </div>
