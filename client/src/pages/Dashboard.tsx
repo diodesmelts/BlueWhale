@@ -171,9 +171,9 @@ export default function Dashboard() {
     <>
       {/* Full-width Hero Welcome Section */}
       <div 
-        className="w-full bg-blue-600 py-32 overflow-hidden relative"
+        className={`w-full ${!bannerImage ? 'bg-gradient-to-r from-blue-600 to-blue-800' : ''} py-32 overflow-hidden relative`}
         style={{
-          backgroundImage: `url(${bannerImage || ''})`,
+          backgroundImage: bannerImage ? `url(${bannerImage})` : '',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           minHeight: '400px',

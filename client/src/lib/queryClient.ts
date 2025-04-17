@@ -19,12 +19,12 @@ export async function apiRequest(
 ): Promise<Response> {
   const isFormData = options?.isFormData || false;
   let headers = {};
-  let body;
+  let body: FormData | string | undefined = undefined;
   
   if (data) {
     if (isFormData) {
       // Don't set Content-Type for FormData, let the browser set it with boundary
-      body = data;
+      body = data as FormData;
     } else {
       headers = { "Content-Type": "application/json" };
       body = JSON.stringify(data);
