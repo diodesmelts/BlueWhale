@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { BrandIcon } from "@/components/ui/brand-icon";
+import { LogoDisplay } from "@/components/ui/logo-display";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -14,7 +14,7 @@ export default function Footer() {
           {/* Company Info */}
           <div>
             <div className="mb-6">
-              <BrandIcon size="lg" className="mb-4" />
+              <LogoDisplay size="lg" className="mb-4" />
             </div>
             <p className="text-gray-400 mb-6 text-sm">
               Your premier destination for discovering and winning the best competitions across the UK.

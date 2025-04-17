@@ -12,8 +12,7 @@ import {
 import { Bell, LogIn, User } from "lucide-react";
 import { useAdmin } from "@/hooks/use-admin";
 import { useAuth } from "@/hooks/use-auth";
-import { BlueWhaleTextLogo } from "@/components/ui/blue-whale-text-logo";
-import { BrandIcon } from "@/components/ui/brand-icon";
+import { LogoDisplay } from "@/components/ui/logo-display";
 
 // Define TypeScript interfaces for navigation items
 interface DropdownItem {
@@ -91,7 +90,7 @@ export default function TopNav() {
             <Link href="/">
               <div className="flex items-center group">
                 <div className="transform transition-all duration-300 group-hover:translate-x-1">
-                  <BrandIcon className="hover:scale-105 transition-transform duration-300" />
+                  <LogoDisplay size="md" className="hover:scale-105 transition-transform duration-300" />
                 </div>
               </div>
             </Link>
