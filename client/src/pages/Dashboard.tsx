@@ -339,7 +339,7 @@ export default function Dashboard() {
             </div>
           </div>
           
-          {/* Added CTA button */}
+          {/* Enhanced CTA button with glow effect */}
           <div className="mt-12 flex justify-center">
             <button 
               onClick={() => {
@@ -348,9 +348,9 @@ export default function Dashboard() {
                   competitionsSection.scrollIntoView({ behavior: 'smooth' });
                 }
               }}
-              className="group relative inline-flex items-center justify-center px-8 py-3 font-medium overflow-hidden rounded-full bg-gradient-to-r from-cyan-500 to-purple-600 text-white shadow-md transition-all duration-300 ease-out hover:shadow-lg"
+              className="group relative inline-flex items-center justify-center px-8 py-3 font-medium overflow-hidden rounded-full bg-gradient-to-r from-cyan-500 to-purple-600 text-white shadow-[0_0_15px_rgba(34,211,238,0.4)] transition-all duration-300 ease-out hover:shadow-[0_0_25px_rgba(34,211,238,0.6)]"
             >
-              <span className="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-gradient-to-r from-blue-600 to-blue-400 group-hover:translate-x-0 ease">
+              <span className="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-gradient-to-r from-cyan-600 via-blue-600 to-purple-600 group-hover:translate-x-0 ease">
                 <i className="fas fa-trophy mr-2"></i> Let's Go!
               </span>
               <span className="absolute flex items-center justify-center w-full h-full text-white transition-all duration-300 transform group-hover:translate-x-full ease">Start Competing Now</span>
@@ -373,18 +373,25 @@ export default function Dashboard() {
         </div>
         
         <div className="container mx-auto px-4 relative z-10">
-          {/* Exciting Header Section */}
+          {/* Enhanced Header Section with glow and sparkle effects */}
           <div className="mb-12 text-center">
-            <div className="inline-block">
-              <span className="uppercase tracking-wider text-xs font-semibold text-cyan-400 mb-2 block">Current Opportunities</span>
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">Live</span> Competitions
+            <div className="inline-block relative">
+              <span className="uppercase tracking-wider text-xs font-semibold text-cyan-300 mb-2 block">Current Opportunities</span>
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight relative">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 relative inline-block">
+                  Live
+                  {/* Small sparkle in the corner of "Live" */}
+                  <span className="absolute -top-2 -right-2 text-yellow-300 text-sm">✨</span>
+                </span>
+                <span className="relative inline-block"> Competitions</span>
+                {/* Subtle glow effect */}
+                <span className="absolute -inset-1 bg-cyan-500/5 blur-2xl rounded-full"></span>
               </h2>
-              <p className="text-gray-400 max-w-xl mx-auto">
+              <p className="text-gray-300 max-w-xl mx-auto">
                 Don't miss your chance to win these amazing prizes! New competitions added regularly.
               </p>
               <div className="mt-4 flex justify-center">
-                <div className="h-1 w-24 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full"></div>
+                <div className="h-1 w-24 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 rounded-full shadow-[0_0_5px_rgba(34,211,238,0.5)]"></div>
               </div>
             </div>
           </div>

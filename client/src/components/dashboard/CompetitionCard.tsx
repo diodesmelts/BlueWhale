@@ -283,7 +283,7 @@ export default function CompetitionCard({
       />
       
       <div 
-        className="competition-card mb-2 overflow-hidden rounded-2xl bg-gray-800/70 shadow-2xl cursor-pointer border border-gray-700/40 transform transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,0,0,0.7)] hover:-translate-y-1 relative backdrop-blur-sm"
+        className="competition-card mb-2 overflow-hidden rounded-2xl bg-gray-800/70 shadow-2xl cursor-pointer border border-gray-700/40 transform transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,0,0,0.7)] hover:-translate-y-1 relative backdrop-blur-sm dark-card-hover"
         onClick={() => setLocation(`/competitions/${id}`)}
       >
         
@@ -297,13 +297,11 @@ export default function CompetitionCard({
           <span className="text-sm">{(totalTickets && soldTickets) ? (totalTickets - soldTickets) : 950} tickets remaining</span>
         </div>
         
-        {/* Top section with much taller image */}
+        {/* Top section with much taller image and shine effect */}
         <div 
-          className="w-full h-96 bg-center bg-cover relative overflow-hidden group"
+          className="w-full h-96 bg-center bg-cover relative overflow-hidden group shine-effect"
           style={{ backgroundImage: `url(${image})` }}
         >
-          {/* Shine effect overlay */}
-          <div className="absolute inset-0 shine-effect opacity-60"></div>
           
           {/* Tickets counter only - price tag removed */}
           <div className="absolute top-4 right-4 bg-black/80 backdrop-blur-sm text-white rounded-full px-3 py-1.5 flex items-center shadow-md">
