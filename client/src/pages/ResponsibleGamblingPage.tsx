@@ -157,7 +157,7 @@ export default function ResponsibleGamblingPage() {
           <h2 className="text-xl font-bold text-gray-800 mb-4">Contact Us</h2>
           <p className="mb-4">
             If you have any concerns or questions about our responsible gambling policies, or if you would like to 
-            discuss options for self-exclusion, please don't hesitate to <Link href="/contact"><a className="text-emerald-600 hover:underline">contact us</a></Link>.
+            discuss options for self-exclusion, please don't hesitate to <Link href="/contact"><span className="text-emerald-600 hover:underline cursor-pointer">contact us</span></Link>.
           </p>
           <p>
             Remember, participating in our competitions should be fun and entertaining. If it stops being 

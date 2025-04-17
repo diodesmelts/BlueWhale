@@ -19,10 +19,10 @@ export default function StaticPageLayout({
       <div className={`bg-gradient-to-r ${gradientColors} py-16`}>
         <div className="container mx-auto px-4">
           <Link href="/">
-            <a className="inline-flex items-center text-white mb-6 hover:underline">
+            <div className="inline-flex items-center text-white mb-6 hover:underline cursor-pointer">
               <ArrowLeft className="h-4 w-4 mr-2" />
               <span>Back to home</span>
-            </a>
+            </div>
           </Link>
           <h1 className="text-3xl md:text-4xl font-bold text-white">{title}</h1>
         </div>

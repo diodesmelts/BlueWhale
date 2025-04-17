@@ -84,7 +84,7 @@ export default function Footer() {
             <h3 className="text-lg font-bold mb-6 text-cyan-300">Quick Links</h3>
             <ul className="space-y-3">
               <li>
-                <Link href="/dashboard">
+                <Link href="/">
                   <span className="text-gray-400 hover:text-white transition-colors text-sm cursor-pointer">Home</span>
                 </Link>
               </li>

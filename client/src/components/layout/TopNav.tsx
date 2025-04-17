@@ -35,7 +35,7 @@ export default function TopNav() {
 
   // Public navigation items available to all users
   const publicNavItems: NavItem[] = [
-    { icon: "fas fa-home", label: "Dashboard", path: "/" },
+    { icon: "fas fa-home", label: "Home", path: "/" },
     { 
       icon: "fas fa-trophy", 
       label: "Competitions", 
