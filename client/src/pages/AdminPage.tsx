@@ -177,7 +177,7 @@ export default function AdminPage() {
   if (isAdmin === null) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+        <Loader2 className="h-8 w-8 animate-spin text-cyan-600" />
       </div>
     );
   }
@@ -189,13 +189,13 @@ export default function AdminPage() {
         <h1 className="text-3xl font-bold bg-gradient-to-r from-cyan-500 to-purple-600 text-transparent bg-clip-text">Admin Dashboard</h1>
       </div>
       
-      <Card className="bg-gray-900 shadow-lg border-cyan-800 mb-8 text-white">
-        <CardHeader className="border-b border-gray-800 pb-3">
-          <CardTitle className="text-2xl flex items-center">
-            <Trophy className="mr-2 h-6 w-6 text-cyan-400" />
+      <Card className="bg-white shadow-md border-gray-200 mb-8 text-gray-800">
+        <CardHeader className="border-b border-gray-100 pb-3">
+          <CardTitle className="text-2xl flex items-center text-gray-800">
+            <Trophy className="mr-2 h-6 w-6 text-cyan-600" />
             Create New Competition
           </CardTitle>
-          <CardDescription className="text-gray-400">
+          <CardDescription className="text-gray-500">
             Add a new competition to the platform. All fields are required unless specified.
           </CardDescription>
         </CardHeader>
@@ -460,7 +460,7 @@ export default function AdminPage() {
                       <FormControl>
                         <Input type="number" min="1" {...field} />
                       </FormControl>
-                      <FormDescription className="text-gray-400">
+                      <FormDescription className="text-gray-500">
                         Maximum number of tickets a user can purchase
                       </FormDescription>
                       <FormMessage />
@@ -477,7 +477,7 @@ export default function AdminPage() {
                       <FormControl>
                         <Input type="number" min="0" {...field} />
                       </FormControl>
-                      <FormDescription className="text-gray-400">
+                      <FormDescription className="text-gray-500">
                         Number of tickets already sold (usually starts at 0)
                       </FormDescription>
                       <FormMessage />
@@ -490,10 +490,10 @@ export default function AdminPage() {
                 control={form.control}
                 name="isVerified"
                 render={({ field }) => (
-                  <FormItem className="flex flex-row items-center justify-between p-4 border border-gray-700 rounded-md bg-gray-800">
+                  <FormItem className="flex flex-row items-center justify-between p-4 border border-gray-200 rounded-md bg-white shadow-sm">
                     <div className="space-y-0.5">
-                      <FormLabel className="text-base">Verified Competition</FormLabel>
-                      <FormDescription className="text-gray-400">
+                      <FormLabel className="text-base text-gray-700 font-medium">Verified Competition</FormLabel>
+                      <FormDescription className="text-gray-500">
                         Mark this competition as verified (displays a verified badge)
                       </FormDescription>
                     </div>
@@ -501,17 +501,18 @@ export default function AdminPage() {
                       <Switch
                         checked={field.value}
                         onCheckedChange={field.onChange}
+                        className="data-[state=checked]:bg-cyan-600"
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-rose-500" />
                   </FormItem>
                 )}
               />
 
-              <CardFooter className="border-t border-gray-800 pt-6 pb-0 flex justify-end px-0">
+              <CardFooter className="border-t border-gray-200 pt-6 pb-0 flex justify-end px-0">
                 <Button 
                   type="submit" 
-                  className="bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-700 hover:to-purple-700 text-white"
+                  className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white shadow-sm"
                   disabled={formLoading}
                 >
                   {formLoading ? (
@@ -535,12 +536,12 @@ export default function AdminPage() {
           <List className="h-6 w-6 text-cyan-500" />
           <h2 className="text-2xl font-bold bg-gradient-to-r from-cyan-500 to-purple-600 text-transparent bg-clip-text">Competition Management</h2>
         </div>
-        <Card className="bg-gray-900 shadow-lg border-cyan-800 text-white">
-          <CardHeader className="border-b border-gray-800 pb-3">
-            <CardTitle className="text-xl text-cyan-400">
+        <Card className="bg-white shadow-md border-gray-200 text-gray-800">
+          <CardHeader className="border-b border-gray-100 pb-3">
+            <CardTitle className="text-xl text-gray-800">
               Manage Existing Competitions
             </CardTitle>
-            <CardDescription className="text-gray-400">
+            <CardDescription className="text-gray-500">
               View, edit, or delete competitions from the platform.
             </CardDescription>
           </CardHeader>
