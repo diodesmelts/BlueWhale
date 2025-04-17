@@ -283,12 +283,12 @@ export default function CompetitionCard({
       />
       
       <div 
-        className="competition-card mb-2 overflow-hidden rounded-2xl bg-white shadow-xl cursor-pointer border border-gray-100 transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 relative"
+        className="competition-card mb-2 overflow-hidden rounded-2xl bg-gray-800/70 shadow-2xl cursor-pointer border border-gray-700/40 transform transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,0,0,0.7)] hover:-translate-y-1 relative backdrop-blur-sm"
         onClick={() => setLocation(`/competitions/${id}`)}
       >
         
         {/* Tickets remaining banner */}
-        <div className="w-full bg-gray-900/90 backdrop-blur-sm text-white py-2 px-4 flex items-center justify-center font-medium border-b border-gray-800">
+        <div className="w-full bg-gradient-to-r from-gray-900/90 to-gray-800/90 backdrop-blur-sm text-white py-2 px-4 flex items-center justify-center font-medium border-b border-gray-700/50">
           <i className={`fas fa-ticket-alt mr-2 
             ${categoryTheme === 'family' ? 'text-amber-400' : 
              categoryTheme === 'appliances' ? 'text-pink-400' : 
@@ -325,15 +325,15 @@ export default function CompetitionCard({
         
         {/* Name + Verified */}
         <div className="px-4 pt-3 pb-1 flex items-center justify-between">
-          <h3 className="text-base font-semibold text-gray-800 truncate">
+          <h3 className="text-base font-semibold text-gray-200 truncate">
             {title}
           </h3>
           {isVerified && (
             <Badge 
               variant="default" 
-              className="bg-gradient-to-r from-green-100 to-teal-100 text-green-600 text-xs font-medium border border-green-200"
+              className="bg-gradient-to-r from-emerald-900/70 to-green-900/70 text-green-400 text-xs font-medium border border-green-800/50 backdrop-blur-sm"
             >
-              <i className="fas fa-check-circle text-green-500 mr-1"></i> Verified
+              <i className="fas fa-check-circle text-green-400 mr-1"></i> Verified
             </Badge>
           )}
         </div>
@@ -351,7 +351,7 @@ export default function CompetitionCard({
                   {timeRemaining?.days.toString().padStart(2, '0') || '00'}
                 </span>
               </div>
-              <span className="text-xs font-semibold text-gray-500 mt-1">DAYS</span>
+              <span className="text-xs font-semibold text-gray-400 mt-1">DAYS</span>
             </div>
             <div className="flex flex-col items-center">
               <div className={`w-full text-white rounded-lg shadow-inner flex items-center justify-center 
@@ -363,7 +363,7 @@ export default function CompetitionCard({
                   {timeRemaining?.hours.toString().padStart(2, '0') || '00'}
                 </span>
               </div>
-              <span className="text-xs font-semibold text-gray-500 mt-1">HOURS</span>
+              <span className="text-xs font-semibold text-gray-400 mt-1">HOURS</span>
             </div>
             <div className="flex flex-col items-center">
               <div className={`w-full text-white rounded-lg shadow-inner flex items-center justify-center 
@@ -375,7 +375,7 @@ export default function CompetitionCard({
                   {timeRemaining?.minutes.toString().padStart(2, '0') || '00'}
                 </span>
               </div>
-              <span className="text-xs font-semibold text-gray-500 mt-1">MINS</span>
+              <span className="text-xs font-semibold text-gray-400 mt-1">MINS</span>
             </div>
             <div className="flex flex-col items-center">
               <div className={`w-full text-white rounded-lg shadow-inner flex items-center justify-center animate-pulse
@@ -387,27 +387,27 @@ export default function CompetitionCard({
                   {timeRemaining?.seconds.toString().padStart(2, '0') || '00'}
                 </span>
               </div>
-              <span className="text-xs font-semibold text-gray-500 mt-1">SECS</span>
+              <span className="text-xs font-semibold text-gray-400 mt-1">SECS</span>
             </div>
           </div>
         )}
         
         {/* Footer section with pricing and button - with gradient button */}
-        <div className="border-t border-gray-200 flex items-center bg-gray-50 rounded-b-2xl overflow-hidden">
+        <div className="border-t border-gray-700/30 flex items-center bg-gray-800/90 backdrop-blur-sm rounded-b-2xl overflow-hidden">
           <div className="flex-1 pl-4 py-3">
             <span className={`text-xl font-extrabold 
-              ${categoryTheme === 'family' ? 'text-amber-600' : 
-               categoryTheme === 'appliances' ? 'text-pink-600' : 
-               categoryTheme === 'cash' ? 'text-green-600' : 
-               'text-blue-600'}`}>
+              ${categoryTheme === 'family' ? 'text-amber-400' : 
+               categoryTheme === 'appliances' ? 'text-pink-400' : 
+               categoryTheme === 'cash' ? 'text-green-400' : 
+               'text-cyan-400'}`}>
               £{(ticketPrice ? ticketPrice/100 : 0).toFixed(2)}
             </span>
-            <span className="text-xs text-gray-500 font-medium block">
+            <span className="text-xs text-gray-400 font-medium block">
               <i className={`fas fa-tag mr-1 
-                ${categoryTheme === 'family' ? 'text-amber-400' : 
-                 categoryTheme === 'appliances' ? 'text-pink-400' : 
-                 categoryTheme === 'cash' ? 'text-green-400' : 
-                 'text-blue-400'}`}></i>
+                ${categoryTheme === 'family' ? 'text-amber-400/80' : 
+                 categoryTheme === 'appliances' ? 'text-pink-400/80' : 
+                 categoryTheme === 'cash' ? 'text-green-400/80' : 
+                 'text-cyan-400/80'}`}></i>
               per ticket
             </span>
           </div>
