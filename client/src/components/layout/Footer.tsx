@@ -98,11 +98,7 @@ export default function Footer() {
                   <span className="text-gray-400 hover:text-white transition-colors text-sm cursor-pointer">My Account</span>
                 </Link>
               </li>
-              <li>
-                <Link href="/winners">
-                  <span className="text-gray-400 hover:text-white transition-colors text-sm cursor-pointer">Past Winners</span>
-                </Link>
-              </li>
+              {/* Past Winners link removed as requested */}
               <li>
                 <Link href="/about">
                   <span className="text-gray-400 hover:text-white transition-colors text-sm cursor-pointer">About Us</span>
@@ -140,16 +136,8 @@ export default function Footer() {
                   <span className="text-gray-400 hover:text-white transition-colors text-sm cursor-pointer">FAQs</span>
                 </Link>
               </li>
-              <li>
-                <Link href="/help">
-                  <span className="text-gray-400 hover:text-white transition-colors text-sm cursor-pointer">Help Center</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/returns">
-                  <span className="text-gray-400 hover:text-white transition-colors text-sm cursor-pointer">Returns & Refunds</span>
-                </Link>
-              </li>
+              {/* Help Center link removed as requested */}
+              {/* Returns & Refunds link removed as requested */}
             </ul>
           </div>
         </div>
