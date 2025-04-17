@@ -278,13 +278,13 @@ export default function Dashboard() {
           <div className="mb-8 relative z-10">
             <div className="flex items-center justify-center">
               <div className="h-px flex-grow bg-blue-200"></div>
-              <div className="bg-gradient-to-r from-blue-600 via-blue-700 to-blue-600 rounded-full shadow-md py-3 px-6 mx-4 gradient-animate">
-                <h2 className="font-extrabold text-xl md:text-2xl tracking-wide uppercase text-white flex items-center">
-                  <span className="mr-2 text-blue-200">
+              <div className="bg-gray-800/90 backdrop-blur-sm rounded-lg shadow-md py-3 px-6 mx-4 border border-gray-700">
+                <h2 className="font-medium text-lg md:text-xl tracking-wide flex items-center justify-center">
+                  <span className="mr-2 text-cyan-400">
                     <i className="fas fa-broadcast-tower"></i>
                   </span>
-                  <span className="text-white">LIVE COMPETITIONS</span>
-                  <span className="ml-2 text-blue-200">
+                  <span className="text-gray-200">Live Competitions</span>
+                  <span className="ml-2 text-cyan-400">
                     <i className="fas fa-trophy"></i>
                   </span>
                 </h2>
@@ -327,6 +327,9 @@ export default function Dashboard() {
                     onBookmark={handleBookmarkCompetition}
                     onLike={handleLikeCompetition}
                     onCompleteEntry={handleCompleteEntry}
+                    categoryTheme={competition.type === 'family' ? 'family' : 
+                                  competition.type === 'appliances' ? 'appliances' : 
+                                  competition.type === 'cash' ? 'cash' : undefined}
                   />
                 ))}
               </div>
