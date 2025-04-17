@@ -321,12 +321,20 @@ export default function Dashboard() {
                 <div className="absolute bottom-7 left-3 w-6 h-6 rounded-full bg-pink-100 opacity-0 group-hover:opacity-50 transition-opacity"></div>
                 <h3 className="text-2xl font-bold text-gray-800 mb-3">3. Win Amazing Prizes</h3>
                 <p className="text-gray-600 leading-relaxed">
-                  Watch the draw live and celebrate your win! Winners are notified instantly and prizes are delivered quickly. Your dream prize could be just a ticket away!
+                  Watch for the competition draw! Winners are picked at random and notified immediately. Could you be our next big winner?
                 </p>
-                <Link href="/about" className="mt-6 text-purple-500 font-medium text-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <span>View Winners' Stories</span>
+                <div 
+                  onClick={() => {
+                    const competitionsSection = document.querySelector('.live-competitions-section');
+                    if (competitionsSection) {
+                      competitionsSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                  className="mt-6 text-purple-500 font-medium text-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                >
+                  <span>See Recent Winners</span>
                   <i className="fas fa-arrow-right ml-2"></i>
-                </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -352,79 +360,93 @@ export default function Dashboard() {
         </div>
       </div>
       
-      <div className="container mx-auto px-4 py-8">
-
-        {/* Competition Listings with Integrated Header */}
-        <div className="px-6 pt-10 pb-8 relative overflow-hidden live-competitions-section">
-          {/* Decorative elements removed for cleaner background */}
-          
-          {/* Simplified header at the top of the section */}
-          <div className="mb-8 relative z-10">
-            <div className="flex items-center justify-center">
-              <div className="h-px flex-grow bg-gray-200"></div>
-              <h2 className="font-medium text-lg md:text-xl tracking-wide flex items-center justify-center px-4 text-gray-700">
-                Live Competitions
+      {/* Enhanced Live Competitions Section */}
+      <div className="bg-gradient-to-b from-gray-900 to-gray-800 py-16 relative overflow-hidden">
+        {/* Animated decorative elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-0 left-1/4 w-64 h-64 bg-cyan-900/20 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-purple-900/20 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/3 right-1/6 w-40 h-40 bg-blue-900/20 rounded-full blur-3xl"></div>
+          <div className="hidden md:block absolute -top-24 -left-24 w-64 h-64 bg-gradient-to-br from-cyan-600/30 to-purple-600/30 rounded-full blur-2xl"></div>
+          <div className="hidden md:block absolute -bottom-32 -right-32 w-80 h-80 bg-gradient-to-br from-blue-600/20 to-cyan-600/20 rounded-full blur-2xl"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          {/* Exciting Header Section */}
+          <div className="mb-12 text-center">
+            <div className="inline-block">
+              <span className="uppercase tracking-wider text-xs font-semibold text-cyan-400 mb-2 block">Current Opportunities</span>
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">Live</span> Competitions
               </h2>
-              <div className="h-px flex-grow bg-gray-200"></div>
+              <p className="text-gray-400 max-w-xl mx-auto">
+                Don't miss your chance to win these amazing prizes! New competitions added regularly.
+              </p>
+              <div className="mt-4 flex justify-center">
+                <div className="h-1 w-24 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full"></div>
+              </div>
             </div>
           </div>
           
-          {isLoadingCompetitions ? (
-            <div className="p-8 text-center">
-              <div className="animate-spin w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
-              <p className="text-gray-500 font-medium">Loading exciting competitions...</p>
-            </div>
-          ) : competitions?.length === 0 ? (
-            <div className="p-8 text-center">
-              <div className="w-20 h-20 mx-auto mb-4 text-blue-300">
-                <i className="fas fa-search-minus text-6xl"></i>
+          {/* Container for competition cards */}
+          <div className="live-competitions-section relative z-10">
+            {isLoadingCompetitions ? (
+              <div className="p-8 text-center">
+                <div className="animate-spin w-10 h-10 border-4 border-cyan-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+                <p className="text-gray-300 font-medium">Loading exciting competitions...</p>
               </div>
-              <p className="text-gray-600">No competitions found matching your criteria.</p>
-              <Button 
-                variant="outline" 
-                className="mt-4 border-blue-200 text-blue-600 hover:bg-blue-50"
-                onClick={() => {
-                  setPrizeValue("all");
-                  setSortBy("popularity");
-                }}
-              >
-                <i className="fas fa-sync-alt mr-2"></i> Reset Filters
-              </Button>
-            </div>
-          ) : (
-            <>
-              {/* Grid layout with 3 columns on larger screens - increased spacing */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10 relative z-10">
-                {competitions?.map((competition: CompetitionWithEntryStatus) => (
-                  <CompetitionCard
-                    key={competition.id}
-                    competition={competition}
-                    onEnter={handleEnterCompetition}
-                    onBookmark={handleBookmarkCompetition}
-                    onLike={handleLikeCompetition}
-                    onCompleteEntry={handleCompleteEntry}
-                    categoryTheme={competition.type === 'family' ? 'family' : 
-                                  competition.type === 'appliances' ? 'appliances' : 
-                                  competition.type === 'cash' ? 'cash' : undefined}
-                  />
-                ))}
-              </div>
-              
-              {/* Competition count indicator only */}
-              <div className="mt-10 flex justify-center">
-                <div className="flex items-center p-2 px-4">
-                  <i className="fas fa-ticket-alt text-blue-400 mr-2"></i>
-                  <span className="text-sm font-medium text-gray-600">
-                    Showing <span className="font-bold text-blue-600">{competitions?.length || 0}</span> exciting competitions
-                  </span>
+            ) : competitions?.length === 0 ? (
+              <div className="p-8 text-center">
+                <div className="w-20 h-20 mx-auto mb-4 text-cyan-300">
+                  <i className="fas fa-search-minus text-6xl"></i>
                 </div>
+                <p className="text-gray-300">No competitions found matching your criteria.</p>
+                <Button 
+                  variant="outline" 
+                  className="mt-4 border-cyan-700 text-cyan-400 hover:bg-cyan-900/30"
+                  onClick={() => {
+                    setPrizeValue("all");
+                    setSortBy("popularity");
+                  }}
+                >
+                  <i className="fas fa-sync-alt mr-2"></i> Reset Filters
+                </Button>
               </div>
-            </>
-          )}
-        </div>
+            ) : (
+              <>
+                {/* Grid layout with 3 columns on larger screens - increased spacing */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10 relative z-10">
+                  {competitions?.map((competition: CompetitionWithEntryStatus) => (
+                    <CompetitionCard
+                      key={competition.id}
+                      competition={competition}
+                      onEnter={handleEnterCompetition}
+                      onBookmark={handleBookmarkCompetition}
+                      onLike={handleLikeCompetition}
+                      onCompleteEntry={handleCompleteEntry}
+                      categoryTheme={competition.type === 'family' ? 'family' : 
+                                    competition.type === 'appliances' ? 'appliances' : 
+                                    competition.type === 'cash' ? 'cash' : undefined}
+                    />
+                  ))}
+                </div>
+                
+                {/* Competition count indicator with improved styling for dark background */}
+                <div className="mt-10 flex justify-center">
+                  <div className="flex items-center justify-center bg-gray-800/50 backdrop-blur-sm py-2 px-5 rounded-full border border-gray-700/50">
+                    <i className="fas fa-ticket-alt text-cyan-400 mr-2"></i>
+                    <span className="text-sm font-medium text-gray-300">
+                      Showing <span className="font-bold text-cyan-300">{competitions?.length || 0}</span> exciting competitions
+                    </span>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
 
-        {/* Extra spacing at the bottom */}
-        <div className="py-6"></div>
+          {/* Extra spacing at the bottom */}
+          <div className="py-6"></div>
+        </div>
       </div>
 
       {/* Banner Upload Modal */}
