@@ -14,6 +14,15 @@ import MyWins from "@/pages/MyWins";
 import Leaderboard from "@/pages/Leaderboard";
 import AdminPage from "@/pages/AdminPage";
 import AuthPage from "@/pages/AuthPage";
+import AboutPage from "@/pages/AboutPage";
+import TermsPage from "@/pages/TermsPage";
+import PrivacyPage from "@/pages/PrivacyPage";
+import FAQsPage from "@/pages/FAQsPage";
+import ContactPage from "@/pages/ContactPage";
+import CookiesPage from "@/pages/CookiesPage";
+import ResponsibleGamblingPage from "@/pages/ResponsibleGamblingPage";
+import SitemapPage from "@/pages/SitemapPage";
+import PaymentMethodsPage from "@/pages/PaymentMethodsPage";
 import TopNav from "@/components/layout/TopNav";
 import MobileNav from "@/components/layout/MobileNav";
 import Footer from "@/components/layout/Footer";
@@ -33,6 +42,17 @@ function Router() {
       <Route path="/competitions/cash" component={CashCompetitionsPage} />
       <Route path="/leaderboard" component={Leaderboard} />
       <Route path="/auth" component={AuthPage} />
+      
+      {/* Static Content Pages */}
+      <Route path="/about" component={AboutPage} />
+      <Route path="/terms" component={TermsPage} />
+      <Route path="/privacy" component={PrivacyPage} />
+      <Route path="/faqs" component={FAQsPage} />
+      <Route path="/contact" component={ContactPage} />
+      <Route path="/cookies" component={CookiesPage} />
+      <Route path="/responsible-gambling" component={ResponsibleGamblingPage} />
+      <Route path="/sitemap" component={SitemapPage} />
+      <Route path="/payment-methods" component={PaymentMethodsPage} />
       
       {/* User protected routes - require login */}
       <ProtectedRoute path="/my-entries">
