@@ -160,11 +160,12 @@ export default function Dashboard() {
     <>
       {/* Full-width Hero Welcome Section */}
       <div 
-        className="w-full bg-blue-600 py-16 overflow-hidden relative"
+        className="w-full bg-blue-600 py-32 overflow-hidden relative"
         style={{
           backgroundImage: `url(${bannerImage || ''})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
+          minHeight: '400px',
         }}
       >
         {/* Darkening overlay */}
