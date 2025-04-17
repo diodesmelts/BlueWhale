@@ -114,24 +114,24 @@ export default function AdminSettings() {
   };
 
   return (
-    <div className="bg-gray-900 text-white rounded-lg shadow-md border border-gray-700 p-6">
-      <h2 className="text-xl font-bold text-cyan-400 mb-4">Site Settings</h2>
+    <div className="bg-white text-gray-800 rounded-lg shadow-md border border-gray-200 p-6">
+      <h2 className="text-xl font-semibold text-gray-800 mb-4">Site Settings</h2>
       
-      <div className="border-b border-gray-700 pb-5 mb-5">
-        <Label className="text-lg font-medium text-purple-400 mb-3 block">Hero Banner</Label>
-        <p className="text-gray-400 mb-4 text-sm">
+      <div className="border-b border-gray-200 pb-5 mb-5">
+        <Label className="text-lg font-medium text-cyan-600 mb-3 block">Hero Banner</Label>
+        <p className="text-gray-500 mb-4 text-sm">
           Upload a hero banner image for the dashboard page. For best results, use a landscape image with dimensions of 1920×600 pixels.
         </p>
         
         {/* Display current banner if available */}
         {currentBannerUrl && (
-          <div className="bg-gray-800 p-4 rounded-lg mb-4 border border-gray-700">
-            <h3 className="text-sm font-medium text-cyan-400 mb-2">Current Banner:</h3>
+          <div className="bg-gray-50 p-4 rounded-lg mb-4 border border-gray-200 shadow-sm">
+            <h3 className="text-sm font-medium text-gray-700 mb-2">Current Banner:</h3>
             <div className="flex justify-center">
               <img 
                 src={currentBannerUrl} 
                 alt="Current Banner" 
-                className="max-h-40 rounded-md object-cover shadow-md border border-gray-600" 
+                className="max-h-40 rounded-md object-cover shadow-sm border border-gray-200" 
               />
             </div>
           </div>
@@ -141,7 +141,7 @@ export default function AdminSettings() {
           {/* File upload area */}
           <div
             className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-all ${
-              selectedFile ? 'border-cyan-600 bg-gray-800' : 'border-gray-600 hover:border-cyan-500'
+              selectedFile ? 'border-cyan-500 bg-cyan-50' : 'border-gray-300 hover:border-cyan-400'
             }`}
             onClick={() => fileInputRef.current?.click()}
             onDragOver={handleDragOver}
@@ -152,17 +152,17 @@ export default function AdminSettings() {
                 <img 
                   src={previewImage} 
                   alt="Preview" 
-                  className="max-h-48 mx-auto rounded-md object-cover"
+                  className="max-h-48 mx-auto rounded-md object-cover shadow-sm"
                 />
-                <p className="text-sm text-gray-300">
+                <p className="text-sm text-gray-600">
                   {selectedFile?.name} ({selectedFile ? Math.round((selectedFile.size || 0) / 1024) : 0} KB)
                 </p>
               </div>
             ) : (
               <>
                 <Upload className="h-10 w-10 text-cyan-500 mx-auto mb-2" />
-                <p className="text-sm text-gray-300 mb-1">Click to upload or drag and drop</p>
-                <p className="text-xs text-gray-400">PNG, JPG or WebP (max 5MB)</p>
+                <p className="text-sm text-gray-700 mb-1">Click to upload or drag and drop</p>
+                <p className="text-xs text-gray-500">PNG, JPG or WebP (max 5MB)</p>
               </>
             )}
             <input 
