@@ -90,7 +90,11 @@ export default function TopNav() {
             <Link href="/">
               <div className="flex items-center group">
                 <div className="transform transition-all duration-300 group-hover:translate-x-1">
-                  <BlueWhaleLogo className="hover:scale-105 transition-transform duration-300" height={48} />
+                  <img 
+                    src="/blue-whale-logo.png" 
+                    alt="Blue Whale Competitions" 
+                    className="h-10 md:h-12 hover:scale-105 transition-transform duration-300"
+                  />
                 </div>
               </div>
             </Link>

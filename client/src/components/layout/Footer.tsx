@@ -14,7 +14,11 @@ export default function Footer() {
           {/* Company Info */}
           <div>
             <div className="mb-6">
-              <BlueWhaleLogo height={48} className="mb-4" />
+              <img 
+                src="/blue-whale-logo.png" 
+                alt="Blue Whale Competitions" 
+                className="h-12 mb-4"
+              />
             </div>
             <p className="text-gray-400 mb-6 text-sm">
               Your premier destination for discovering and winning the best competitions across the UK.
