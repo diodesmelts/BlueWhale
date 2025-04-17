@@ -13,6 +13,7 @@ import { Bell, LogIn, User } from "lucide-react";
 import { useAdmin } from "@/hooks/use-admin";
 import { useAuth } from "@/hooks/use-auth";
 import { BlueWhaleTextLogo } from "@/components/ui/blue-whale-text-logo";
+import { BrandIcon } from "@/components/ui/brand-icon";
 
 // Define TypeScript interfaces for navigation items
 interface DropdownItem {
@@ -90,22 +91,7 @@ export default function TopNav() {
             <Link href="/">
               <div className="flex items-center group">
                 <div className="transform transition-all duration-300 group-hover:translate-x-1">
-                  <img 
-                    src="/logo.png" 
-                    alt="Blue Whale Competitions" 
-                    className="h-10 md:h-12 hover:scale-105 transition-transform duration-300"
-                    style={{ maxWidth: '180px', background: 'transparent' }}
-                    onError={(e) => {
-                      e.currentTarget.style.display = 'none';
-                      document.getElementById('text-logo')?.style.setProperty('display', 'flex');
-                    }}
-                  />
-                  <div 
-                    id="text-logo"
-                    className="hidden"
-                  >
-                    <BlueWhaleTextLogo className="text-xl md:text-2xl font-bold hover:scale-105 transition-transform duration-300" />
-                  </div>
+                  <BrandIcon className="hover:scale-105 transition-transform duration-300" />
                 </div>
               </div>
             </Link>
