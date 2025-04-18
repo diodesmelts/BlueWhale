@@ -399,14 +399,6 @@ export default function CompetitionDetailPage() {
                   <h3 className="text-lg font-semibold mb-4 text-white">Competition Details</h3>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
                     <div>
-                      <div className="text-sm text-gray-400">Platform</div>
-                      <div className="font-medium text-gray-200">{competition.platform}</div>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-400">Type</div>
-                      <div className="font-medium text-gray-200 capitalize">{competition.type}</div>
-                    </div>
-                    <div>
                       <div className="text-sm text-gray-400">Draw Date</div>
                       <div className="font-medium text-gray-200">
                         {competition.drawTime ? new Date(competition.drawTime).toLocaleDateString('en-GB', {
@@ -625,6 +617,7 @@ export default function CompetitionDetailPage() {
 
       {isTicketModalOpen && (
         <TicketPurchaseModal
+          isOpen={isTicketModalOpen}
           competition={competition}
           onClose={() => setIsTicketModalOpen(false)}
           onPurchase={handlePurchaseTickets}
