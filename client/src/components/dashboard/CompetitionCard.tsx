@@ -517,7 +517,7 @@ export default function CompetitionCard({
               setTicketModalOpen(true);
             }}
             disabled={isPaying}
-            className={`group px-7 py-3 h-full text-white font-bold text-sm transition-all duration-300 rounded-l-2xl shadow-lg 
+            className={`group px-7 py-3 h-full text-white font-bold text-sm transition-all duration-300 rounded-l-2xl rounded-r-none shadow-lg 
               bg-gradient-to-r from-yellow-600 via-yellow-400 to-yellow-500 hover:from-yellow-500 hover:via-yellow-300 hover:to-yellow-400 
               hover:shadow-[0_0_25px_rgba(251,191,36,0.8)] relative overflow-hidden border-2 border-yellow-300/70`}
           >
