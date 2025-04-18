@@ -143,11 +143,8 @@ export default function CompetitionManagement() {
               <TableHeader className="bg-gray-50">
                 <TableRow className="border-gray-200 hover:bg-gray-100">
                   <TableHead className="text-gray-700 font-semibold">Title</TableHead>
-                  <TableHead className="text-gray-700 font-semibold">Platform</TableHead>
-                  <TableHead className="text-gray-700 font-semibold">Category</TableHead>
                   <TableHead className="text-right text-gray-700 font-semibold">Prize</TableHead>
                   <TableHead className="text-gray-700 font-semibold">Draw Date</TableHead>
-                  <TableHead className="text-gray-700 font-semibold">Status</TableHead>
                   <TableHead className="text-right text-gray-700 font-semibold">Actions</TableHead>
                 </TableRow>
               </TableHeader>
@@ -156,21 +153,8 @@ export default function CompetitionManagement() {
                   activeCompetitions.map((competition: Competition) => (
                     <TableRow key={competition.id} className="border-gray-200 hover:bg-gray-50">
                       <TableCell className="font-medium">{competition.title}</TableCell>
-                      <TableCell>{competition.platform}</TableCell>
-                      <TableCell className="capitalize">{competition.category || "Other"}</TableCell>
                       <TableCell className="text-right font-medium">£{competition.prize}</TableCell>
                       <TableCell>{formatDate(competition.drawTime || competition.endDate)}</TableCell>
-                      <TableCell>
-                        {new Date(competition.endDate) > new Date() ? (
-                          <span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">
-                            Active
-                          </span>
-                        ) : (
-                          <span className="px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 border border-gray-200">
-                            Ended
-                          </span>
-                        )}
-                      </TableCell>
                       <TableCell className="text-right">
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
@@ -202,7 +186,7 @@ export default function CompetitionManagement() {
                   ))
                 ) : (
                   <TableRow className="border-gray-200 hover:bg-gray-50">
-                    <TableCell colSpan={7} className="text-center py-8 text-gray-500">
+                    <TableCell colSpan={4} className="text-center py-8 text-gray-500">
                       No active competitions found
                     </TableCell>
                   </TableRow>
@@ -218,8 +202,6 @@ export default function CompetitionManagement() {
               <TableHeader className="bg-gray-50">
                 <TableRow className="border-gray-200 hover:bg-gray-100">
                   <TableHead className="text-gray-700 font-semibold">Title</TableHead>
-                  <TableHead className="text-gray-700 font-semibold">Platform</TableHead>
-                  <TableHead className="text-gray-700 font-semibold">Category</TableHead>
                   <TableHead className="text-right text-gray-700 font-semibold">Prize</TableHead>
                   <TableHead className="text-gray-700 font-semibold">Draw Date</TableHead>
                   <TableHead className="text-right text-gray-700 font-semibold">Actions</TableHead>
@@ -230,8 +212,6 @@ export default function CompetitionManagement() {
                   pastCompetitions.map((competition: Competition) => (
                     <TableRow key={competition.id} className="border-gray-200 hover:bg-gray-50">
                       <TableCell className="font-medium">{competition.title}</TableCell>
-                      <TableCell>{competition.platform}</TableCell>
-                      <TableCell className="capitalize">{competition.category || "Other"}</TableCell>
                       <TableCell className="text-right font-medium">£{competition.prize}</TableCell>
                       <TableCell>{formatDate(competition.drawTime || competition.endDate)}</TableCell>
                       <TableCell className="text-right">
@@ -254,7 +234,7 @@ export default function CompetitionManagement() {
                   ))
                 ) : (
                   <TableRow className="border-gray-200 hover:bg-gray-50">
-                    <TableCell colSpan={7} className="text-center py-8 text-gray-500">
+                    <TableCell colSpan={4} className="text-center py-8 text-gray-500">
                       No past competitions found
                     </TableCell>
                   </TableRow>
