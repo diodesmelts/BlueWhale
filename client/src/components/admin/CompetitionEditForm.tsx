@@ -105,11 +105,12 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
       // Add the missing fields that are required in the database schema
       const formattedData = {
         ...data,
-        platform: "Other",
-        entrySteps: [],
-        type: "competition", // Required field (removed from UI)
-        eligibility: "worldwide", // Required field (removed from UI)
+        platform: "Other", // Required field by the database schema
+        entrySteps: data.entrySteps || [],
+        type: "competition", // Required field by the database schema
+        eligibility: "worldwide", // Required field by the database schema
         endDate: new Date(data.drawTime).toISOString(), // Required field (using drawTime)
+        isVerified: false, // Default value, since field was removed from UI
       };
       
       console.log('Submission data:', formattedData);

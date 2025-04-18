@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { apiRequest, queryClient } from "@/lib/queryClient";
-import { Calendar, Upload, PlusCircle, Trash2 } from "lucide-react";
+import { Calendar, Upload, PlusCircle, Trash2, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -28,7 +28,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BarLoader } from "@/components/ui/bar-loader";
 
 // Form validation schema
 const competitionSchema = z.object({
@@ -612,7 +611,7 @@ export default function CompetitionCreationForm() {
         >
           {formLoading ? (
             <>
-              <BarLoader className="mr-2" /> Creating Competition...
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Creating Competition...
             </>
           ) : (
             "Create Competition"
