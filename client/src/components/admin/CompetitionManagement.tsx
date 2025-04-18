@@ -96,7 +96,7 @@ export default function CompetitionManagement() {
     setIsViewModalOpen(true);
   };
 
-  const handleDelete = (competition: Competition) => {
+  const handleDelist = (competition: Competition) => {
     setSelectedCompetition(competition);
     setIsDeleteAlertOpen(true);
   };
@@ -124,80 +124,146 @@ export default function CompetitionManagement() {
     );
   }
 
+  // Filter active and delisted competitions
+  const activeCompetitions = competitions?.filter(comp => !comp.isDeleted) || [];
+  const pastCompetitions = competitions?.filter(comp => comp.isDeleted) || [];
+
   return (
     <div className="space-y-4">
-      <div className="rounded-md border border-gray-200 shadow-sm overflow-hidden">
-        <Table className="text-gray-700">
-          <TableHeader className="bg-gray-50">
-            <TableRow className="border-gray-200 hover:bg-gray-100">
-              <TableHead className="text-gray-700 font-semibold">Title</TableHead>
-              <TableHead className="text-gray-700 font-semibold">Platform</TableHead>
-              <TableHead className="text-gray-700 font-semibold">Category</TableHead>
-              <TableHead className="text-right text-gray-700 font-semibold">Prize</TableHead>
-              <TableHead className="text-gray-700 font-semibold">Draw Date</TableHead>
-              <TableHead className="text-gray-700 font-semibold">Status</TableHead>
-              <TableHead className="text-right text-gray-700 font-semibold">Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {competitions && competitions.length > 0 ? (
-              competitions.map((competition: Competition) => (
-                <TableRow key={competition.id} className="border-gray-200 hover:bg-gray-50">
-                  <TableCell className="font-medium">{competition.title}</TableCell>
-                  <TableCell>{competition.platform}</TableCell>
-                  <TableCell className="capitalize">{competition.category || "Other"}</TableCell>
-                  <TableCell className="text-right font-medium">£{competition.prize}</TableCell>
-                  <TableCell>{formatDate(competition.drawTime || competition.endDate)}</TableCell>
-                  <TableCell>
-                    {new Date(competition.endDate) > new Date() ? (
-                      <span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">
-                        Active
-                      </span>
-                    ) : (
-                      <span className="px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 border border-gray-200">
-                        Ended
-                      </span>
-                    )}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="sm" className="text-gray-500 hover:text-gray-900 hover:bg-gray-100">
-                          <MoreHorizontal className="h-4 w-4" />
-                          <span className="sr-only">Actions</span>
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="bg-white border-gray-200 text-gray-700 shadow-md">
-                        <DropdownMenuItem onClick={() => handleView(competition)} className="hover:bg-gray-50 focus:bg-gray-50">
-                          <Eye className="mr-2 h-4 w-4 text-cyan-600" />
-                          View
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => handleEdit(competition)} className="hover:bg-gray-50 focus:bg-gray-50">
-                          <Pencil className="mr-2 h-4 w-4 text-purple-600" />
-                          Edit
-                        </DropdownMenuItem>
-                        <DropdownMenuItem 
-                          onClick={() => handleDelete(competition)}
-                          className="text-red-600 hover:text-red-700 hover:bg-red-50 focus:bg-red-50"
-                        >
-                          <Trash2 className="mr-2 h-4 w-4" />
-                          Delete
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
+      <h2 className="text-2xl font-semibold text-gray-800 mb-6">Manage Existing Competitions</h2>
+      <Tabs defaultValue="active" className="w-full" onValueChange={(value) => setActiveTab(value as 'active' | 'past')}>
+        <TabsList className="grid w-full max-w-md grid-cols-2 mb-6">
+          <TabsTrigger value="active" className="text-sm">Active Competitions</TabsTrigger>
+          <TabsTrigger value="past" className="text-sm">Past Competitions</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="active" className="mt-0">
+          <div className="rounded-md border border-gray-200 shadow-sm overflow-hidden">
+            <Table className="text-gray-700">
+              <TableHeader className="bg-gray-50">
+                <TableRow className="border-gray-200 hover:bg-gray-100">
+                  <TableHead className="text-gray-700 font-semibold">Title</TableHead>
+                  <TableHead className="text-gray-700 font-semibold">Platform</TableHead>
+                  <TableHead className="text-gray-700 font-semibold">Category</TableHead>
+                  <TableHead className="text-right text-gray-700 font-semibold">Prize</TableHead>
+                  <TableHead className="text-gray-700 font-semibold">Draw Date</TableHead>
+                  <TableHead className="text-gray-700 font-semibold">Status</TableHead>
+                  <TableHead className="text-right text-gray-700 font-semibold">Actions</TableHead>
                 </TableRow>
-              ))
-            ) : (
-              <TableRow className="border-gray-200 hover:bg-gray-50">
-                <TableCell colSpan={7} className="text-center py-8 text-gray-500">
-                  No competitions found
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
+              </TableHeader>
+              <TableBody>
+                {activeCompetitions.length > 0 ? (
+                  activeCompetitions.map((competition: Competition) => (
+                    <TableRow key={competition.id} className="border-gray-200 hover:bg-gray-50">
+                      <TableCell className="font-medium">{competition.title}</TableCell>
+                      <TableCell>{competition.platform}</TableCell>
+                      <TableCell className="capitalize">{competition.category || "Other"}</TableCell>
+                      <TableCell className="text-right font-medium">£{competition.prize}</TableCell>
+                      <TableCell>{formatDate(competition.drawTime || competition.endDate)}</TableCell>
+                      <TableCell>
+                        {new Date(competition.endDate) > new Date() ? (
+                          <span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">
+                            Active
+                          </span>
+                        ) : (
+                          <span className="px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 border border-gray-200">
+                            Ended
+                          </span>
+                        )}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="sm" className="text-gray-500 hover:text-gray-900 hover:bg-gray-100">
+                              <MoreHorizontal className="h-4 w-4" />
+                              <span className="sr-only">Actions</span>
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end" className="bg-white border-gray-200 text-gray-700 shadow-md">
+                            <DropdownMenuItem onClick={() => handleView(competition)} className="hover:bg-gray-50 focus:bg-gray-50">
+                              <Eye className="mr-2 h-4 w-4 text-cyan-600" />
+                              View
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => handleEdit(competition)} className="hover:bg-gray-50 focus:bg-gray-50">
+                              <Pencil className="mr-2 h-4 w-4 text-purple-600" />
+                              Edit
+                            </DropdownMenuItem>
+                            <DropdownMenuItem 
+                              onClick={() => handleDelist(competition)}
+                              className="text-red-600 hover:text-red-700 hover:bg-red-50 focus:bg-red-50"
+                            >
+                              <Trash2 className="mr-2 h-4 w-4" />
+                              Delist
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow className="border-gray-200 hover:bg-gray-50">
+                    <TableCell colSpan={7} className="text-center py-8 text-gray-500">
+                      No active competitions found
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="past" className="mt-0">
+          <div className="rounded-md border border-gray-200 shadow-sm overflow-hidden">
+            <Table className="text-gray-700">
+              <TableHeader className="bg-gray-50">
+                <TableRow className="border-gray-200 hover:bg-gray-100">
+                  <TableHead className="text-gray-700 font-semibold">Title</TableHead>
+                  <TableHead className="text-gray-700 font-semibold">Platform</TableHead>
+                  <TableHead className="text-gray-700 font-semibold">Category</TableHead>
+                  <TableHead className="text-right text-gray-700 font-semibold">Prize</TableHead>
+                  <TableHead className="text-gray-700 font-semibold">Draw Date</TableHead>
+                  <TableHead className="text-right text-gray-700 font-semibold">Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {pastCompetitions.length > 0 ? (
+                  pastCompetitions.map((competition: Competition) => (
+                    <TableRow key={competition.id} className="border-gray-200 hover:bg-gray-50">
+                      <TableCell className="font-medium">{competition.title}</TableCell>
+                      <TableCell>{competition.platform}</TableCell>
+                      <TableCell className="capitalize">{competition.category || "Other"}</TableCell>
+                      <TableCell className="text-right font-medium">£{competition.prize}</TableCell>
+                      <TableCell>{formatDate(competition.drawTime || competition.endDate)}</TableCell>
+                      <TableCell className="text-right">
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="sm" className="text-gray-500 hover:text-gray-900 hover:bg-gray-100">
+                              <MoreHorizontal className="h-4 w-4" />
+                              <span className="sr-only">Actions</span>
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end" className="bg-white border-gray-200 text-gray-700 shadow-md">
+                            <DropdownMenuItem onClick={() => handleView(competition)} className="hover:bg-gray-50 focus:bg-gray-50">
+                              <Eye className="mr-2 h-4 w-4 text-cyan-600" />
+                              View
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow className="border-gray-200 hover:bg-gray-50">
+                    <TableCell colSpan={7} className="text-center py-8 text-gray-500">
+                      No past competitions found
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
+        </TabsContent>
+      </Tabs>
 
       {/* View Competition Modal */}
       <Dialog open={isViewModalOpen} onOpenChange={setIsViewModalOpen}>
