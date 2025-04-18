@@ -338,14 +338,14 @@ export default function CompetitionDetailPage() {
             {/* Competition information with label in top left */}
             <div className="relative">
               <div className="absolute top-4 left-4 z-10">
-                <span className="bg-blue-500 text-white text-xs font-medium px-3 py-1 rounded">
+                <span className="bg-blue-500 text-white text-sm font-bold px-4 py-2 rounded-full">
                   PHOTO
                 </span>
               </div>
               
               {/* Competition Title Overlay */}
               <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/80 to-transparent">
-                <h1 className="text-3xl sm:text-4xl font-bold text-white">{competition.title}</h1>
+                <h1 className="text-4xl sm:text-5xl font-bold text-white">{competition.title}</h1>
                 <div className="flex items-center mt-1">
                   <span className="text-white/80 text-sm">by Blue Whale</span>
                   <div className="ml-2 bg-blue-500 text-white rounded-full w-4 h-4 flex items-center justify-center">
@@ -358,7 +358,7 @@ export default function CompetitionDetailPage() {
             </div>
             
             {/* Competition Stats */}
-            <div className="grid grid-cols-4 divide-x divide-[#1e2538]">
+            <div className="grid grid-cols-3 divide-x divide-[#1e2538]">
               <div className="flex flex-col items-center py-4 bg-[#0f1525]">
                 <Trophy className="w-5 h-5 text-blue-500 mb-1" />
                 <span className="text-gray-400 text-xs mb-1">Prize</span>
@@ -377,12 +377,6 @@ export default function CompetitionDetailPage() {
                 <span className="text-white font-bold">
                   {isEnded ? 'Competition ended' : getDaysRemaining()}
                 </span>
-              </div>
-              
-              <div className="flex flex-col items-center py-4 bg-[#0f1525]">
-                <Globe className="w-5 h-5 text-blue-500 mb-1" />
-                <span className="text-gray-400 text-xs mb-1">Eligibility</span>
-                <span className="text-white font-bold">{competition.eligibility}</span>
               </div>
             </div>
 

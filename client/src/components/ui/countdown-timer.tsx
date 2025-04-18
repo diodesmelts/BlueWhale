@@ -95,19 +95,19 @@ export function CountdownTimer({
   if (categoryTheme === 'simple') {
     return (
       <div className={`grid grid-cols-4 text-center gap-0 ${className}`}>
-        <div className="bg-[#e9872b] p-2">
+        <div className="bg-[#2460e9] p-2">
           <div className="text-white text-3xl font-bold">{days}</div>
           <div className="text-white text-xs uppercase font-medium">DAYS</div>
         </div>
-        <div className="bg-[#e9872b] p-2">
+        <div className="bg-[#2460e9] p-2">
           <div className="text-white text-3xl font-bold">{hours}</div>
           <div className="text-white text-xs uppercase font-medium">HRS</div>
         </div>
-        <div className="bg-[#e9872b] p-2">
+        <div className="bg-[#2460e9] p-2">
           <div className="text-white text-3xl font-bold">{minutes}</div>
           <div className="text-white text-xs uppercase font-medium">MIN</div>
         </div>
-        <div className="bg-[#e9872b] p-2">
+        <div className="bg-[#2460e9] p-2">
           <div className="text-white text-3xl font-bold">{seconds}</div>
           <div className="text-white text-xs uppercase font-medium">SEC</div>
         </div>
