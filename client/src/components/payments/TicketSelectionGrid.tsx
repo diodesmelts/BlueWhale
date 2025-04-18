@@ -160,55 +160,58 @@ export default function TicketSelectionGrid({
   return (
     <div className="w-full max-w-3xl mx-auto space-y-6">
       {/* Tickets Legend */}
-      <div className="mb-4">
-        <h3 className="text-lg font-semibold mb-2">Tickets Legend</h3>
-        <div className="flex flex-wrap gap-4">
+      <div className="mb-6">
+        <h3 className="text-xl font-bold mb-3">Tickets Legend</h3>
+        <div className="flex flex-wrap gap-5">
           <div className="flex items-center">
-            <div className="w-5 h-5 rounded border border-gray-300 bg-white mr-2"></div>
+            <div className="w-5 h-5 rounded-full border border-gray-300 bg-white mr-2"></div>
             <span className="text-sm">Available</span>
           </div>
           <div className="flex items-center">
-            <div className={`w-5 h-5 rounded border ${colors.border} ${colors.selected} mr-2`}></div>
-            <span className="text-sm">Selected</span>
+            <div className={`w-5 h-5 rounded-full border ${colors.border} ${colors.selected} mr-2`}></div>
+            <span className="text-sm">Added</span>
           </div>
           <div className="flex items-center">
-            <div className="w-5 h-5 rounded border border-gray-400 bg-gray-200 mr-2"></div>
-            <span className="text-sm">Unavailable</span>
+            <div className="w-5 h-5 rounded-full border border-gray-300 bg-gray-200 mr-2"></div>
+            <span className="text-sm">Purchased</span>
           </div>
           <div className="flex items-center">
-            <div className="w-5 h-5 rounded border border-green-700 bg-green-100 mr-2"></div>
-            <span className="text-sm">Your Tickets</span>
+            <div className="w-5 h-5 rounded-full border border-amber-500 bg-amber-100 mr-2"></div>
+            <span className="text-sm">Another Player is purchasing</span>
           </div>
         </div>
       </div>
       
       {/* Ticket Pages Selector */}
-      <div className="mb-4">
-        <h3 className="text-lg font-semibold mb-2">Ticket Pages</h3>
-        <div className="flex items-center gap-2 mb-2 overflow-x-auto pb-2">
-          {Array.from({ length: Math.min(5, totalPages) }, (_, i) => i + 1).map((page) => (
+      <div className="mb-6">
+        <h3 className="text-xl font-bold mb-3">Ticket Pages</h3>
+        <div className="flex">
+          <span className="text-sm font-medium mr-2">1-{Math.min(ticketsPerPage, totalTickets || 0)}</span>
+        </div>
+        <div className="flex items-center gap-2 mt-2 overflow-x-auto pb-2">
+          {Array.from({ length: Math.min(8, totalPages) }, (_, i) => i + 1).map((page) => (
             <button
               key={page}
               onClick={() => goToPage(page)}
-              className={`px-3 py-1.5 rounded ${
-                currentPage === page
-                  ? `${colors.selected} text-white`
-                  : 'bg-gray-100 hover:bg-gray-200'
-              }`}
+              className={`min-w-[36px] px-2 h-9 flex items-center justify-center 
+                ${currentPage === page
+                  ? `bg-orange-500 text-white`
+                  : page % 2 === 0 ? 'bg-gray-200' : 'bg-gray-100 hover:bg-gray-200'
+                }`}
             >
               {page}
             </button>
           ))}
-          {totalPages > 5 && (
+          {totalPages > 8 && (
             <>
-              <span className="px-2">...</span>
+              <span className="px-1">...</span>
               <button
                 onClick={() => goToPage(totalPages)}
-                className={`px-3 py-1.5 rounded ${
-                  currentPage === totalPages
-                    ? `${colors.selected} text-white`
-                    : 'bg-gray-100 hover:bg-gray-200'
-                }`}
+                className={`min-w-[36px] px-2 h-9 flex items-center justify-center 
+                  ${currentPage === totalPages
+                    ? `bg-orange-500 text-white`
+                    : totalPages % 2 === 0 ? 'bg-gray-200' : 'bg-gray-100'
+                  }`}
               >
                 {totalPages}
               </button>
@@ -218,7 +221,7 @@ export default function TicketSelectionGrid({
       </div>
       
       {/* Ticket Grid */}
-      <div className="grid grid-cols-4 sm:grid-cols-8 gap-2 mb-4">
+      <div className="grid grid-cols-8 gap-1 mb-8">
         {ticketsToDisplay.map((ticketNumber) => {
           const status = getTicketStatus(ticketNumber);
           return (
@@ -226,13 +229,14 @@ export default function TicketSelectionGrid({
               key={ticketNumber}
               onClick={() => handleTicketClick(ticketNumber)}
               className={`
-                h-12 flex items-center justify-center rounded border 
-                ${status === 'selected' ? `${colors.selected} ${colors.selectedHover} text-white` : ''}
-                ${status === 'available' ? `bg-white ${colors.hover}` : ''}
-                ${status === 'purchased' ? 'bg-green-100 border-green-700 cursor-default' : ''}
-                ${status === 'unavailable' ? 'bg-gray-200 cursor-not-allowed' : ''}
-                ${status === 'processing' ? `${colors.processing} cursor-wait` : ''}
-                transition-colors duration-200
+                h-[48px] flex items-center justify-center border border-gray-300 text-sm font-medium
+                ${status === 'selected' ? `bg-orange-500 text-white border-orange-500` : ''}
+                ${status === 'available' ? `bg-white hover:bg-gray-100` : ''}
+                ${status === 'purchased' ? 'bg-gray-200 text-gray-700 cursor-default' : ''}
+                ${status === 'unavailable' ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : ''}
+                ${status === 'processing' ? `bg-amber-100 text-amber-800 cursor-wait` : ''}
+                transition-colors duration-100
+                ${ticketNumber % 2 === 0 ? 'bg-opacity-95' : ''}
               `}
               disabled={status === 'unavailable' || status === 'purchased' || status === 'processing'}
             >
@@ -243,52 +247,44 @@ export default function TicketSelectionGrid({
       </div>
       
       {/* Selected Tickets Summary */}
-      <div className="bg-gray-50 p-3 rounded-lg border">
-        <h3 className="font-semibold mb-2">Selected Ticket(s)</h3>
-        <div className="flex flex-wrap gap-2 mb-3 min-h-12">
+      <div className="mb-6">
+        <h3 className="text-xl font-bold mb-3">Selected Ticket(s)</h3>
+        <div className="flex flex-wrap gap-2 mb-5 min-h-8">
           {selectedNumbers.length > 0 ? (
             selectedNumbers.map(number => (
-              <span key={number} className={`inline-flex items-center px-3 py-1 rounded-full text-sm text-white ${colors.selected}`}>
-                #{number}
-                <button 
-                  className="ml-1 hover:text-red-100" 
-                  onClick={() => handleTicketClick(number)}
-                >
-                  ×
-                </button>
+              <span key={number} className="inline-flex items-center text-sm">
+                Number {number}
+                {selectedNumbers.indexOf(number) < selectedNumbers.length - 1 && ", "}
               </span>
             ))
           ) : (
-            <span className="text-gray-500 italic">No tickets selected yet</span>
+            <span className="text-gray-500">No tickets selected</span>
           )}
         </div>
         
-        <Button
-          onClick={generateLuckyDip}
-          className="w-full bg-black text-white hover:bg-gray-800"
-          disabled={selectedNumbers.length >= (maxSelectable || 10)}
-        >
-          LUCKY DIP
-        </Button>
+        <div className="flex justify-center mb-5">
+          <Button
+            onClick={generateLuckyDip}
+            className="px-8 py-3 h-auto bg-black text-white hover:bg-gray-800 rounded-md text-center"
+            disabled={selectedNumbers.length >= (maxSelectable || 10)}
+          >
+            LUCKY DIP
+          </Button>
+        </div>
       </div>
       
       {/* Action Buttons */}
-      <div className="flex gap-3">
+      <div className="pb-4">
         <Button 
-          className={`flex-1 ${
+          onClick={() => onSelectNumbers(selectedNumbers)}
+          className={`w-full py-4 h-auto rounded-md ${
             selectedNumbers.length > 0
-              ? `bg-gradient-to-r ${
-                  competitionType === 'family' ? 'from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700' :
-                  competitionType === 'appliances' ? 'from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700' : 
-                  competitionType === 'cash' ? 'from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700' :
-                  'from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700'
-                }`
+              ? `bg-orange-500 hover:bg-orange-600`
               : 'bg-gray-300 cursor-not-allowed'
-          } text-white font-medium text-sm`}
+          } text-white font-medium text-base`}
           disabled={selectedNumbers.length === 0}
         >
-          <Ticket className="w-4 h-4 mr-2" />
-          ADD TO CART
+          GO TO CART
         </Button>
       </div>
     </div>
