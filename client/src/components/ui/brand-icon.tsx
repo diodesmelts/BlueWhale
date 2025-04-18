@@ -8,9 +8,9 @@ interface BrandIconProps {
 
 export function BrandIcon({ className = "", size = "md", style = {} }: BrandIconProps) {
   const sizeMap = {
-    sm: "h-8",
-    md: "h-10 md:h-12",
-    lg: "h-14"
+    sm: "h-10",
+    md: "h-12 md:h-14",
+    lg: "h-16"
   };
 
   return (

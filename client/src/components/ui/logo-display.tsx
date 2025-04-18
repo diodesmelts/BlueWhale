@@ -26,8 +26,8 @@ export function LogoDisplay({ className = "", size = "md", style = {} }: LogoDis
     <img 
       src={logoSettings.imageUrl}
       alt="Blue Whale Competitions" 
-      className={`${className} transition-all duration-300 hover:scale-105`} 
-      style={{ height: size === "sm" ? "32px" : size === "md" ? "40px" : "56px", ...style }}
+      className={`${className} transition-all duration-300`} 
+      style={{ height: size === "sm" ? "40px" : size === "md" ? "50px" : "64px", ...style }}
       onError={() => setShowFallback(true)}
     />
   );

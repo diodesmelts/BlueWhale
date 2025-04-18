@@ -390,12 +390,12 @@ export default function CompetitionCard({
           <div className="px-4 pt-3 pb-5 grid grid-cols-4 gap-2.5 mt-1">
             <div className="flex flex-col items-center">
               <div className={`w-full text-white rounded-lg shadow-inner flex items-center justify-center 
-                ${categoryTheme === 'family' ? 'bg-gradient-to-br from-amber-400 to-amber-600 border-2 border-white/70 shadow-[0_0_10px_rgba(251,191,36,0.6)]' : 
-                 categoryTheme === 'appliances' ? 'bg-gradient-to-br from-pink-400 to-pink-600 border-2 border-white/70 shadow-[0_0_10px_rgba(236,72,153,0.6)]' : 
-                 categoryTheme === 'cash' ? 'bg-gradient-to-br from-green-400 to-green-600 border-2 border-white/70 shadow-[0_0_10px_rgba(16,185,129,0.6)]' : 
-                 'bg-gradient-to-br from-blue-400 to-blue-600 border-2 border-white/70 shadow-[0_0_10px_rgba(14,165,233,0.6)]'}`}>
-                <span className="text-xl font-bold py-2 font-mono text-white relative">
-                  <span className="text-white/80 absolute inset-0 filter blur-[0.5px] mix-blend-overlay">
+                ${categoryTheme === 'family' ? 'bg-transparent border-2 border-white/70' : 
+                 categoryTheme === 'appliances' ? 'bg-transparent border-2 border-white/70' : 
+                 categoryTheme === 'cash' ? 'bg-transparent border-2 border-white/70' : 
+                 'bg-transparent border-2 border-white/70'}`}>
+                <span className="text-xl font-bold py-2 font-sans text-white relative">
+                  <span className="hidden">
                     {timeRemaining?.days.toString().padStart(2, '0') || '00'}
                   </span>
                   <span className="relative">
@@ -412,12 +412,12 @@ export default function CompetitionCard({
             </div>
             <div className="flex flex-col items-center">
               <div className={`w-full text-white rounded-lg shadow-inner flex items-center justify-center 
-                ${categoryTheme === 'family' ? 'bg-gradient-to-br from-amber-400 to-amber-600 border-2 border-white/70 shadow-[0_0_10px_rgba(251,191,36,0.6)]' : 
-                 categoryTheme === 'appliances' ? 'bg-gradient-to-br from-pink-400 to-pink-600 border-2 border-white/70 shadow-[0_0_10px_rgba(236,72,153,0.6)]' : 
-                 categoryTheme === 'cash' ? 'bg-gradient-to-br from-green-400 to-green-600 border-2 border-white/70 shadow-[0_0_10px_rgba(16,185,129,0.6)]' : 
-                 'bg-gradient-to-br from-blue-400 to-blue-600 border-2 border-white/70 shadow-[0_0_10px_rgba(14,165,233,0.6)]'}`}>
-                <span className="text-xl font-bold py-2 font-mono text-white relative">
-                  <span className="text-white/80 absolute inset-0 filter blur-[0.5px] mix-blend-overlay">
+                ${categoryTheme === 'family' ? 'bg-transparent border-2 border-white/70' : 
+                 categoryTheme === 'appliances' ? 'bg-transparent border-2 border-white/70' : 
+                 categoryTheme === 'cash' ? 'bg-transparent border-2 border-white/70' : 
+                 'bg-transparent border-2 border-white/70'}`}>
+                <span className="text-xl font-bold py-2 font-sans text-white relative">
+                  <span className="hidden">
                     {timeRemaining?.hours.toString().padStart(2, '0') || '00'}
                   </span>
                   <span className="relative">
@@ -434,12 +434,12 @@ export default function CompetitionCard({
             </div>
             <div className="flex flex-col items-center">
               <div className={`w-full text-white rounded-lg shadow-inner flex items-center justify-center 
-                ${categoryTheme === 'family' ? 'bg-gradient-to-br from-amber-400 to-amber-600 border-2 border-white/70 shadow-[0_0_10px_rgba(251,191,36,0.6)]' : 
-                 categoryTheme === 'appliances' ? 'bg-gradient-to-br from-pink-400 to-pink-600 border-2 border-white/70 shadow-[0_0_10px_rgba(236,72,153,0.6)]' : 
-                 categoryTheme === 'cash' ? 'bg-gradient-to-br from-green-400 to-green-600 border-2 border-white/70 shadow-[0_0_10px_rgba(16,185,129,0.6)]' : 
-                 'bg-gradient-to-br from-blue-400 to-blue-600 border-2 border-white/70 shadow-[0_0_10px_rgba(14,165,233,0.6)]'}`}>
-                <span className="text-xl font-bold py-2 font-mono text-white relative">
-                  <span className="text-white/80 absolute inset-0 filter blur-[0.5px] mix-blend-overlay">
+                ${categoryTheme === 'family' ? 'bg-transparent border-2 border-white/70' : 
+                 categoryTheme === 'appliances' ? 'bg-transparent border-2 border-white/70' : 
+                 categoryTheme === 'cash' ? 'bg-transparent border-2 border-white/70' : 
+                 'bg-transparent border-2 border-white/70'}`}>
+                <span className="text-xl font-bold py-2 font-sans text-white relative">
+                  <span className="hidden">
                     {timeRemaining?.minutes.toString().padStart(2, '0') || '00'}
                   </span>
                   <span className="relative">
@@ -456,12 +456,12 @@ export default function CompetitionCard({
             </div>
             <div className="flex flex-col items-center">
               <div className={`w-full text-white rounded-lg shadow-inner flex items-center justify-center animate-pulse
-                ${categoryTheme === 'family' ? 'bg-gradient-to-br from-amber-400 to-amber-600 border-2 border-white/70 shadow-[0_0_15px_rgba(251,191,36,0.7)]' : 
-                 categoryTheme === 'appliances' ? 'bg-gradient-to-br from-pink-400 to-pink-600 border-2 border-white/70 shadow-[0_0_15px_rgba(236,72,153,0.7)]' : 
-                 categoryTheme === 'cash' ? 'bg-gradient-to-br from-green-400 to-green-600 border-2 border-white/70 shadow-[0_0_15px_rgba(16,185,129,0.7)]' : 
-                 'bg-gradient-to-br from-blue-400 to-blue-600 border-2 border-white/70 shadow-[0_0_15px_rgba(14,165,233,0.7)]'}`}>
-                <span className="text-xl font-bold py-2 font-mono text-white relative">
-                  <span className="text-white/80 absolute inset-0 filter blur-[0.5px] mix-blend-overlay">
+                ${categoryTheme === 'family' ? 'bg-transparent border-2 border-white/70' : 
+                 categoryTheme === 'appliances' ? 'bg-transparent border-2 border-white/70' : 
+                 categoryTheme === 'cash' ? 'bg-transparent border-2 border-white/70' : 
+                 'bg-transparent border-2 border-white/70'}`}>
+                <span className="text-xl font-bold py-2 font-sans text-white relative">
+                  <span className="hidden">
                     {timeRemaining?.seconds.toString().padStart(2, '0') || '00'}
                   </span>
                   <span className="relative">
