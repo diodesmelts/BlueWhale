@@ -475,19 +475,15 @@ export default function CompetitionCard({
            'bg-gradient-to-br from-gray-900/95 to-cyan-950/20'}`}>
           <div className="flex-1 pl-4 py-3">
             <div className="flex items-baseline">
-              <span className="text-2xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-amber-500">
+              <span className="text-2xl font-extrabold tracking-tight text-white">
                 £{(ticketPrice ? ticketPrice/100 : 0).toFixed(2)}
               </span>
-              <span className="text-sm ml-1 text-amber-300">
+              <span className="text-sm ml-1 text-white">
                 per ticket
               </span>
             </div>
-            <span className={`text-xs font-medium block mt-0.5
-                ${categoryTheme === 'family' ? 'text-amber-400' : 
-                categoryTheme === 'appliances' ? 'text-pink-400' : 
-                categoryTheme === 'cash' ? 'text-green-400' : 
-                'text-amber-400'}`}>
-              <i className={`fas fa-ticket-alt mr-1`}></i>
+            <span className="text-xs font-medium block mt-0.5 text-white">
+              <i className="fas fa-ticket-alt mr-1"></i>
               {(totalTickets && soldTickets) ? (totalTickets - soldTickets) : 950} available
             </span>
           </div>
