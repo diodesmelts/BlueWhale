@@ -135,6 +135,22 @@ export function setupPaymentRoutes(app: Express) {
           const competitionId = parseInt(metadata.competitionId);
           const ticketCount = parseInt(metadata.ticketCount);
           
+          // Extract selected numbers from metadata if available
+          let selectedNumbers: number[] | undefined;
+          if (metadata.selectedNumbers) {
+            try {
+              selectedNumbers = metadata.selectedNumbers.split(',').map(Number);
+              // Validate all numbers are valid
+              if (selectedNumbers.some(isNaN)) {
+                console.warn("Invalid selected numbers found, ignoring:", metadata.selectedNumbers);
+                selectedNumbers = undefined;
+              }
+            } catch (err) {
+              console.warn("Error parsing selected numbers, ignoring:", metadata.selectedNumbers);
+              selectedNumbers = undefined;
+            }
+          }
+          
           const competition = await storage.getCompetition(competitionId);
           if (!competition) {
             return res.status(404).json({ error: 'Competition not found' });
@@ -148,7 +164,8 @@ export function setupPaymentRoutes(app: Express) {
             ticketCount, 
             userEntry, 
             paymentIntent.id,
-            paymentIntent.amount
+            paymentIntent.amount,
+            selectedNumbers
           );
           
           return res.json({ 
@@ -402,8 +419,14 @@ export function setupPaymentRoutes(app: Express) {
   // Purchase competition tickets
   app.post("/api/payments/purchase-tickets", ensureAuthenticated, async (req, res) => {
     try {
-      const { competitionId, ticketCount, paymentMethodId } = req.body;
+      const { competitionId, ticketCount, paymentMethodId, selectedNumbers } = req.body;
       const userId = req.user!.id;
+      let parsedSelectedNumbers: number[] | undefined;
+      
+      // Parse selected numbers if provided
+      if (selectedNumbers && Array.isArray(selectedNumbers) && selectedNumbers.length > 0) {
+        parsedSelectedNumbers = selectedNumbers;
+      }
       
       // Validate inputs
       if (!competitionId || !ticketCount || ticketCount < 1) {
@@ -417,19 +440,22 @@ export function setupPaymentRoutes(app: Express) {
       }
       
       // Check if competition has available tickets
-      if (competition.soldTickets >= competition.totalTickets) {
+      if (competition.soldTickets !== null && competition.totalTickets !== null && 
+          competition.soldTickets >= competition.totalTickets) {
         return res.status(400).json({ error: "Competition is sold out" });
       }
       
       // Check if user is trying to buy more than allowed
-      if (ticketCount > competition.maxTicketsPerUser) {
+      if (competition.maxTicketsPerUser !== null && ticketCount > competition.maxTicketsPerUser) {
         return res.status(400).json({ 
           error: `You can only purchase up to ${competition.maxTicketsPerUser} tickets`
         });
       }
       
       // Check available tickets
-      const remainingTickets = competition.totalTickets - competition.soldTickets;
+      const totalTickets = competition.totalTickets || 0;
+      const soldTickets = competition.soldTickets || 0;
+      const remainingTickets = totalTickets - soldTickets;
       if (ticketCount > remainingTickets) {
         return res.status(400).json({ 
           error: `Only ${remainingTickets} tickets remaining`
@@ -466,7 +492,8 @@ export function setupPaymentRoutes(app: Express) {
           ticketCount, 
           userEntry, 
           "free_entry",
-          totalAmount
+          totalAmount,
+          parsedSelectedNumbers
         );
         
         return res.json({ 
@@ -508,7 +535,8 @@ export function setupPaymentRoutes(app: Express) {
           userId: userId.toString(),
           competitionId: competition.id.toString(),
           type: "ticket_purchase",
-          ticketCount: ticketCount.toString()
+          ticketCount: ticketCount.toString(),
+          ...(parsedSelectedNumbers && { selectedNumbers: parsedSelectedNumbers.join(',') })
         },
         description: `${ticketCount} ticket${ticketCount > 1 ? 's' : ''} for ${competition.title}`
       });
@@ -521,7 +549,8 @@ export function setupPaymentRoutes(app: Express) {
           ticketCount, 
           userEntry, 
           paymentIntent.id,
-          totalAmount
+          totalAmount,
+          parsedSelectedNumbers
         );
         
         return res.json({ 
