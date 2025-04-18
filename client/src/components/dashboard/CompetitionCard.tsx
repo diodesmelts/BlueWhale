@@ -394,11 +394,13 @@ export default function CompetitionCard({
                  categoryTheme === 'appliances' ? 'bg-gradient-to-br from-pink-400 to-pink-600 border border-pink-500 shadow-[0_0_10px_rgba(236,72,153,0.6)]' : 
                  categoryTheme === 'cash' ? 'bg-gradient-to-br from-green-400 to-green-600 border border-green-500 shadow-[0_0_10px_rgba(16,185,129,0.6)]' : 
                  'bg-gradient-to-br from-blue-400 to-blue-600 border border-blue-500 shadow-[0_0_10px_rgba(14,165,233,0.6)]'}`}>
-                <span className="text-xl font-bold py-2 font-mono relative">
-                  <span className="bg-gradient-to-r from-white/10 to-white/70 bg-clip-text text-transparent absolute inset-0 filter blur-[1px]">
+                <span className="text-xl font-bold py-2 font-mono text-white relative">
+                  <span className="text-white/80 absolute inset-0 filter blur-[0.5px] mix-blend-overlay">
                     {timeRemaining?.days.toString().padStart(2, '0') || '00'}
                   </span>
-                  {timeRemaining?.days.toString().padStart(2, '0') || '00'}
+                  <span className="relative">
+                    {timeRemaining?.days.toString().padStart(2, '0') || '00'}
+                  </span>
                 </span>
               </div>
               <span className={`text-xs font-semibold mt-1 ${
@@ -414,11 +416,13 @@ export default function CompetitionCard({
                  categoryTheme === 'appliances' ? 'bg-gradient-to-br from-pink-400 to-pink-600 border border-pink-500 shadow-[0_0_10px_rgba(236,72,153,0.6)]' : 
                  categoryTheme === 'cash' ? 'bg-gradient-to-br from-green-400 to-green-600 border border-green-500 shadow-[0_0_10px_rgba(16,185,129,0.6)]' : 
                  'bg-gradient-to-br from-blue-400 to-blue-600 border border-blue-500 shadow-[0_0_10px_rgba(14,165,233,0.6)]'}`}>
-                <span className="text-xl font-bold py-2 font-mono relative">
-                  <span className="bg-gradient-to-r from-white/10 to-white/70 bg-clip-text text-transparent absolute inset-0 filter blur-[1px]">
+                <span className="text-xl font-bold py-2 font-mono text-white relative">
+                  <span className="text-white/80 absolute inset-0 filter blur-[0.5px] mix-blend-overlay">
                     {timeRemaining?.hours.toString().padStart(2, '0') || '00'}
                   </span>
-                  {timeRemaining?.hours.toString().padStart(2, '0') || '00'}
+                  <span className="relative">
+                    {timeRemaining?.hours.toString().padStart(2, '0') || '00'}
+                  </span>
                 </span>
               </div>
               <span className={`text-xs font-semibold mt-1 ${
@@ -434,11 +438,13 @@ export default function CompetitionCard({
                  categoryTheme === 'appliances' ? 'bg-gradient-to-br from-pink-400 to-pink-600 border border-pink-500 shadow-[0_0_10px_rgba(236,72,153,0.6)]' : 
                  categoryTheme === 'cash' ? 'bg-gradient-to-br from-green-400 to-green-600 border border-green-500 shadow-[0_0_10px_rgba(16,185,129,0.6)]' : 
                  'bg-gradient-to-br from-blue-400 to-blue-600 border border-blue-500 shadow-[0_0_10px_rgba(14,165,233,0.6)]'}`}>
-                <span className="text-xl font-bold py-2 font-mono relative">
-                  <span className="bg-gradient-to-r from-white/10 to-white/70 bg-clip-text text-transparent absolute inset-0 filter blur-[1px]">
+                <span className="text-xl font-bold py-2 font-mono text-white relative">
+                  <span className="text-white/80 absolute inset-0 filter blur-[0.5px] mix-blend-overlay">
                     {timeRemaining?.minutes.toString().padStart(2, '0') || '00'}
                   </span>
-                  {timeRemaining?.minutes.toString().padStart(2, '0') || '00'}
+                  <span className="relative">
+                    {timeRemaining?.minutes.toString().padStart(2, '0') || '00'}
+                  </span>
                 </span>
               </div>
               <span className={`text-xs font-semibold mt-1 ${
@@ -454,11 +460,13 @@ export default function CompetitionCard({
                  categoryTheme === 'appliances' ? 'bg-gradient-to-br from-pink-400 to-pink-600 border border-pink-500 shadow-[0_0_15px_rgba(236,72,153,0.7)]' : 
                  categoryTheme === 'cash' ? 'bg-gradient-to-br from-green-400 to-green-600 border border-green-500 shadow-[0_0_15px_rgba(16,185,129,0.7)]' : 
                  'bg-gradient-to-br from-blue-400 to-blue-600 border border-blue-500 shadow-[0_0_15px_rgba(14,165,233,0.7)]'}`}>
-                <span className="text-xl font-bold py-2 font-mono relative">
-                  <span className="bg-gradient-to-r from-white/20 to-white/90 bg-clip-text text-transparent absolute inset-0 filter blur-[1px]">
+                <span className="text-xl font-bold py-2 font-mono text-white relative">
+                  <span className="text-white/80 absolute inset-0 filter blur-[0.5px] mix-blend-overlay">
                     {timeRemaining?.seconds.toString().padStart(2, '0') || '00'}
                   </span>
-                  {timeRemaining?.seconds.toString().padStart(2, '0') || '00'}
+                  <span className="relative">
+                    {timeRemaining?.seconds.toString().padStart(2, '0') || '00'}
+                  </span>
                 </span>
               </div>
               <span className={`text-xs font-semibold mt-1 ${
