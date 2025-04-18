@@ -19,7 +19,7 @@ import { Button } from "@/components/ui/button";
 
 import { useToast } from "@/hooks/use-toast";
 import { usePayment } from "@/hooks/use-payment";
-import TicketPurchaseModal from "@/components/payments/TicketPurchaseModal";
+import EnhancedTicketModal from "@/components/payments/EnhancedTicketModal";
 import { CountdownTimer } from "@/components/ui/countdown-timer";
 
 export default function CompetitionDetailPage() {
@@ -617,12 +617,13 @@ export default function CompetitionDetailPage() {
       </div>
 
       {isTicketModalOpen && (
-        <TicketPurchaseModal
+        <EnhancedTicketModal
           isOpen={isTicketModalOpen}
           competition={competition}
           onClose={() => setIsTicketModalOpen(false)}
-          onPurchase={handlePurchaseTickets}
+          onConfirm={handlePurchaseTickets}
           isProcessing={isProcessing}
+          userTickets={competition.ticketNumbers || []}
         />
       )}
     </div>
