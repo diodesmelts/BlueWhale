@@ -13,6 +13,7 @@ import {
   TableHeader, 
   TableRow 
 } from "@/components/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -44,6 +45,7 @@ export default function CompetitionManagement() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<'active' | 'past'>('active');
 
   // Query to fetch all competitions for admin management
   const { data: competitions, isLoading } = useQuery({
@@ -55,11 +57,11 @@ export default function CompetitionManagement() {
     }
   });
 
-  // Mutation to delete a competition
-  const deleteMutation = useMutation({
+  // Mutation to delist a competition (soft delete)
+  const delistMutation = useMutation({
     mutationFn: async (id: number) => {
       const res = await apiRequest('DELETE', `/api/admin/competitions/${id}`);
-      if (!res.ok) throw new Error('Failed to delete competition');
+      if (!res.ok) throw new Error('Failed to delist competition');
       return res.json();
     },
     onSuccess: () => {
@@ -68,8 +70,8 @@ export default function CompetitionManagement() {
       queryClient.invalidateQueries({ queryKey: ['/api/competitions'] });
       
       toast({
-        title: "Competition deleted",
-        description: "The competition has been successfully deleted.",
+        title: "Competition delisted",
+        description: "The competition has been moved to past competitions.",
       });
       
       // Close the alert dialog
@@ -78,7 +80,7 @@ export default function CompetitionManagement() {
     onError: (error) => {
       toast({
         title: "Error",
-        description: `Failed to delete competition: ${error.message}`,
+        description: `Failed to delist competition: ${error.message}`,
         variant: "destructive",
       });
     }
@@ -99,9 +101,9 @@ export default function CompetitionManagement() {
     setIsDeleteAlertOpen(true);
   };
 
-  const confirmDelete = () => {
+  const confirmDelist = () => {
     if (selectedCompetition) {
-      deleteMutation.mutate(selectedCompetition.id);
+      delistMutation.mutate(selectedCompetition.id);
     }
   };
 
@@ -351,14 +353,14 @@ export default function CompetitionManagement() {
         </DialogContent>
       </Dialog>
 
-      {/* Delete Confirmation Alert */}
+      {/* Delist Confirmation Alert */}
       <AlertDialog open={isDeleteAlertOpen} onOpenChange={setIsDeleteAlertOpen}>
         <AlertDialogContent className="bg-white text-gray-800 border-gray-200 shadow-lg">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-xl text-gray-800 font-semibold">Are you sure?</AlertDialogTitle>
             <AlertDialogDescription className="text-gray-600">
-              This action cannot be undone. This will permanently delete the competition
-              "<span className="text-cyan-600 font-medium">{selectedCompetition?.title}</span>" and remove all associated entries and data.
+              This will delist the competition "<span className="text-cyan-600 font-medium">{selectedCompetition?.title}</span>" and 
+              move it to the Past Competitions section. It will no longer appear in the active competitions list.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -367,16 +369,16 @@ export default function CompetitionManagement() {
             </AlertDialogCancel>
             <AlertDialogAction 
               className="bg-red-500 hover:bg-red-600 border-0 text-white shadow-sm"
-              onClick={confirmDelete}
-              disabled={deleteMutation.isPending}
+              onClick={confirmDelist}
+              disabled={delistMutation.isPending}
             >
-              {deleteMutation.isPending ? (
+              {delistMutation.isPending ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin text-white" />
-                  Deleting...
+                  Delisting...
                 </>
               ) : (
-                "Delete Competition"
+                "Delist Competition"
               )}
             </AlertDialogAction>
           </AlertDialogFooter>
