@@ -7,11 +7,16 @@ import {
   Trophy, 
   Users, 
   Clock,
-  ArrowLeft
+  ArrowLeft,
+  Heart,
+  Bookmark,
+  CheckCircle
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { usePayment } from "@/hooks/use-payment";
 import EnhancedTicketModal from "@/components/payments/EnhancedTicketModal";
+import { CountdownTimer } from "@/components/ui/countdown-timer";
 
 export default function CompetitionDetailPage() {
   const [, setLocation] = useLocation();
@@ -215,198 +220,329 @@ export default function CompetitionDetailPage() {
   const isEnded = competition.drawTime ? new Date(competition.drawTime) < new Date() : false;
 
   return (
-    <div className="min-h-screen bg-[#0c111d] text-white">
-      <div className="pb-20">
-        {/* Back button */}
-        <div className="mb-4 px-4 py-2">
-          <button 
-            className="text-white flex items-center" 
-            onClick={() => setLocation('/competitions')}
-          >
-            <ArrowLeft className="h-5 w-5 mr-1" />
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 overflow-hidden">
+      {/* Decorative Background Elements */}
+      <div className="fixed top-0 left-0 w-96 h-96 bg-blue-600/10 rounded-full filter blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+      <div className="fixed bottom-0 right-0 w-96 h-96 bg-purple-600/10 rounded-full filter blur-3xl translate-x-1/2 translate-y-1/2"></div>
+      
+      <div className="container mx-auto py-8 px-4 relative">
+        {/* Back button with category-specific styling */}
+        <Button
+          variant="ghost"
+          className="mb-6 relative z-10 group transition-all duration-300 font-medium text-white hover:text-white/80"
+          onClick={() => setLocation('/competitions')}
+        >
+          <ArrowLeft className="h-5 w-5 mr-2 group-hover:-translate-x-1 transition-transform" />
+          <span className="relative">
             Back to Competitions
-          </button>
-        </div>
-        
-        {/* Competition Image and Title */}
-        <div className="relative">
-          <img
-            src={competition.image}
-            alt={competition.title}
-            className="w-full h-[350px] object-cover"
-          />
-          
-          {/* PHOTO badge */}
-          <div className="absolute top-5 left-5">
-            <span className="bg-blue-500 text-white text-sm font-semibold py-1 px-4 rounded-full">
-              PHOTO
-            </span>
-          </div>
-          
-          {/* Title section */}
-          <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black to-transparent pt-16 pb-6 px-6">
-            <h1 className="text-5xl font-bold text-white">{competition.title}</h1>
-            <div className="flex items-center mt-1">
-              <span className="text-white/90 text-sm">by Blue Whale</span>
-              <div className="ml-2 bg-blue-500 text-white rounded-full w-4 h-4 flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-3 h-3">
-                  <path fillRule="evenodd" d="M19.916 4.626a.75.75 0 01.208 1.04l-9 13.5a.75.75 0 01-1.154.114l-6-6a.75.75 0 011.06-1.06l5.353 5.353 8.493-12.739a.75.75 0 011.04-.208z" clipRule="evenodd" />
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        {/* Stats bar */}
-        <div className="grid grid-cols-3 border-t border-b border-[#1e2538]">
-          {/* Prize */}
-          <div className="py-4 flex flex-col items-center justify-center border-r border-[#1e2538]">
-            <div className="mb-1">
-              <Trophy className="h-6 w-6 text-blue-500" />
-            </div>
-            <div className="text-xs text-gray-400">Prize</div>
-            <div className="text-white font-bold">£{competition.prize}</div>
-          </div>
-          
-          {/* Entries */}
-          <div className="py-4 flex flex-col items-center justify-center border-r border-[#1e2538]">
-            <div className="mb-1">
-              <Users className="h-6 w-6 text-blue-500" />
-            </div>
-            <div className="text-xs text-gray-400">Entries</div>
-            <div className="text-white font-bold">{competition.entries}</div>
-          </div>
-          
-          {/* Ends in */}
-          <div className="py-4 flex flex-col items-center justify-center">
-            <div className="mb-1">
-              <Clock className="h-6 w-6 text-blue-500" />
-            </div>
-            <div className="text-xs text-gray-400">Ends In</div>
-            <div className="text-white font-bold">
-              {isEnded ? "Competition ended" : "Competition ended"}
-            </div>
-          </div>
-        </div>
-        
-        {/* Main content */}
-        <div className="px-4 pt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left column - About and details */}
-          <div className="lg:col-span-2">
-            {/* About section */}
-            <div className="mb-6">
-              <h2 className="text-xl font-bold text-white mb-3 border-b border-b-white/10 pb-1">
-                About This Competition
-              </h2>
-              <p className="text-white/80">
-                {competition.description}
-              </p>
+            <span className="absolute inset-x-0 bottom-0 h-0.5 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left bg-white/70"></span>
+          </span>
+        </Button>
+
+        <div className="bg-gray-900/80 backdrop-blur-sm rounded-xl shadow-2xl overflow-hidden border border-gray-800/50 relative z-10 shadow-blue-900/20">
+          {/* Hero section with improved image treatment */}
+          <div className="relative overflow-hidden">
+            <div className="aspect-video max-h-[500px] w-full overflow-hidden">
+              <img 
+                src={competition.image} 
+                alt={competition.title}
+                className="w-full h-full object-cover transition-transform duration-1000 hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
             </div>
             
-            {/* Competition details */}
-            <div className="mb-6">
-              <h2 className="text-xl font-bold text-white mb-3 border-b border-b-white/10 pb-1">
-                Competition Details
-              </h2>
-              
-              <div className="grid grid-cols-2 gap-4 bg-[#0f1525] p-4 rounded-md">
-                <div>
-                  <div className="text-sm text-gray-400">Draw Date</div>
-                  <div className="text-white font-medium">
-                    {competition.drawTime ? new Date(competition.drawTime).toLocaleDateString('en-GB', {
-                      day: 'numeric', 
-                      month: 'short', 
-                      year: 'numeric'
-                    }) : '17 Apr 2025'}
-                  </div>
-                </div>
-                
-                <div>
-                  <div className="text-sm text-gray-400">Ticket Price</div>
-                  <div className="text-white font-medium">
-                    £{(competition.ticketPrice/100).toFixed(2)}
-                  </div>
-                </div>
-                
-                <div>
-                  <div className="text-sm text-gray-400">Max Tickets Per User</div>
-                  <div className="text-white font-medium">
-                    {competition.maxTicketsPerUser}
-                  </div>
-                </div>
-                
-                <div>
-                  <div className="text-sm text-gray-400">Available Tickets</div>
-                  <div className="text-white font-medium">
-                    {competition.totalTickets - competition.soldTickets} of {competition.totalTickets}
-                  </div>
-                </div>
+            <div className="absolute inset-0 flex flex-col justify-end p-8 text-white">
+              {/* Action buttons */}
+              <div className="absolute top-4 right-4 flex space-x-3">
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className={`rounded-full backdrop-blur-sm border transition-colors duration-300
+                    ${competition.isBookmarked ? 
+                      'border-blue-400 bg-blue-500/20 text-blue-400 hover:bg-blue-500/30' : 
+                    'border-white/30 bg-white/10 text-white hover:bg-white/20'}`}
+                  onClick={() => handleBookmark(competition.id)}
+                >
+                  <Bookmark className="h-4 w-4" />
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className={`rounded-full backdrop-blur-sm border transition-colors duration-300
+                    ${competition.isLiked ? 
+                      'border-blue-400 bg-blue-500/20 text-blue-400 hover:bg-blue-500/30' : 
+                    'border-white/30 bg-white/10 text-white hover:bg-white/20'}`}
+                  onClick={() => handleLike(competition.id)}
+                >
+                  <Heart className="h-4 w-4" />
+                </Button>
               </div>
-            </div>
-          </div>
-          
-          {/* Right column - Timer and tickets */}
-          <div>
-            {/* Prize draw countdown */}
-            <div className="mb-4">
-              <div className="bg-blue-600 text-white rounded-t-md flex items-center justify-between px-4 py-2">
-                <div className="flex items-center">
-                  <Clock className="w-5 h-5 text-white mr-2" />
-                  <h3 className="font-bold text-white uppercase">Prize Draw Countdown</h3>
+
+              {/* Category badge */}
+              <div className="mt-auto space-y-2">
+                <div className="inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-2 bg-blue-500/80 text-white">
+                  PHOTO
                 </div>
-                <div className="bg-black/20 text-white text-xs font-bold px-2 py-1 rounded">
-                  ENDED
-                </div>
-              </div>
-              
-              <div className="bg-[#0f1525] p-4 text-center rounded-b-md">
-                <div className="text-white text-xl font-bold tracking-wider">
-                  COMPETITION CLOSED
-                </div>
-              </div>
-            </div>
-            
-            {/* Ticket section */}
-            <div>
-              <div className="bg-blue-600 text-white rounded-t-md px-4 py-2">
-                <h3 className="font-bold uppercase">Get Your Tickets</h3>
-              </div>
-              
-              <div className="bg-[#0f1525] p-4 rounded-b-md">
-                <h4 className="text-lg font-bold text-white mb-2">
-                  Get Your Chance to Win
-                </h4>
-                <p className="text-white/80 text-sm mb-4">
-                  Purchase tickets for your chance to win this amazing prize!
+                <h1 className="text-4xl sm:text-5xl font-extrabold text-white drop-shadow-md">{competition.title}</h1>
+                <p className="text-white/80 text-lg flex items-center">
+                  <span className="mr-1 opacity-75">by</span> 
+                  <span className="font-medium">Blue Whale</span>
+                  <CheckCircle className="h-4 w-4 ml-2 text-blue-400" />
                 </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Stats cards - more enhanced design */}
+          <div className="grid grid-cols-3 gap-4 p-6 bg-gray-900/60">
+            <div className="bg-gray-800/60 backdrop-blur-sm rounded-xl p-4 transform hover:scale-105 transition-all duration-300 border border-gray-700/50 shadow-xl">
+              <div className="flex items-center mb-3">
+                <Trophy className="text-blue-500 h-5 w-5 mr-2" />
+                <span className="text-gray-400 text-xs font-medium uppercase tracking-wider">Prize</span>
+              </div>
+              <span className="text-2xl font-bold text-white">£{competition.prize}</span>
+            </div>
+            
+            <div className="bg-gray-800/60 backdrop-blur-sm rounded-xl p-4 transform hover:scale-105 transition-all duration-300 border border-gray-700/50 shadow-xl">
+              <div className="flex items-center mb-3">
+                <Users className="text-blue-500 h-5 w-5 mr-2" />
+                <span className="text-gray-400 text-xs font-medium uppercase tracking-wider">Entries</span>
+              </div>
+              <span className="text-2xl font-bold text-white">{competition.entries}</span>
+            </div>
+            
+            <div className="bg-gray-800/60 backdrop-blur-sm rounded-xl p-4 transform hover:scale-105 transition-all duration-300 border border-gray-700/50 shadow-xl">
+              <div className="flex items-center mb-3">
+                <Clock className="text-blue-500 h-5 w-5 mr-2" />
+                <span className="text-gray-400 text-xs font-medium uppercase tracking-wider">Ends In</span>
+              </div>
+              <span className="text-2xl font-bold text-white">
+                {isEnded ? "Ended" : "1 day"}
+              </span>
+            </div>
+          </div>
+
+          {/* Main content area */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
+            {/* Left column - About and Competition Details */}
+            <div className="md:col-span-2 space-y-6">
+              {/* About section */}
+              <div className="bg-gray-800/40 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50">
+                <h2 className="text-xl font-bold text-white mb-4 flex items-center">
+                  <span className="bg-blue-500 w-1 h-6 rounded-full mr-3"></span>
+                  About This Competition
+                </h2>
+                <p className="text-gray-300 leading-relaxed">
+                  {competition.description}
+                </p>
+              </div>
+              
+              {/* Competition details section */}
+              <div className="bg-gray-800/40 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50">
+                <h2 className="text-xl font-bold text-white mb-4 flex items-center">
+                  <span className="bg-blue-500 w-1 h-6 rounded-full mr-3"></span>
+                  Competition Details
+                </h2>
                 
-                {/* Ticket info */}
-                <div className="flex justify-between mb-4">
-                  <div>
-                    <div className="text-sm text-gray-400">Ticket Price</div>
-                    <div className="text-white font-bold">£{(competition.ticketPrice/100).toFixed(2)}</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-sm text-gray-400">Available</div>
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="bg-gray-800/80 p-4 rounded-lg border border-gray-700/50">
+                    <div className="text-sm text-gray-400 mb-1">Draw Date</div>
                     <div className="text-white font-bold">
-                      {competition.totalTickets - competition.soldTickets} / {competition.totalTickets}
+                      {competition.drawTime ? new Date(competition.drawTime).toLocaleDateString('en-GB', {
+                        day: 'numeric', 
+                        month: 'short', 
+                        year: 'numeric'
+                      }) : '17 Apr 2025'}
+                    </div>
+                  </div>
+                  
+                  <div className="bg-gray-800/80 p-4 rounded-lg border border-gray-700/50">
+                    <div className="text-sm text-gray-400 mb-1">Ticket Price</div>
+                    <div className="text-white font-bold">
+                      £{(competition.ticketPrice/100).toFixed(2)}
+                    </div>
+                  </div>
+                  
+                  <div className="bg-gray-800/80 p-4 rounded-lg border border-gray-700/50">
+                    <div className="text-sm text-gray-400 mb-1">Max Tickets Per User</div>
+                    <div className="text-white font-bold">
+                      {competition.maxTicketsPerUser}
+                    </div>
+                  </div>
+                  
+                  <div className="bg-gray-800/80 p-4 rounded-lg border border-gray-700/50">
+                    <div className="text-sm text-gray-400 mb-1">Available Tickets</div>
+                    <div className="text-white font-bold">
+                      {competition.totalTickets - competition.soldTickets} of {competition.totalTickets}
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+            
+            {/* Right column - Countdown and Ticket Purchase */}
+            <div className="space-y-6">
+              {/* Prize draw countdown */}
+              <div className="bg-gray-800/40 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-700/50">
+                <div className="bg-blue-600 py-3 px-4 flex items-center justify-between">
+                  <div className="flex items-center">
+                    <Clock className="h-5 w-5 text-white mr-2" />
+                    <h3 className="text-white font-bold">PRIZE DRAW COUNTDOWN</h3>
+                  </div>
+                  <div className="px-2 py-1 rounded-full text-xs font-bold bg-black/20 text-white">
+                    {isEnded ? 'ENDED' : 'LIVE'}
+                  </div>
+                </div>
                 
-                {/* Get tickets button */}
-                <button 
-                  onClick={() => setIsTicketModalOpen(true)}
-                  className="w-full bg-blue-600 text-white font-bold py-3 rounded text-center"
-                  disabled={isEnded}
-                >
-                  GET YOUR TICKETS
-                </button>
-                
-                <div className="text-center text-gray-400 text-xs mt-2">
-                  This competition has ended
+                <div className="p-4">
+                  {isEnded ? (
+                    <div className="text-center text-white text-xl font-bold py-4">
+                      COMPETITION CLOSED
+                    </div>
+                  ) : (
+                    <CountdownTimer 
+                      targetDate={competition.drawTime || new Date().toISOString()} 
+                      showIcon={false}
+                      categoryTheme="simple"
+                    />
+                  )}
                 </div>
               </div>
+              
+              {/* Ticket purchase section */}
+              <div className="bg-gray-800/40 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-700/50">
+                <div className="bg-blue-600 py-3 px-4">
+                  <h3 className="text-white font-bold">GET YOUR TICKETS</h3>
+                </div>
+                
+                <div className="p-6">
+                  {/* If user has tickets already */}
+                  {competition.isEntered && competition.ticketCount && competition.ticketCount > 0 ? (
+                    <div>
+                      <div className="flex items-center justify-between mb-4">
+                        <h4 className="text-base font-semibold text-white">
+                          Your Tickets
+                        </h4>
+                        <div className="px-2 py-1 rounded-full text-xs font-bold bg-blue-600/20 text-blue-400 border border-blue-500/30">
+                          {competition.ticketCount} {competition.ticketCount === 1 ? 'ticket' : 'tickets'}
+                        </div>
+                      </div>
+                      
+                      {/* User's ticket numbers */}
+                      {competition.ticketNumbers && competition.ticketNumbers.length > 0 && (
+                        <div className="mb-4">
+                          <div className="text-sm text-gray-400 mb-2">Your ticket numbers:</div>
+                          <div className="flex flex-wrap gap-2">
+                            {competition.ticketNumbers.map(number => (
+                              <span key={number} className="px-2 py-1 rounded text-sm bg-blue-600/20 text-blue-400 border border-blue-500/30">
+                                #{number}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      
+                      {/* Buy more tickets button */}
+                      <Button
+                        onClick={() => setIsTicketModalOpen(true)}
+                        className="w-full py-3 bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white font-medium rounded-lg shadow-lg hover:shadow-blue-500/25 transition-all duration-300"
+                        disabled={isEnded}
+                      >
+                        Buy More Tickets
+                      </Button>
+                    </div>
+                  ) : (
+                    <div>
+                      <div className="mb-4">
+                        <h4 className="text-lg font-semibold text-white mb-2">
+                          Get Your Chance to Win
+                        </h4>
+                        <p className="text-gray-300 text-sm">
+                          Purchase tickets for your chance to win this amazing prize!
+                        </p>
+                      </div>
+                      
+                      {/* Ticket info */}
+                      <div className="grid grid-cols-2 gap-4 mb-4">
+                        <div className="bg-gray-800/80 p-3 rounded-lg">
+                          <div className="text-sm text-gray-400">Ticket Price</div>
+                          <div className="text-lg font-bold text-white">£{(competition.ticketPrice/100).toFixed(2)}</div>
+                        </div>
+                        <div className="bg-gray-800/80 p-3 rounded-lg">
+                          <div className="text-sm text-gray-400">Available</div>
+                          <div className="text-lg font-bold text-white">
+                            {competition.totalTickets - competition.soldTickets} / {competition.totalTickets}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Get tickets button */}
+                      <Button 
+                        onClick={() => setIsTicketModalOpen(true)}
+                        className="w-full py-3 bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white font-bold rounded-lg shadow-lg hover:shadow-blue-500/25 transition-all duration-300 relative overflow-hidden group"
+                        disabled={isEnded}
+                      >
+                        <span className="absolute top-0 left-0 w-full h-full bg-white/10 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
+                        GET YOUR TICKETS
+                      </Button>
+                      
+                      <div className="mt-2 text-xs text-center text-gray-400">
+                        {isEnded ? 'This competition has ended' : `Max ${competition.maxTicketsPerUser} tickets per person`}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+              
+              {/* Entry steps if user has entered */}
+              {(competition.isEntered && competition.entrySteps && competition.entrySteps.length > 0) && (
+                <div className="bg-gray-800/40 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50">
+                  <h3 className="text-xl font-bold text-white mb-4 flex items-center">
+                    <span className="bg-blue-500 w-1 h-6 rounded-full mr-3"></span>
+                    Entry Steps
+                  </h3>
+                  
+                  <div className="space-y-4">
+                    {competition.entrySteps.map((step, index) => (
+                      <div key={step.id} className="flex items-start bg-gray-800/80 p-4 rounded-lg border border-gray-700/50 hover:border-blue-500/50 transition-colors duration-300">
+                        <div className={`h-6 w-6 rounded-full flex items-center justify-center text-xs font-bold mr-3
+                          ${competition.entryProgress?.includes(step.id) ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300'}`}>
+                          {competition.entryProgress?.includes(step.id) ? (
+                            <CheckCircle className="h-4 w-4" />
+                          ) : (
+                            index + 1
+                          )}
+                        </div>
+                        <div>
+                          <div className="text-gray-100">{step.description}</div>
+                          {step.link && (
+                            <a 
+                              href={step.link} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="text-sm text-blue-400 hover:text-blue-300 transition-colors inline-flex items-center mt-1"
+                            >
+                              Visit Link
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3 h-3 ml-1">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                              </svg>
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  {competition.isEntered && !competition.entryProgress?.length && (
+                    <Button
+                      onClick={() => handleCompleteEntry(competition.id)}
+                      className="mt-4 w-full py-3 bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white font-medium rounded-lg shadow-lg hover:shadow-blue-500/25 transition-all duration-300"
+                    >
+                      Complete All Steps
+                    </Button>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -418,7 +554,9 @@ export default function CompetitionDetailPage() {
           competition={competition}
           isOpen={isTicketModalOpen}
           onClose={() => setIsTicketModalOpen(false)}
-          onPurchase={handlePurchaseTickets}
+          onConfirm={handlePurchaseTickets}
+          isProcessing={isProcessing}
+          userTickets={competition.ticketNumbers}
         />
       )}
     </div>
