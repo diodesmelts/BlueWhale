@@ -517,13 +517,14 @@ export default function CompetitionCard({
               setTicketModalOpen(true);
             }}
             disabled={isPaying}
-            className={`group px-6 py-3 h-full text-white font-bold text-sm transition-all duration-300 rounded-none shadow-lg 
-              bg-gradient-to-r from-yellow-600 via-amber-500 to-yellow-600 hover:from-yellow-500 hover:via-amber-400 hover:to-yellow-500 
-              hover:shadow-[0_0_20px_rgba(251,191,36,0.7)] relative overflow-hidden border border-yellow-300/50`}
+            className={`group px-7 py-3 h-full text-white font-bold text-sm transition-all duration-300 rounded-l-2xl shadow-lg 
+              bg-gradient-to-r from-yellow-600 via-yellow-400 to-yellow-500 hover:from-yellow-500 hover:via-yellow-300 hover:to-yellow-400 
+              hover:shadow-[0_0_25px_rgba(251,191,36,0.8)] relative overflow-hidden border-2 border-yellow-300/70`}
           >
-            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-yellow-100/40 to-transparent shine-effect-fast" />
-            <span className="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0iI0ZGRiIgZmlsbC1ydWxlPSJldmVub2RkIj48Y2lyY2xlIGN4PSIxIiBjeT0iMSIgcj0iMSIvPjwvZz48L3N2Zz4=')]"></span>
-            <span className="relative z-10 flex items-center justify-center text-shadow drop-shadow-md">
+            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-yellow-100/60 to-transparent shine-effect-fast" />
+            <span className="absolute inset-0 opacity-30 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0iI0ZGRiIgZmlsbC1ydWxlPSJldmVub2RkIj48Y2lyY2xlIGN4PSIxIiBjeT0iMSIgcj0iMSIvPjwvZz48L3N2Zz4=')]"></span>
+            <span className="absolute top-0 left-0 right-0 h-1/3 bg-gradient-to-b from-yellow-200/30 to-transparent"></span>
+            <span className="relative z-10 flex items-center justify-center text-shadow drop-shadow-md font-bold">
               <i className="fas fa-ticket-alt mr-2 text-white"></i>
               GET TICKETS
             </span>
