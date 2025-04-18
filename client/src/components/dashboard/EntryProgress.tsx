@@ -90,7 +90,7 @@ export default function EntryProgress({ steps, progress, onComplete, competition
   
   const { toast } = useToast();
   
-  const handlePurchaseTickets = (ticketCount: number) => {
+  const handlePurchaseTickets = (ticketCount: number, selectedNumbers?: number[]) => {
     // If competition doesn't exist or has no ID, just close the modal
     if (!competitionWithTicket?.id) {
       setShowTicketModal(false);
@@ -102,11 +102,15 @@ export default function EntryProgress({ steps, progress, onComplete, competition
     
     // Log purchase attempt
     console.log('Purchasing', ticketCount, 'tickets for competition', competitionWithTicket);
+    if (selectedNumbers) {
+      console.log('Selected ticket numbers:', selectedNumbers);
+    }
     
     // Use apiRequest instead of fetch for consistency
     apiRequest('POST', `/api/competitions/${competitionWithTicket.id}/enter`, { 
       ticketCount,
       ticketPrice: competitionWithTicket.ticketPrice, // Send the ticket price we've set
+      selectedNumbers
     })
       .then(async (res) => {
         const responseData = await res.json();
@@ -117,7 +121,8 @@ export default function EntryProgress({ steps, progress, onComplete, competition
           // Make a direct ticket purchase instead
           apiRequest('POST', `/api/competitions/${competitionWithTicket.id}/purchase-tickets`, {
             ticketCount,
-            ticketPrice: competitionWithTicket.ticketPrice
+            ticketPrice: competitionWithTicket.ticketPrice,
+            selectedNumbers
           })
           .then(async (purchaseRes) => {
             // Handle the ticket purchase response
@@ -220,7 +225,8 @@ export default function EntryProgress({ steps, progress, onComplete, competition
             ticketPrice: competitionWithTicket.ticketPrice,
             maxTicketsPerUser: competitionWithTicket.maxTicketsPerUser,
             totalTickets: competitionWithTicket.totalTickets,
-            soldTickets: competitionWithTicket.soldTickets
+            soldTickets: competitionWithTicket.soldTickets,
+            type: competitionWithTicket.type // Add the type for category-specific styling
           }}
         />
       )}
