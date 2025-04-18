@@ -141,7 +141,7 @@ export function setupPaymentRoutes(app: Express) {
             try {
               selectedNumbers = metadata.selectedNumbers.split(',').map(Number);
               // Validate all numbers are valid
-              if (selectedNumbers.some(isNaN)) {
+              if (selectedNumbers && selectedNumbers.some(isNaN)) {
                 console.warn("Invalid selected numbers found, ignoring:", metadata.selectedNumbers);
                 selectedNumbers = undefined;
               }
@@ -466,7 +466,7 @@ export function setupPaymentRoutes(app: Express) {
       let userEntry = await storage.getUserEntry(userId, competition.id);
       
       // Check if user already has some tickets and would exceed max
-      if (userEntry && userEntry.ticketCount) {
+      if (userEntry && userEntry.ticketCount && competition.maxTicketsPerUser !== null) {
         const totalTickets = userEntry.ticketCount + ticketCount;
         if (totalTickets > competition.maxTicketsPerUser) {
           return res.status(400).json({ 
@@ -482,10 +482,11 @@ export function setupPaymentRoutes(app: Express) {
       }
       
       // Calculate total amount
-      const totalAmount = competition.ticketPrice * ticketCount;
+      const ticketPrice = competition.ticketPrice || 0; // Use 0 if ticketPrice is null
+      const totalAmount = ticketPrice * ticketCount;
       
       // If this is a free competition, just create/update the entry without payment
-      if (competition.ticketPrice === 0) {
+      if (ticketPrice === 0) {
         await handleSuccessfulTicketPurchase(
           userId, 
           competition, 
@@ -586,7 +587,7 @@ export function setupPaymentRoutes(app: Express) {
       ticketNumbers = selectedNumbers;
     } else {
       // Generate ticket numbers (sequential from last sold ticket)
-      const startTicketNumber = competition.soldTickets + 1;
+      const startTicketNumber = (competition.soldTickets || 0) + 1;
       ticketNumbers = Array.from(
         { length: ticketCount }, 
         (_, i) => startTicketNumber + i
@@ -595,8 +596,8 @@ export function setupPaymentRoutes(app: Express) {
     
     // Update competition with new sold tickets count
     await storage.updateCompetition(competition.id, {
-      soldTickets: competition.soldTickets + ticketCount,
-      entries: competition.entries + (existingEntry ? 0 : 1) // Only increment entries if new user
+      soldTickets: (competition.soldTickets || 0) + ticketCount,
+      entries: (competition.entries || 0) + (existingEntry ? 0 : 1) // Only increment entries if new user
     });
     
     if (existingEntry) {
