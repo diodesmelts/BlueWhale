@@ -87,6 +87,7 @@ export default function EnhancedTicketModal({
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="max-w-3xl p-0 gap-0 bg-gradient-to-b from-gray-900 to-gray-800 border border-gray-700 shadow-2xl text-white">
         <DialogTitle className="sr-only">Select Your Tickets</DialogTitle>
+        
         {/* Header */}
         <div className="bg-gray-800/50 backdrop-blur-sm px-6 py-4 border-b border-gray-700/50 flex justify-between items-center">
           <div className="flex items-center space-x-2">
@@ -106,7 +107,7 @@ export default function EnhancedTicketModal({
         </div>
         
         {/* Main content */}
-        <div className="p-6">
+        <div className="p-6 max-h-[90vh] overflow-auto">
           {/* Ticket info */}
           <div className="mb-6 grid grid-cols-2 gap-4">
             <div className="bg-gray-800/40 backdrop-blur-sm rounded-xl p-4 border border-gray-700/50">
@@ -118,44 +119,6 @@ export default function EnhancedTicketModal({
               <div className="text-xl font-bold text-white">{competition.maxTicketsPerUser || 3} per user</div>
             </div>
           </div>
-          
-          {/* Show ticket confirmation overlay */}
-          {showConfirmation && (
-            <div className="absolute inset-0 bg-gray-900/95 z-50 flex items-center justify-center rounded-lg backdrop-blur-sm">
-              <div className="w-full max-w-lg p-8 text-center">
-                <div className="w-20 h-20 mx-auto mb-6">
-                  <div className="relative">
-                    <div className="absolute -inset-1 rounded-full bg-blue-600/30 blur-lg animate-pulse"></div>
-                    <div className="bg-blue-600 rounded-full p-5 relative">
-                      <Ticket className="h-10 w-10 text-white" />
-                    </div>
-                  </div>
-                </div>
-                <h3 className="text-2xl font-bold mb-4 text-white">Tickets Selected!</h3>
-                <p className="mb-6 text-gray-300">
-                  {selectedNumbers.length === 1 
-                    ? `Ticket #${selectedNumbers[0]} selected.`
-                    : `Tickets #${selectedNumbers.join(', ')} selected.`}
-                </p>
-                <div className="flex flex-col gap-3">
-                  <Button 
-                    className="w-full py-6 h-auto text-lg font-bold bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white rounded-lg hover:shadow-lg hover:shadow-blue-700/30 transition-all duration-300 relative overflow-hidden group"
-                    onClick={handleGoToCart}
-                  >
-                    <span className="absolute top-0 left-0 w-full h-full bg-white/10 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
-                    PROCEED TO PAYMENT
-                  </Button>
-                  <Button 
-                    variant="outline"
-                    className="w-full py-3 h-auto border-gray-600 text-gray-300 hover:text-white hover:bg-gray-800 hover:border-gray-500"
-                    onClick={() => setShowConfirmation(false)}
-                  >
-                    SELECT MORE TICKETS
-                  </Button>
-                </div>
-              </div>
-            </div>
-          )}
           
           {/* Selected tickets summary */}
           {selectedNumbers.length > 0 && (
@@ -209,6 +172,44 @@ export default function EnhancedTicketModal({
             You can select up to {competition.maxTicketsPerUser} tickets in total
           </div>
         </div>
+        
+        {/* Confirmation overlay */}
+        {showConfirmation && (
+          <div className="absolute inset-0 bg-gray-900/95 z-50 flex items-center justify-center rounded-lg backdrop-blur-sm">
+            <div className="w-full max-w-lg p-8 text-center">
+              <div className="w-20 h-20 mx-auto mb-6">
+                <div className="relative">
+                  <div className="absolute -inset-1 rounded-full bg-blue-600/30 blur-lg animate-pulse"></div>
+                  <div className="bg-blue-600 rounded-full p-5 relative">
+                    <Ticket className="h-10 w-10 text-white" />
+                  </div>
+                </div>
+              </div>
+              <h3 className="text-2xl font-bold mb-4 text-white">Tickets Selected!</h3>
+              <p className="mb-6 text-gray-300">
+                {selectedNumbers.length === 1 
+                  ? `Ticket #${selectedNumbers[0]} selected.`
+                  : `Tickets #${selectedNumbers.join(', ')} selected.`}
+              </p>
+              <div className="flex flex-col gap-3">
+                <Button 
+                  className="w-full py-6 h-auto text-lg font-bold bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white rounded-lg hover:shadow-lg hover:shadow-blue-700/30 transition-all duration-300 relative overflow-hidden group"
+                  onClick={handleGoToCart}
+                >
+                  <span className="absolute top-0 left-0 w-full h-full bg-white/10 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
+                  PROCEED TO PAYMENT
+                </Button>
+                <Button 
+                  variant="outline"
+                  className="w-full py-3 h-auto border-gray-600 text-gray-300 hover:text-white hover:bg-gray-800 hover:border-gray-500"
+                  onClick={() => setShowConfirmation(false)}
+                >
+                  SELECT MORE TICKETS
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </DialogContent>
     </Dialog>
   );

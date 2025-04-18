@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Ticket } from "lucide-react";
+import { Ticket, Shuffle } from "lucide-react";
 
 interface TicketSelectionGridProps {
   totalTickets: number | null;
@@ -158,72 +158,74 @@ export default function TicketSelectionGrid({
   const colors = getTypeColors();
   
   return (
-    <div className="w-full mx-auto space-y-6">
+    <div className="w-full mx-auto space-y-4 max-h-[70vh] overflow-y-auto pr-1">
       {/* Tickets Legend */}
-      <div className="mb-6">
-        <h3 className="text-2xl font-bold mb-3">Tickets Legend</h3>
-        <div className="flex flex-wrap gap-5">
+      <div className="mb-4">
+        <h3 className="text-lg font-semibold mb-2">Tickets Legend</h3>
+        <div className="flex flex-wrap gap-4">
           <div className="flex items-center">
-            <div className="w-4 h-4 rounded-full border border-gray-300 bg-white mr-2"></div>
-            <span className="text-sm">Available</span>
+            <div className="w-4 h-4 rounded-full bg-gray-800/80 border border-gray-600 mr-2"></div>
+            <span className="text-sm text-gray-300">Available</span>
           </div>
           <div className="flex items-center">
-            <div className="w-4 h-4 rounded-full border border-orange-500 bg-orange-500 mr-2"></div>
-            <span className="text-sm">Added</span>
+            <div className={`w-4 h-4 rounded-full ${colors.selected} mr-2`}></div>
+            <span className="text-sm text-gray-300">Selected</span>
           </div>
           <div className="flex items-center">
-            <div className="w-4 h-4 rounded-full border border-gray-400 bg-gray-200 mr-2"></div>
-            <span className="text-sm">Purchased</span>
+            <div className="w-4 h-4 rounded-full bg-gray-600 mr-2"></div>
+            <span className="text-sm text-gray-300">Purchased</span>
           </div>
           <div className="flex items-center">
-            <div className="w-4 h-4 rounded-full border border-amber-500 bg-amber-100 mr-2"></div>
-            <span className="text-sm">Another Player is purchasing</span>
+            <div className="w-4 h-4 rounded-full bg-gray-500/50 mr-2"></div>
+            <span className="text-sm text-gray-300">Unavailable</span>
           </div>
         </div>
       </div>
       
       {/* Ticket Pages Selector */}
-      <div className="mb-4">
-        <h3 className="text-2xl font-bold mb-3">Ticket Pages</h3>
-        <div className="flex">
-          <span className="text-sm font-medium">1-34</span>
-        </div>
-        <div className="flex items-center gap-0 mt-3 overflow-x-auto pb-2">
-          {Array.from({ length: Math.min(8, totalPages) }, (_, i) => i + 1).map((page) => (
-            <button
-              key={page}
-              onClick={() => goToPage(page)}
-              className={`min-w-[44px] px-1 h-12 flex items-center justify-center 
-                ${currentPage === page
-                  ? `bg-orange-500 text-white`
-                  : page % 2 === 0 ? 'bg-gray-200' : 'bg-gray-100 hover:bg-gray-200'
+      {totalPages > 1 && (
+        <div className="mb-4">
+          <div className="flex justify-between items-center mb-2">
+            <h3 className="text-lg font-semibold">Ticket Pages</h3>
+            <span className="text-sm text-gray-400">Page {currentPage} of {totalPages}</span>
+          </div>
+          <div className="flex items-center gap-1 overflow-x-auto py-1">
+            {Array.from({ length: Math.min(10, totalPages) }, (_, i) => i + 1).map((page) => (
+              <Button
+                key={page}
+                onClick={() => goToPage(page)}
+                variant="ghost"
+                className={`min-w-[40px] h-10 px-0 rounded ${
+                  currentPage === page
+                    ? `${colors.selected} text-white font-medium`
+                    : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50'
                 }`}
-              style={{ borderRight: "1px solid #fff" }}
-            >
-              {page}
-            </button>
-          ))}
-          {totalPages > 8 && (
-            <>
-              <span className="px-1">...</span>
-              <button
-                onClick={() => goToPage(totalPages)}
-                className={`min-w-[44px] px-1 h-12 flex items-center justify-center 
-                  ${currentPage === totalPages
-                    ? `bg-orange-500 text-white`
-                    : totalPages % 2 === 0 ? 'bg-gray-200' : 'bg-gray-100'
-                  }`}
-                style={{ borderRight: "1px solid #fff" }}
               >
-                {totalPages}
-              </button>
-            </>
-          )}
+                {page}
+              </Button>
+            ))}
+            {totalPages > 10 && (
+              <>
+                <span className="px-1 text-gray-500">...</span>
+                <Button
+                  onClick={() => goToPage(totalPages)}
+                  variant="ghost"
+                  className={`min-w-[40px] h-10 px-0 rounded ${
+                    currentPage === totalPages
+                      ? `${colors.selected} text-white font-medium`
+                      : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50'
+                  }`}
+                >
+                  {totalPages}
+                </Button>
+              </>
+            )}
+          </div>
         </div>
-      </div>
+      )}
       
       {/* Ticket Grid */}
-      <div className="grid grid-cols-8 gap-0 mb-8">
+      <div className="grid grid-cols-8 gap-1 mb-6">
         {ticketsToDisplay.map((ticketNumber) => {
           const status = getTicketStatus(ticketNumber);
           return (
@@ -231,15 +233,13 @@ export default function TicketSelectionGrid({
               key={ticketNumber}
               onClick={() => handleTicketClick(ticketNumber)}
               className={`
-                h-[44px] flex items-center justify-center border border-gray-300 text-sm font-medium
-                ${status === 'selected' ? `bg-orange-500 text-white border-orange-500` : ''}
-                ${status === 'available' ? `bg-white hover:bg-gray-100` : ''}
-                ${status === 'purchased' ? 'bg-gray-200 text-gray-700 cursor-default' : ''}
-                ${status === 'unavailable' ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : ''}
-                ${status === 'processing' ? `bg-amber-100 text-amber-800 cursor-wait` : ''}
-                transition-colors duration-100
+                h-10 flex items-center justify-center rounded text-sm font-medium transition-all duration-200
+                ${status === 'selected' ? `${colors.selected} text-white border-0` : ''}
+                ${status === 'available' ? `bg-gray-800/50 text-gray-300 hover:bg-gray-700/80` : ''}
+                ${status === 'purchased' ? 'bg-gray-600 text-white/70 cursor-default' : ''}
+                ${status === 'unavailable' ? 'bg-gray-700/40 text-gray-500 cursor-not-allowed' : ''}
+                ${status === 'processing' ? `bg-gray-800 text-white/70 cursor-wait` : ''}
               `}
-              style={{ marginBottom: "-1px", marginRight: "-1px" }}
               disabled={status === 'unavailable' || status === 'purchased' || status === 'processing'}
             >
               {ticketNumber}
@@ -249,46 +249,35 @@ export default function TicketSelectionGrid({
       </div>
       
       {/* Selected Tickets Summary */}
-      <div className="mb-6">
-        <h3 className="text-2xl font-bold mb-3">Selected Ticket(s)</h3>
-        <div className="flex flex-wrap gap-2 mb-5 min-h-8">
+      <div className="mb-4 bg-gray-800/40 backdrop-blur-sm p-3 rounded-lg border border-gray-700/50">
+        <h3 className="text-lg font-semibold mb-2">Selected Tickets</h3>
+        <div className="flex flex-wrap gap-2 mb-3 min-h-6">
           {selectedNumbers.length > 0 ? (
-            selectedNumbers.map(number => (
-              <span key={number} className="inline-flex items-center text-sm">
-                Ticket Number {number}
-                {selectedNumbers.indexOf(number) < selectedNumbers.length - 1 && ", "}
-              </span>
-            ))
+            <div className="flex flex-wrap gap-1">
+              {selectedNumbers.map(number => (
+                <span 
+                  key={number} 
+                  className={`inline-flex items-center justify-center px-2 py-1 rounded text-xs font-medium ${colors.selected} text-white`}
+                >
+                  #{number}
+                </span>
+              ))}
+            </div>
           ) : (
-            <span className="text-gray-500">No tickets selected</span>
+            <span className="text-gray-400 text-sm">No tickets selected</span>
           )}
-        </div>
-        
-        <div className="mb-8">
-          <button
-            onClick={generateLuckyDip}
-            disabled={selectedNumbers.length >= (maxSelectable || 10)}
-            className="w-full py-4 bg-black text-white text-center rounded-sm font-medium"
-          >
-            LUCKY DIP
-          </button>
         </div>
       </div>
       
-      {/* Action Buttons */}
-      <div className="pb-4">
-        <button 
-          onClick={() => onSelectNumbers(selectedNumbers)}
-          className={`w-full py-4 h-auto rounded-sm ${
-            selectedNumbers.length > 0
-              ? `bg-orange-500 hover:bg-orange-600`
-              : 'bg-gray-300 cursor-not-allowed'
-          } text-white font-medium text-lg`}
-          disabled={selectedNumbers.length === 0}
-        >
-          GO TO CART
-        </button>
-      </div>
+      {/* Lucky Dip Button */}
+      <Button
+        onClick={generateLuckyDip}
+        disabled={selectedNumbers.length >= (maxSelectable || 10)}
+        className="w-full py-3 h-auto gap-2 bg-gray-800/80 hover:bg-gray-700/80 text-white font-medium border border-gray-700/50 hover:border-gray-600/80 shadow-sm" 
+      >
+        <Shuffle className="h-4 w-4 mr-1" />
+        Lucky Dip
+      </Button>
     </div>
   );
 }
