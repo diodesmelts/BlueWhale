@@ -125,8 +125,8 @@ export default function CompetitionManagement() {
   }
 
   // Filter active and delisted competitions
-  const activeCompetitions = competitions?.filter(comp => !comp.isDeleted) || [];
-  const pastCompetitions = competitions?.filter(comp => comp.isDeleted) || [];
+  const activeCompetitions = competitions?.filter((comp: Competition) => !comp.isDeleted) || [];
+  const pastCompetitions = competitions?.filter((comp: Competition) => comp.isDeleted) || [];
 
   return (
     <div className="space-y-4">
