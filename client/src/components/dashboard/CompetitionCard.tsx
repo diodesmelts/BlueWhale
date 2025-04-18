@@ -370,20 +370,8 @@ export default function CompetitionCard({
           </div>
         </div>
         
-        {/* Name + Verified */}
-        <div className="px-4 pt-3 pb-1 flex items-center justify-between">
-          <h3 className="text-base font-semibold text-gray-200 truncate">
-            {title}
-          </h3>
-          {isVerified && (
-            <Badge 
-              variant="default" 
-              className="bg-gradient-to-r from-emerald-900/70 to-green-900/70 text-green-400 text-xs font-medium border border-green-800/50 backdrop-blur-sm"
-            >
-              <i className="fas fa-check-circle text-green-400 mr-1"></i> Verified
-            </Badge>
-          )}
-        </div>
+        {/* Spacer between image and price info */}
+        <div className="px-4 pt-3 pb-1"></div>
         
         {/* Countdown timer section - styled with category-specific gradients and animations */}
         {drawTime && (
