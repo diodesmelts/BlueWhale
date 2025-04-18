@@ -240,11 +240,18 @@ export default function TopNav() {
                     </div>
                   </div>
                   {isAdmin && (
-                    <Link href="/admin">
-                      <DropdownMenuItem className="py-2.5 px-3 cursor-pointer focus:bg-purple-50 rounded-lg my-0.5 hover:bg-purple-50 transition-colors">
-                        <i className="fas fa-shield-alt mr-2 text-purple-600"></i> Admin Dashboard
-                      </DropdownMenuItem>
-                    </Link>
+                    <>
+                      <Link href="/admin">
+                        <DropdownMenuItem className="py-2.5 px-3 cursor-pointer focus:bg-purple-50 rounded-lg my-0.5 hover:bg-purple-50 transition-colors">
+                          <i className="fas fa-shield-alt mr-2 text-purple-600"></i> Admin Dashboard
+                        </DropdownMenuItem>
+                      </Link>
+                      <Link href="/listings">
+                        <DropdownMenuItem className="py-2.5 px-3 cursor-pointer focus:bg-blue-50 rounded-lg my-0.5 hover:bg-blue-50 transition-colors">
+                          <i className="fas fa-list-alt mr-2 text-blue-600"></i> Listings Management
+                        </DropdownMenuItem>
+                      </Link>
+                    </>
                   )}
                   <DropdownMenuItem className="py-2.5 px-3 cursor-pointer focus:bg-cyan-50 rounded-lg my-0.5 hover:bg-cyan-50 transition-colors">
                     <i className="fas fa-user mr-2 text-cyan-600"></i> My Profile

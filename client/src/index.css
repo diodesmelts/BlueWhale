@@ -352,3 +352,20 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+/* Bar loader animation */
+@keyframes bar-loading {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-bar-loading {
+  animation: bar-loading 1.5s ease-in-out infinite;
+}

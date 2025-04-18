@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import TopNav from "@/components/layout/TopNav";
 import CompetitionManagement from "@/components/admin/CompetitionManagement";
-
+import CompetitionCreationForm from "@/components/admin/CompetitionCreationForm";
 import Footer from "@/components/layout/Footer";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
