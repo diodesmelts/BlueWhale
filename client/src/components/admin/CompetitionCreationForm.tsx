@@ -356,7 +356,7 @@ export default function CompetitionCreationForm() {
           )}
         />
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
           <FormField
             control={form.control}
             name="category"
@@ -379,63 +379,6 @@ export default function CompetitionCreationForm() {
                     <SelectItem value="electronics">Electronics</SelectItem>
                     <SelectItem value="travel">Travel</SelectItem>
                     <SelectItem value="cars">Cars</SelectItem>
-                    <SelectItem value="Other">Other</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage className="text-rose-500" />
-              </FormItem>
-            )}
-          />
-          
-          <FormField
-            control={form.control}
-            name="platform"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-gray-700 font-medium">Platform</FormLabel>
-                <Select 
-                  onValueChange={field.onChange} 
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger className="bg-white border border-gray-200 focus:ring-cyan-500 focus:border-cyan-500">
-                      <SelectValue placeholder="Select platform" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="Instagram">Instagram</SelectItem>
-                    <SelectItem value="Facebook">Facebook</SelectItem>
-                    <SelectItem value="Twitter">Twitter</SelectItem>
-                    <SelectItem value="TikTok">TikTok</SelectItem>
-                    <SelectItem value="Website">Website</SelectItem>
-                    <SelectItem value="Other">Other</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage className="text-rose-500" />
-              </FormItem>
-            )}
-          />
-          
-          <FormField
-            control={form.control}
-            name="type"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-gray-700 font-medium">Type</FormLabel>
-                <Select 
-                  onValueChange={field.onChange} 
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger className="bg-white border border-gray-200 focus:ring-cyan-500 focus:border-cyan-500">
-                      <SelectValue placeholder="Select type" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="Raffle">Raffle</SelectItem>
-                    <SelectItem value="Giveaway">Giveaway</SelectItem>
-                    <SelectItem value="Contest">Contest</SelectItem>
-                    <SelectItem value="Sweepstakes">Sweepstakes</SelectItem>
                     <SelectItem value="Other">Other</SelectItem>
                   </SelectContent>
                 </Select>
@@ -589,54 +532,7 @@ export default function CompetitionCreationForm() {
           />
         </div>
         
-        <FormField
-          control={form.control}
-          name="eligibility"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-gray-700 font-medium">Eligibility</FormLabel>
-              <Select 
-                onValueChange={field.onChange} 
-                defaultValue={field.value}
-              >
-                <FormControl>
-                  <SelectTrigger className="bg-white border border-gray-200 focus:ring-cyan-500 focus:border-cyan-500">
-                    <SelectValue placeholder="Select eligibility" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="Everyone">Everyone</SelectItem>
-                  <SelectItem value="UK Only">UK Only</SelectItem>
-                  <SelectItem value="18+ Only">18+ Only</SelectItem>
-                  <SelectItem value="UK 18+">UK 18+</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormMessage className="text-rose-500" />
-            </FormItem>
-          )}
-        />
-        
-        <FormField
-          control={form.control}
-          name="isVerified"
-          render={({ field }) => (
-            <FormItem>
-              <div className="flex items-center space-x-2">
-                <FormControl>
-                  <Switch 
-                    checked={field.value} 
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <FormLabel className="text-gray-700 font-medium">Verified Competition</FormLabel>
-              </div>
-              <FormDescription className="text-xs text-gray-500 pl-10">
-                Mark this competition as verified (displays a verified badge)
-              </FormDescription>
-              <FormMessage className="text-rose-500" />
-            </FormItem>
-          )}
-        />
+
         
         <div>
           <Label className="text-gray-700 font-medium">Entry Steps</Label>

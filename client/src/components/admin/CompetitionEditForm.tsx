@@ -22,13 +22,10 @@ const competitionUpdateSchema = z.object({
   organizer: z.string().min(2, "Organizer must be at least 2 characters"),
   description: z.string().min(10, "Description must be at least 10 characters"),
   image: z.string().min(1, "Image is required"), // Changed from URL validation to allow file uploads
-  platform: z.string().default("Other"),
-  // Removed type field as requested
   category: z.string().default("other"), // Added category field for family, appliances, cash, other
   prize: z.coerce.number().min(1, "Prize must be at least £1"),
   entries: z.coerce.number().default(0),
-  // Removed eligibility field as requested
-  // Removed endDate - we only use drawTime for countdown functionality
+  // We only use drawTime for countdown functionality
   drawTime: z.string().min(1, "Draw date and time is required"),
   entrySteps: z.array(
     z.object({
@@ -37,7 +34,6 @@ const competitionUpdateSchema = z.object({
       link: z.string().optional(),
     })
   ).default([]),
-  isVerified: z.boolean().default(false),
   ticketPrice: z.coerce.number().default(0),
   maxTicketsPerUser: z.coerce.number().default(10),
   totalTickets: z.coerce.number().default(1000),
@@ -88,16 +84,12 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
       organizer: competition.organizer,
       description: competition.description,
       image: competition.image,
-      platform: "Other", // Default value
-      // Removed type field
       category: competition.category || "other", // Category field for family, appliances, cash
       prize: competition.prize,
       entries: competition.entries || 0,
-      // Removed eligibility field
-      // Removed endDate - we now use drawTime only
+      // We now use drawTime only
       drawTime: competition.drawTime ? competition.drawTime.toString().substring(0, 16) : '', // Format as YYYY-MM-DDThh:mm
-      entrySteps: [], // Empty array as we're removing this field
-      isVerified: competition.isVerified || false,
+      entrySteps: [], // Empty array as we're simplifying this field
       ticketPrice: competition.ticketPrice || 0,
       maxTicketsPerUser: competition.maxTicketsPerUser || 10,
       totalTickets: competition.totalTickets || 1000,
@@ -508,28 +500,7 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
         
         {/* Entry Steps section removed as requested */}
         
-        <FormField
-          control={form.control}
-          name="isVerified"
-          render={({ field }) => (
-            <FormItem className="flex flex-row items-center justify-between p-4 border border-gray-200 rounded-md bg-white shadow-sm">
-              <div className="space-y-0.5">
-                <FormLabel className="text-base text-gray-700 font-medium">Verified Competition</FormLabel>
-                <FormDescription className="text-gray-500">
-                  Mark this competition as verified (displays a verified badge)
-                </FormDescription>
-              </div>
-              <FormControl>
-                <Switch
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                  className="data-[state=checked]:bg-cyan-600"
-                />
-              </FormControl>
-              <FormMessage className="text-rose-500" />
-            </FormItem>
-          )}
-        />
+
 
         <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200">
           <Button 
