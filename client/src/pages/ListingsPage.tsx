@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/use-auth";
-import TopNav from "@/components/layout/TopNav";
 import CompetitionManagement from "@/components/admin/CompetitionManagement";
 import CompetitionCreationForm from "@/components/admin/CompetitionCreationForm";
-import Footer from "@/components/layout/Footer";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "wouter";
@@ -49,12 +47,8 @@ export default function ListingsPage() {
   // If admin status is still loading, show loading state
   if (isAdmin === null) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 flex flex-col">
-        <TopNav />
-        <div className="flex-1 flex items-center justify-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-cyan-500"></div>
-        </div>
-        <Footer />
+      <div className="flex-1 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-cyan-500"></div>
       </div>
     );
   }
@@ -62,10 +56,8 @@ export default function ListingsPage() {
   // If user is not an admin, they will be redirected by the useEffect
   
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 flex flex-col">
-      <TopNav />
-      
-      <main className="flex-1 container mx-auto px-4 py-8">
+    <div className="flex-1 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+      <main className="container mx-auto px-4 py-8">
         <div className="mb-10">
           <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-2">
             Listings Management
@@ -104,8 +96,6 @@ export default function ListingsPage() {
           </TabsContent>
         </Tabs>
       </main>
-      
-      <Footer />
     </div>
   );
 }
