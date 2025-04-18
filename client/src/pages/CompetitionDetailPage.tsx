@@ -240,87 +240,103 @@ export default function CompetitionDetailPage() {
         </Button>
 
         <div className="bg-gray-900/80 backdrop-blur-sm rounded-xl shadow-2xl overflow-hidden border border-gray-800/50 relative z-10 shadow-blue-900/20">
-          {/* Hero section with improved image treatment */}
-          <div className="relative overflow-hidden">
-            <div className="aspect-video max-h-[500px] w-full overflow-hidden">
-              <img 
-                src={competition.image} 
-                alt={competition.title}
-                className="w-full h-full object-cover transition-transform duration-1000 hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+          {/* Hero section with horizontal layout - image on left */}
+          <div className="flex flex-col md:flex-row bg-gray-800/40 backdrop-blur-sm rounded-t-xl overflow-hidden">
+            {/* Image on the left */}
+            <div className="md:w-2/5 relative overflow-hidden">
+              <div className="aspect-square w-full h-full">
+                <img 
+                  src={competition.image} 
+                  alt={competition.title}
+                  className="w-full h-full object-cover transition-transform duration-1000 hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-black/20 md:bg-gradient-to-r md:from-transparent md:to-gray-900/90"></div>
+                
+                {/* Action buttons */}
+                <div className="absolute top-4 right-4 flex space-x-3">
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    className={`rounded-full backdrop-blur-sm border transition-colors duration-300
+                      ${competition.isBookmarked ? 
+                        'border-blue-400 bg-blue-500/20 text-blue-400 hover:bg-blue-500/30' : 
+                      'border-white/30 bg-white/10 text-white hover:bg-white/20'}`}
+                    onClick={() => handleBookmark(competition.id)}
+                  >
+                    <Bookmark className="h-4 w-4" />
+                  </Button>
+                </div>
+                
+                {/* Category badge */}
+                <div className="absolute top-4 left-4">
+                  <div className="px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-blue-500/80 text-white">
+                    PHOTO
+                  </div>
+                </div>
+              </div>
             </div>
             
-            <div className="absolute inset-0 flex flex-col justify-end p-8 text-white">
-              {/* Action buttons */}
-              <div className="absolute top-4 right-4 flex space-x-3">
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
-                  className={`rounded-full backdrop-blur-sm border transition-colors duration-300
-                    ${competition.isBookmarked ? 
-                      'border-blue-400 bg-blue-500/20 text-blue-400 hover:bg-blue-500/30' : 
-                    'border-white/30 bg-white/10 text-white hover:bg-white/20'}`}
-                  onClick={() => handleBookmark(competition.id)}
-                >
-                  <Bookmark className="h-4 w-4" />
-                </Button>
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
-                  className={`rounded-full backdrop-blur-sm border transition-colors duration-300
-                    ${competition.isLiked ? 
-                      'border-blue-400 bg-blue-500/20 text-blue-400 hover:bg-blue-500/30' : 
-                    'border-white/30 bg-white/10 text-white hover:bg-white/20'}`}
-                  onClick={() => handleLike(competition.id)}
-                >
-                  <Heart className="h-4 w-4" />
-                </Button>
-              </div>
-
-              {/* Category badge */}
-              <div className="mt-auto space-y-2">
-                <div className="inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-2 bg-blue-500/80 text-white">
-                  PHOTO
+            {/* Content on the right */}
+            <div className="md:w-3/5 p-6 md:p-8 flex flex-col justify-between">
+              <div>
+                <div className="flex justify-between items-start mb-4">
+                  <h1 className="text-3xl md:text-4xl font-extrabold text-white">{competition.title}</h1>
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    className={`rounded-full backdrop-blur-sm border transition-colors duration-300 ml-2
+                      ${competition.isLiked ? 
+                        'border-blue-400 bg-blue-500/20 text-blue-400 hover:bg-blue-500/30' : 
+                      'border-white/30 bg-white/10 text-white hover:bg-white/20'}`}
+                    onClick={() => handleLike(competition.id)}
+                  >
+                    <Heart className="h-4 w-4" />
+                  </Button>
                 </div>
-                <h1 className="text-4xl sm:text-5xl font-extrabold text-white drop-shadow-md">{competition.title}</h1>
-                <p className="text-white/80 text-lg flex items-center">
+                <p className="text-white/80 text-lg flex items-center mb-6">
                   <span className="mr-1 opacity-75">by</span> 
                   <span className="font-medium">Blue Whale</span>
                   <CheckCircle className="h-4 w-4 ml-2 text-blue-400" />
                 </p>
+                
+                <p className="text-gray-300 mb-8 line-clamp-3">
+                  {competition.description}
+                </p>
+              </div>
+              
+              {/* Quick stats */}
+              <div className="grid grid-cols-3 gap-4">
+                <div className="bg-gray-800/60 rounded-lg p-3">
+                  <div className="flex items-center mb-1">
+                    <Trophy className="text-blue-500 h-4 w-4 mr-2" />
+                    <span className="text-gray-400 text-xs">Prize</span>
+                  </div>
+                  <span className="text-lg font-bold text-white">£{competition.prize}</span>
+                </div>
+                
+                <div className="bg-gray-800/60 rounded-lg p-3">
+                  <div className="flex items-center mb-1">
+                    <Users className="text-blue-500 h-4 w-4 mr-2" />
+                    <span className="text-gray-400 text-xs">Entries</span>
+                  </div>
+                  <span className="text-lg font-bold text-white">{competition.entries}</span>
+                </div>
+                
+                <div className="bg-gray-800/60 rounded-lg p-3">
+                  <div className="flex items-center mb-1">
+                    <Clock className="text-blue-500 h-4 w-4 mr-2" />
+                    <span className="text-gray-400 text-xs">Ends In</span>
+                  </div>
+                  <span className="text-lg font-bold text-white">
+                    {isEnded ? "Ended" : "1 day"}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
-
-          {/* Stats cards - more enhanced design */}
-          <div className="grid grid-cols-3 gap-4 p-6 bg-gray-900/60">
-            <div className="bg-gray-800/60 backdrop-blur-sm rounded-xl p-4 transform hover:scale-105 transition-all duration-300 border border-gray-700/50 shadow-xl">
-              <div className="flex items-center mb-3">
-                <Trophy className="text-blue-500 h-5 w-5 mr-2" />
-                <span className="text-gray-400 text-xs font-medium uppercase tracking-wider">Prize</span>
-              </div>
-              <span className="text-2xl font-bold text-white">£{competition.prize}</span>
-            </div>
-            
-            <div className="bg-gray-800/60 backdrop-blur-sm rounded-xl p-4 transform hover:scale-105 transition-all duration-300 border border-gray-700/50 shadow-xl">
-              <div className="flex items-center mb-3">
-                <Users className="text-blue-500 h-5 w-5 mr-2" />
-                <span className="text-gray-400 text-xs font-medium uppercase tracking-wider">Entries</span>
-              </div>
-              <span className="text-2xl font-bold text-white">{competition.entries}</span>
-            </div>
-            
-            <div className="bg-gray-800/60 backdrop-blur-sm rounded-xl p-4 transform hover:scale-105 transition-all duration-300 border border-gray-700/50 shadow-xl">
-              <div className="flex items-center mb-3">
-                <Clock className="text-blue-500 h-5 w-5 mr-2" />
-                <span className="text-gray-400 text-xs font-medium uppercase tracking-wider">Ends In</span>
-              </div>
-              <span className="text-2xl font-bold text-white">
-                {isEnded ? "Ended" : "1 day"}
-              </span>
-            </div>
-          </div>
+          
+          {/* Divider */}
+          <div className="h-1 w-full bg-gradient-to-r from-gray-900 via-blue-900/30 to-gray-900"></div>
 
           {/* Main content area */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
