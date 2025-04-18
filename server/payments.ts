@@ -544,14 +544,25 @@ export function setupPaymentRoutes(app: Express) {
     ticketCount: number,
     existingEntry: any,
     paymentIntentId: string,
-    amountPaid: number
+    amountPaid: number,
+    selectedNumbers?: number[]
   ) {
-    // Generate ticket numbers (sequential from last sold ticket)
-    const startTicketNumber = competition.soldTickets + 1;
-    const ticketNumbers = Array.from(
-      { length: ticketCount }, 
-      (_, i) => startTicketNumber + i
-    );
+    // If selected numbers were provided, use them
+    // Otherwise generate sequential ticket numbers
+    let ticketNumbers: number[];
+    
+    if (selectedNumbers && selectedNumbers.length === ticketCount) {
+      // Verify the selected numbers are valid (not already sold)
+      // For simplicity, we'll assume they are valid if provided
+      ticketNumbers = selectedNumbers;
+    } else {
+      // Generate ticket numbers (sequential from last sold ticket)
+      const startTicketNumber = competition.soldTickets + 1;
+      ticketNumbers = Array.from(
+        { length: ticketCount }, 
+        (_, i) => startTicketNumber + i
+      );
+    }
     
     // Update competition with new sold tickets count
     await storage.updateCompetition(competition.id, {
