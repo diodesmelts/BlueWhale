@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
 import TicketSelectionGrid from "./TicketSelectionGrid";
-import { Check, ShoppingCart, Ticket } from "lucide-react";
+import { Check, ShoppingCart, Ticket, X } from "lucide-react";
 
 interface EnhancedTicketModalProps {
   isOpen: boolean;
@@ -85,90 +85,129 @@ export default function EnhancedTicketModal({
   
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-3xl p-6 gap-0 bg-white border-none" style={{boxShadow: "none"}}>
-        <div className="flex justify-between items-center mb-6">
-          <div className="flex-1 flex">
-            <h2 className="text-base font-normal">
-              Maximum tickets per user: {competition.maxTicketsPerUser || 3}
+      <DialogContent className="max-w-3xl p-0 gap-0 bg-gradient-to-b from-gray-900 to-gray-800 border border-gray-700 shadow-2xl text-white">
+        <DialogTitle className="sr-only">Select Your Tickets</DialogTitle>
+        {/* Header */}
+        <div className="bg-gray-800/50 backdrop-blur-sm px-6 py-4 border-b border-gray-700/50 flex justify-between items-center">
+          <div className="flex items-center space-x-2">
+            <Ticket className="h-5 w-5 text-blue-400" />
+            <h2 className="text-lg font-bold text-white">
+              Select Your Tickets
             </h2>
           </div>
-          <button 
-            onClick={onClose} 
-            className="rounded-sm opacity-70 hover:opacity-100 focus:outline-none"
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="rounded-full h-8 w-8 text-gray-400 hover:text-white hover:bg-gray-700/50"
+            onClick={onClose}
           >
-            <svg width="16" height="16" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5">
-              <path d="M11.7816 4.03157C12.0062 3.80702 12.0062 3.44295 11.7816 3.2184C11.5571 2.99385 11.193 2.99385 10.9685 3.2184L7.50005 6.68682L4.03164 3.2184C3.80708 2.99385 3.44301 2.99385 3.21846 3.2184C2.99391 3.44295 2.99391 3.80702 3.21846 4.03157L6.68688 7.49999L3.21846 10.9684C2.99391 11.193 2.99391 11.557 3.21846 11.7816C3.44301 12.0061 3.80708 12.0061 4.03164 11.7816L7.50005 8.31316L10.9685 11.7816C11.193 12.0061 11.5571 12.0061 11.7816 11.7816C12.0062 11.557 12.0062 11.193 11.7816 10.9684L8.31322 7.49999L11.7816 4.03157Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path>
-            </svg>
-          </button>
+            <X className="h-4 w-4" />
+          </Button>
         </div>
         
-        {/* Show ticket confirmation overlay */}
-        {showConfirmation && (
-          <div className="absolute inset-0 bg-white z-50 flex items-center justify-center rounded-lg">
-            <div className="w-full max-w-lg p-8 text-center">
-              <div className="w-20 h-20 mx-auto mb-6">
-                <div className="relative">
-                  <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg" className="mx-auto">
-                    <path d="M36 12L40 30L58 36L40 42L36 60L32 42L14 36L32 30L36 12Z" fill="#F97316"/>
-                  </svg>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <Ticket className="h-6 w-6 text-white" />
-                  </div>
-                </div>
-              </div>
-              <h3 className="text-2xl font-bold mb-4">Tickets Added!</h3>
-              <p className="mb-6 text-gray-700">
-                Ticket Number {selectedNumbers.join(', ')} has been added to your cart.
-              </p>
-              <div className="flex flex-col gap-3">
-                <button 
-                  className="w-full bg-orange-500 hover:bg-orange-600 py-4 h-auto text-lg font-medium rounded-sm text-white"
-                  onClick={handleGoToCart}
-                >
-                  GO TO CART
-                </button>
-                <button 
-                  className="w-full py-4 h-auto text-lg font-medium rounded-sm border border-gray-300 bg-gray-100 hover:bg-gray-200 text-gray-700"
-                  onClick={() => setShowConfirmation(false)}
-                >
-                  CLOSE
-                </button>
-              </div>
+        {/* Main content */}
+        <div className="p-6">
+          {/* Ticket info */}
+          <div className="mb-6 grid grid-cols-2 gap-4">
+            <div className="bg-gray-800/40 backdrop-blur-sm rounded-xl p-4 border border-gray-700/50">
+              <div className="text-sm text-gray-400 mb-1">Ticket Price</div>
+              <div className="text-xl font-bold text-white">£{pricePerTicket}</div>
+            </div>
+            <div className="bg-gray-800/40 backdrop-blur-sm rounded-xl p-4 border border-gray-700/50">
+              <div className="text-sm text-gray-400 mb-1">Maximum Tickets</div>
+              <div className="text-xl font-bold text-white">{competition.maxTicketsPerUser || 3} per user</div>
             </div>
           </div>
-        )}
-        
-        {/* Ticket selection grid */}
-        <TicketSelectionGrid 
-          totalTickets={competition.totalTickets}
-          soldTickets={competition.soldTickets}
-          maxSelectable={competition.maxTicketsPerUser}
-          selectedNumbers={selectedNumbers}
-          onSelectNumbers={handleSelectNumbers}
-          competitionType={competition.type}
-          userTickets={userTickets}
-        />
-        
-        {/* Bottom action buttons - Hidden when dialog loads */}
-        <div className="flex justify-center mt-4">
-          <button
+          
+          {/* Show ticket confirmation overlay */}
+          {showConfirmation && (
+            <div className="absolute inset-0 bg-gray-900/95 z-50 flex items-center justify-center rounded-lg backdrop-blur-sm">
+              <div className="w-full max-w-lg p-8 text-center">
+                <div className="w-20 h-20 mx-auto mb-6">
+                  <div className="relative">
+                    <div className="absolute -inset-1 rounded-full bg-blue-600/30 blur-lg animate-pulse"></div>
+                    <div className="bg-blue-600 rounded-full p-5 relative">
+                      <Ticket className="h-10 w-10 text-white" />
+                    </div>
+                  </div>
+                </div>
+                <h3 className="text-2xl font-bold mb-4 text-white">Tickets Selected!</h3>
+                <p className="mb-6 text-gray-300">
+                  {selectedNumbers.length === 1 
+                    ? `Ticket #${selectedNumbers[0]} selected.`
+                    : `Tickets #${selectedNumbers.join(', ')} selected.`}
+                </p>
+                <div className="flex flex-col gap-3">
+                  <Button 
+                    className="w-full py-6 h-auto text-lg font-bold bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white rounded-lg hover:shadow-lg hover:shadow-blue-700/30 transition-all duration-300 relative overflow-hidden group"
+                    onClick={handleGoToCart}
+                  >
+                    <span className="absolute top-0 left-0 w-full h-full bg-white/10 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
+                    PROCEED TO PAYMENT
+                  </Button>
+                  <Button 
+                    variant="outline"
+                    className="w-full py-3 h-auto border-gray-600 text-gray-300 hover:text-white hover:bg-gray-800 hover:border-gray-500"
+                    onClick={() => setShowConfirmation(false)}
+                  >
+                    SELECT MORE TICKETS
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
+          
+          {/* Selected tickets summary */}
+          {selectedNumbers.length > 0 && (
+            <div className="mb-6 bg-blue-900/20 border border-blue-800/30 rounded-lg p-4">
+              <div className="flex justify-between items-center">
+                <div>
+                  <div className="text-sm text-blue-300">Selected Tickets</div>
+                  <div className="text-white font-bold">
+                    {selectedNumbers.length} ticket{selectedNumbers.length !== 1 ? 's' : ''}
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-sm text-blue-300">Total</div>
+                  <div className="text-xl font-bold text-white">£{totalPrice}</div>
+                </div>
+              </div>
+            </div>
+          )}
+          
+          {/* Ticket selection grid */}
+          <div className="bg-gray-800/30 backdrop-blur-sm rounded-xl p-4 border border-gray-700/50 mb-6">
+            <TicketSelectionGrid 
+              totalTickets={competition.totalTickets}
+              soldTickets={competition.soldTickets}
+              maxSelectable={competition.maxTicketsPerUser}
+              selectedNumbers={selectedNumbers}
+              onSelectNumbers={handleSelectNumbers}
+              competitionType={competition.type}
+              userTickets={userTickets}
+            />
+          </div>
+          
+          {/* Bottom action buttons */}
+          <Button
             onClick={handleAddToCart}
             disabled={selectedNumbers.length === 0 || isProcessing}
-            className={`w-full py-4 text-lg font-medium ${
-              selectedNumbers.length > 0
-                ? 'bg-orange-500 hover:bg-orange-600'
-                : 'bg-gray-300'
-            } text-white rounded-sm`}
+            className="w-full py-4 h-auto text-lg font-bold bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white rounded-lg shadow-lg hover:shadow-blue-700/30 transition-all duration-300 relative overflow-hidden group disabled:opacity-50 disabled:pointer-events-none"
           >
+            <span className="absolute top-0 left-0 w-full h-full bg-white/10 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
             {isProcessing ? (
               <div className="flex items-center justify-center">
                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
                 Processing...
               </div>
             ) : (
-              <>GO TO CART</>
+              <>CONFIRM SELECTION</>
             )}
-          </button>
+          </Button>
+          
+          <div className="mt-3 text-center text-sm text-gray-400">
+            You can select up to {competition.maxTicketsPerUser} tickets in total
+          </div>
         </div>
       </DialogContent>
     </Dialog>
