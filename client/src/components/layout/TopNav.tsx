@@ -232,11 +232,6 @@ export default function TopNav() {
                           <i className="fas fa-shield-alt mr-1"></i> Admin
                         </span>
                       )}
-                      {user.isPremium && (
-                        <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-cyan-900 text-cyan-300">
-                          <i className="fas fa-crown mr-1"></i> Premium
-                        </span>
-                      )}
                     </div>
                   </div>
                   {isAdmin && (
@@ -262,11 +257,6 @@ export default function TopNav() {
                   <DropdownMenuItem className="py-2.5 px-3 cursor-pointer focus:bg-cyan-50 rounded-lg my-0.5 hover:bg-cyan-50 transition-colors">
                     <i className="fas fa-cog mr-2 text-gray-600"></i> Account Settings
                   </DropdownMenuItem>
-                  {!user.isPremium && (
-                    <DropdownMenuItem className="py-2.5 px-3 cursor-pointer focus:bg-purple-50 rounded-lg my-0.5 hover:bg-purple-50 transition-colors">
-                      <i className="fas fa-crown mr-2 text-purple-500"></i> Upgrade to Premium
-                    </DropdownMenuItem>
-                  )}
                   <DropdownMenuSeparator className="my-1.5" />
                   <DropdownMenuItem 
                     className="py-2.5 px-3 cursor-pointer focus:bg-red-50 rounded-lg hover:bg-red-50 text-red-600 transition-colors"
