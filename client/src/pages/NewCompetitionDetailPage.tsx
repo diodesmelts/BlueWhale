@@ -118,77 +118,6 @@ export default function CompetitionDetailPage() {
     }
   };
 
-  const handleCompleteEntry = (id: number) => {
-    apiRequest('POST', `/api/competitions/${id}/complete-entry`)
-      .then(res => {
-        if (!res.ok) throw new Error('Failed to complete entry steps');
-        return res.json();
-      })
-      .then(data => {
-        toast({
-          title: 'Entry Completed!',
-          description: 'You have successfully completed all entry steps.',
-        });
-        // Refetch competition data to update UI
-        refetch();
-      })
-      .catch(err => {
-        toast({
-          title: 'Error',
-          description: err.message,
-          variant: 'destructive',
-        });
-      });
-  };
-
-  const handleBookmark = (id: number) => {
-    apiRequest('POST', `/api/competitions/${id}/bookmark`)
-      .then(res => {
-        if (!res.ok) throw new Error('Failed to bookmark competition');
-        return res.json();
-      })
-      .then(data => {
-        toast({
-          title: data.isBookmarked ? 'Bookmarked' : 'Removed from bookmarks',
-          description: data.isBookmarked 
-            ? 'Competition added to your bookmarks' 
-            : 'Competition removed from your bookmarks',
-        });
-        refetch();
-      })
-      .catch(err => {
-        toast({
-          title: 'Error',
-          description: err.message,
-          variant: 'destructive',
-        });
-      });
-  };
-
-  const handleLike = (id: number) => {
-    apiRequest('POST', `/api/competitions/${id}/like`)
-      .then(res => {
-        if (!res.ok) throw new Error('Failed to like competition');
-        return res.json();
-      })
-      .then(data => {
-        toast({
-          title: data.isLiked ? 'Liked' : 'Unliked',
-          description: data.isLiked 
-            ? 'Competition added to your likes' 
-            : 'Competition removed from your likes',
-        });
-        refetch();
-      })
-      .catch(err => {
-        toast({
-          title: 'Error',
-          description: err.message,
-          variant: 'destructive',
-        });
-      });
-  };
-
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen bg-[#0c111d]">
@@ -418,7 +347,10 @@ export default function CompetitionDetailPage() {
           competition={competition}
           isOpen={isTicketModalOpen}
           onClose={() => setIsTicketModalOpen(false)}
-          onPurchase={handlePurchaseTickets}
+          onSuccess={() => {
+            setIsTicketModalOpen(false);
+            refetch();
+          }}
         />
       )}
     </div>
