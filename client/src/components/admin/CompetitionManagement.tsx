@@ -267,24 +267,12 @@ export default function CompetitionManagement() {
                   <p className="mt-1 text-gray-600">{selectedCompetition.organizer}</p>
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium text-gray-700">Platform</h3>
-                  <p className="mt-1 text-gray-600">{selectedCompetition.platform}</p>
-                </div>
-                <div>
-                  <h3 className="text-sm font-medium text-gray-700">Category</h3>
-                  <p className="mt-1 text-gray-600 capitalize">{selectedCompetition.category || "Other"}</p>
-                </div>
-                <div>
                   <h3 className="text-sm font-medium text-gray-700">Prize</h3>
                   <p className="mt-1 text-gray-600 font-semibold">£{selectedCompetition.prize}</p>
                 </div>
                 <div>
                   <h3 className="text-sm font-medium text-gray-700">Entries</h3>
                   <p className="mt-1 text-gray-600">{selectedCompetition.entries}</p>
-                </div>
-                <div>
-                  <h3 className="text-sm font-medium text-gray-700">Eligibility</h3>
-                  <p className="mt-1 text-gray-600">{selectedCompetition.eligibility}</p>
                 </div>
                 <div>
                   <h3 className="text-sm font-medium text-gray-700">End Date</h3>
@@ -296,15 +284,6 @@ export default function CompetitionManagement() {
                     {selectedCompetition.drawTime 
                       ? new Date(selectedCompetition.drawTime).toLocaleString() 
                       : "Not set"}
-                  </p>
-                </div>
-                <div>
-                  <h3 className="text-sm font-medium text-gray-700">Verified</h3>
-                  <p className="mt-1 text-gray-600">
-                    {selectedCompetition.isVerified ? 
-                      <span className="text-cyan-600 font-medium">Yes</span> : 
-                      <span className="text-gray-500">No</span>
-                    }
                   </p>
                 </div>
                 <div>
