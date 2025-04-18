@@ -347,6 +347,19 @@
   animation: shine-faster 1.5s infinite linear;
 }
 
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) skewX(-12deg);
+  }
+  100% {
+    transform: translateX(200%) skewX(-12deg);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 3s infinite;
+}
+
 .text-gradient {
   background: linear-gradient(to right, #ff7e5f, #feb47b);
   -webkit-background-clip: text;

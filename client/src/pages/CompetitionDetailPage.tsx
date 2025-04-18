@@ -256,9 +256,9 @@ export default function CompetitionDetailPage() {
       <Button
         variant="ghost"
         className={`mb-6 relative z-10 group transition-all duration-300 font-medium
-          ${competition.category === 'family' ? 'text-amber-600 hover:text-amber-800' : 
-           competition.category === 'appliances' ? 'text-pink-600 hover:text-pink-800' : 
-           competition.category === 'cash' ? 'text-green-600 hover:text-green-800' : 
+          ${competition.type === 'family' ? 'text-amber-600 hover:text-amber-800' : 
+           competition.type === 'appliances' ? 'text-pink-600 hover:text-pink-800' : 
+           competition.type === 'cash' ? 'text-green-600 hover:text-green-800' : 
            'text-blue-600 hover:text-blue-800'}`}
         onClick={() => setLocation('/competitions')}
       >
@@ -266,9 +266,9 @@ export default function CompetitionDetailPage() {
         <span className="relative">
           Back to Competitions
           <span className={`absolute inset-x-0 bottom-0 h-0.5 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left
-            ${competition.category === 'family' ? 'bg-amber-500' : 
-             competition.category === 'appliances' ? 'bg-pink-500' : 
-             competition.category === 'cash' ? 'bg-green-500' : 
+            ${competition.type === 'family' ? 'bg-amber-500' : 
+             competition.type === 'appliances' ? 'bg-pink-500' : 
+             competition.type === 'cash' ? 'bg-green-500' : 
              'bg-blue-500'}`}></span>
         </span>
       </Button>
@@ -293,9 +293,9 @@ export default function CompetitionDetailPage() {
                 size="icon" 
                 className={`rounded-full backdrop-blur-sm border transition-colors duration-300
                   ${competition.isBookmarked ? 
-                    competition.category === 'family' ? 'border-amber-400 bg-amber-500/20 text-amber-400 hover:bg-amber-500/30' : 
-                    competition.category === 'appliances' ? 'border-pink-400 bg-pink-500/20 text-pink-400 hover:bg-pink-500/30' : 
-                    competition.category === 'cash' ? 'border-green-400 bg-green-500/20 text-green-400 hover:bg-green-500/30' : 
+                    competition.type === 'family' ? 'border-amber-400 bg-amber-500/20 text-amber-400 hover:bg-amber-500/30' : 
+                    competition.type === 'appliances' ? 'border-pink-400 bg-pink-500/20 text-pink-400 hover:bg-pink-500/30' : 
+                    competition.type === 'cash' ? 'border-green-400 bg-green-500/20 text-green-400 hover:bg-green-500/30' : 
                     'border-blue-400 bg-blue-500/20 text-blue-400 hover:bg-blue-500/30' : 
                   'border-white/30 bg-white/10 text-white hover:bg-white/20'}`}
                 onClick={() => handleBookmark(competition.id)}
@@ -307,9 +307,9 @@ export default function CompetitionDetailPage() {
                 size="icon" 
                 className={`rounded-full backdrop-blur-sm border transition-colors duration-300
                   ${competition.isLiked ? 
-                    competition.category === 'family' ? 'border-amber-400 bg-amber-500/20 text-amber-400 hover:bg-amber-500/30' : 
-                    competition.category === 'appliances' ? 'border-pink-400 bg-pink-500/20 text-pink-400 hover:bg-pink-500/30' : 
-                    competition.category === 'cash' ? 'border-green-400 bg-green-500/20 text-green-400 hover:bg-green-500/30' : 
+                    competition.type === 'family' ? 'border-amber-400 bg-amber-500/20 text-amber-400 hover:bg-amber-500/30' : 
+                    competition.type === 'appliances' ? 'border-pink-400 bg-pink-500/20 text-pink-400 hover:bg-pink-500/30' : 
+                    competition.type === 'cash' ? 'border-green-400 bg-green-500/20 text-green-400 hover:bg-green-500/30' : 
                     'border-blue-400 bg-blue-500/20 text-blue-400 hover:bg-blue-500/30' : 
                   'border-white/30 bg-white/10 text-white hover:bg-white/20'}`}
                 onClick={() => handleLike(competition.id)}
@@ -321,11 +321,11 @@ export default function CompetitionDetailPage() {
             {/* Title and organizer */}
             <div className="mt-auto space-y-2">
               <div className={`inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-2
-                ${competition.category === 'family' ? 'bg-amber-500/80 text-white' : 
-                 competition.category === 'appliances' ? 'bg-pink-500/80 text-white' : 
-                 competition.category === 'cash' ? 'bg-green-500/80 text-white' : 
+                ${competition.type === 'family' ? 'bg-amber-500/80 text-white' : 
+                 competition.type === 'appliances' ? 'bg-pink-500/80 text-white' : 
+                 competition.type === 'cash' ? 'bg-green-500/80 text-white' : 
                  'bg-blue-500/80 text-white'}`}>
-                {competition.category}
+                {competition.type.charAt(0).toUpperCase() + competition.type.slice(1)}
               </div>
               <h1 className="text-4xl sm:text-5xl font-extrabold text-white drop-shadow-md">{competition.title}</h1>
               <p className="text-white/80 text-lg flex items-center">
@@ -344,74 +344,74 @@ export default function CompetitionDetailPage() {
           {/* Top statistics with glass-morphism cards */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 -mt-16 mb-12 relative z-20">
             <div className={`flex flex-col items-center p-6 rounded-xl backdrop-blur-md border shadow-lg transform hover:translate-y-[-4px] transition-all duration-300
-              ${competition.category === 'family' ? 'bg-amber-50/90 border-amber-200 shadow-amber-100/20' : 
-               competition.category === 'appliances' ? 'bg-pink-50/90 border-pink-200 shadow-pink-100/20' : 
-               competition.category === 'cash' ? 'bg-green-50/90 border-green-200 shadow-green-100/20' : 
+              ${competition.type === 'family' ? 'bg-amber-50/90 border-amber-200 shadow-amber-100/20' : 
+               competition.type === 'appliances' ? 'bg-pink-50/90 border-pink-200 shadow-pink-100/20' : 
+               competition.type === 'cash' ? 'bg-green-50/90 border-green-200 shadow-green-100/20' : 
                'bg-blue-50/90 border-blue-200 shadow-blue-100/20'}`}>
               <Trophy className={`h-7 w-7 mb-3
-                ${competition.category === 'family' ? 'text-amber-500' : 
-                 competition.category === 'appliances' ? 'text-pink-500' : 
-                 competition.category === 'cash' ? 'text-green-500' : 
+                ${competition.type === 'family' ? 'text-amber-500' : 
+                 competition.type === 'appliances' ? 'text-pink-500' : 
+                 competition.type === 'cash' ? 'text-green-500' : 
                  'text-blue-500'}`} />
               <span className="text-sm text-gray-500 dark:text-gray-400 font-medium">Prize</span>
               <span className={`text-xl md:text-2xl font-bold mt-1
-                ${competition.category === 'family' ? 'text-amber-700 dark:text-amber-400' : 
-                 competition.category === 'appliances' ? 'text-pink-700 dark:text-pink-400' : 
-                 competition.category === 'cash' ? 'text-green-700 dark:text-green-400' : 
+                ${competition.type === 'family' ? 'text-amber-700 dark:text-amber-400' : 
+                 competition.type === 'appliances' ? 'text-pink-700 dark:text-pink-400' : 
+                 competition.type === 'cash' ? 'text-green-700 dark:text-green-400' : 
                  'text-blue-700 dark:text-blue-400'}`}>£{competition.prize.toLocaleString()}</span>
             </div>
             
             <div className={`flex flex-col items-center p-6 rounded-xl backdrop-blur-md border shadow-lg transform hover:translate-y-[-4px] transition-all duration-300
-              ${competition.category === 'family' ? 'bg-amber-50/90 border-amber-200 shadow-amber-100/20' : 
-               competition.category === 'appliances' ? 'bg-pink-50/90 border-pink-200 shadow-pink-100/20' : 
-               competition.category === 'cash' ? 'bg-green-50/90 border-green-200 shadow-green-100/20' : 
+              ${competition.type === 'family' ? 'bg-amber-50/90 border-amber-200 shadow-amber-100/20' : 
+               competition.type === 'appliances' ? 'bg-pink-50/90 border-pink-200 shadow-pink-100/20' : 
+               competition.type === 'cash' ? 'bg-green-50/90 border-green-200 shadow-green-100/20' : 
                'bg-blue-50/90 border-blue-200 shadow-blue-100/20'}`}>
               <Users className={`h-7 w-7 mb-3
-                ${competition.category === 'family' ? 'text-amber-500' : 
-                 competition.category === 'appliances' ? 'text-pink-500' : 
-                 competition.category === 'cash' ? 'text-green-500' : 
+                ${competition.type === 'family' ? 'text-amber-500' : 
+                 competition.type === 'appliances' ? 'text-pink-500' : 
+                 competition.type === 'cash' ? 'text-green-500' : 
                  'text-blue-500'}`} />
               <span className="text-sm text-gray-500 dark:text-gray-400 font-medium">Entries</span>
               <span className={`text-xl md:text-2xl font-bold mt-1
-                ${competition.category === 'family' ? 'text-amber-700 dark:text-amber-400' : 
-                 competition.category === 'appliances' ? 'text-pink-700 dark:text-pink-400' : 
-                 competition.category === 'cash' ? 'text-green-700 dark:text-green-400' : 
+                ${competition.type === 'family' ? 'text-amber-700 dark:text-amber-400' : 
+                 competition.type === 'appliances' ? 'text-pink-700 dark:text-pink-400' : 
+                 competition.type === 'cash' ? 'text-green-700 dark:text-green-400' : 
                  'text-blue-700 dark:text-blue-400'}`}>{competition.entries}</span>
             </div>
             
             <div className={`flex flex-col items-center p-6 rounded-xl backdrop-blur-md border shadow-lg transform hover:translate-y-[-4px] transition-all duration-300
-              ${competition.category === 'family' ? 'bg-amber-50/90 border-amber-200 shadow-amber-100/20' : 
-               competition.category === 'appliances' ? 'bg-pink-50/90 border-pink-200 shadow-pink-100/20' : 
-               competition.category === 'cash' ? 'bg-green-50/90 border-green-200 shadow-green-100/20' : 
+              ${competition.type === 'family' ? 'bg-amber-50/90 border-amber-200 shadow-amber-100/20' : 
+               competition.type === 'appliances' ? 'bg-pink-50/90 border-pink-200 shadow-pink-100/20' : 
+               competition.type === 'cash' ? 'bg-green-50/90 border-green-200 shadow-green-100/20' : 
                'bg-blue-50/90 border-blue-200 shadow-blue-100/20'}`}>
               <Timer className={`h-7 w-7 mb-3
-                ${competition.category === 'family' ? 'text-amber-500' : 
-                 competition.category === 'appliances' ? 'text-pink-500' : 
-                 competition.category === 'cash' ? 'text-green-500' : 
+                ${competition.type === 'family' ? 'text-amber-500' : 
+                 competition.type === 'appliances' ? 'text-pink-500' : 
+                 competition.type === 'cash' ? 'text-green-500' : 
                  'text-blue-500'}`} />
               <span className="text-sm text-gray-500 dark:text-gray-400 font-medium">Ends In</span>
               <span className={`text-xl md:text-2xl font-bold mt-1
-                ${competition.category === 'family' ? 'text-amber-700 dark:text-amber-400' : 
-                 competition.category === 'appliances' ? 'text-pink-700 dark:text-pink-400' : 
-                 competition.category === 'cash' ? 'text-green-700 dark:text-green-400' : 
+                ${competition.type === 'family' ? 'text-amber-700 dark:text-amber-400' : 
+                 competition.type === 'appliances' ? 'text-pink-700 dark:text-pink-400' : 
+                 competition.type === 'cash' ? 'text-green-700 dark:text-green-400' : 
                  'text-blue-700 dark:text-blue-400'}`}>{getDaysRemaining()}</span>
             </div>
             
             <div className={`flex flex-col items-center p-6 rounded-xl backdrop-blur-md border shadow-lg transform hover:translate-y-[-4px] transition-all duration-300
-              ${competition.category === 'family' ? 'bg-amber-50/90 border-amber-200 shadow-amber-100/20' : 
-               competition.category === 'appliances' ? 'bg-pink-50/90 border-pink-200 shadow-pink-100/20' : 
-               competition.category === 'cash' ? 'bg-green-50/90 border-green-200 shadow-green-100/20' : 
+              ${competition.type === 'family' ? 'bg-amber-50/90 border-amber-200 shadow-amber-100/20' : 
+               competition.type === 'appliances' ? 'bg-pink-50/90 border-pink-200 shadow-pink-100/20' : 
+               competition.type === 'cash' ? 'bg-green-50/90 border-green-200 shadow-green-100/20' : 
                'bg-blue-50/90 border-blue-200 shadow-blue-100/20'}`}>
               <Globe className={`h-7 w-7 mb-3
-                ${competition.category === 'family' ? 'text-amber-500' : 
-                 competition.category === 'appliances' ? 'text-pink-500' : 
-                 competition.category === 'cash' ? 'text-green-500' : 
+                ${competition.type === 'family' ? 'text-amber-500' : 
+                 competition.type === 'appliances' ? 'text-pink-500' : 
+                 competition.type === 'cash' ? 'text-green-500' : 
                  'text-blue-500'}`} />
               <span className="text-sm text-gray-500 dark:text-gray-400 font-medium">Eligibility</span>
               <span className={`text-xl md:text-2xl font-bold mt-1
-                ${competition.category === 'family' ? 'text-amber-700 dark:text-amber-400' : 
-                 competition.category === 'appliances' ? 'text-pink-700 dark:text-pink-400' : 
-                 competition.category === 'cash' ? 'text-green-700 dark:text-green-400' : 
+                ${competition.type === 'family' ? 'text-amber-700 dark:text-amber-400' : 
+                 competition.type === 'appliances' ? 'text-pink-700 dark:text-pink-400' : 
+                 competition.type === 'cash' ? 'text-green-700 dark:text-green-400' : 
                  'text-blue-700 dark:text-blue-400'}`}>{competition.eligibility}</span>
             </div>
           </div>
@@ -421,15 +421,15 @@ export default function CompetitionDetailPage() {
               {/* Description with improved typography */}
               <div>
                 <h2 className={`text-2xl font-bold mb-4 inline-block
-                  ${competition.category === 'family' ? 'text-amber-800 dark:text-amber-400' : 
-                   competition.category === 'appliances' ? 'text-pink-800 dark:text-pink-400' : 
-                   competition.category === 'cash' ? 'text-green-800 dark:text-green-400' : 
+                  ${competition.type === 'family' ? 'text-amber-800 dark:text-amber-400' : 
+                   competition.type === 'appliances' ? 'text-pink-800 dark:text-pink-400' : 
+                   competition.type === 'cash' ? 'text-green-800 dark:text-green-400' : 
                    'text-blue-800 dark:text-blue-400'}`}>
                   About This Competition
                   <div className={`h-1 w-20 mt-1 rounded-full
-                    ${competition.category === 'family' ? 'bg-amber-500' : 
-                     competition.category === 'appliances' ? 'bg-pink-500' : 
-                     competition.category === 'cash' ? 'bg-green-500' : 
+                    ${competition.type === 'family' ? 'bg-amber-500' : 
+                     competition.type === 'appliances' ? 'bg-pink-500' : 
+                     competition.type === 'cash' ? 'bg-green-500' : 
                      'bg-blue-500'}`}></div>
                 </h2>
                 <div className="prose prose-lg max-w-none dark:prose-invert">
@@ -483,14 +483,14 @@ export default function CompetitionDetailPage() {
               {/* Countdown timer with modern design */}
               {competition.drawTime && (
                 <div className={`rounded-2xl backdrop-blur-sm border-2 overflow-hidden shadow-xl
-                  ${competition.category === 'family' ? 'bg-gradient-to-br from-amber-500/10 to-yellow-600/10 border-amber-400/50' : 
-                   competition.category === 'appliances' ? 'bg-gradient-to-br from-pink-500/10 to-rose-600/10 border-pink-400/50' : 
-                   competition.category === 'cash' ? 'bg-gradient-to-br from-green-500/10 to-emerald-600/10 border-green-400/50' : 
+                  ${competition.type === 'family' ? 'bg-gradient-to-br from-amber-500/10 to-yellow-600/10 border-amber-400/50' : 
+                   competition.type === 'appliances' ? 'bg-gradient-to-br from-pink-500/10 to-rose-600/10 border-pink-400/50' : 
+                   competition.type === 'cash' ? 'bg-gradient-to-br from-green-500/10 to-emerald-600/10 border-green-400/50' : 
                    'bg-gradient-to-br from-blue-500/10 to-indigo-600/10 border-blue-400/50'}`}>
                   <div className={`py-4 px-6 border-b-2 flex items-center justify-between
-                    ${competition.category === 'family' ? 'bg-amber-500/80 border-amber-400/50' : 
-                     competition.category === 'appliances' ? 'bg-pink-500/80 border-pink-400/50' : 
-                     competition.category === 'cash' ? 'bg-green-500/80 border-green-400/50' : 
+                    ${competition.type === 'family' ? 'bg-amber-500/80 border-amber-400/50' : 
+                     competition.type === 'appliances' ? 'bg-pink-500/80 border-pink-400/50' : 
+                     competition.type === 'cash' ? 'bg-green-500/80 border-green-400/50' : 
                      'bg-blue-500/80 border-blue-400/50'}`}>
                     <div className="flex items-center">
                       <Clock className="h-5 w-5 text-white mr-2 animate-pulse" />
@@ -505,9 +505,9 @@ export default function CompetitionDetailPage() {
                       targetDate={competition.drawTime} 
                       showIcon={false}
                       categoryTheme={
-                        competition.category === 'family' ? 'family' :
-                        competition.category === 'appliances' ? 'appliances' :
-                        competition.category === 'cash' ? 'cash' : 
+                        competition.type === 'family' ? 'family' :
+                        competition.type === 'appliances' ? 'appliances' :
+                        competition.type === 'cash' ? 'cash' : 
                         undefined
                       }
                     />
@@ -517,14 +517,14 @@ export default function CompetitionDetailPage() {
 
               {/* Ticket Purchase Box with enhanced design */}
               <div className={`rounded-2xl overflow-hidden shadow-xl border-2 backdrop-blur-sm
-                ${competition.category === 'family' ? 'bg-gradient-to-br from-amber-500/5 to-yellow-600/5 border-amber-400/30' : 
-                 competition.category === 'appliances' ? 'bg-gradient-to-br from-pink-500/5 to-rose-600/5 border-pink-400/30' : 
-                 competition.category === 'cash' ? 'bg-gradient-to-br from-green-500/5 to-emerald-600/5 border-green-400/30' : 
+                ${competition.type === 'family' ? 'bg-gradient-to-br from-amber-500/5 to-yellow-600/5 border-amber-400/30' : 
+                 competition.type === 'appliances' ? 'bg-gradient-to-br from-pink-500/5 to-rose-600/5 border-pink-400/30' : 
+                 competition.type === 'cash' ? 'bg-gradient-to-br from-green-500/5 to-emerald-600/5 border-green-400/30' : 
                  'bg-gradient-to-br from-blue-500/5 to-indigo-600/5 border-blue-400/30'}`}>
                 <div className={`py-4 px-6 border-b-2
-                  ${competition.category === 'family' ? 'bg-amber-500 border-amber-400' : 
-                   competition.category === 'appliances' ? 'bg-pink-500 border-pink-400' : 
-                   competition.category === 'cash' ? 'bg-green-500 border-green-400' : 
+                  ${competition.type === 'family' ? 'bg-amber-500 border-amber-400' : 
+                   competition.type === 'appliances' ? 'bg-pink-500 border-pink-400' : 
+                   competition.type === 'cash' ? 'bg-green-500 border-green-400' : 
                    'bg-blue-500 border-blue-400'}`}>
                   <h3 className="text-lg font-bold text-white">GET YOUR TICKETS</h3>
                 </div>
@@ -533,16 +533,16 @@ export default function CompetitionDetailPage() {
                   <div className="p-6">
                     <div className="flex items-center justify-between mb-4">
                       <h4 className={`text-lg font-semibold
-                        ${competition.category === 'family' ? 'text-amber-700 dark:text-amber-400' : 
-                         competition.category === 'appliances' ? 'text-pink-700 dark:text-pink-400' : 
-                         competition.category === 'cash' ? 'text-green-700 dark:text-green-400' : 
+                        ${competition.type === 'family' ? 'text-amber-700 dark:text-amber-400' : 
+                         competition.type === 'appliances' ? 'text-pink-700 dark:text-pink-400' : 
+                         competition.type === 'cash' ? 'text-green-700 dark:text-green-400' : 
                          'text-blue-700 dark:text-blue-400'}`}>
                         Your Tickets
                       </h4>
                       <div className={`px-3 py-1 rounded-full text-xs font-bold
-                        ${competition.category === 'family' ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-300' : 
-                         competition.category === 'appliances' ? 'bg-pink-100 text-pink-800 dark:bg-pink-900/50 dark:text-pink-300' : 
-                         competition.category === 'cash' ? 'bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300' : 
+                        ${competition.type === 'family' ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-300' : 
+                         competition.type === 'appliances' ? 'bg-pink-100 text-pink-800 dark:bg-pink-900/50 dark:text-pink-300' : 
+                         competition.type === 'cash' ? 'bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300' : 
                          'bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300'}`}>
                         {competition.ticketCount} {competition.ticketCount === 1 ? 'ticket' : 'tickets'}
                       </div>
@@ -554,9 +554,9 @@ export default function CompetitionDetailPage() {
                         <div className="flex flex-wrap gap-2">
                           {competition.ticketNumbers.map(number => (
                             <span key={number} className={`px-3 py-1 rounded-full text-sm font-medium bg-white dark:bg-gray-800 border
-                              ${competition.category === 'family' ? 'border-amber-300 text-amber-800 dark:border-amber-800 dark:text-amber-300' : 
-                               competition.category === 'appliances' ? 'border-pink-300 text-pink-800 dark:border-pink-800 dark:text-pink-300' : 
-                               competition.category === 'cash' ? 'border-green-300 text-green-800 dark:border-green-800 dark:text-green-300' : 
+                              ${competition.type === 'family' ? 'border-amber-300 text-amber-800 dark:border-amber-800 dark:text-amber-300' : 
+                               competition.type === 'appliances' ? 'border-pink-300 text-pink-800 dark:border-pink-800 dark:text-pink-300' : 
+                               competition.type === 'cash' ? 'border-green-300 text-green-800 dark:border-green-800 dark:text-green-300' : 
                                'border-blue-300 text-blue-800 dark:border-blue-800 dark:text-blue-300'}`}>
                               #{number}
                             </span>
@@ -569,9 +569,9 @@ export default function CompetitionDetailPage() {
                       <Button
                         onClick={() => setIsTicketModalOpen(true)}
                         className={`w-full text-white font-bold py-3 rounded-r-none rounded-l-xl relative overflow-hidden group
-                          ${competition.category === 'family' ? 'bg-gradient-to-r from-amber-500 to-yellow-600' : 
-                           competition.category === 'appliances' ? 'bg-gradient-to-r from-pink-500 to-rose-600' : 
-                           competition.category === 'cash' ? 'bg-gradient-to-r from-green-500 to-emerald-600' : 
+                          ${competition.type === 'family' ? 'bg-gradient-to-r from-amber-500 to-yellow-600' : 
+                           competition.type === 'appliances' ? 'bg-gradient-to-r from-pink-500 to-rose-600' : 
+                           competition.type === 'cash' ? 'bg-gradient-to-r from-green-500 to-emerald-600' : 
                            'bg-gradient-to-r from-blue-500 to-indigo-600'}`}
                       >
                         <span className="relative z-10 flex items-center justify-center">
@@ -592,9 +592,9 @@ export default function CompetitionDetailPage() {
                       <div>
                         <div className="text-sm text-gray-500 dark:text-gray-400">Price per ticket</div>
                         <div className={`text-xl font-bold
-                          ${competition.category === 'family' ? 'text-amber-700 dark:text-amber-400' : 
-                           competition.category === 'appliances' ? 'text-pink-700 dark:text-pink-400' : 
-                           competition.category === 'cash' ? 'text-green-700 dark:text-green-400' : 
+                          ${competition.type === 'family' ? 'text-amber-700 dark:text-amber-400' : 
+                           competition.type === 'appliances' ? 'text-pink-700 dark:text-pink-400' : 
+                           competition.type === 'cash' ? 'text-green-700 dark:text-green-400' : 
                            'text-blue-700 dark:text-blue-400'}`}>
                           £{(competition.ticketPrice ? competition.ticketPrice/100 : 9.99).toFixed(2)}
                         </div>
@@ -603,9 +603,9 @@ export default function CompetitionDetailPage() {
                       <div>
                         <div className="text-sm text-gray-500 dark:text-gray-400">Available</div>
                         <div className={`text-xl font-bold
-                          ${competition.category === 'family' ? 'text-amber-700 dark:text-amber-400' : 
-                           competition.category === 'appliances' ? 'text-pink-700 dark:text-pink-400' : 
-                           competition.category === 'cash' ? 'text-green-700 dark:text-green-400' : 
+                          ${competition.type === 'family' ? 'text-amber-700 dark:text-amber-400' : 
+                           competition.type === 'appliances' ? 'text-pink-700 dark:text-pink-400' : 
+                           competition.type === 'cash' ? 'text-green-700 dark:text-green-400' : 
                            'text-blue-700 dark:text-blue-400'}`}>
                           {competition.totalTickets - competition.soldTickets} tickets
                         </div>
@@ -616,9 +616,9 @@ export default function CompetitionDetailPage() {
                       onClick={handleEnterCompetition}
                       disabled={isEnded || isProcessing}
                       className={`w-full text-white font-bold py-3 rounded-r-none rounded-l-xl relative overflow-hidden group
-                        ${competition.category === 'family' ? 'bg-gradient-to-r from-amber-500 to-yellow-600' : 
-                         competition.category === 'appliances' ? 'bg-gradient-to-r from-pink-500 to-rose-600' : 
-                         competition.category === 'cash' ? 'bg-gradient-to-r from-green-500 to-emerald-600' : 
+                        ${competition.type === 'family' ? 'bg-gradient-to-r from-amber-500 to-yellow-600' : 
+                         competition.type === 'appliances' ? 'bg-gradient-to-r from-pink-500 to-rose-600' : 
+                         competition.type === 'cash' ? 'bg-gradient-to-r from-green-500 to-emerald-600' : 
                          'bg-gradient-to-r from-blue-500 to-indigo-600'}`}
                     >
                       <span className="relative z-10 flex items-center justify-center">
@@ -659,20 +659,7 @@ export default function CompetitionDetailPage() {
         />
       )}
       
-      {/* Add this to your global CSS for the shimmer animation */}
-      <style jsx>{`
-        @keyframes shimmer {
-          0% {
-            transform: translateX(-100%) skewX(-12deg);
-          }
-          100% {
-            transform: translateX(200%) skewX(-12deg);
-          }
-        }
-        .animate-shimmer {
-          animation: shimmer 3s infinite;
-        }
-      `}</style>
+      {/* Shimmer animation is handled in global CSS */}
     </div>
   );
 }
