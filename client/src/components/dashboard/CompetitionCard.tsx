@@ -387,49 +387,64 @@ export default function CompetitionCard({
         
         {/* Countdown timer section - styled with category-specific gradients and animations */}
         {drawTime && (
-          <div className="px-4 pt-1 pb-4 grid grid-cols-4 gap-2.5">
+          <div className="px-4 pt-3 pb-5 grid grid-cols-4 gap-2.5 mt-1">
             <div className="flex flex-col items-center">
               <div className={`w-full text-white rounded-lg shadow-inner flex items-center justify-center 
-                ${categoryTheme === 'family' ? 'bg-gradient-to-br from-amber-500 to-amber-700 border border-amber-600' : 
-                 categoryTheme === 'appliances' ? 'bg-gradient-to-br from-pink-500 to-pink-700 border border-pink-600' : 
-                 categoryTheme === 'cash' ? 'bg-gradient-to-br from-green-500 to-green-700 border border-green-600' : 
-                 'bg-gradient-to-br from-blue-500 to-blue-700 border border-blue-600'}`}>
+                ${categoryTheme === 'family' ? 'bg-gradient-to-br from-amber-400 to-amber-600 border border-amber-500 shadow-[0_0_10px_rgba(251,191,36,0.6)]' : 
+                 categoryTheme === 'appliances' ? 'bg-gradient-to-br from-pink-400 to-pink-600 border border-pink-500 shadow-[0_0_10px_rgba(236,72,153,0.6)]' : 
+                 categoryTheme === 'cash' ? 'bg-gradient-to-br from-green-400 to-green-600 border border-green-500 shadow-[0_0_10px_rgba(16,185,129,0.6)]' : 
+                 'bg-gradient-to-br from-blue-400 to-blue-600 border border-blue-500 shadow-[0_0_10px_rgba(14,165,233,0.6)]'}`}>
                 <span className="text-xl font-bold py-2 font-mono">
                   {timeRemaining?.days.toString().padStart(2, '0') || '00'}
                 </span>
               </div>
-              <span className="text-xs font-semibold text-gray-400 mt-1">DAYS</span>
+              <span className={`text-xs font-semibold mt-1 ${
+                categoryTheme === 'family' ? 'text-amber-300' : 
+                categoryTheme === 'appliances' ? 'text-pink-300' : 
+                categoryTheme === 'cash' ? 'text-green-300' : 
+                'text-cyan-300'
+              }`}>DAYS</span>
             </div>
             <div className="flex flex-col items-center">
               <div className={`w-full text-white rounded-lg shadow-inner flex items-center justify-center 
-                ${categoryTheme === 'family' ? 'bg-gradient-to-br from-amber-500 to-amber-700 border border-amber-600' : 
-                 categoryTheme === 'appliances' ? 'bg-gradient-to-br from-pink-500 to-pink-700 border border-pink-600' : 
-                 categoryTheme === 'cash' ? 'bg-gradient-to-br from-green-500 to-green-700 border border-green-600' : 
-                 'bg-gradient-to-br from-blue-500 to-blue-700 border border-blue-600'}`}>
+                ${categoryTheme === 'family' ? 'bg-gradient-to-br from-amber-400 to-amber-600 border border-amber-500 shadow-[0_0_10px_rgba(251,191,36,0.6)]' : 
+                 categoryTheme === 'appliances' ? 'bg-gradient-to-br from-pink-400 to-pink-600 border border-pink-500 shadow-[0_0_10px_rgba(236,72,153,0.6)]' : 
+                 categoryTheme === 'cash' ? 'bg-gradient-to-br from-green-400 to-green-600 border border-green-500 shadow-[0_0_10px_rgba(16,185,129,0.6)]' : 
+                 'bg-gradient-to-br from-blue-400 to-blue-600 border border-blue-500 shadow-[0_0_10px_rgba(14,165,233,0.6)]'}`}>
                 <span className="text-xl font-bold py-2 font-mono">
                   {timeRemaining?.hours.toString().padStart(2, '0') || '00'}
                 </span>
               </div>
-              <span className="text-xs font-semibold text-gray-400 mt-1">HOURS</span>
+              <span className={`text-xs font-semibold mt-1 ${
+                categoryTheme === 'family' ? 'text-amber-300' : 
+                categoryTheme === 'appliances' ? 'text-pink-300' : 
+                categoryTheme === 'cash' ? 'text-green-300' : 
+                'text-cyan-300'
+              }`}>HOURS</span>
             </div>
             <div className="flex flex-col items-center">
               <div className={`w-full text-white rounded-lg shadow-inner flex items-center justify-center 
-                ${categoryTheme === 'family' ? 'bg-gradient-to-br from-amber-500 to-amber-700 border border-amber-600' : 
-                 categoryTheme === 'appliances' ? 'bg-gradient-to-br from-pink-500 to-pink-700 border border-pink-600' : 
-                 categoryTheme === 'cash' ? 'bg-gradient-to-br from-green-500 to-green-700 border border-green-600' : 
-                 'bg-gradient-to-br from-blue-500 to-blue-700 border border-blue-600'}`}>
+                ${categoryTheme === 'family' ? 'bg-gradient-to-br from-amber-400 to-amber-600 border border-amber-500 shadow-[0_0_10px_rgba(251,191,36,0.6)]' : 
+                 categoryTheme === 'appliances' ? 'bg-gradient-to-br from-pink-400 to-pink-600 border border-pink-500 shadow-[0_0_10px_rgba(236,72,153,0.6)]' : 
+                 categoryTheme === 'cash' ? 'bg-gradient-to-br from-green-400 to-green-600 border border-green-500 shadow-[0_0_10px_rgba(16,185,129,0.6)]' : 
+                 'bg-gradient-to-br from-blue-400 to-blue-600 border border-blue-500 shadow-[0_0_10px_rgba(14,165,233,0.6)]'}`}>
                 <span className="text-xl font-bold py-2 font-mono">
                   {timeRemaining?.minutes.toString().padStart(2, '0') || '00'}
                 </span>
               </div>
-              <span className="text-xs font-semibold text-gray-400 mt-1">MINS</span>
+              <span className={`text-xs font-semibold mt-1 ${
+                categoryTheme === 'family' ? 'text-amber-300' : 
+                categoryTheme === 'appliances' ? 'text-pink-300' : 
+                categoryTheme === 'cash' ? 'text-green-300' : 
+                'text-cyan-300'
+              }`}>MINS</span>
             </div>
             <div className="flex flex-col items-center">
               <div className={`w-full text-white rounded-lg shadow-inner flex items-center justify-center animate-pulse
-                ${categoryTheme === 'family' ? 'bg-gradient-to-br from-amber-500 to-amber-700 border border-amber-600' : 
-                 categoryTheme === 'appliances' ? 'bg-gradient-to-br from-pink-500 to-pink-700 border border-pink-600' : 
-                 categoryTheme === 'cash' ? 'bg-gradient-to-br from-green-500 to-green-700 border border-green-600' : 
-                 'bg-gradient-to-br from-blue-500 to-blue-700 border border-blue-600'}`}>
+                ${categoryTheme === 'family' ? 'bg-gradient-to-br from-amber-400 to-amber-600 border border-amber-500 shadow-[0_0_15px_rgba(251,191,36,0.7)]' : 
+                 categoryTheme === 'appliances' ? 'bg-gradient-to-br from-pink-400 to-pink-600 border border-pink-500 shadow-[0_0_15px_rgba(236,72,153,0.7)]' : 
+                 categoryTheme === 'cash' ? 'bg-gradient-to-br from-green-400 to-green-600 border border-green-500 shadow-[0_0_15px_rgba(16,185,129,0.7)]' : 
+                 'bg-gradient-to-br from-blue-400 to-blue-600 border border-blue-500 shadow-[0_0_15px_rgba(14,165,233,0.7)]'}`}>
                 <span className="text-xl font-bold py-2 font-mono">
                   {timeRemaining?.seconds.toString().padStart(2, '0') || '00'}
                 </span>
