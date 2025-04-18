@@ -334,6 +334,19 @@
   }
 }
 
+@keyframes shine-faster {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.shine-effect-fast {
+  animation: shine-faster 1.5s infinite linear;
+}
+
 .text-gradient {
   background: linear-gradient(to right, #ff7e5f, #feb47b);
   -webkit-background-clip: text;

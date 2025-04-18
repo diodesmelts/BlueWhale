@@ -517,14 +517,16 @@ export default function CompetitionCard({
               setTicketModalOpen(true);
             }}
             disabled={isPaying}
-            className={`px-6 py-3 h-full text-white font-bold text-sm transition-all duration-300 rounded-none shadow-lg 
-              ${categoryTheme === 'family' ? 'bg-gradient-to-r from-amber-600 to-amber-800 hover:from-amber-700 hover:to-amber-900 hover:shadow-[0_0_15px_rgba(251,191,36,0.5)]' : 
-               categoryTheme === 'appliances' ? 'bg-gradient-to-r from-pink-600 to-pink-800 hover:from-pink-700 hover:to-pink-900 hover:shadow-[0_0_15px_rgba(236,72,153,0.5)]' : 
-               categoryTheme === 'cash' ? 'bg-gradient-to-r from-green-600 to-green-800 hover:from-green-700 hover:to-green-900 hover:shadow-[0_0_15px_rgba(16,185,129,0.5)]' : 
-               'bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 hover:shadow-[0_0_15px_rgba(14,165,233,0.5)]'}`}
+            className={`group px-6 py-3 h-full text-white font-bold text-sm transition-all duration-300 rounded-none shadow-lg 
+              bg-gradient-to-r from-yellow-600 via-amber-500 to-yellow-600 hover:from-yellow-500 hover:via-amber-400 hover:to-yellow-500 
+              hover:shadow-[0_0_20px_rgba(251,191,36,0.7)] relative overflow-hidden border border-yellow-300/50`}
           >
-            <i className="fas fa-ticket-alt mr-2"></i>
-            GET TICKETS
+            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-yellow-100/40 to-transparent shine-effect-fast" />
+            <span className="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0iI0ZGRiIgZmlsbC1ydWxlPSJldmVub2RkIj48Y2lyY2xlIGN4PSIxIiBjeT0iMSIgcj0iMSIvPjwvZz48L3N2Zz4=')]"></span>
+            <span className="relative z-10 flex items-center justify-center text-shadow drop-shadow-md">
+              <i className="fas fa-ticket-alt mr-2 text-white"></i>
+              GET TICKETS
+            </span>
           </Button>
         </div>
       </div>
