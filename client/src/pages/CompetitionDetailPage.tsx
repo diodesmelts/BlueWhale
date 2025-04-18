@@ -79,7 +79,7 @@ export default function CompetitionDetailPage() {
     }
   }, [error, setLocation, toast]);
 
-  const handlePurchaseTickets = (ticketCount: number) => {
+  const handlePurchaseTickets = (ticketCount: number, selectedNumbers?: number[]) => {
     if (!competition) return;
     
     const totalAmount = competition.ticketPrice * ticketCount;
@@ -90,7 +90,8 @@ export default function CompetitionDetailPage() {
       ticketCount,
       paymentType: 'ticket_purchase',
       metadata: {
-        competitionTitle: competition.title
+        competitionTitle: competition.title,
+        selectedNumbers: selectedNumbers ? selectedNumbers.join(',') : undefined
       }
     });
     

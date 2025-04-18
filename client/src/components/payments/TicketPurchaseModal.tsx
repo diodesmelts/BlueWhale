@@ -1,14 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
+import { Switch } from "@/components/ui/switch";
+import { Sparkles } from "lucide-react";
 
 interface TicketPurchaseModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onPurchase: (ticketCount: number) => void;
+  onPurchase: (ticketCount: number, selectedNumbers?: number[]) => void;
   competition: {
     title: string;
     ticketPrice: number | null;
@@ -36,9 +38,42 @@ export default function TicketPurchaseModal({
   
   const [ticketCount, setTicketCount] = useState(1);
   const [internalProcessing, setInternalProcessing] = useState(false);
+  const [useLuckyDip, setUseLuckyDip] = useState(false);
+  const [luckyNumbers, setLuckyNumbers] = useState<number[]>([]);
   
   // Use external processing state if provided, otherwise use internal
   const isProcessing = externalProcessing !== undefined ? externalProcessing : internalProcessing;
+  
+  // Generate lucky dip numbers when ticket count changes or lucky dip is toggled
+  useEffect(() => {
+    if (useLuckyDip) {
+      const newLuckyNumbers: number[] = [];
+      // To make this feel more random, we'll add a slight delay
+      const timer = setTimeout(() => {
+        // Generate random numbers based on available tickets
+        // Ensure we don't pick the same number twice
+        const soldTicketsArray = Array.from({ length: soldTickets || 0 }, (_, i) => i + 1);
+        const availableNumbersPool = Array.from(
+          { length: totalTickets || 100 }, 
+          (_, i) => i + 1
+        ).filter(num => !soldTicketsArray.includes(num));
+        
+        // Shuffle array to get random numbers
+        const shuffled = [...availableNumbersPool].sort(() => 0.5 - Math.random());
+        
+        // Pick ticketCount numbers
+        for (let i = 0; i < Math.min(ticketCount, shuffled.length); i++) {
+          newLuckyNumbers.push(shuffled[i]);
+        }
+        
+        setLuckyNumbers(newLuckyNumbers);
+      }, 300);
+      
+      return () => clearTimeout(timer);
+    } else {
+      setLuckyNumbers([]);
+    }
+  }, [ticketCount, useLuckyDip, totalTickets, soldTickets]);
   
   const handleTicketCountChange = (value: number[]) => {
     setTicketCount(value[0]);
@@ -56,7 +91,12 @@ export default function TicketPurchaseModal({
     if (externalProcessing === undefined) {
       setInternalProcessing(true);
     }
-    onPurchase(ticketCount);
+    // Pass lucky numbers if using lucky dip, otherwise just pass the ticket count
+    if (useLuckyDip && luckyNumbers.length > 0) {
+      onPurchase(ticketCount, luckyNumbers);
+    } else {
+      onPurchase(ticketCount);
+    }
   };
   
   const totalPrice = (pricePerTicket * ticketCount).toFixed(2);
@@ -133,6 +173,64 @@ export default function TicketPurchaseModal({
                  competition.type === 'cash' ? 'text-green-700' : 
                  'text-primary'}`}>£{totalPrice}</span>
             </div>
+          </div>
+          
+          {/* Lucky Dip Option */}
+          <div className={`p-4 rounded-lg 
+            ${competition.type === 'family' ? 'bg-amber-100/80' : 
+             competition.type === 'appliances' ? 'bg-pink-100/80' : 
+             competition.type === 'cash' ? 'bg-green-100/80' : 
+             'bg-blue-100/80'}`}>
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center">
+                <Sparkles className={`h-5 w-5 mr-2
+                  ${competition.type === 'family' ? 'text-amber-500' : 
+                   competition.type === 'appliances' ? 'text-pink-500' : 
+                   competition.type === 'cash' ? 'text-green-500' : 
+                   'text-blue-500'}`} />
+                <Label htmlFor="luckyDip" className="font-medium">Lucky Dip Selection</Label>
+              </div>
+              <Switch 
+                id="luckyDip" 
+                checked={useLuckyDip}
+                onCheckedChange={setUseLuckyDip}
+                className={`
+                  ${competition.type === 'family' ? 'data-[state=checked]:bg-amber-600' : 
+                   competition.type === 'appliances' ? 'data-[state=checked]:bg-pink-600' : 
+                   competition.type === 'cash' ? 'data-[state=checked]:bg-green-600' : 
+                   'data-[state=checked]:bg-blue-600'}`}
+              />
+            </div>
+            <p className="text-sm text-gray-600 mb-3">
+              Let us pick your lucky ticket numbers from the available pool
+            </p>
+            
+            {useLuckyDip && (
+              <div className="mt-3">
+                <div className="text-sm font-medium mb-2">Your lucky numbers:</div>
+                <div className="flex flex-wrap gap-2">
+                  {luckyNumbers.length > 0 ? (
+                    luckyNumbers.map(number => (
+                      <span key={number} className={`px-3 py-1 rounded-full text-sm font-medium text-white
+                        ${competition.type === 'family' ? 'bg-amber-500 border-amber-600' : 
+                         competition.type === 'appliances' ? 'bg-pink-500 border-pink-600' : 
+                         competition.type === 'cash' ? 'bg-green-500 border-green-600' : 
+                         'bg-blue-500 border-blue-600'}`}>
+                        #{number}
+                      </span>
+                    ))
+                  ) : (
+                    <div className="flex items-center justify-center w-full py-2">
+                      <div className={`animate-spin w-5 h-5 border-2 rounded-full 
+                        ${competition.type === 'family' ? 'border-amber-500 border-t-transparent' : 
+                         competition.type === 'appliances' ? 'border-pink-500 border-t-transparent' : 
+                         competition.type === 'cash' ? 'border-green-500 border-t-transparent' : 
+                         'border-blue-500 border-t-transparent'}`} />
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
           
           <div className={`p-3 rounded-lg text-sm
