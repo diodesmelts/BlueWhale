@@ -13,6 +13,7 @@ import MyEntries from "@/pages/MyEntries";
 import MyWins from "@/pages/MyWins";
 import Leaderboard from "@/pages/Leaderboard";
 import AdminPage from "@/pages/AdminPage";
+import ListingsPage from "@/pages/ListingsPage";
 import AuthPage from "@/pages/AuthPage";
 import AboutPage from "@/pages/AboutPage";
 import TermsPage from "@/pages/TermsPage";
@@ -62,9 +63,13 @@ function Router() {
         <MyWins />
       </ProtectedRoute>
       
-      {/* Admin protected route */}
+      {/* Admin protected routes */}
       <ProtectedRoute path="/admin" adminOnly={true}>
         <AdminPage />
+      </ProtectedRoute>
+      
+      <ProtectedRoute path="/listings" adminOnly={true}>
+        <ListingsPage />
       </ProtectedRoute>
       
       {/* Fallback route */}
