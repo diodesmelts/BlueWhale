@@ -188,7 +188,15 @@ export default function Dashboard() {
           <div className="flex flex-col justify-center items-center relative z-10 mx-auto max-w-6xl">
             <div className="text-white text-center">
               <h1 className="text-3xl md:text-5xl font-bold tracking-tight mb-3">
-                <span className="text-white">BLUE WHALE</span> <span className="text-white font-light">COMPETITIONS</span>
+                <span className="relative inline-block">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-300 to-blue-300 relative inline-block font-medium leading-tight tracking-wider" style={{ fontFamily: "Comic Sans MS, cursive, sans-serif" }}>
+                    competition time
+                    {/* Small sparkle in the corner */}
+                    <span className="absolute -top-2 -right-2 text-yellow-300 text-sm">✨</span>
+                  </span>
+                  {/* Subtle glow effect */}
+                  <span className="absolute -inset-1 bg-cyan-500/5 blur-2xl rounded-full"></span>
+                </span>
               </h1>
               <p className="text-base md:text-lg font-normal text-white/90 max-w-xl mx-auto">
                 Your premier destination for discovering, participating in, and winning exclusive competitions across multiple platforms.
