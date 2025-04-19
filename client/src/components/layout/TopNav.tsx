@@ -84,8 +84,8 @@ export default function TopNav() {
       <div className="h-3 w-full bg-gradient-to-r from-blue-400 via-cyan-500 to-purple-500"></div>
       
       <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center h-36 py-3">
-          <div className="flex items-center space-x-6 md:space-x-12">
+        <div className="flex justify-between items-center h-28 py-2">
+          <div className="flex items-center space-x-4 md:space-x-10">
             {/* Logo - Image */}
             <Link href="/">
               <div className="flex items-center group">
@@ -269,7 +269,7 @@ export default function TopNav() {
             ) : (
               // User is not logged in - show login button
               <Link href="/auth">
-                <Button className="flex items-center bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-700 hover:to-purple-700 text-white border-0 shadow-md px-5 py-6">
+                <Button className="flex items-center bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-700 hover:to-purple-700 text-white border-0 shadow-md px-5 py-5">
                   <LogIn className="h-5 w-5 mr-2" />
                   <span className="text-base font-medium">Sign In</span>
                 </Button>
