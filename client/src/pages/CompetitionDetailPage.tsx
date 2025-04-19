@@ -13,7 +13,8 @@ import {
   CheckCircle,
   Calendar,
   Ticket,
-  ChevronLeft
+  ChevronLeft,
+  Sparkles
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
@@ -27,7 +28,6 @@ export default function CompetitionDetailPage() {
   const { toast } = useToast();
   const competitionId = parseInt(params.id);
   const [isTicketModalOpen, setIsTicketModalOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('details');
   
   // Payment integration
   const { initiatePayment, isProcessing } = usePayment({
@@ -198,20 +198,20 @@ export default function CompetitionDetailPage() {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-screen bg-gray-950">
-        <div className="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full"></div>
+      <div className="flex justify-center items-center h-screen bg-[#0a101f]">
+        <div className="animate-spin w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full"></div>
       </div>
     );
   }
 
   if (!competition) {
     return (
-      <div className="min-h-screen bg-gray-950 text-white flex flex-col items-center justify-center p-4">
+      <div className="min-h-screen bg-[#0a101f] text-white flex flex-col items-center justify-center p-4">
         <h2 className="text-2xl font-bold mb-4">Competition not found</h2>
         <p className="text-gray-400 mb-6">This competition may have been removed or doesn't exist.</p>
         <button 
           onClick={() => setLocation('/competitions')}
-          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          className="px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium"
         >
           Back to Competitions
         </button>
@@ -222,13 +222,13 @@ export default function CompetitionDetailPage() {
   const isEnded = competition.drawTime ? new Date(competition.drawTime) < new Date() : false;
 
   return (
-    <div className="min-h-screen bg-gray-950">
-      {/* Header area with back button and competition title */}
-      <div className="bg-gray-900 border-b border-gray-800">
+    <div className="min-h-screen bg-[#0a101f]">
+      {/* Top navigation bar */}
+      <div className="bg-[#111827] border-b border-[#1e293b]">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center">
           <button 
             onClick={() => setLocation('/competitions')}
-            className="flex items-center text-gray-400 hover:text-white mr-4"
+            className="flex items-center text-gray-400 hover:text-white transition-colors mr-4"
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
@@ -236,12 +236,12 @@ export default function CompetitionDetailPage() {
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 py-6">
+      <div className="max-w-6xl mx-auto px-4 py-6 lg:py-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Left column - Main content */}
           <div className="lg:col-span-8 space-y-6">
             {/* Hero section with image */}
-            <div className="bg-gray-900 rounded-lg overflow-hidden">
+            <div className="bg-gradient-to-b from-[#111827] to-[#0f172a] rounded-xl overflow-hidden shadow-lg border border-[#1e293b]">
               <div className="relative">
                 {/* Main image with aspect ratio */}
                 <div className="relative pb-[56.25%]">
@@ -252,18 +252,18 @@ export default function CompetitionDetailPage() {
                   />
                   
                   {/* Overlay gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-70"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a] to-transparent opacity-70"></div>
                   
                   {/* Action buttons */}
                   <div className="absolute top-4 right-4 flex space-x-2">
                     <button 
-                      className={`p-2 rounded-full ${competition.isBookmarked ? 'bg-blue-600' : 'bg-black/40'} text-white transition-colors duration-200`}
+                      className={`p-2 rounded-full ${competition.isBookmarked ? 'bg-blue-600' : 'bg-black/40 backdrop-blur-sm'} text-white transition-colors duration-200 hover:shadow-lg`}
                       onClick={() => handleBookmark(competition.id)}
                     >
                       <Bookmark className="h-5 w-5" />
                     </button>
                     <button 
-                      className={`p-2 rounded-full ${competition.isLiked ? 'bg-rose-600' : 'bg-black/40'} text-white transition-colors duration-200`}
+                      className={`p-2 rounded-full ${competition.isLiked ? 'bg-rose-600' : 'bg-black/40 backdrop-blur-sm'} text-white transition-colors duration-200 hover:shadow-lg`}
                       onClick={() => handleLike(competition.id)}
                     >
                       <Heart className="h-5 w-5" />
@@ -272,29 +272,29 @@ export default function CompetitionDetailPage() {
                   
                   {/* Category badge */}
                   <div className="absolute top-4 left-4">
-                    <div className="px-3 py-1 bg-blue-600 text-white text-xs font-semibold rounded-full">
-                      COMPETITION
+                    <div className="px-3 py-1 bg-blue-600 text-white text-xs font-semibold uppercase tracking-wider rounded-full shadow-md">
+                      WIN NOW
                     </div>
                   </div>
                 </div>
               </div>
               
               {/* Quick stats */}
-              <div className="grid grid-cols-3 gap-px bg-gray-800">
-                <div className="p-4 bg-gray-900 flex flex-col items-center">
-                  <div className="text-gray-400 text-xs uppercase mb-1 flex items-center">
+              <div className="grid grid-cols-3 gap-px bg-[#1e293b]">
+                <div className="p-4 bg-gradient-to-b from-[#111827] to-[#0f172a] flex flex-col items-center">
+                  <div className="text-blue-300 text-xs uppercase mb-1 font-medium flex items-center">
                     <Trophy className="h-3 w-3 mr-1" /> Prize
                   </div>
                   <div className="text-xl font-bold text-white">£{competition.prize}</div>
                 </div>
-                <div className="p-4 bg-gray-900 flex flex-col items-center">
-                  <div className="text-gray-400 text-xs uppercase mb-1 flex items-center">
+                <div className="p-4 bg-gradient-to-b from-[#111827] to-[#0f172a] flex flex-col items-center">
+                  <div className="text-blue-300 text-xs uppercase mb-1 font-medium flex items-center">
                     <Ticket className="h-3 w-3 mr-1" /> Ticket Price
                   </div>
                   <div className="text-xl font-bold text-white">£{(competition.ticketPrice/100).toFixed(2)}</div>
                 </div>
-                <div className="p-4 bg-gray-900 flex flex-col items-center">
-                  <div className="text-gray-400 text-xs uppercase mb-1 flex items-center">
+                <div className="p-4 bg-gradient-to-b from-[#111827] to-[#0f172a] flex flex-col items-center">
+                  <div className="text-blue-300 text-xs uppercase mb-1 font-medium flex items-center">
                     <Calendar className="h-3 w-3 mr-1" /> Closes
                   </div>
                   <div className="text-xl font-bold text-white">
@@ -307,78 +307,64 @@ export default function CompetitionDetailPage() {
               </div>
             </div>
             
-            {/* Tabbed content */}
-            <div className="bg-gray-900 rounded-lg overflow-hidden">
-              <div className="flex border-b border-gray-800">
-                <button 
-                  onClick={() => setActiveTab('details')}
-                  className={`px-5 py-3 font-medium text-sm ${activeTab === 'details' ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-400 hover:text-gray-300'}`}
-                >
-                  Details
-                </button>
-                <button 
-                  onClick={() => setActiveTab('steps')}
-                  className={`px-5 py-3 font-medium text-sm ${activeTab === 'steps' ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-400 hover:text-gray-300'}`}
-                >
-                  Entry Steps
-                </button>
-                <button 
-                  onClick={() => setActiveTab('winners')}
-                  className={`px-5 py-3 font-medium text-sm ${activeTab === 'winners' ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-400 hover:text-gray-300'}`}
-                >
-                  Past Winners
-                </button>
-              </div>
-              
-              {/* Tab content */}
+            {/* Competition details */}
+            <div className="bg-gradient-to-b from-[#111827] to-[#0f172a] rounded-xl overflow-hidden shadow-lg border border-[#1e293b]">
               <div className="p-6">
-                {activeTab === 'details' && (
-                  <div className="space-y-6">
-                    <div>
-                      <h2 className="text-xl font-bold text-white mb-3">About This Competition</h2>
-                      <p className="text-gray-300 text-sm leading-relaxed">{competition.description}</p>
+                <div className="space-y-6">
+                  {/* About section */}
+                  <div>
+                    <div className="flex items-center mb-4">
+                      <Sparkles className="h-5 w-5 text-blue-400 mr-2" />
+                      <h2 className="text-xl font-bold text-white">About This Competition</h2>
+                    </div>
+                    <p className="text-gray-300 text-base leading-relaxed">{competition.description}</p>
+                  </div>
+                  
+                  <div className="pt-2">
+                    <div className="flex items-center mb-4">
+                      <div className="h-5 w-1 bg-blue-500 rounded-full mr-3"></div>
+                      <h2 className="text-xl font-bold text-white">Competition Details</h2>
                     </div>
                     
-                    <div>
-                      <h2 className="text-xl font-bold text-white mb-3">Additional Details</h2>
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="p-4 bg-gray-800 rounded-lg">
-                          <div className="text-sm text-gray-400 mb-1">Entries</div>
-                          <div className="text-lg font-bold text-white">{competition.entries}</div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="p-4 bg-[#1e293b]/50 rounded-xl border border-[#1e293b] hover:border-blue-500/30 transition-colors group">
+                        <div className="text-sm text-blue-300 mb-1 group-hover:text-blue-200 transition-colors">Total Entries</div>
+                        <div className="text-lg font-bold text-white">{competition.entries}</div>
+                      </div>
+                      <div className="p-4 bg-[#1e293b]/50 rounded-xl border border-[#1e293b] hover:border-blue-500/30 transition-colors group">
+                        <div className="text-sm text-blue-300 mb-1 group-hover:text-blue-200 transition-colors">Available Tickets</div>
+                        <div className="text-lg font-bold text-white">{competition.totalTickets - competition.soldTickets} of {competition.totalTickets}</div>
+                      </div>
+                      <div className="p-4 bg-[#1e293b]/50 rounded-xl border border-[#1e293b] hover:border-blue-500/30 transition-colors group">
+                        <div className="text-sm text-blue-300 mb-1 group-hover:text-blue-200 transition-colors">Draw Date</div>
+                        <div className="text-lg font-bold text-white">
+                          {competition.drawTime ? new Date(competition.drawTime).toLocaleDateString('en-GB', {
+                            day: 'numeric', 
+                            month: 'short', 
+                            year: 'numeric'
+                          }) : '24 Apr 2025'}
                         </div>
-                        <div className="p-4 bg-gray-800 rounded-lg">
-                          <div className="text-sm text-gray-400 mb-1">Available Tickets</div>
-                          <div className="text-lg font-bold text-white">{competition.totalTickets - competition.soldTickets} of {competition.totalTickets}</div>
-                        </div>
-                        <div className="p-4 bg-gray-800 rounded-lg">
-                          <div className="text-sm text-gray-400 mb-1">Draw Date</div>
-                          <div className="text-lg font-bold text-white">
-                            {competition.drawTime ? new Date(competition.drawTime).toLocaleDateString('en-GB', {
-                              day: 'numeric', 
-                              month: 'short', 
-                              year: 'numeric'
-                            }) : '24 Apr 2025'}
-                          </div>
-                        </div>
-                        <div className="p-4 bg-gray-800 rounded-lg">
-                          <div className="text-sm text-gray-400 mb-1">Max Tickets Per User</div>
-                          <div className="text-lg font-bold text-white">{competition.maxTicketsPerUser}</div>
-                        </div>
+                      </div>
+                      <div className="p-4 bg-[#1e293b]/50 rounded-xl border border-[#1e293b] hover:border-blue-500/30 transition-colors group">
+                        <div className="text-sm text-blue-300 mb-1 group-hover:text-blue-200 transition-colors">Max Tickets Per User</div>
+                        <div className="text-lg font-bold text-white">{competition.maxTicketsPerUser}</div>
                       </div>
                     </div>
                   </div>
-                )}
-                
-                {activeTab === 'steps' && (
-                  <div>
-                    <h2 className="text-xl font-bold text-white mb-4">Entry Steps</h2>
-                    
-                    {competition.entrySteps && competition.entrySteps.length > 0 ? (
+                  
+                  {/* Display entry steps if user has entered */}
+                  {(competition.isEntered && competition.entrySteps && competition.entrySteps.length > 0) && (
+                    <div className="pt-2">
+                      <div className="flex items-center mb-4">
+                        <div className="h-5 w-1 bg-blue-500 rounded-full mr-3"></div>
+                        <h2 className="text-xl font-bold text-white">Entry Steps</h2>
+                      </div>
+                      
                       <div className="space-y-3">
                         {competition.entrySteps.map((step, index) => (
-                          <div key={step.id} className="flex items-start bg-gray-800 p-4 rounded-lg">
+                          <div key={step.id} className="flex items-start bg-[#1e293b]/50 p-4 rounded-xl border border-[#1e293b]">
                             <div className={`h-6 w-6 rounded-full flex items-center justify-center text-xs font-bold mr-3
-                              ${competition.entryProgress?.includes(step.id) ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300'}`}>
+                              ${competition.entryProgress?.includes(step.id) ? 'bg-blue-600 text-white' : 'bg-[#1e293b] text-gray-300'}`}>
                               {competition.entryProgress?.includes(step.id) ? (
                                 <CheckCircle className="h-4 w-4" />
                               ) : (
@@ -413,18 +399,9 @@ export default function CompetitionDetailPage() {
                           </Button>
                         )}
                       </div>
-                    ) : (
-                      <p className="text-gray-400">No entry steps available for this competition.</p>
-                    )}
-                  </div>
-                )}
-                
-                {activeTab === 'winners' && (
-                  <div>
-                    <h2 className="text-xl font-bold text-white mb-4">Past Winners</h2>
-                    <p className="text-gray-400">No winners have been announced yet.</p>
-                  </div>
-                )}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -432,41 +409,41 @@ export default function CompetitionDetailPage() {
           {/* Right column - Sidebar */}
           <div className="lg:col-span-4 space-y-6">
             {/* Countdown timer */}
-            <div className="bg-gray-900 rounded-lg overflow-hidden">
-              <div className="bg-blue-600 py-3 px-4">
+            <div className="bg-gradient-to-b from-[#111827] to-[#0f172a] rounded-xl overflow-hidden shadow-lg border border-[#1e293b]">
+              <div className="bg-gradient-to-r from-blue-600 to-blue-700 py-3 px-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
                     <Clock className="h-4 w-4 text-white mr-2" />
-                    <h3 className="text-white font-medium">Draw Countdown</h3>
+                    <h3 className="text-white font-medium">PRIZE DRAW</h3>
                   </div>
-                  <div className="px-2 py-0.5 rounded-full text-xs bg-black/20 text-white font-medium">
-                    {isEnded ? 'ENDED' : 'LIVE'}
+                  <div className="px-3 py-0.5 rounded-full text-xs bg-black/20 backdrop-blur-sm text-white font-medium uppercase">
+                    {isEnded ? 'Ended' : 'Live'}
                   </div>
                 </div>
               </div>
               
-              <div className="p-4">
+              <div className="p-5">
                 {isEnded ? (
-                  <div className="text-center text-white font-bold py-4">
+                  <div className="text-center text-white font-bold py-4 text-lg">
                     COMPETITION CLOSED
                   </div>
                 ) : (
-                  <div className="grid grid-cols-4 divide-x divide-gray-800">
+                  <div className="grid grid-cols-4 divide-x divide-[#1e293b]">
                     <div className="text-center px-2">
                       <div className="text-2xl font-bold text-white">5</div>
-                      <div className="text-xs text-gray-400 uppercase">days</div>
+                      <div className="text-xs text-blue-400 uppercase font-medium">days</div>
                     </div>
                     <div className="text-center px-2">
                       <div className="text-2xl font-bold text-white">12</div>
-                      <div className="text-xs text-gray-400 uppercase">hrs</div>
+                      <div className="text-xs text-blue-400 uppercase font-medium">hrs</div>
                     </div>
                     <div className="text-center px-2">
                       <div className="text-2xl font-bold text-white">45</div>
-                      <div className="text-xs text-gray-400 uppercase">min</div>
+                      <div className="text-xs text-blue-400 uppercase font-medium">min</div>
                     </div>
                     <div className="text-center px-2">
                       <div className="text-2xl font-bold text-white">10</div>
-                      <div className="text-xs text-gray-400 uppercase">sec</div>
+                      <div className="text-xs text-blue-400 uppercase font-medium">sec</div>
                     </div>
                   </div>
                 )}
@@ -474,9 +451,9 @@ export default function CompetitionDetailPage() {
             </div>
             
             {/* Ticket purchase card */}
-            <div className="bg-gray-900 rounded-lg overflow-hidden">
-              <div className="bg-blue-600 py-3 px-4">
-                <h3 className="text-white font-medium">Get Your Tickets</h3>
+            <div className="bg-gradient-to-b from-[#111827] to-[#0f172a] rounded-xl overflow-hidden shadow-lg border border-[#1e293b]">
+              <div className="bg-gradient-to-r from-blue-600 to-blue-700 py-3 px-4">
+                <h3 className="text-white font-medium">GET YOUR TICKETS</h3>
               </div>
               
               <div className="p-5">
@@ -485,18 +462,18 @@ export default function CompetitionDetailPage() {
                   <div>
                     <div className="flex items-center justify-between mb-4">
                       <h4 className="text-white font-medium">Your Tickets</h4>
-                      <div className="px-3 py-1 rounded-full text-xs font-medium bg-blue-600/20 text-blue-400 border border-blue-500/20">
+                      <div className="px-3 py-1 rounded-full text-xs font-medium bg-blue-600/20 text-blue-300 border border-blue-500/20">
                         {competition.ticketCount} {competition.ticketCount === 1 ? 'ticket' : 'tickets'}
                       </div>
                     </div>
                     
                     {/* User's ticket numbers */}
                     {competition.ticketNumbers && competition.ticketNumbers.length > 0 && (
-                      <div className="mb-4">
-                        <div className="text-sm text-gray-400 mb-2">Your ticket numbers:</div>
+                      <div className="mb-5">
+                        <div className="text-sm text-blue-300 mb-2">Your ticket numbers:</div>
                         <div className="flex flex-wrap gap-2">
                           {competition.ticketNumbers.map(number => (
-                            <div key={number} className="px-2 py-1 rounded text-sm bg-gray-800 text-gray-300 border border-gray-700">
+                            <div key={number} className="px-3 py-1 rounded-lg text-sm bg-[#1e293b] text-blue-300 border border-blue-500/20">
                               #{number}
                             </div>
                           ))}
@@ -506,58 +483,47 @@ export default function CompetitionDetailPage() {
                     
                     <Button
                       onClick={() => setIsTicketModalOpen(true)}
-                      className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg"
+                      className="w-full py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium rounded-lg relative overflow-hidden group"
                       disabled={isEnded}
                     >
+                      <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-all duration-700"></span>
                       Buy More Tickets
                     </Button>
                   </div>
                 ) : (
                   <div>
                     <div className="text-center mb-5">
-                      <h4 className="text-lg font-bold text-white mb-2">£{(competition.ticketPrice/100).toFixed(2)}</h4>
-                      <p className="text-gray-400 text-sm">per ticket</p>
+                      <h4 className="text-2xl font-bold text-white mb-1">£{(competition.ticketPrice/100).toFixed(2)}</h4>
+                      <p className="text-blue-300 text-sm">per ticket</p>
                     </div>
                     
-                    <div className="grid grid-cols-2 gap-3 mb-4">
-                      <div className="bg-gray-800 rounded-lg p-3 text-center">
-                        <div className="text-sm text-gray-400 mb-1">Available</div>
+                    <div className="grid grid-cols-2 gap-3 mb-5">
+                      <div className="bg-[#1e293b]/50 rounded-lg p-3 text-center border border-[#1e293b]">
+                        <div className="text-sm text-blue-300 mb-1">Available</div>
                         <div className="text-white font-medium">
                           {competition.totalTickets - competition.soldTickets} / {competition.totalTickets}
                         </div>
                       </div>
-                      <div className="bg-gray-800 rounded-lg p-3 text-center">
-                        <div className="text-sm text-gray-400 mb-1">Max per user</div>
+                      <div className="bg-[#1e293b]/50 rounded-lg p-3 text-center border border-[#1e293b]">
+                        <div className="text-sm text-blue-300 mb-1">Max per user</div>
                         <div className="text-white font-medium">{competition.maxTicketsPerUser}</div>
                       </div>
                     </div>
                     
                     <Button 
                       onClick={() => setIsTicketModalOpen(true)}
-                      className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg"
+                      className="w-full py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium text-lg rounded-lg shadow-lg relative overflow-hidden group"
                       disabled={isEnded}
                     >
+                      <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-all duration-700"></span>
                       GET TICKETS
                     </Button>
+                    
+                    <div className="mt-3 text-center text-sm text-blue-300/70">
+                      {isEnded ? 'This competition has ended' : `Max ${competition.maxTicketsPerUser} tickets per person`}
+                    </div>
                   </div>
                 )}
-              </div>
-            </div>
-            
-            {/* Organizer info */}
-            <div className="bg-gray-900 rounded-lg p-5">
-              <h3 className="text-lg font-bold text-white mb-3">About the Organizer</h3>
-              <div className="flex items-center">
-                <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold mr-3">
-                  BW
-                </div>
-                <div>
-                  <div className="text-white font-medium flex items-center">
-                    Blue Whale
-                    <CheckCircle className="h-3 w-3 ml-1 text-blue-500" />
-                  </div>
-                  <div className="text-sm text-gray-400">Verified Organizer</div>
-                </div>
               </div>
             </div>
           </div>
@@ -575,6 +541,8 @@ export default function CompetitionDetailPage() {
           userTickets={competition.ticketNumbers}
         />
       )}
+
+      {/* Animations are handled in CSS already */}
     </div>
   );
 }
