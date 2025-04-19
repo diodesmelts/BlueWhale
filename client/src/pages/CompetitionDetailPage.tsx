@@ -408,61 +408,82 @@ export default function CompetitionDetailPage() {
           
           {/* Right column - Sidebar */}
           <div className="lg:col-span-4 space-y-6">
-            {/* Countdown timer */}
-            <div className="bg-gradient-to-b from-[#111827] to-[#0f172a] rounded-xl overflow-hidden shadow-lg border border-[#1e293b]">
-              <div className="bg-gradient-to-r from-blue-600 to-blue-700 py-3 px-4">
+            {/* Enhanced Prize Draw Timer */}
+            <div className="bg-gradient-to-b from-[#111827] to-[#0f172a] rounded-xl overflow-hidden shadow-xl border border-[#1e293b] relative">
+              {/* Glow effect behind the card */}
+              <div className="absolute inset-0 bg-blue-600/10 filter blur-xl transform scale-90"></div>
+              
+              {/* Header with vibrant gradient */}
+              <div className="relative bg-gradient-to-r from-blue-600 via-blue-500 to-blue-700 py-3 px-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <Clock className="h-4 w-4 text-white mr-2" />
-                    <h3 className="text-white font-medium">PRIZE DRAW</h3>
+                    <Sparkles className="h-4 w-4 text-white mr-2 animate-pulse" />
+                    <h3 className="text-white font-bold tracking-wide">PRIZE DRAW</h3>
                   </div>
-                  <div className="px-3 py-0.5 rounded-full text-xs bg-black/20 backdrop-blur-sm text-white font-medium uppercase">
+                  <div className="px-3 py-0.5 rounded-full text-xs bg-black/20 backdrop-blur-sm text-white font-medium uppercase border border-white/10">
                     {isEnded ? 'Ended' : 'Live'}
                   </div>
                 </div>
               </div>
               
-              <div className="p-5">
+              <div className="relative p-6 bg-gradient-to-br from-[#111827]/90 to-[#0c1424]/90 backdrop-blur-sm">
                 {isEnded ? (
-                  <div className="text-center text-white font-bold py-4 text-lg">
+                  <div className="text-center text-white font-bold py-4 text-xl tracking-wider">
                     COMPETITION CLOSED
                   </div>
                 ) : (
-                  <div className="grid grid-cols-4 divide-x divide-[#1e293b]">
-                    <div className="text-center px-2">
-                      <div className="text-2xl font-bold text-white">5</div>
-                      <div className="text-xs text-blue-400 uppercase font-medium">days</div>
+                  <div>
+                    <div className="grid grid-cols-4 gap-3">
+                      <div className="bg-gradient-to-b from-[#1a2747] to-[#141e34] rounded-lg p-3 text-center border border-blue-500/20 shadow-lg">
+                        <div className="text-3xl font-bold text-white">5</div>
+                        <div className="text-xs text-blue-300 uppercase font-medium mt-1">days</div>
+                      </div>
+                      <div className="bg-gradient-to-b from-[#1a2747] to-[#141e34] rounded-lg p-3 text-center border border-blue-500/20 shadow-lg">
+                        <div className="text-3xl font-bold text-white">12</div>
+                        <div className="text-xs text-blue-300 uppercase font-medium mt-1">hrs</div>
+                      </div>
+                      <div className="bg-gradient-to-b from-[#1a2747] to-[#141e34] rounded-lg p-3 text-center border border-blue-500/20 shadow-lg">
+                        <div className="text-3xl font-bold text-white">45</div>
+                        <div className="text-xs text-blue-300 uppercase font-medium mt-1">min</div>
+                      </div>
+                      <div className="bg-gradient-to-b from-[#1a2747] to-[#141e34] rounded-lg p-3 text-center border border-blue-500/20 shadow-lg">
+                        <div className="text-3xl font-bold text-white">10</div>
+                        <div className="text-xs text-blue-300 uppercase font-medium mt-1">sec</div>
+                      </div>
                     </div>
-                    <div className="text-center px-2">
-                      <div className="text-2xl font-bold text-white">12</div>
-                      <div className="text-xs text-blue-400 uppercase font-medium">hrs</div>
-                    </div>
-                    <div className="text-center px-2">
-                      <div className="text-2xl font-bold text-white">45</div>
-                      <div className="text-xs text-blue-400 uppercase font-medium">min</div>
-                    </div>
-                    <div className="text-center px-2">
-                      <div className="text-2xl font-bold text-white">10</div>
-                      <div className="text-xs text-blue-400 uppercase font-medium">sec</div>
+                    
+                    <div className="mt-4 text-center text-sm">
+                      <p className="text-blue-200">Drawing on {competition.drawTime ? new Date(competition.drawTime).toLocaleDateString('en-GB', {
+                        day: 'numeric', 
+                        month: 'long', 
+                        year: 'numeric'
+                      }) : 'April 24, 2025'}</p>
                     </div>
                   </div>
                 )}
               </div>
             </div>
             
-            {/* Ticket purchase card */}
-            <div className="bg-gradient-to-b from-[#111827] to-[#0f172a] rounded-xl overflow-hidden shadow-lg border border-[#1e293b]">
-              <div className="bg-gradient-to-r from-blue-600 to-blue-700 py-3 px-4">
-                <h3 className="text-white font-medium">GET YOUR TICKETS</h3>
+            {/* Enhanced Ticket purchase card */}
+            <div className="bg-gradient-to-b from-[#111827] to-[#0f172a] rounded-xl overflow-hidden shadow-xl border border-[#1e293b] relative">
+              {/* Glow effect behind the card */}
+              <div className="absolute inset-0 bg-blue-600/10 filter blur-xl transform scale-90"></div>
+              
+              {/* Header with vibrant gradient */}
+              <div className="relative bg-gradient-to-r from-blue-600 via-blue-500 to-blue-700 py-3 px-4">
+                <h3 className="text-white font-bold tracking-wide flex items-center">
+                  <Ticket className="h-4 w-4 mr-2" />
+                  GET YOUR TICKETS
+                </h3>
               </div>
               
-              <div className="p-5">
+              <div className="relative p-6 bg-gradient-to-br from-[#111827]/90 to-[#0c1424]/90 backdrop-blur-sm">
                 {/* User's tickets section */}
                 {competition.isEntered && competition.ticketCount && competition.ticketCount > 0 ? (
                   <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <h4 className="text-white font-medium">Your Tickets</h4>
-                      <div className="px-3 py-1 rounded-full text-xs font-medium bg-blue-600/20 text-blue-300 border border-blue-500/20">
+                    <div className="flex items-center justify-between mb-5">
+                      <h4 className="text-white font-medium text-lg">Your Tickets</h4>
+                      <div className="px-3 py-1 rounded-full text-sm font-medium bg-blue-600/30 text-blue-200 border border-blue-500/30">
                         {competition.ticketCount} {competition.ticketCount === 1 ? 'ticket' : 'tickets'}
                       </div>
                     </div>
@@ -470,10 +491,10 @@ export default function CompetitionDetailPage() {
                     {/* User's ticket numbers */}
                     {competition.ticketNumbers && competition.ticketNumbers.length > 0 && (
                       <div className="mb-5">
-                        <div className="text-sm text-blue-300 mb-2">Your ticket numbers:</div>
-                        <div className="flex flex-wrap gap-2">
+                        <div className="text-sm text-blue-300 mb-3 font-medium">Your ticket numbers:</div>
+                        <div className="flex flex-wrap gap-2 max-h-[120px] overflow-y-auto pr-1 pb-1">
                           {competition.ticketNumbers.map(number => (
-                            <div key={number} className="px-3 py-1 rounded-lg text-sm bg-[#1e293b] text-blue-300 border border-blue-500/20">
+                            <div key={number} className="px-3 py-2 rounded-lg text-sm bg-gradient-to-b from-[#1a2747] to-[#141e34] text-blue-200 border border-blue-500/20 shadow-md">
                               #{number}
                             </div>
                           ))}
@@ -483,7 +504,7 @@ export default function CompetitionDetailPage() {
                     
                     <Button
                       onClick={() => setIsTicketModalOpen(true)}
-                      className="w-full py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium rounded-lg relative overflow-hidden group"
+                      className="w-full py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium rounded-lg shadow-md relative overflow-hidden group"
                       disabled={isEnded}
                     >
                       <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-all duration-700"></span>
@@ -492,34 +513,36 @@ export default function CompetitionDetailPage() {
                   </div>
                 ) : (
                   <div>
-                    <div className="text-center mb-5">
-                      <h4 className="text-2xl font-bold text-white mb-1">£{(competition.ticketPrice/100).toFixed(2)}</h4>
+                    <div className="text-center mb-6">
+                      <div className="inline-block bg-gradient-to-r from-blue-400 to-blue-600 px-5 py-2 rounded-full text-white font-bold text-xl mb-1">
+                        £{(competition.ticketPrice/100).toFixed(2)}
+                      </div>
                       <p className="text-blue-300 text-sm">per ticket</p>
                     </div>
                     
-                    <div className="grid grid-cols-2 gap-3 mb-5">
-                      <div className="bg-[#1e293b]/50 rounded-lg p-3 text-center border border-[#1e293b]">
-                        <div className="text-sm text-blue-300 mb-1">Available</div>
-                        <div className="text-white font-medium">
-                          {competition.totalTickets - competition.soldTickets} / {competition.totalTickets}
+                    <div className="grid grid-cols-2 gap-3 mb-6">
+                      <div className="bg-gradient-to-b from-[#1a2747] to-[#141e34] rounded-lg p-3 text-center border border-blue-500/20 shadow-lg">
+                        <div className="text-sm text-blue-300 mb-1 font-medium">Available</div>
+                        <div className="text-xl font-bold text-white">
+                          {competition.totalTickets - competition.soldTickets} <span className="text-blue-300 text-sm font-normal">/ {competition.totalTickets}</span>
                         </div>
                       </div>
-                      <div className="bg-[#1e293b]/50 rounded-lg p-3 text-center border border-[#1e293b]">
-                        <div className="text-sm text-blue-300 mb-1">Max per user</div>
-                        <div className="text-white font-medium">{competition.maxTicketsPerUser}</div>
+                      <div className="bg-gradient-to-b from-[#1a2747] to-[#141e34] rounded-lg p-3 text-center border border-blue-500/20 shadow-lg">
+                        <div className="text-sm text-blue-300 mb-1 font-medium">Max per user</div>
+                        <div className="text-xl font-bold text-white">{competition.maxTicketsPerUser}</div>
                       </div>
                     </div>
                     
                     <Button 
                       onClick={() => setIsTicketModalOpen(true)}
-                      className="w-full py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium text-lg rounded-lg shadow-lg relative overflow-hidden group"
+                      className="w-full py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold text-lg rounded-lg shadow-lg relative overflow-hidden group"
                       disabled={isEnded}
                     >
-                      <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-all duration-700"></span>
-                      GET TICKETS
+                      <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-all duration-700"></span>
+                      GET TICKETS NOW
                     </Button>
                     
-                    <div className="mt-3 text-center text-sm text-blue-300/70">
+                    <div className="mt-3 text-center text-sm text-blue-300/80">
                       {isEnded ? 'This competition has ended' : `Max ${competition.maxTicketsPerUser} tickets per person`}
                     </div>
                   </div>
