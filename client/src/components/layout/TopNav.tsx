@@ -79,9 +79,16 @@ export default function TopNav() {
   };
 
   return (
-    <header className="sticky top-0 shadow-lg transition-all duration-300 bg-black text-white z-20">
+    <header className="sticky top-0 shadow-lg transition-all duration-300 text-white z-20 bg-gradient-to-b from-gray-900 to-black relative">
       {/* Top stripe */}
       <div className="h-3 w-full bg-gradient-to-r from-blue-400 via-cyan-500 to-purple-500"></div>
+      
+      {/* Background decorative elements to match How to Play section */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-64 h-64 bg-cyan-800/15 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-purple-800/15 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/3 right-1/6 w-40 h-40 bg-blue-800/15 rounded-full blur-3xl"></div>
+      </div>
       
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-28 py-2">
