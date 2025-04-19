@@ -84,7 +84,7 @@ export default function TopNav() {
       <div className="h-1.5 w-full bg-gradient-to-r from-blue-400 via-cyan-500 to-purple-500"></div>
       
       <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center h-20">
+        <div className="flex justify-between items-center h-30">
           <div className="flex items-center space-x-4 md:space-x-10">
             {/* Logo - Image */}
             <Link href="/">
@@ -102,13 +102,13 @@ export default function TopNav() {
                   <DropdownMenu key={item.path}>
                     <DropdownMenuTrigger asChild>
                       <button
-                        className={`px-4 py-2.5 rounded-full text-sm flex items-center transition-all duration-200 ${
+                        className={`px-5 py-3 rounded-full text-base flex items-center transition-all duration-200 ${
                           location.startsWith(item.path)
                             ? 'bg-cyan-900 text-cyan-300 shadow-md font-medium'
                             : 'text-gray-300 hover:bg-gray-800'
                         }`}
                       >
-                        <i className={`${item.icon} mr-2`}></i>
+                        <i className={`${item.icon} mr-2 text-lg`}></i>
                         {item.label}
                         <i className="fas fa-chevron-down ml-2 text-xs opacity-70"></i>
                       </button>
@@ -129,13 +129,13 @@ export default function TopNav() {
                 ) : (
                   <Link key={item.path} href={item.path}>
                     <button
-                      className={`px-4 py-2.5 rounded-full text-sm flex items-center transition-all duration-200 ${
+                      className={`px-5 py-3 rounded-full text-base flex items-center transition-all duration-200 ${
                         isActive(item.path)
                           ? 'bg-cyan-900 text-cyan-300 shadow-md font-medium'
                           : 'text-gray-300 hover:bg-gray-800'
                       }`}
                     >
-                      <i className={`${item.icon} mr-2`}></i>
+                      <i className={`${item.icon} mr-2 text-lg`}></i>
                       {item.label}
                     </button>
                   </Link>
@@ -149,9 +149,9 @@ export default function TopNav() {
             {/* Notifications */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="relative p-2 rounded-full focus:outline-none transition-all text-white hover:bg-gray-800 bg-cyan-900">
-                  <Bell className="h-5 w-5 text-cyan-300" />
-                  <span className="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-purple-400 ring-2 ring-black"></span>
+                <button className="relative p-3 rounded-full focus:outline-none transition-all text-white hover:bg-gray-800 bg-cyan-900">
+                  <Bell className="h-6 w-6 text-cyan-300" />
+                  <span className="absolute top-0 right-0 block h-3 w-3 rounded-full bg-purple-400 ring-2 ring-black"></span>
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-80 p-2 rounded-xl shadow-xl">
@@ -210,16 +210,16 @@ export default function TopNav() {
               // User is logged in - show profile dropdown
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <div className="flex items-center space-x-2 cursor-pointer rounded-full pl-2 pr-4 py-1.5 transition-all bg-cyan-900 hover:bg-gray-800">
-                    <Avatar className="h-9 w-9 shadow-md bg-black text-cyan-400 border-2 border-cyan-600">
-                      <span className="text-sm font-bold">
+                  <div className="flex items-center space-x-3 cursor-pointer rounded-full pl-3 pr-5 py-2 transition-all bg-cyan-900 hover:bg-gray-800">
+                    <Avatar className="h-12 w-12 shadow-md bg-black text-cyan-400 border-2 border-cyan-600">
+                      <span className="text-base font-bold">
                         {user.username.substring(0, 2).toUpperCase()}
                       </span>
                     </Avatar>
-                    <span className="text-sm font-medium hidden md:block text-cyan-300">
+                    <span className="text-base font-medium hidden md:block text-cyan-300">
                       {user.username}
                     </span>
-                    <i className="fas fa-chevron-down text-xs opacity-70 text-cyan-200 hidden md:block"></i>
+                    <i className="fas fa-chevron-down text-sm opacity-70 text-cyan-200 hidden md:block"></i>
                   </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-60 p-2 rounded-xl shadow-xl">
@@ -269,9 +269,9 @@ export default function TopNav() {
             ) : (
               // User is not logged in - show login button
               <Link href="/auth">
-                <Button className="flex items-center bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-700 hover:to-purple-700 text-white border-0 shadow-md">
-                  <LogIn className="h-4 w-4 mr-1.5" />
-                  <span className="text-sm font-medium">Sign In</span>
+                <Button className="flex items-center bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-700 hover:to-purple-700 text-white border-0 shadow-md px-5 py-6">
+                  <LogIn className="h-5 w-5 mr-2" />
+                  <span className="text-base font-medium">Sign In</span>
                 </Button>
               </Link>
             )}

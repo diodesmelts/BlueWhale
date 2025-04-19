@@ -27,7 +27,7 @@ export function LogoDisplay({ className = "", size = "md", style = {} }: LogoDis
       src={logoSettings.imageUrl}
       alt="Blue Whale Competitions" 
       className={`${className} transition-all duration-300`} 
-      style={{ height: size === "sm" ? "40px" : size === "md" ? "50px" : "64px", ...style }}
+      style={{ height: size === "sm" ? "50px" : size === "md" ? "75px" : "96px", ...style }}
       onError={() => setShowFallback(true)}
     />
   );
