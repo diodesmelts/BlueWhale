@@ -228,11 +228,11 @@ export default function CompetitionDetailPage() {
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center">
           <button 
             onClick={() => setLocation('/competitions')}
-            className="flex items-center text-gray-400 hover:text-white transition-colors mr-4"
+            className="flex items-center text-gray-400 hover:text-white transition-colors"
           >
-            <ChevronLeft className="h-5 w-5" />
+            <ChevronLeft className="h-5 w-5 mr-1" />
+            <span>Back to Competitions</span>
           </button>
-          <h1 className="text-white text-lg font-medium truncate">{competition.title}</h1>
         </div>
       </div>
 
@@ -277,6 +277,16 @@ export default function CompetitionDetailPage() {
                     </div>
                   </div>
                 </div>
+              </div>
+              
+              {/* Title and Competition Info Below the Image */}
+              <div className="p-5 border-t border-[#1e293b]">
+                <h1 className="text-2xl font-bold text-white mb-3">{competition.title}</h1>
+                
+                <p className="text-gray-400 text-sm mb-3">
+                  by <span className="text-white">Blue Whale</span>
+                  <CheckCircle className="h-3 w-3 ml-1 inline text-blue-400" />
+                </p>
               </div>
               
               {/* Quick stats */}
