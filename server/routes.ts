@@ -810,25 +810,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const inputPath = req.file.path;
       const outputPath = inputPath; // Overwrite the original file
       
-      // Process image - resize to 700x700 square
-      try {
-        await sharp(inputPath)
-          .resize({
-            width: 700,
-            height: 700,
-            fit: sharp.fit.cover, // This crops the image to make it square
-            position: sharp.strategy.attention // Focus on the most interesting part
-          })
-          .toFile(outputPath + '.processed');
+      // If it's a GIF, don't process it to preserve animation
+      if (req.file.mimetype === 'image/gif') {
+        // No processing needed, just continue with the original file
+        console.log('GIF file uploaded - preserving animation');
+      } else {
+        // Process non-GIF images - resize to 700x700 square
+        try {
+          await sharp(inputPath)
+            .resize({
+              width: 700,
+              height: 700,
+              fit: sharp.fit.cover, // This crops the image to make it square
+              position: sharp.strategy.attention // Focus on the most interesting part
+            })
+            .toFile(outputPath + '.processed');
+            
+          // Replace the original file with the processed one
+          fs.unlinkSync(inputPath);
+          fs.renameSync(outputPath + '.processed', outputPath);
           
-        // Replace the original file with the processed one
-        fs.unlinkSync(inputPath);
-        fs.renameSync(outputPath + '.processed', outputPath);
-        
-        console.log(`Image processed successfully: ${req.file.filename}`);
-      } catch (processError) {
-        console.error('Image processing error:', processError);
-        // If processing fails, we still return the original image
+          console.log(`Image processed successfully: ${req.file.filename}`);
+        } catch (processError) {
+          console.error('Image processing error:', processError);
+          // If processing fails, we still return the original image
+        }
       }
       
       // Construct the URL to the uploaded file
@@ -1019,18 +1025,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Get the uploaded file details
       const file = req.file;
       const filePath = file.path;
+      let imageUrl = '';
       
-      // Process the image with sharp (resize to 700x700 to match requirements)
-      const outputPath = path.join(process.cwd(), 'public', 'uploads', `optimized-${file.filename}`);
-      await sharp(filePath)
-        .resize(700, 700, {
-          fit: 'inside',
-          withoutEnlargement: true
-        })
-        .toFile(outputPath);
-      
-      // Return the URL of the optimized image
-      const imageUrl = `/uploads/optimized-${file.filename}`;
+      // Handle GIFs differently - don't process them with sharp to preserve animation
+      if (file.mimetype === 'image/gif') {
+        // For GIFs, just use the original file
+        const gifDestPath = path.join(process.cwd(), 'public', 'uploads', `optimized-${file.filename}`);
+        fs.copyFileSync(filePath, gifDestPath);
+        imageUrl = `/uploads/optimized-${file.filename}`;
+      } else {
+        // Process other image types with sharp (resize to 700x700)
+        const outputPath = path.join(process.cwd(), 'public', 'uploads', `optimized-${file.filename}`);
+        await sharp(filePath)
+          .resize(700, 700, {
+            fit: 'inside',
+            withoutEnlargement: true
+          })
+          .toFile(outputPath);
+        
+        imageUrl = `/uploads/optimized-${file.filename}`;
+      }
       
       res.status(200).json({
         message: "File uploaded successfully",
