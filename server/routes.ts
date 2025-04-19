@@ -38,11 +38,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   // File filter for images
   const fileFilter = (req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
-    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif'];
     if (allowedMimeTypes.includes(file.mimetype)) {
       cb(null, true);
     } else {
-      cb(new Error('Invalid file type. Only JPEG, JPG, and PNG are allowed.'));
+      cb(new Error('Invalid file type. Only JPEG, JPG, PNG, and GIF are allowed.'));
     }
   };
   

@@ -312,7 +312,7 @@ export default function CompetitionCreationForm() {
                           type="file"
                           ref={fileInputRef}
                           className="hidden"
-                          accept="image/*"
+                          accept="image/png, image/jpeg, image/jpg, image/gif"
                           onChange={handleImageUpload}
                         />
                       </div>

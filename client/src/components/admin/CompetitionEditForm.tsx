@@ -326,7 +326,7 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
                                 ref={fileInputRef}
                                 onChange={handleFileChange}
                                 className="hidden"
-                                accept="image/*"
+                                accept="image/png, image/jpeg, image/jpg, image/gif"
                               />
                               <Button 
                                 type="button" 
@@ -356,7 +356,7 @@ export function CompetitionEditForm({ competition, onClose }: CompetitionEditFor
                         </Card>
                       </div>
                       <FormDescription className="text-gray-500">
-                        Upload an image file from your device (max 5MB)
+                        Upload an image file (PNG, JPG, GIF) from your device (max 5MB)
                       </FormDescription>
                     </div>
                   </TabsContent>

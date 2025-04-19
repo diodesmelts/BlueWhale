@@ -306,7 +306,7 @@ export default function AdminPage() {
                         <input 
                           ref={fileInputRef}
                           type="file" 
-                          accept="image/png, image/jpeg, image/jpg"
+                          accept="image/png, image/jpeg, image/jpg, image/gif"
                           className="hidden"
                           onChange={handleImageUpload}
                         />
