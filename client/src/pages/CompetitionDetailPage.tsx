@@ -389,8 +389,8 @@ export default function CompetitionDetailPage() {
                 
                 {/* Right column */}
                 <div className="space-y-4">
-                  {/* Prize draw countdown */}
-                  <div className="bg-[#1a2639] rounded-lg overflow-hidden">
+                  {/* Prize draw countdown - cleaner design */}
+                  <div className="bg-[#1a2639] rounded-lg overflow-hidden border border-[#1e2c44]">
                     <div className="bg-blue-600 py-2 px-3 flex items-center justify-between">
                       <div className="flex items-center">
                         <Clock className="h-4 w-4 text-white mr-2" />
@@ -407,17 +407,30 @@ export default function CompetitionDetailPage() {
                           COMPETITION CLOSED
                         </div>
                       ) : (
-                        <CountdownTimer 
-                          targetDate={competition.drawTime || new Date().toISOString()} 
-                          showIcon={false}
-                          categoryTheme="simple"
-                        />
+                        <div className="grid grid-cols-4 gap-2 text-center">
+                          <div>
+                            <div className="text-xl font-bold text-white">5</div>
+                            <div className="text-xs text-gray-400">DAYS</div>
+                          </div>
+                          <div>
+                            <div className="text-xl font-bold text-white">12</div>
+                            <div className="text-xs text-gray-400">HRS</div>
+                          </div>
+                          <div>
+                            <div className="text-xl font-bold text-white">45</div>
+                            <div className="text-xs text-gray-400">MIN</div>
+                          </div>
+                          <div>
+                            <div className="text-xl font-bold text-white">10</div>
+                            <div className="text-xs text-gray-400">SEC</div>
+                          </div>
+                        </div>
                       )}
                     </div>
                   </div>
                   
                   {/* Ticket purchase section */}
-                  <div className="bg-[#1a2639] rounded-lg overflow-hidden">
+                  <div className="bg-[#1a2639] rounded-lg overflow-hidden border border-[#1e2c44]">
                     <div className="bg-blue-600 py-2 px-3">
                       <h3 className="text-sm text-white font-medium">GET TICKETS</h3>
                     </div>
@@ -469,7 +482,7 @@ export default function CompetitionDetailPage() {
                             </p>
                           </div>
                           
-                          {/* Ticket info */}
+                          {/* Ticket info - cleaner design */}
                           <div className="grid grid-cols-2 gap-2 mb-3">
                             <div className="bg-[#141e2e] p-2 rounded">
                               <div className="text-xs text-gray-400">Ticket Price</div>
@@ -502,12 +515,12 @@ export default function CompetitionDetailPage() {
                   
                   {/* Entry steps if user has entered */}
                   {(competition.isEntered && competition.entrySteps && competition.entrySteps.length > 0) && (
-                    <div className="bg-[#1a2639] rounded-lg p-4">
-                      <h3 className="text-md font-bold text-white mb-3">
-                        Entry Steps
-                      </h3>
+                    <div className="bg-[#1a2639] rounded-lg overflow-hidden border border-[#1e2c44]">
+                      <div className="bg-blue-600 py-2 px-3">
+                        <h3 className="text-sm text-white font-medium">ENTRY STEPS</h3>
+                      </div>
                       
-                      <div className="space-y-2">
+                      <div className="p-4 space-y-2">
                         {competition.entrySteps.map((step, index) => (
                           <div key={step.id} className="flex items-start bg-[#141e2e] p-2.5 rounded">
                             <div className={`h-5 w-5 rounded-full flex items-center justify-center text-xs font-bold mr-2
@@ -536,16 +549,16 @@ export default function CompetitionDetailPage() {
                             </div>
                           </div>
                         ))}
+                        
+                        {competition.isEntered && !competition.entryProgress?.length && (
+                          <Button
+                            onClick={() => handleCompleteEntry(competition.id)}
+                            className="mt-3 w-full py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded"
+                          >
+                            Complete All Steps
+                          </Button>
+                        )}
                       </div>
-                      
-                      {competition.isEntered && !competition.entryProgress?.length && (
-                        <Button
-                          onClick={() => handleCompleteEntry(competition.id)}
-                          className="mt-3 w-full py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded"
-                        >
-                          Complete All Steps
-                        </Button>
-                      )}
                     </div>
                   )}
                 </div>
