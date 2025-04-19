@@ -413,15 +413,18 @@ export default function CompetitionDetailPage() {
               {/* Glow effect behind the card */}
               <div className="absolute inset-0 bg-blue-600/10 filter blur-xl transform scale-90"></div>
               
-              {/* Header with vibrant gradient */}
-              <div className="relative bg-gradient-to-r from-blue-600 via-blue-500 to-blue-700 py-3 px-4">
+              {/* Header with blue gradient and shine effect */}
+              <div className="relative bg-gradient-to-r from-blue-600 via-blue-500 to-blue-800 py-3 px-4 overflow-hidden">
+                {/* Shine effect overlay */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent animate-shine"></div>
+                
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
                     <Sparkles className="h-4 w-4 text-white mr-2 animate-pulse" />
                     <h3 className="text-white font-bold tracking-wide">PRIZE DRAW</h3>
                   </div>
-                  <div className="px-3 py-0.5 rounded-full text-xs bg-black/20 backdrop-blur-sm text-white font-medium uppercase border border-white/10">
-                    {isEnded ? 'Ended' : 'Live'}
+                  <div className="px-3 py-0.5 rounded-full text-xs bg-blue-800/70 backdrop-blur-sm text-white font-medium uppercase border border-white/20">
+                    {isEnded ? 'Ended' : 'LIVE'}
                   </div>
                 </div>
               </div>
@@ -469,9 +472,12 @@ export default function CompetitionDetailPage() {
               {/* Glow effect behind the card */}
               <div className="absolute inset-0 bg-blue-600/10 filter blur-xl transform scale-90"></div>
               
-              {/* Header with vibrant gradient */}
-              <div className="relative bg-gradient-to-r from-blue-600 via-blue-500 to-blue-700 py-3 px-4">
-                <h3 className="text-white font-bold tracking-wide flex items-center">
+              {/* Header with blue gradient and shine effect */}
+              <div className="relative bg-gradient-to-r from-blue-600 via-blue-500 to-blue-800 py-3 px-4 overflow-hidden">
+                {/* Shine effect overlay */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent animate-shine"></div>
+                
+                <h3 className="text-white font-bold tracking-wide flex items-center relative z-10">
                   <Ticket className="h-4 w-4 mr-2" />
                   GET YOUR TICKETS
                 </h3>
