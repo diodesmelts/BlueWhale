@@ -80,8 +80,6 @@ export default function TopNav() {
 
   return (
     <header className="sticky top-0 shadow-lg transition-all duration-300 text-white z-20 bg-gradient-to-b from-gray-900 to-black relative">
-      {/* Top stripe */}
-      <div className="h-3 w-full bg-gradient-to-r from-blue-400 via-cyan-500 to-purple-500"></div>
       
       {/* Background decorative elements to match How to Play section */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
