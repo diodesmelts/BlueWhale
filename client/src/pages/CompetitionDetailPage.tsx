@@ -240,7 +240,7 @@ export default function CompetitionDetailPage() {
         </Button>
 
         <div className="bg-gray-900/80 backdrop-blur-sm rounded-xl shadow-2xl overflow-hidden border border-gray-800/50 relative z-10 shadow-blue-900/20">
-          {/* Hero section with horizontal layout - image on left */}
+          {/* Hero section with improved image treatment */}
           <div className="flex flex-col md:flex-row bg-gray-800/40 backdrop-blur-sm rounded-t-xl overflow-hidden">
             {/* Image on the left */}
             <div className="md:w-2/5 relative overflow-hidden">
@@ -334,9 +334,6 @@ export default function CompetitionDetailPage() {
               </div>
             </div>
           </div>
-          
-          {/* Divider */}
-          <div className="h-1 w-full bg-gradient-to-r from-gray-900 via-blue-900/30 to-gray-900"></div>
 
           {/* Main content area */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
