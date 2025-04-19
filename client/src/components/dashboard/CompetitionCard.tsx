@@ -324,9 +324,14 @@ export default function CompetitionCard({
         
         {/* Top section with much taller image and shine effect */}
         <div 
-          className="w-full h-[28rem] bg-center bg-cover relative overflow-hidden group shine-effect"
-          style={{ backgroundImage: `url(${image})` }}
+          className="w-full h-[28rem] relative overflow-hidden group shine-effect bg-black"
         >
+          {/* Using an img tag instead of background-image to properly support animated GIFs */}
+          <img 
+            src={image} 
+            alt={title}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
           
           {/* Tickets counter - enhanced with category-themed styling */}
           <div className={`absolute top-4 right-4 backdrop-blur-md px-3 py-1.5 flex items-center shadow-md border border-gray-700/50 rounded-full
