@@ -49,7 +49,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   const fileUpload = multer({ 
     storage: diskStorage, 
     fileFilter,
-    limits: { fileSize: 10 * 1024 * 1024 } // 10MB limit
+    limits: { fileSize: 25 * 1024 * 1024 } // 25MB limit
   });
   
   // Special development route to make SDK an admin user (would be removed in production)
@@ -789,7 +789,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   const imageUpload = multer({
     storage: multerStorage,
     limits: {
-      fileSize: 5 * 1024 * 1024, // 5MB limit
+      fileSize: 25 * 1024 * 1024, // 25MB limit
     },
     fileFilter: (req, file, cb) => {
       // Only allow image files
