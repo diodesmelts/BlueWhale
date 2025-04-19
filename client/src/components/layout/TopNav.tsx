@@ -81,11 +81,11 @@ export default function TopNav() {
   return (
     <header className="sticky top-0 shadow-lg transition-all duration-300 bg-black text-white z-20">
       {/* Top stripe */}
-      <div className="h-1.5 w-full bg-gradient-to-r from-blue-400 via-cyan-500 to-purple-500"></div>
+      <div className="h-3 w-full bg-gradient-to-r from-blue-400 via-cyan-500 to-purple-500"></div>
       
       <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center h-30">
-          <div className="flex items-center space-x-4 md:space-x-10">
+        <div className="flex justify-between items-center h-36 py-3">
+          <div className="flex items-center space-x-6 md:space-x-12">
             {/* Logo - Image */}
             <Link href="/">
               <div className="flex items-center group">
@@ -144,7 +144,7 @@ export default function TopNav() {
             </nav>
           </div>
 
-          <div className="flex items-center space-x-2 md:space-x-6">
+          <div className="flex items-center space-x-4 md:space-x-8">
 
             {/* Notifications */}
             <DropdownMenu>
