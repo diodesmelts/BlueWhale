@@ -244,7 +244,7 @@ export default function CompetitionDetailPage() {
             <div className="bg-gradient-to-b from-[#111827] to-[#0f172a] rounded-xl overflow-hidden shadow-lg border border-[#1e293b]">
               <div className="relative">
                 {/* Main image with aspect ratio */}
-                <div className="relative pb-[56.25%]">
+                <div className="relative pb-[56.25%] border-2 border-[#1e3a8a]/30 rounded-lg overflow-hidden shadow-lg">
                   <img 
                     src={competition.image} 
                     alt={competition.title} 
