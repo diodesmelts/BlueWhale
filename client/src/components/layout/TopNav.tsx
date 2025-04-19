@@ -79,7 +79,7 @@ export default function TopNav() {
   };
 
   return (
-    <header className="sticky top-0 shadow-lg transition-all duration-300 text-white z-20 bg-gradient-to-b from-gray-900 to-black relative">
+    <header className="sticky top-0 shadow-lg transition-all duration-300 text-white z-20 bg-gradient-to-b from-gray-900 to-black relative border-t-[3px] border-b-[3px] border-[#b446ff]">
       
       {/* Background decorative elements to match How to Play section */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
