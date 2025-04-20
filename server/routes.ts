@@ -1091,6 +1091,41 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
     }
   });
+  
+  // Update user notification settings
+  app.patch("/api/user/notifications", isAuthenticated, async (req, res) => {
+    try {
+      // Use authenticated user's ID
+      const userId = (req.user as any).id;
+      if (!userId) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+      
+      // Validate the notification settings
+      const notificationSchema = z.object({
+        newCompetitions: z.boolean(),
+        competitionClosingSoon: z.boolean(),
+        winningResults: z.boolean(),
+        accountUpdates: z.boolean()
+      });
+      
+      const validatedData = notificationSchema.parse(req.body);
+      
+      // In a production app, we would save these preferences to the database
+      // For this prototype, we'll just return success with the submitted preferences
+      res.status(200).json({ 
+        success: true,
+        preferences: validatedData
+      });
+    } catch (error) {
+      console.error("Error updating notification settings:", error);
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ message: "Invalid notification settings", errors: error.errors });
+      } else {
+        res.status(500).json({ message: "Failed to update notification settings" });
+      }
+    }
+  });
 
   const httpServer = createServer(app);
 

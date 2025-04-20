@@ -17,10 +17,10 @@ export default function ProfilePage() {
   const [currentMascotId, setCurrentMascotId] = useState<string | null>(user?.mascotId || "dolphin");
   const [selectedTab, setSelectedTab] = useState("profile");
   const [notificationSettings, setNotificationSettings] = useState({
-    newCompetitions: true,
-    competitionClosingSoon: true,
-    winningResults: true,
-    accountUpdates: true
+    newCompetitions: false,
+    competitionClosingSoon: false,
+    winningResults: false,
+    accountUpdates: false
   });
 
   useEffect(() => {
