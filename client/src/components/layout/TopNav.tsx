@@ -50,7 +50,6 @@ export default function TopNav() {
         { label: "Featured Competitions", path: "/competitions", color: "text-purple-500" },
       ] 
     },
-    { icon: "fas fa-chart-line", label: "Leaderboard", path: "/leaderboard" },
   ];
   
   // User-specific navigation items available only when logged in
