@@ -9,12 +9,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Bell, LogIn, User } from "lucide-react";
+import { LogIn, User } from "lucide-react";
 import { useAdmin } from "@/hooks/use-admin";
 import { useAuth } from "@/hooks/use-auth";
 import { LogoDisplay } from "@/components/ui/logo-display";
 import MascotSelector, { getMascotById } from "@/components/profile/MascotSelector";
 import { useState } from "react";
+import { NotificationBell } from "@/components/notifications/NotificationBell";
 
 // Define TypeScript interfaces for navigation items
 interface DropdownItem {
@@ -155,63 +156,9 @@ export default function TopNav() {
           <div className="flex items-center space-x-4 md:space-x-8">
 
             {/* Notifications */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button className="relative p-3 rounded-full focus:outline-none transition-all text-white hover:bg-gray-800 bg-cyan-900">
-                  <Bell className="h-6 w-6 text-cyan-300" />
-                  <span className="absolute top-0 right-0 block h-3 w-3 rounded-full bg-purple-400 ring-2 ring-black"></span>
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-80 p-2 rounded-xl shadow-xl">
-                <DropdownMenuLabel className="px-4 py-3 text-lg font-semibold text-cyan-600 flex items-center border-b border-gray-200 pb-3">
-                  <i className="fas fa-bell mr-2 text-cyan-500"></i>
-                  Notifications
-                </DropdownMenuLabel>
-                <div className="max-h-[320px] overflow-y-auto py-1">
-                  <DropdownMenuItem className="p-4 cursor-pointer focus:bg-cyan-50 rounded-xl my-1 hover:bg-cyan-50 transition-colors">
-                    <div className="flex space-x-3">
-                      <div className="w-10 h-10 bg-cyan-100 rounded-full flex items-center justify-center text-cyan-600 shrink-0">
-                        <i className="fas fa-gift"></i>
-                      </div>
-                      <div className="flex flex-col space-y-1">
-                        <p className="text-sm font-medium">New competition available!</p>
-                        <p className="text-xs text-gray-500">£500 Google Play gift card giveaway</p>
-                        <p className="text-xs text-gray-400 flex items-center"><i className="fas fa-clock mr-1"></i> 2 minutes ago</p>
-                      </div>
-                    </div>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="p-4 cursor-pointer focus:bg-cyan-50 rounded-xl my-1 hover:bg-cyan-50 transition-colors">
-                    <div className="flex space-x-3">
-                      <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600 shrink-0">
-                        <i className="fas fa-check-circle"></i>
-                      </div>
-                      <div className="flex flex-col space-y-1">
-                        <p className="text-sm font-medium">Your entry was approved</p>
-                        <p className="text-xs text-gray-500">Dream Vacation Giveaway</p>
-                        <p className="text-xs text-gray-400 flex items-center"><i className="fas fa-clock mr-1"></i> 1 hour ago</p>
-                      </div>
-                    </div>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="p-4 cursor-pointer focus:bg-purple-50 rounded-xl my-1 hover:bg-purple-50 transition-colors">
-                    <div className="flex space-x-3">
-                      <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 shrink-0">
-                        <i className="fas fa-trophy"></i>
-                      </div>
-                      <div className="flex flex-col space-y-1">
-                        <p className="text-sm font-medium">Congratulations! You won!</p>
-                        <p className="text-xs text-gray-500">Apple Gift Card Giveaway</p>
-                        <p className="text-xs text-gray-400 flex items-center"><i className="fas fa-clock mr-1"></i> 5 hours ago</p>
-                      </div>
-                    </div>
-                  </DropdownMenuItem>
-                </div>
-                <div className="p-2 mt-2 border-t border-gray-200 pt-3">
-                  <Button className="w-full text-sm font-medium bg-cyan-100 hover:bg-cyan-200 text-cyan-700 border-0">
-                    View all notifications
-                  </Button>
-                </div>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <div className="relative p-2 rounded-full focus:outline-none transition-all hover:bg-gray-800 bg-cyan-900/50">
+              <NotificationBell />
+            </div>
 
             {/* Auth Button or Profile Dropdown */}
             {user ? (
