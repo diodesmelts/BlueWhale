@@ -152,12 +152,6 @@ export default function CompetitionsPage() {
               </h1>
               <p className="text-gray-400 mt-2">Find and enter competitions that match your interests</p>
             </div>
-            <div>
-              <Button className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white font-medium shadow-lg shadow-cyan-700/20 transition-all duration-300 px-5 py-6 rounded-xl">
-                <i className="fas fa-plus-circle mr-2"></i>
-                <span>Add Competition</span>
-              </Button>
-            </div>
           </div>
         </div>
 
