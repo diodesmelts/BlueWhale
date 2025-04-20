@@ -957,91 +957,124 @@ export default function Dashboard() {
               </motion.div>
             ) : (
               <>
-                {/* Interactive filter and category controls */}
+                {/* Custom filter buttons - redesigned to avoid DOM nesting issues */}
                 <motion.div 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
-                  className="mb-8 flex flex-wrap gap-4 justify-center items-center"
+                  className="mb-8"
                 >
-                  {/* Filter 1: Prize Type */}
-                  <motion.div
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                    className="bg-gray-800/60 border border-gray-700/50 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg relative"
-                  >
-                    <Select
-                      value={prizeValue}
-                      onValueChange={setPrizeValue}
+                  {/* Top row - Filter buttons for Prize Types */}
+                  <div className="flex flex-wrap gap-3 justify-center mb-4">
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => setPrizeValue("all")}
+                      className={`py-2 px-5 rounded-full text-sm font-medium transition-all duration-200 flex items-center 
+                        ${prizeValue === "all" 
+                          ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/30" 
+                          : "bg-gray-800/60 text-gray-300 border border-gray-700/50 hover:bg-gray-700/50"}`}
                     >
-                      <SelectTrigger className="min-w-[160px] border-0 bg-transparent text-gray-200 focus:ring-1 focus:ring-cyan-500/50">
-                        <span className="flex items-center">
-                          <Trophy className="h-4 w-4 text-cyan-400 mr-2"/>
-                          <SelectValue placeholder="Prize Type" />
-                        </span>
-                      </SelectTrigger>
-                      <SelectContent className="bg-gray-900 border-gray-700 text-gray-200 z-50">
-                        <SelectItem value="all">All Prizes</SelectItem>
-                        <SelectItem value="cash">Cash Prizes</SelectItem>
-                        <SelectItem value="family">Family Prizes</SelectItem>
-                        <SelectItem value="appliances">Appliances</SelectItem>
-                        <SelectItem value="tech">Tech Gadgets</SelectItem>
-                        <SelectItem value="luxury">Luxury Items</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </motion.div>
+                      <Trophy className="h-4 w-4 mr-2" />
+                      All Prizes
+                    </motion.button>
+                    
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => setPrizeValue("cash")}
+                      className={`py-2 px-5 rounded-full text-sm font-medium transition-all duration-200 flex items-center 
+                        ${prizeValue === "cash" 
+                          ? "bg-gradient-to-r from-green-500 to-green-600 text-white shadow-lg shadow-green-500/30" 
+                          : "bg-gray-800/60 text-gray-300 border border-gray-700/50 hover:bg-gray-700/50"}`}
+                    >
+                      <i className="fas fa-money-bill-wave text-sm mr-2"></i>
+                      Cash Prizes
+                    </motion.button>
+                    
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => setPrizeValue("family")}
+                      className={`py-2 px-5 rounded-full text-sm font-medium transition-all duration-200 flex items-center 
+                        ${prizeValue === "family" 
+                          ? "bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-lg shadow-amber-500/30" 
+                          : "bg-gray-800/60 text-gray-300 border border-gray-700/50 hover:bg-gray-700/50"}`}
+                    >
+                      <i className="fas fa-home text-sm mr-2"></i>
+                      Family
+                    </motion.button>
+                    
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => setPrizeValue("appliances")}
+                      className={`py-2 px-5 rounded-full text-sm font-medium transition-all duration-200 flex items-center 
+                        ${prizeValue === "appliances" 
+                          ? "bg-gradient-to-r from-pink-500 to-pink-600 text-white shadow-lg shadow-pink-500/30" 
+                          : "bg-gray-800/60 text-gray-300 border border-gray-700/50 hover:bg-gray-700/50"}`}
+                    >
+                      <i className="fas fa-blender text-sm mr-2"></i>
+                      Appliances
+                    </motion.button>
+                  </div>
                   
-                  {/* Filter 2: Sort By */}
-                  <motion.div
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                    className="bg-gray-800/60 border border-gray-700/50 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg relative"
-                  >
-                    <Select
-                      value={sortBy}
-                      onValueChange={setSortBy}
+                  {/* Second row - Sort and Filter controls */}
+                  <div className="flex flex-wrap gap-3 justify-center">
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => setSortBy("popularity")}
+                      className={`py-2 px-5 rounded-full text-sm font-medium transition-all duration-200 flex items-center 
+                        ${sortBy === "popularity" 
+                          ? "bg-gradient-to-r from-purple-500 to-purple-600 text-white shadow-lg shadow-purple-500/30" 
+                          : "bg-gray-800/60 text-gray-300 border border-gray-700/50 hover:bg-gray-700/50"}`}
                     >
-                      <SelectTrigger className="min-w-[160px] border-0 bg-transparent text-gray-200 focus:ring-1 focus:ring-purple-500/50">
-                        <span className="flex items-center">
-                          <Sparkles className="h-4 w-4 text-purple-400 mr-2"/>
-                          <SelectValue placeholder="Sort By" />
-                        </span>
-                      </SelectTrigger>
-                      <SelectContent className="bg-gray-900 border-gray-700 text-gray-200 z-50">
-                        <SelectItem value="popularity">Most Popular</SelectItem>
-                        <SelectItem value="newest">Newest First</SelectItem>
-                        <SelectItem value="endingSoon">Ending Soon</SelectItem>
-                        <SelectItem value="prizeValueHigh">Prize: High to Low</SelectItem>
-                        <SelectItem value="prizeValueLow">Prize: Low to High</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </motion.div>
-                  
-                  {/* Filter 3: Filter By */}
-                  <motion.div
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                    className="bg-gray-800/60 border border-gray-700/50 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg relative"
-                  >
-                    <Select
-                      value={activeTab}
-                      onValueChange={setActiveTab}
+                      <Sparkles className="h-4 w-4 mr-2" />
+                      Most Popular
+                    </motion.button>
+                    
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => setSortBy("newest")}
+                      className={`py-2 px-5 rounded-full text-sm font-medium transition-all duration-200 flex items-center 
+                        ${sortBy === "newest" 
+                          ? "bg-gradient-to-r from-purple-500 to-purple-600 text-white shadow-lg shadow-purple-500/30" 
+                          : "bg-gray-800/60 text-gray-300 border border-gray-700/50 hover:bg-gray-700/50"}`}
                     >
-                      <SelectTrigger className="min-w-[160px] border-0 bg-transparent text-gray-200 focus:ring-1 focus:ring-blue-500/50">
-                        <span className="flex items-center">
-                          <i className="fas fa-filter text-blue-400 mr-2 text-sm"></i>
-                          <SelectValue placeholder="Filter By" />
-                        </span>
-                      </SelectTrigger>
-                      <SelectContent className="bg-gray-900 border-gray-700 text-gray-200 z-50">
-                        <SelectItem value="trending">Trending Now</SelectItem>
-                        <SelectItem value="featured">Featured</SelectItem>
-                        <SelectItem value="new">New Arrivals</SelectItem>
-                        <SelectItem value="popular">Most Entered</SelectItem>
-                        <SelectItem value="all">All Competitions</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </motion.div>
+                      <i className="fas fa-calendar-alt text-sm mr-2"></i>
+                      Newest First
+                    </motion.button>
+                    
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => setActiveTab("trending")}
+                      className={`py-2 px-5 rounded-full text-sm font-medium transition-all duration-200 flex items-center 
+                        ${activeTab === "trending" 
+                          ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/30" 
+                          : "bg-gray-800/60 text-gray-300 border border-gray-700/50 hover:bg-gray-700/50"}`}
+                    >
+                      <i className="fas fa-fire text-sm mr-2"></i>
+                      Trending Now
+                    </motion.button>
+                    
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => {
+                        setPrizeValue("all");
+                        setSortBy("popularity");
+                        setActiveTab("trending");
+                      }}
+                      className="py-2 px-5 rounded-full text-sm font-medium transition-all duration-200 flex items-center 
+                        bg-gray-800/60 text-gray-300 border border-gray-700/50 hover:bg-gray-700/50"
+                    >
+                      <i className="fas fa-sync-alt text-sm mr-2"></i>
+                      Reset Filters
+                    </motion.button>
+                  </div>
                 </motion.div>
 
                 {/* Staggered animation for competition cards */}
