@@ -1061,6 +1061,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Update user profile (mascot, etc.)
+  app.patch("/api/user/profile", isAuthenticated, async (req, res) => {
+    try {
+      // Use authenticated user's ID
+      const userId = (req.user as any).id;
+      if (!userId) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+      
+      // Validate the update data
+      const updateSchema = z.object({
+        mascotId: z.string().optional(),
+        // Add other profile fields here as needed
+      });
+      
+      const validatedData = updateSchema.parse(req.body);
+      const updatedUser = await storage.updateUser(userId, validatedData);
+      
+      // Return user data without sensitive information
+      const { password, ...userWithoutPassword } = updatedUser;
+      res.status(200).json(userWithoutPassword);
+    } catch (error) {
+      console.error("Error updating user profile:", error);
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ message: "Invalid update data", errors: error.errors });
+      } else {
+        res.status(500).json({ message: "Failed to update user profile" });
+      }
+    }
+  });
+
   const httpServer = createServer(app);
 
   return httpServer;

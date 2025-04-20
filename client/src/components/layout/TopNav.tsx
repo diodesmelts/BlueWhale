@@ -13,6 +13,8 @@ import { Bell, LogIn, User } from "lucide-react";
 import { useAdmin } from "@/hooks/use-admin";
 import { useAuth } from "@/hooks/use-auth";
 import { LogoDisplay } from "@/components/ui/logo-display";
+import MascotSelector, { getMascotById } from "@/components/profile/MascotSelector";
+import { useState } from "react";
 
 // Define TypeScript interfaces for navigation items
 interface DropdownItem {
@@ -33,6 +35,7 @@ export default function TopNav() {
   const [location, setLocation] = useLocation();
   const { isAdmin } = useAdmin();
   const { user, logoutUser, isLoading } = useAuth();
+  const [currentMascotId, setCurrentMascotId] = useState<string | null>(user?.mascotId || "whale");
 
   // Public navigation items available to all users
   const publicNavItems: NavItem[] = [
@@ -216,10 +219,11 @@ export default function TopNav() {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <div className="flex items-center space-x-3 cursor-pointer rounded-full pl-3 pr-5 py-2 transition-all bg-cyan-900 hover:bg-gray-800">
-                    <Avatar className="h-12 w-12 shadow-md bg-black text-cyan-400 border-2 border-cyan-600">
-                      <span className="text-base font-bold">
-                        {user.username.substring(0, 2).toUpperCase()}
-                      </span>
+                    <Avatar className="h-12 w-12 shadow-md bg-black border-2 border-cyan-600 p-0 overflow-hidden">
+                      <MascotSelector 
+                        currentMascotId={user.mascotId || currentMascotId} 
+                        onSelect={setCurrentMascotId} 
+                      />
                     </Avatar>
                     <span className="text-base font-medium hidden md:block text-cyan-300">
                       {user.username}
