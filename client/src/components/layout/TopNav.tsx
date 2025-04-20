@@ -155,10 +155,12 @@ export default function TopNav() {
 
           <div className="flex items-center space-x-4 md:space-x-8">
 
-            {/* Notifications */}
-            <div className="relative p-2 rounded-full focus:outline-none transition-all hover:bg-gray-800 bg-cyan-900/50">
-              <NotificationBell />
-            </div>
+            {/* Notifications - only for logged in users */}
+            {user && (
+              <div className="relative p-2 rounded-full focus:outline-none transition-all hover:bg-gray-800 bg-cyan-900/50">
+                <NotificationBell />
+              </div>
+            )}
 
             {/* Auth Button or Profile Dropdown */}
             {user ? (

@@ -9,6 +9,8 @@ import { buttonVariants } from "@/components/ui/button";
 
 export function NotificationBell() {
   const [showDot, setShowDot] = useState(true);
+  const [notifications, setNotifications] = useState<any[]>([]);
+  const hasNotifications = notifications.length > 0;
   
   const handleOpenChange = (open: boolean) => {
     // When opening the notifications, we clear the notification indicator
@@ -33,22 +35,24 @@ export function NotificationBell() {
           </h3>
         </div>
           
-        <div className="px-4 py-2 space-y-4">
-          <NotificationItem 
-            icon="gift"
-            title="New competition available!"
-            description="£500 Google Play gift card giveaway"
-            time="Just now"
-            isNew={true}
-          />
-            
-          <NotificationItem 
-            icon="check-circle"
-            title="Your entry was approved"
-            description="Dream Vacation Giveaway"
-            time="1 hour ago"
-            isNew={false}
-          />
+        <div className="px-4 py-2 space-y-4 min-h-[100px] flex items-center justify-center">
+          {hasNotifications ? (
+            notifications.map((notification, index) => (
+              <NotificationItem 
+                key={index}
+                icon={notification.icon}
+                title={notification.title}
+                description={notification.description}
+                time={notification.time}
+                isNew={notification.isNew}
+              />
+            ))
+          ) : (
+            <div className="text-center text-gray-400 py-4">
+              <i className="fas fa-bell-slash text-2xl mb-2 block"></i>
+              <p>No new notifications</p>
+            </div>
+          )}
         </div>
           
         <div className="border-t border-gray-800 p-2">
