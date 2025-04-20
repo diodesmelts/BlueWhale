@@ -211,7 +211,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         error: error || null,
         loginUser,
         logoutUser,
-        registerUser
+        registerUser,
+        // Expose mutation objects directly for form integrations
+        loginMutation,
+        registerMutation,
+        logoutMutation
       }}
     >
       {children}
