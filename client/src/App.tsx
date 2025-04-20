@@ -24,6 +24,7 @@ import CookiesPage from "@/pages/CookiesPage";
 import ResponsibleGamblingPage from "@/pages/ResponsibleGamblingPage";
 import SitemapPage from "@/pages/SitemapPage";
 import PaymentMethodsPage from "@/pages/PaymentMethodsPage";
+import HowToPlayPage from "@/pages/HowToPlayPage";
 import TopNav from "@/components/layout/TopNav";
 import MobileNav from "@/components/layout/MobileNav";
 import Footer from "@/components/layout/Footer";
@@ -45,6 +46,7 @@ function Router() {
       <Route path="/auth" component={AuthPage} />
       
       {/* Static Content Pages */}
+      <Route path="/how-to-play" component={HowToPlayPage} />
       <Route path="/about" component={AboutPage} />
       <Route path="/terms" component={TermsPage} />
       <Route path="/privacy" component={PrivacyPage} />

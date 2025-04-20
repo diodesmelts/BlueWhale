@@ -50,6 +50,7 @@ export default function TopNav() {
         { label: "Featured Competitions", path: "/competitions", color: "text-purple-500" },
       ] 
     },
+    { icon: "fas fa-gamepad", label: "How to Play", path: "/how-to-play" },
   ];
   
   // User-specific navigation items available only when logged in

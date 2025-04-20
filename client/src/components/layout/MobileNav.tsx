@@ -51,7 +51,7 @@ export default function MobileNav() {
       hasSubmenu: true,
       action: () => setIsCompetitionsOpen(true)
     },
-    { icon: "fas fa-chart-line", label: "Leaderboard", path: "/leaderboard" },
+    { icon: "fas fa-gamepad", label: "How to Play", path: "/how-to-play" },
   ];
   
   // User-specific navigation items only when logged in
