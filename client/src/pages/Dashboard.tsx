@@ -271,7 +271,7 @@ export default function Dashboard() {
                     transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
                     className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 relative inline-block"
                   >
-                    competition
+                    Competition
                     {/* Animated sparkle in the corner */}
                     <motion.span 
                       animate={{ 
@@ -285,7 +285,7 @@ export default function Dashboard() {
                       ✨
                     </motion.span>
                   </motion.span>
-                  <span className="relative inline-block text-white"> time</span>
+                  <span className="relative inline-block text-white">Time</span>
                   {/* Enhanced glow effect */}
                   <motion.span 
                     animate={{ 
