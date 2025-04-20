@@ -88,9 +88,9 @@ export default function TopNav() {
         <div className="absolute top-1/3 right-1/6 w-40 h-40 bg-blue-800/15 rounded-full blur-3xl"></div>
       </div>
       
-      <div className="w-full px-4 md:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-28 py-2 max-w-screen-2xl mx-auto">
-          <div className="flex items-center space-x-4 md:space-x-10">
+      <div className="w-full px-4 md:px-8 lg:px-12">
+        <div className="flex justify-between items-center h-28 py-2 w-full">
+          <div className="flex items-center space-x-4 md:space-x-16">
             {/* Logo - Image */}
             <Link href="/">
               <div className="flex items-center group">
@@ -101,7 +101,7 @@ export default function TopNav() {
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-2">
+            <nav className="hidden md:flex items-center space-x-6">
               {navItems.map((item) => (
                 item.hasDropdown ? (
                   <DropdownMenu key={item.path}>
