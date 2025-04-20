@@ -29,7 +29,7 @@ export function ProtectedRoute({ path, adminOnly = false, children }: ProtectedR
   if (!user) {
     return (
       <Route path={path}>
-        <Redirect to="/auth" />
+        <Redirect to="/login" />
       </Route>
     );
   }

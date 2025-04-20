@@ -46,7 +46,6 @@ function Router() {
       <Route path="/competitions/appliances" component={AppliancesCompetitionsPage} />
       <Route path="/competitions/cash" component={CashCompetitionsPage} />
       <Route path="/leaderboard" component={Leaderboard} />
-      <Route path="/auth" component={AuthPage} />
       <Route path="/login" component={LoginPage} />
       <Route path="/register" component={RegisterPage} />
       
