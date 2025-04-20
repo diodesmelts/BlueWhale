@@ -17,6 +17,7 @@ import ListingsPage from "@/pages/ListingsPage";
 import AuthPage from "@/pages/AuthPage";
 import LoginPage from "@/pages/LoginPage";
 import RegisterPage from "@/pages/RegisterPage";
+import ProfilePage from "@/pages/ProfilePage";
 import AboutPage from "@/pages/AboutPage";
 import TermsPage from "@/pages/TermsPage";
 import PrivacyPage from "@/pages/PrivacyPage";
@@ -67,6 +68,9 @@ function Router() {
       </ProtectedRoute>
       <ProtectedRoute path="/my-wins">
         <MyWins />
+      </ProtectedRoute>
+      <ProtectedRoute path="/profile">
+        <ProfilePage />
       </ProtectedRoute>
       
       {/* Admin protected routes */}

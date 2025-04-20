@@ -257,9 +257,11 @@ export default function TopNav() {
                       </Link>
                     </>
                   )}
-                  <DropdownMenuItem className="py-2.5 px-3 cursor-pointer focus:bg-cyan-50 rounded-lg my-0.5 hover:bg-cyan-50 transition-colors">
-                    <i className="fas fa-user mr-2 text-cyan-600"></i> My Profile
-                  </DropdownMenuItem>
+                  <Link href="/profile">
+                    <DropdownMenuItem className="py-2.5 px-3 cursor-pointer focus:bg-cyan-50 rounded-lg my-0.5 hover:bg-cyan-50 transition-colors">
+                      <i className="fas fa-user mr-2 text-cyan-600"></i> My Profile
+                    </DropdownMenuItem>
+                  </Link>
                   <DropdownMenuItem className="py-2.5 px-3 cursor-pointer focus:bg-cyan-50 rounded-lg my-0.5 hover:bg-cyan-50 transition-colors">
                     <i className="fas fa-wallet mr-2 text-green-600"></i> My Balance
                   </DropdownMenuItem>

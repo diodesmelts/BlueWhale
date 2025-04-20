@@ -10,6 +10,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import MascotSelector, { getMascotById } from "@/components/profile/MascotSelector";
 
 interface NavItem {
   icon: string;
