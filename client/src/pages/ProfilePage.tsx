@@ -16,6 +16,12 @@ export default function ProfilePage() {
   const queryClient = useQueryClient();
   const [currentMascotId, setCurrentMascotId] = useState<string | null>(user?.mascotId || "dolphin");
   const [selectedTab, setSelectedTab] = useState("profile");
+  const [notificationSettings, setNotificationSettings] = useState({
+    newCompetitions: true,
+    competitionClosingSoon: true,
+    winningResults: true,
+    accountUpdates: true
+  });
 
   useEffect(() => {
     if (user?.mascotId) {
@@ -43,10 +49,34 @@ export default function ProfilePage() {
       });
     },
   });
+  
+  const updateNotificationsMutation = useMutation({
+    mutationFn: async (data: typeof notificationSettings) => {
+      const res = await apiRequest("PATCH", "/api/user/notifications", data);
+      return await res.json();
+    },
+    onSuccess: () => {
+      toast({
+        title: "Notification preferences updated",
+        description: "Your notification settings have been saved successfully.",
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Update failed",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
 
   const handleSaveChanges = () => {
     if (!currentMascotId) return;
     updateProfileMutation.mutate({ mascotId: currentMascotId });
+  };
+  
+  const handleSaveNotifications = () => {
+    updateNotificationsMutation.mutate(notificationSettings);
   };
 
   if (isLoading) {
@@ -75,12 +105,6 @@ export default function ProfilePage() {
                 className="data-[state=active]:text-cyan-400 data-[state=active]:border-b-2 data-[state=active]:border-cyan-500 text-gray-400 bg-transparent rounded-none px-6 py-2"
               >
                 Profile
-              </TabsTrigger>
-              <TabsTrigger 
-                value="appearance" 
-                className="data-[state=active]:text-cyan-400 data-[state=active]:border-b-2 data-[state=active]:border-cyan-500 text-gray-400 bg-transparent rounded-none px-6 py-2"
-              >
-                Appearance
               </TabsTrigger>
               <TabsTrigger 
                 value="notifications" 
@@ -232,40 +256,108 @@ export default function ProfilePage() {
               </div>
             </TabsContent>
             
-            <TabsContent value="appearance" className="mt-6">
-              <div className="bg-gray-900 rounded-xl overflow-hidden shadow-lg border border-gray-800">
-                <div className="p-5 border-b border-gray-800">
-                  <h2 className="text-lg font-medium text-white">Appearance Settings</h2>
-                  <p className="text-gray-400 text-xs mt-1">Customize how Blue Whale Competitions looks for you</p>
-                </div>
-                
-                <div className="p-10 flex flex-col items-center justify-center text-center">
-                  <div className="w-16 h-16 flex items-center justify-center rounded-full bg-gray-800 mb-4">
-                    <i className="fas fa-paint-brush text-cyan-400 text-xl"></i>
-                  </div>
-                  <h3 className="text-white text-lg mb-2">Appearance settings coming soon!</h3>
-                  <p className="text-gray-400 text-sm max-w-md">
-                    We're working on customization options to let you personalize your Blue Whale Competitions experience.
-                  </p>
-                </div>
-              </div>
-            </TabsContent>
-            
             <TabsContent value="notifications" className="mt-6">
               <div className="bg-gray-900 rounded-xl overflow-hidden shadow-lg border border-gray-800">
                 <div className="p-5 border-b border-gray-800">
                   <h2 className="text-lg font-medium text-white">Notification Preferences</h2>
-                  <p className="text-gray-400 text-xs mt-1">Control how and when you receive updates</p>
+                  <p className="text-gray-400 text-xs mt-1">Control which in-app notifications you receive</p>
                 </div>
                 
-                <div className="p-10 flex flex-col items-center justify-center text-center">
-                  <div className="w-16 h-16 flex items-center justify-center rounded-full bg-gray-800 mb-4">
-                    <i className="fas fa-bell text-cyan-400 text-xl"></i>
+                <div className="p-6">
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-between py-3 border-b border-gray-800">
+                      <div>
+                        <h3 className="text-white font-medium">New Competitions</h3>
+                        <p className="text-gray-400 text-sm mt-1">Get notified when new competitions are added</p>
+                      </div>
+                      <div className="h-6 flex items-center">
+                        <button 
+                          className={`w-12 h-6 rounded-full flex items-center transition-colors ${notificationSettings.newCompetitions ? 'bg-cyan-500 justify-end' : 'bg-gray-600 justify-start'}`}
+                          onClick={() => setNotificationSettings({
+                            ...notificationSettings,
+                            newCompetitions: !notificationSettings.newCompetitions
+                          })}
+                        >
+                          <span className={`bg-white rounded-full h-5 w-5 transform mx-0.5 transition-transform`}></span>
+                        </button>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center justify-between py-3 border-b border-gray-800">
+                      <div>
+                        <h3 className="text-white font-medium">Competition Closing Soon</h3>
+                        <p className="text-gray-400 text-sm mt-1">Get reminded when competitions are about to end</p>
+                      </div>
+                      <div className="h-6 flex items-center">
+                        <button 
+                          className={`w-12 h-6 rounded-full flex items-center transition-colors ${notificationSettings.competitionClosingSoon ? 'bg-cyan-500 justify-end' : 'bg-gray-600 justify-start'}`}
+                          onClick={() => setNotificationSettings({
+                            ...notificationSettings,
+                            competitionClosingSoon: !notificationSettings.competitionClosingSoon
+                          })}
+                        >
+                          <span className={`bg-white rounded-full h-5 w-5 transform mx-0.5 transition-transform`}></span>
+                        </button>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center justify-between py-3 border-b border-gray-800">
+                      <div>
+                        <h3 className="text-white font-medium">Winning Results</h3>
+                        <p className="text-gray-400 text-sm mt-1">Receive notifications when competition results are announced</p>
+                      </div>
+                      <div className="h-6 flex items-center">
+                        <button 
+                          className={`w-12 h-6 rounded-full flex items-center transition-colors ${notificationSettings.winningResults ? 'bg-cyan-500 justify-end' : 'bg-gray-600 justify-start'}`}
+                          onClick={() => setNotificationSettings({
+                            ...notificationSettings,
+                            winningResults: !notificationSettings.winningResults
+                          })}
+                        >
+                          <span className={`bg-white rounded-full h-5 w-5 transform mx-0.5 transition-transform`}></span>
+                        </button>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center justify-between py-3">
+                      <div>
+                        <h3 className="text-white font-medium">Account Updates</h3>
+                        <p className="text-gray-400 text-sm mt-1">Get notifications about your account status and balance</p>
+                      </div>
+                      <div className="h-6 flex items-center">
+                        <button 
+                          className={`w-12 h-6 rounded-full flex items-center transition-colors ${notificationSettings.accountUpdates ? 'bg-cyan-500 justify-end' : 'bg-gray-600 justify-start'}`}
+                          onClick={() => setNotificationSettings({
+                            ...notificationSettings,
+                            accountUpdates: !notificationSettings.accountUpdates
+                          })}
+                        >
+                          <span className={`bg-white rounded-full h-5 w-5 transform mx-0.5 transition-transform`}></span>
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                  <h3 className="text-white text-lg mb-2">Notification settings coming soon!</h3>
-                  <p className="text-gray-400 text-sm max-w-md">
-                    We're building a powerful notification system to keep you updated on competitions, wins, and important events.
-                  </p>
+                </div>
+                
+                <div className="bg-gray-950 px-6 py-4 flex justify-end gap-3 border-t border-gray-800">
+                  <Button 
+                    variant="outline" 
+                    className="border-gray-700 text-gray-300 hover:bg-gray-800 hover:text-white"
+                  >
+                    Cancel
+                  </Button>
+                  <Button 
+                    className="bg-gradient-to-r from-cyan-600 to-cyan-500 hover:from-cyan-700 hover:to-cyan-600 border-0 shadow-md shadow-cyan-900/20"
+                    onClick={handleSaveNotifications}
+                    disabled={updateNotificationsMutation.isPending}
+                  >
+                    {updateNotificationsMutation.isPending ? (
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    ) : (
+                      <i className="fas fa-save mr-2"></i>
+                    )}
+                    Save Preferences
+                  </Button>
                 </div>
               </div>
             </TabsContent>
