@@ -220,10 +220,12 @@ export default function TopNav() {
                 <DropdownMenuTrigger asChild>
                   <div className="flex items-center space-x-3 cursor-pointer rounded-full pl-3 pr-5 py-2 transition-all bg-cyan-900 hover:bg-gray-800">
                     <Avatar className="h-12 w-12 shadow-md bg-black border-2 border-cyan-600 p-0 overflow-hidden">
-                      <MascotSelector 
-                        currentMascotId={user.mascotId || currentMascotId} 
-                        onSelect={setCurrentMascotId} 
-                      />
+                      <div className="h-full w-full flex items-center justify-center">
+                        <MascotSelector 
+                          currentMascotId={user.mascotId || currentMascotId} 
+                          onSelect={setCurrentMascotId} 
+                        />
+                      </div>
                     </Avatar>
                     <span className="text-base font-medium hidden md:block text-cyan-300">
                       {user.username}
