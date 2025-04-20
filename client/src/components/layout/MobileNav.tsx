@@ -32,6 +32,7 @@ export default function MobileNav() {
   const { isAdmin } = useAdmin();
   const { user } = useAuth();
   const [isCompetitionsOpen, setIsCompetitionsOpen] = useState(false);
+  const [currentMascotId, setCurrentMascotId] = useState<string | null>(user?.mascotId || "whale");
   
   // Competition categories
   const competitionCategories: CategoryItem[] = [

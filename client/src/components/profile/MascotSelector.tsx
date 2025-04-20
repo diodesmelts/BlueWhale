@@ -40,6 +40,29 @@ export default function MascotSelector({ currentMascotId, onSelect, className = 
 
   const currentMascot = getMascotById(currentMascotId);
 
+  // For profile page, sometimes we just want to display the grid without the dialog
+  if (className === "col-span-4") {
+    return (
+      <div className="grid grid-cols-4 gap-3 py-2">
+        {mascots.map((mascot) => (
+          <div 
+            key={mascot.id} 
+            className={`
+              aspect-square rounded-xl p-2 flex flex-col items-center justify-center cursor-pointer transition-all
+              ${mascot.id === currentMascotId ? 'ring-2 ring-cyan-400 ring-offset-2 ring-offset-black scale-105' : 'hover:bg-gray-800'}
+            `}
+            onClick={() => onSelect(mascot.id)}
+          >
+            <div className={`w-12 h-12 rounded-full flex items-center justify-center ${mascot.color} mb-1`}>
+              <span className="text-2xl">{mascot.emoji}</span>
+            </div>
+            <span className="text-xs text-center mt-1 text-gray-300">{mascot.name}</span>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   const updateMascotMutation = useMutation({
     mutationFn: async (mascotId: string) => {
       const res = await apiRequest("PATCH", "/api/user/profile", { mascotId });

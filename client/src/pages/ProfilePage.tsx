@@ -134,15 +134,21 @@ export default function ProfilePage() {
                       <p className="text-gray-300 mt-1 mb-3">Choose a mascot that represents you</p>
                       
                       <div className="flex flex-col items-center space-y-4 bg-black bg-opacity-30 rounded-xl p-4 border border-gray-800">
-                        <Avatar className="h-24 w-24 bg-black border-2 border-cyan-600 p-0 overflow-hidden">
-                          <MascotSelector 
-                            currentMascotId={currentMascotId} 
-                            onSelect={setCurrentMascotId} 
-                            className="w-24 h-24"
-                          />
-                        </Avatar>
+                        <div className="relative">
+                          <Avatar className="h-24 w-24 bg-black border-2 border-cyan-600 p-0 overflow-hidden shadow-lg">
+                            <MascotSelector 
+                              currentMascotId={currentMascotId} 
+                              onSelect={setCurrentMascotId} 
+                              className="w-24 h-24"
+                            />
+                          </Avatar>
+                          <div className="absolute -bottom-2 -right-2 bg-cyan-600 text-white p-1 rounded-full text-xs shadow-md">
+                            <i className="fas fa-edit"></i>
+                          </div>
+                        </div>
                         
-                        <div className="grid grid-cols-4 gap-3 w-full mt-4">
+                        <div className="w-full mt-6 mb-2">
+                          <h4 className="text-sm font-medium text-gray-400 mb-3">Choose your favorite mascot:</h4>
                           <MascotSelector
                             currentMascotId={currentMascotId}
                             onSelect={setCurrentMascotId}
