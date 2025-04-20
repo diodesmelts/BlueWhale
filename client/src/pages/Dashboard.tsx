@@ -499,10 +499,10 @@ export default function Dashboard() {
               className="mt-8"
             >
               <Link href="/how-to-play">
-                <motion.a
+                <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="inline-flex items-center py-2 px-6 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-full font-medium shadow-lg shadow-blue-700/20 hover:shadow-blue-700/40 transition-all duration-300"
+                  className="inline-flex items-center py-2 px-6 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-full font-medium shadow-lg shadow-blue-700/20 hover:shadow-blue-700/40 transition-all duration-300 cursor-pointer"
                 >
                   <span>Detailed Guide</span>
                   <motion.span
@@ -512,7 +512,7 @@ export default function Dashboard() {
                   >
                     <ChevronRight size={18} />
                   </motion.span>
-                </motion.a>
+                </motion.div>
               </Link>
             </motion.div>
           </motion.div>
