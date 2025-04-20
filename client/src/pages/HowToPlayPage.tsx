@@ -225,7 +225,7 @@ export default function HowToPlayPage() {
       
       {/* Statistics Section */}
       <div className="container mx-auto px-4 py-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
           <motion.div 
             className="bg-gray-800/40 backdrop-blur-sm rounded-xl p-6 text-center border border-gray-700/30"
             whileHover={{ y: -5, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.2)" }}
@@ -246,16 +246,8 @@ export default function HowToPlayPage() {
             className="bg-gray-800/40 backdrop-blur-sm rounded-xl p-6 text-center border border-gray-700/30"
             whileHover={{ y: -5, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.2)" }}
           >
-            <div className="text-4xl font-bold text-green-400 mb-2">50K+</div>
-            <div className="text-gray-300">Happy Winners</div>
-          </motion.div>
-          
-          <motion.div 
-            className="bg-gray-800/40 backdrop-blur-sm rounded-xl p-6 text-center border border-gray-700/30"
-            whileHover={{ y: -5, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.2)" }}
-          >
-            <div className="text-4xl font-bold text-yellow-400 mb-2">99%</div>
-            <div className="text-gray-300">Positive Reviews</div>
+            <div className="text-4xl font-bold text-green-400 mb-2">1000's</div>
+            <div className="text-gray-300">of prizes to come</div>
           </motion.div>
         </div>
       </div>
