@@ -309,48 +309,12 @@ export default function CompetitionsPage() {
                 ))}
               </div>
               
-              {/* Pagination with Dark Theme */}
-              <div className="mt-8 pt-4 flex flex-col md:flex-row items-center justify-between border-t border-gray-700">
-                <div className="flex items-center text-sm text-gray-400 mb-4 md:mb-0">
+              {/* Simple count without pagination when few listings */}
+              <div className="mt-8 pt-4 flex flex-col md:flex-row items-center justify-center border-t border-gray-700">
+                <div className="flex items-center text-sm text-gray-400">
                   <span>
-                    Showing <span className="font-medium text-white">1</span> to <span className="font-medium text-white">{competitions?.length || 0}</span> of <span className="font-medium text-white">42</span> competitions
+                    Showing <span className="font-medium text-white">{competitions?.length || 0}</span> competition{competitions?.length !== 1 ? 's' : ''}
                   </span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="border-gray-600 text-gray-300 hover:bg-gray-700"
-                  >
-                    Previous
-                  </Button>
-                  <Button 
-                    size="sm" 
-                    className="px-3 py-1 bg-gradient-to-r from-cyan-600 to-blue-600 text-white border-0"
-                  >
-                    1
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="border-gray-600 text-gray-300 hover:bg-gray-700"
-                  >
-                    2
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="border-gray-600 text-gray-300 hover:bg-gray-700"
-                  >
-                    3
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="border-gray-600 text-gray-300 hover:bg-gray-700"
-                  >
-                    Next
-                  </Button>
                 </div>
               </div>
             </>
