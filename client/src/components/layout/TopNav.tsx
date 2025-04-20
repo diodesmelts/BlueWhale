@@ -233,67 +233,73 @@ export default function TopNav() {
                     <i className="fas fa-chevron-down text-sm opacity-70 text-cyan-200 hidden md:block"></i>
                   </div>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-64 p-2 rounded-xl shadow-xl border border-cyan-800/30">
-                  <div className="p-3 mb-1 rounded-lg bg-gradient-to-b from-gray-900 to-gray-950 border border-cyan-800/30">
-                    <div className="font-semibold text-cyan-400 text-lg">{user.username}</div>
-                    <div className="text-xs text-gray-400 mt-0.5">{user.email}</div>
+                <DropdownMenuContent align="end" className="w-64 p-0 rounded-xl shadow-xl border border-gray-700">
+                  {/* Dark header section with user info */}
+                  <div className="p-4 bg-gray-900 rounded-t-xl">
+                    <div className="font-semibold text-cyan-400 text-xl">{user.username}</div>
+                    <div className="text-xs text-gray-400 mt-1">{user.email}</div>
                     <div className="flex mt-2 items-center space-x-2">
                       {isAdmin && (
-                        <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-purple-900/80 text-purple-300 border border-purple-700/50">
-                          <i className="fas fa-shield-alt mr-1"></i> Admin
+                        <span className="inline-flex items-center px-2.5 py-1 rounded text-xs font-medium bg-purple-800 text-purple-200">
+                          <i className="fas fa-shield-alt mr-1.5"></i> Admin
                         </span>
                       )}
                     </div>
                   </div>
-                  {isAdmin && (
-                    <>
-                      <Link href="/admin">
-                        <DropdownMenuItem className="py-2.5 px-3 cursor-pointer rounded-lg my-0.5 transition-colors group hover:bg-gradient-to-r hover:from-purple-900/20 hover:to-purple-950/20 focus:bg-gradient-to-r focus:from-purple-900/20 focus:to-purple-950/20">
-                          <div className="w-6 h-6 rounded-full bg-purple-900/30 flex items-center justify-center mr-2 group-hover:bg-purple-900/50">
-                            <i className="fas fa-shield-alt text-purple-400"></i>
-                          </div>
-                          <span>Admin Dashboard</span>
-                        </DropdownMenuItem>
-                      </Link>
-                      <Link href="/listings">
-                        <DropdownMenuItem className="py-2.5 px-3 cursor-pointer rounded-lg my-0.5 transition-colors group hover:bg-gradient-to-r hover:from-blue-900/20 hover:to-blue-950/20 focus:bg-gradient-to-r focus:from-blue-900/20 focus:to-blue-950/20">
-                          <div className="w-6 h-6 rounded-full bg-blue-900/30 flex items-center justify-center mr-2 group-hover:bg-blue-900/50">
-                            <i className="fas fa-list-alt text-blue-400"></i>
-                          </div>
-                          <span>Listings Management</span>
-                        </DropdownMenuItem>
-                      </Link>
-                    </>
-                  )}
-                  <Link href="/profile">
-                    <DropdownMenuItem className="py-2.5 px-3 cursor-pointer rounded-lg my-0.5 transition-colors group hover:bg-gradient-to-r hover:from-cyan-900/20 hover:to-cyan-950/20 focus:bg-gradient-to-r focus:from-cyan-900/20 focus:to-cyan-950/20">
-                      <div className="w-6 h-6 rounded-full bg-cyan-900/30 flex items-center justify-center mr-2 group-hover:bg-cyan-900/50">
-                        <i className="fas fa-user text-cyan-400"></i>
+                  
+                  <div className="py-2">
+                    {isAdmin && (
+                      <>
+                        <Link href="/admin">
+                          <DropdownMenuItem className="py-3 px-4 cursor-pointer my-0.5 transition-colors hover:bg-gray-100/5">
+                            <div className="w-8 h-8 rounded-full bg-purple-200/20 flex items-center justify-center mr-3">
+                              <i className="fas fa-shield-alt text-purple-300"></i>
+                            </div>
+                            <span className="text-gray-100">Admin Dashboard</span>
+                          </DropdownMenuItem>
+                        </Link>
+                        <Link href="/listings">
+                          <DropdownMenuItem className="py-3 px-4 cursor-pointer my-0.5 transition-colors hover:bg-gray-100/5">
+                            <div className="w-8 h-8 rounded-full bg-blue-200/20 flex items-center justify-center mr-3">
+                              <i className="fas fa-list-alt text-blue-300"></i>
+                            </div>
+                            <span className="text-gray-100">Listings Management</span>
+                          </DropdownMenuItem>
+                        </Link>
+                      </>
+                    )}
+                    <Link href="/profile">
+                      <DropdownMenuItem className="py-3 px-4 cursor-pointer my-0.5 transition-colors hover:bg-gray-100/5">
+                        <div className="w-8 h-8 rounded-full bg-cyan-200/20 flex items-center justify-center mr-3">
+                          <i className="fas fa-user text-cyan-300"></i>
+                        </div>
+                        <span className="text-gray-100">My Profile</span>
+                      </DropdownMenuItem>
+                    </Link>
+                    <DropdownMenuItem className="py-3 px-4 cursor-pointer my-0.5 transition-colors hover:bg-gray-100/5">
+                      <div className="w-8 h-8 rounded-full bg-green-200/20 flex items-center justify-center mr-3">
+                        <i className="fas fa-wallet text-green-300"></i>
                       </div>
-                      <span>My Profile</span>
+                      <span className="text-gray-100">My Balance</span>
                     </DropdownMenuItem>
-                  </Link>
-                  <DropdownMenuItem className="py-2.5 px-3 cursor-pointer rounded-lg my-0.5 transition-colors group hover:bg-gradient-to-r hover:from-green-900/20 hover:to-green-950/20 focus:bg-gradient-to-r focus:from-green-900/20 focus:to-green-950/20">
-                    <div className="w-6 h-6 rounded-full bg-green-900/30 flex items-center justify-center mr-2 group-hover:bg-green-900/50">
-                      <i className="fas fa-wallet text-green-400"></i>
-                    </div>
-                    <span>My Balance</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="py-2.5 px-3 cursor-pointer rounded-lg my-0.5 transition-colors group hover:bg-gradient-to-r hover:from-gray-800/20 hover:to-gray-900/20 focus:bg-gradient-to-r focus:from-gray-800/20 focus:to-gray-900/20">
-                    <div className="w-6 h-6 rounded-full bg-gray-800/30 flex items-center justify-center mr-2 group-hover:bg-gray-800/50">
-                      <i className="fas fa-cog text-gray-400"></i>
-                    </div>
-                    <span>Account Settings</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator className="my-2 border-t border-cyan-900/20" />
+                    <DropdownMenuItem className="py-3 px-4 cursor-pointer my-0.5 transition-colors hover:bg-gray-100/5">
+                      <div className="w-8 h-8 rounded-full bg-gray-400/20 flex items-center justify-center mr-3">
+                        <i className="fas fa-cog text-gray-300"></i>
+                      </div>
+                      <span className="text-gray-100">Account Settings</span>
+                    </DropdownMenuItem>
+                  </div>
+                  
+                  <DropdownMenuSeparator className="m-0 border-t border-gray-700" />
+                  
                   <DropdownMenuItem 
-                    className="py-2.5 px-3 cursor-pointer rounded-lg transition-colors group hover:bg-gradient-to-r hover:from-red-900/20 hover:to-red-950/20 focus:bg-gradient-to-r focus:from-red-900/20 focus:to-red-950/20 text-red-400"
+                    className="py-3 px-4 cursor-pointer transition-colors hover:bg-gray-100/5"
                     onClick={handleLogout}
                   >
-                    <div className="w-6 h-6 rounded-full bg-red-900/30 flex items-center justify-center mr-2 group-hover:bg-red-900/50">
-                      <i className="fas fa-sign-out-alt text-red-400"></i>
+                    <div className="w-8 h-8 rounded-full bg-red-200/20 flex items-center justify-center mr-3">
+                      <i className="fas fa-sign-out-alt text-red-300"></i>
                     </div>
-                    <span>Logout</span>
+                    <span className="text-red-300">Logout</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
