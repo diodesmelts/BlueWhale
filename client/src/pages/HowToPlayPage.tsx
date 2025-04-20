@@ -238,8 +238,8 @@ export default function HowToPlayPage() {
             className="bg-gray-800/40 backdrop-blur-sm rounded-xl p-6 text-center border border-gray-700/30"
             whileHover={{ y: -5, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.2)" }}
           >
-            <div className="text-4xl font-bold text-purple-400 mb-2">£2M+</div>
-            <div className="text-gray-300">Prizes Awarded</div>
+            <div className="text-4xl font-bold text-purple-400 mb-2">£10,000</div>
+            <div className="text-gray-300">of prizes to be won</div>
           </motion.div>
           
           <motion.div 
