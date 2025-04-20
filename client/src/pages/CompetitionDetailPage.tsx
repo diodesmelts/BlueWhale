@@ -602,7 +602,7 @@ export default function CompetitionDetailPage() {
                       <p className="text-blue-300 text-sm">per ticket</p>
                     </div>
                     
-                    <div className="grid grid-cols-2 gap-3 mb-6">
+                    <div className="grid grid-cols-2 gap-3 mb-4">
                       <div className="bg-gradient-to-b from-[#1a2747] to-[#141e34] rounded-lg p-3 text-center border border-blue-500/20 shadow-lg">
                         <div className="text-sm text-blue-300 mb-1 font-medium">Available</div>
                         <div className="text-xl font-bold text-white">
@@ -612,6 +612,30 @@ export default function CompetitionDetailPage() {
                       <div className="bg-gradient-to-b from-[#1a2747] to-[#141e34] rounded-lg p-3 text-center border border-blue-500/20 shadow-lg">
                         <div className="text-sm text-blue-300 mb-1 font-medium">Max per user</div>
                         <div className="text-xl font-bold text-white">{competition.maxTicketsPerUser}</div>
+                      </div>
+                    </div>
+                    
+                    {/* Secure payment methods */}
+                    <div className="flex items-center justify-between mb-4 px-2">
+                      <div className="flex items-center space-x-1">
+                        <div className="w-7 h-5 bg-[#1a2747] rounded flex items-center justify-center">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-300">
+                            <rect width="18" height="12" x="3" y="6" rx="2"/>
+                            <line x1="3" x2="21" y1="10" y2="10"/>
+                          </svg>
+                        </div>
+                        <div className="w-7 h-5 bg-[#1a2747] rounded flex items-center justify-center">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-300">
+                            <path d="M12 19a7 7 0 1 0 0-14 7 7 0 0 0 0 14Z"/>
+                            <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                          </svg>
+                        </div>
+                      </div>
+                      <div className="text-xs text-blue-300/80 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-400 mr-1">
+                          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/>
+                        </svg>
+                        Secure payment via Stripe
                       </div>
                     </div>
                     
