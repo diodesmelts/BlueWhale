@@ -69,27 +69,26 @@ export default function ProfilePage() {
     <div className="container max-w-6xl px-4 py-8 mx-auto">
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold text-white">My Profile</h1>
-          <p className="text-gray-400 mt-2">Manage your account settings</p>
+          <p className="text-gray-400 mb-1 text-sm">Manage your account settings</p>
         </div>
 
         <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
-          <TabsList className="bg-black border border-gray-800 rounded-lg p-1 mb-6">
+          <TabsList className="bg-transparent rounded-lg p-0 mb-4 border-b border-gray-800 w-auto">
             <TabsTrigger 
               value="profile" 
-              className="data-[state=active]:bg-gray-800 data-[state=active]:text-cyan-400 text-gray-300"
+              className="data-[state=active]:text-cyan-400 data-[state=active]:border-b-2 data-[state=active]:border-cyan-400 data-[state=active]:bg-transparent text-gray-300 bg-transparent rounded-none px-6"
             >
               Profile
             </TabsTrigger>
             <TabsTrigger 
               value="appearance" 
-              className="data-[state=active]:bg-gray-800 data-[state=active]:text-cyan-400 text-gray-300"
+              className="data-[state=active]:text-cyan-400 data-[state=active]:border-b-2 data-[state=active]:border-cyan-400 data-[state=active]:bg-transparent text-gray-300 bg-transparent rounded-none px-6"
             >
               Appearance
             </TabsTrigger>
             <TabsTrigger 
               value="notifications" 
-              className="data-[state=active]:bg-gray-800 data-[state=active]:text-cyan-400 text-gray-300"
+              className="data-[state=active]:text-cyan-400 data-[state=active]:border-b-2 data-[state=active]:border-cyan-400 data-[state=active]:bg-transparent text-gray-300 bg-transparent rounded-none px-6"
             >
               Notifications
             </TabsTrigger>
@@ -98,8 +97,8 @@ export default function ProfilePage() {
           <TabsContent value="profile" className="space-y-6">
             <Card className="bg-gray-900 border-gray-800 text-white shadow-lg">
               <CardHeader>
-                <CardTitle>Profile Information</CardTitle>
-                <CardDescription className="text-gray-400">
+                <CardTitle className="text-white text-lg">Profile Information</CardTitle>
+                <CardDescription className="text-gray-400 text-xs">
                   View and update your profile details
                 </CardDescription>
               </CardHeader>
@@ -107,19 +106,18 @@ export default function ProfilePage() {
                 <div className="flex flex-col md:flex-row justify-between space-y-6 md:space-y-0 md:space-x-10">
                   <div className="space-y-6 flex-1">
                     <div>
-                      <h3 className="text-lg font-medium text-cyan-400">Username</h3>
-                      <p className="text-gray-300 mt-1">{user.username}</p>
+                      <h3 className="text-sm font-medium text-cyan-400">Username</h3>
+                      <p className="text-white mt-1">{user.username}</p>
                     </div>
                     <div>
-                      <h3 className="text-lg font-medium text-cyan-400">Email</h3>
-                      <p className="text-gray-300 mt-1">{user.email}</p>
+                      <h3 className="text-sm font-medium text-cyan-400">Email</h3>
+                      <p className="text-white mt-1">{user.email}</p>
                     </div>
                     <div>
-                      <h3 className="text-lg font-medium text-cyan-400">Account Status</h3>
+                      <h3 className="text-sm font-medium text-cyan-400">Account Status</h3>
                       <div className="flex items-center mt-1">
-                        <span className="flex items-center text-green-400">
+                        <span className="flex items-center text-white">
                           <span className="relative flex h-3 w-3 mr-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                             <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
                           </span>
                           Active
@@ -130,37 +128,38 @@ export default function ProfilePage() {
 
                   <div className="space-y-6 flex-1">
                     <div>
-                      <h3 className="text-lg font-medium text-cyan-400">Mascot</h3>
-                      <p className="text-gray-300 mt-1 mb-3">Choose a mascot that represents you</p>
+                      <h3 className="text-sm font-medium text-cyan-400">Mascot</h3>
+                      <p className="text-white text-sm mt-1 mb-3">Choose a mascot that represents you</p>
                       
-                      <div className="flex flex-col items-center space-y-4 bg-black bg-opacity-30 rounded-xl p-4 border border-gray-800">
-                        <div className="relative">
-                          <Avatar className="h-24 w-24 bg-black border-2 border-cyan-600 p-0 overflow-hidden shadow-lg">
+                      <div className="flex flex-col items-center space-y-4">
+                        <div className="relative mb-4">
+                          <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-cyan-400">
                             <MascotSelector 
                               currentMascotId={currentMascotId} 
                               onSelect={setCurrentMascotId} 
-                              className="w-24 h-24"
                             />
-                          </Avatar>
-                          <div className="absolute -bottom-2 -right-2 bg-cyan-600 text-white p-1 rounded-full text-xs shadow-md">
-                            <i className="fas fa-edit"></i>
+                          </div>
+                          <div className="absolute bottom-0 right-0 bg-cyan-500 text-white p-1 rounded-full text-xs shadow-md w-5 h-5 flex items-center justify-center">
+                            <i className="fas fa-pencil-alt text-[10px]"></i>
                           </div>
                         </div>
                         
-                        <div className="w-full mt-6 mb-2">
-                          <h4 className="text-sm font-medium text-gray-400 mb-3">Choose your favorite mascot:</h4>
-                          <MascotSelector
-                            currentMascotId={currentMascotId}
-                            onSelect={setCurrentMascotId}
-                            className="col-span-4"
-                          />
+                        <div className="w-full">
+                          <h4 className="text-xs text-white mb-3">Choose your favorite mascot:</h4>
+                          <div className="bg-gray-950 rounded-lg p-2">
+                            <MascotSelector
+                              currentMascotId={currentMascotId}
+                              onSelect={setCurrentMascotId}
+                              className="col-span-4"
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </CardContent>
-              <CardFooter className="flex justify-end space-x-3 border-t border-gray-800 pt-4">
+              <CardFooter className="flex justify-end space-x-3 pt-4">
                 <Button 
                   variant="outline" 
                   className="border-gray-700 text-gray-300 hover:bg-gray-800 hover:text-white"
@@ -168,7 +167,7 @@ export default function ProfilePage() {
                   Cancel
                 </Button>
                 <Button 
-                  className="bg-gradient-to-r from-cyan-600 to-cyan-500 hover:from-cyan-700 hover:to-cyan-600 border-0"
+                  className="bg-cyan-500 hover:bg-cyan-600 border-0 text-white"
                   onClick={handleSaveChanges}
                   disabled={updateProfileMutation.isPending}
                 >
@@ -182,24 +181,24 @@ export default function ProfilePage() {
             
             <Card className="bg-gray-900 border-gray-800 text-white shadow-lg">
               <CardHeader>
-                <CardTitle>Account Statistics</CardTitle>
-                <CardDescription className="text-gray-400">
+                <CardTitle className="text-white text-lg">Account Statistics</CardTitle>
+                <CardDescription className="text-gray-400 text-xs">
                   Your account activity and performance
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div className="bg-black bg-opacity-50 rounded-xl p-5 border border-gray-800">
-                    <h3 className="text-cyan-400 text-sm font-medium mb-1">Total Competitions Entered</h3>
-                    <p className="text-3xl font-bold text-white">0</p>
+                  <div className="bg-gray-950 rounded-lg p-4">
+                    <h3 className="text-cyan-400 text-xs font-medium mb-1">Total Competitions Entered</h3>
+                    <p className="text-2xl font-bold text-white">0</p>
                   </div>
-                  <div className="bg-black bg-opacity-50 rounded-xl p-5 border border-gray-800">
-                    <h3 className="text-green-400 text-sm font-medium mb-1">Wins</h3>
-                    <p className="text-3xl font-bold text-white">0</p>
+                  <div className="bg-gray-950 rounded-lg p-4">
+                    <h3 className="text-cyan-400 text-xs font-medium mb-1">Wins</h3>
+                    <p className="text-2xl font-bold text-white">0</p>
                   </div>
-                  <div className="bg-black bg-opacity-50 rounded-xl p-5 border border-gray-800">
-                    <h3 className="text-purple-400 text-sm font-medium mb-1">Account Balance</h3>
-                    <p className="text-3xl font-bold text-white">£{user.walletBalance?.toFixed(2) || "0.00"}</p>
+                  <div className="bg-gray-950 rounded-lg p-4">
+                    <h3 className="text-cyan-400 text-xs font-medium mb-1">Account Balance</h3>
+                    <p className="text-2xl font-bold text-white">£{user.walletBalance?.toFixed(2) || "0.00"}</p>
                   </div>
                 </div>
               </CardContent>
@@ -209,13 +208,13 @@ export default function ProfilePage() {
           <TabsContent value="appearance" className="space-y-6">
             <Card className="bg-gray-900 border-gray-800 text-white shadow-lg">
               <CardHeader>
-                <CardTitle>Appearance Settings</CardTitle>
-                <CardDescription className="text-gray-400">
+                <CardTitle className="text-white text-lg">Appearance Settings</CardTitle>
+                <CardDescription className="text-gray-400 text-xs">
                   Customize how Blue Whale Competitions looks for you
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-300">Appearance settings coming soon!</p>
+                <p className="text-white text-sm">Appearance settings coming soon!</p>
               </CardContent>
             </Card>
           </TabsContent>
@@ -223,13 +222,13 @@ export default function ProfilePage() {
           <TabsContent value="notifications" className="space-y-6">
             <Card className="bg-gray-900 border-gray-800 text-white shadow-lg">
               <CardHeader>
-                <CardTitle>Notification Preferences</CardTitle>
-                <CardDescription className="text-gray-400">
+                <CardTitle className="text-white text-lg">Notification Preferences</CardTitle>
+                <CardDescription className="text-gray-400 text-xs">
                   Control how and when you receive updates
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-300">Notification settings coming soon!</p>
+                <p className="text-white text-sm">Notification settings coming soon!</p>
               </CardContent>
             </Card>
           </TabsContent>

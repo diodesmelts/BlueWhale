@@ -233,9 +233,9 @@ export default function TopNav() {
                     <i className="fas fa-chevron-down text-sm opacity-70 text-cyan-200 hidden md:block"></i>
                   </div>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-64 p-0 rounded-xl shadow-xl border border-gray-700">
+                <DropdownMenuContent align="end" className="w-64 p-0 rounded-xl shadow-xl border border-gray-700 bg-gray-900">
                   {/* Dark header section with user info */}
-                  <div className="p-4 bg-gray-900 rounded-t-xl">
+                  <div className="p-4 bg-gray-900 rounded-t-xl border-b border-gray-800">
                     <div className="font-semibold text-cyan-400 text-xl">{user.username}</div>
                     <div className="text-xs text-gray-400 mt-1">{user.email}</div>
                     <div className="flex mt-2 items-center space-x-2">
@@ -247,53 +247,53 @@ export default function TopNav() {
                     </div>
                   </div>
                   
-                  <div className="py-2">
+                  <div className="py-2 bg-white bg-opacity-5">
                     {isAdmin && (
                       <>
                         <Link href="/admin">
-                          <DropdownMenuItem className="py-3 px-4 cursor-pointer my-0.5 transition-colors hover:bg-gray-100/5">
+                          <DropdownMenuItem className="py-3 px-4 cursor-pointer my-0.5 transition-colors hover:bg-white/5">
                             <div className="w-8 h-8 rounded-full bg-purple-200/20 flex items-center justify-center mr-3">
                               <i className="fas fa-shield-alt text-purple-300"></i>
                             </div>
-                            <span className="text-gray-100">Admin Dashboard</span>
+                            <span className="text-white text-opacity-80">Admin Dashboard</span>
                           </DropdownMenuItem>
                         </Link>
                         <Link href="/listings">
-                          <DropdownMenuItem className="py-3 px-4 cursor-pointer my-0.5 transition-colors hover:bg-gray-100/5">
+                          <DropdownMenuItem className="py-3 px-4 cursor-pointer my-0.5 transition-colors hover:bg-white/5">
                             <div className="w-8 h-8 rounded-full bg-blue-200/20 flex items-center justify-center mr-3">
                               <i className="fas fa-list-alt text-blue-300"></i>
                             </div>
-                            <span className="text-gray-100">Listings Management</span>
+                            <span className="text-white text-opacity-80">Listings Management</span>
                           </DropdownMenuItem>
                         </Link>
                       </>
                     )}
                     <Link href="/profile">
-                      <DropdownMenuItem className="py-3 px-4 cursor-pointer my-0.5 transition-colors hover:bg-gray-100/5">
+                      <DropdownMenuItem className="py-3 px-4 cursor-pointer my-0.5 transition-colors hover:bg-white/5">
                         <div className="w-8 h-8 rounded-full bg-cyan-200/20 flex items-center justify-center mr-3">
                           <i className="fas fa-user text-cyan-300"></i>
                         </div>
-                        <span className="text-gray-100">My Profile</span>
+                        <span className="text-white text-opacity-80">My Profile</span>
                       </DropdownMenuItem>
                     </Link>
-                    <DropdownMenuItem className="py-3 px-4 cursor-pointer my-0.5 transition-colors hover:bg-gray-100/5">
+                    <DropdownMenuItem className="py-3 px-4 cursor-pointer my-0.5 transition-colors hover:bg-white/5">
                       <div className="w-8 h-8 rounded-full bg-green-200/20 flex items-center justify-center mr-3">
                         <i className="fas fa-wallet text-green-300"></i>
                       </div>
-                      <span className="text-gray-100">My Balance</span>
+                      <span className="text-white text-opacity-80">My Balance</span>
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="py-3 px-4 cursor-pointer my-0.5 transition-colors hover:bg-gray-100/5">
+                    <DropdownMenuItem className="py-3 px-4 cursor-pointer my-0.5 transition-colors hover:bg-white/5">
                       <div className="w-8 h-8 rounded-full bg-gray-400/20 flex items-center justify-center mr-3">
                         <i className="fas fa-cog text-gray-300"></i>
                       </div>
-                      <span className="text-gray-100">Account Settings</span>
+                      <span className="text-white text-opacity-80">Account Settings</span>
                     </DropdownMenuItem>
                   </div>
                   
-                  <DropdownMenuSeparator className="m-0 border-t border-gray-700" />
+                  <DropdownMenuSeparator className="m-0 border-t border-gray-800" />
                   
                   <DropdownMenuItem 
-                    className="py-3 px-4 cursor-pointer transition-colors hover:bg-gray-100/5"
+                    className="py-3 px-4 cursor-pointer transition-colors hover:bg-white/5 bg-white bg-opacity-5"
                     onClick={handleLogout}
                   >
                     <div className="w-8 h-8 rounded-full bg-red-200/20 flex items-center justify-center mr-3">
