@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
-import { Loader2, Upload } from "lucide-react";
+import { Loader2, Upload, Trophy, Sparkles, Award, ChevronRight, Heart, Bookmark } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
@@ -10,6 +10,7 @@ import { CompetitionWithEntryStatus, UserStats, LeaderboardUser } from "@shared/
 import { useToast } from "@/hooks/use-toast";
 import { useAdmin } from "@/hooks/use-admin";
 import { apiRequest } from "@/lib/queryClient";
+import { motion, useScroll, useInView, useAnimation, AnimatePresence } from "framer-motion";
 
 export default function Dashboard() {
   const { toast } = useToast();
@@ -166,10 +167,28 @@ export default function Dashboard() {
       });
   };
 
+  // Animation refs
+  const heroRef = useRef(null);
+  const isHeroInView = useInView(heroRef, { once: false, amount: 0.2 });
+  const heroControls = useAnimation();
+  
+  useEffect(() => {
+    if (isHeroInView) {
+      heroControls.start("visible");
+    }
+  }, [isHeroInView, heroControls]);
+
   return (
     <>
-      {/* Full-width Hero Welcome Section - Enhanced for full responsiveness */}
-      <div 
+      {/* Full-width Hero Welcome Section - Enhanced with animations and interactivity */}
+      <motion.div 
+        ref={heroRef}
+        initial="hidden"
+        animate={heroControls}
+        variants={{
+          hidden: { opacity: 0 },
+          visible: { opacity: 1, transition: { duration: 0.5, staggerChildren: 0.1 } }
+        }}
         className={`w-full ${!bannerImage ? 'bg-gradient-to-r from-blue-600 to-blue-800' : ''} py-16 md:py-24 lg:py-32 overflow-hidden relative`}
         style={{
           backgroundImage: bannerImage ? `url(${bannerImage})` : '',
@@ -181,80 +200,209 @@ export default function Dashboard() {
           maxWidth: '100vw',
         }}
       >
-        {/* Darkening overlay */}
-        <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]"></div>
+        {/* Darkening overlay with animated blur */}
+        <motion.div 
+          initial={{ backdropFilter: 'blur(0px)', backgroundColor: 'rgba(0,0,0,0.2)' }}
+          animate={{ backdropFilter: 'blur(2px)', backgroundColor: 'rgba(0,0,0,0.4)' }}
+          transition={{ duration: 1.2 }}
+          className="absolute inset-0"
+        ></motion.div>
         
-        {/* Subtle background pattern */}
+        {/* Animated background pattern */}
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0djZoNnYtNmgtNnptMCAwdi02aC02djZoNnptNiAwaDZ2LTZoLTZ2NnptLTEyIDBoLTZ2Nmg2di02em0tNi02aC02djZoNnYtNnoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-30"></div>
+        
+        {/* Animated floating elements - similar to How to Play page */}
+        <motion.div 
+          className="absolute top-10 left-[10%] w-12 h-12 rounded-full bg-gradient-to-r from-cyan-500/20 to-blue-500/20 blur-md"
+          animate={{ 
+            y: [0, -15, 0],
+            opacity: [0.5, 0.8, 0.5]
+          }}
+          transition={{ 
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut" 
+          }}
+        />
+        
+        <motion.div 
+          className="absolute bottom-20 right-[15%] w-16 h-16 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 blur-md"
+          animate={{ 
+            y: [0, 20, 0],
+            opacity: [0.6, 0.9, 0.6]
+          }}
+          transition={{ 
+            duration: 5,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 0.5
+          }}
+        />
+        
+        <motion.div 
+          className="absolute top-1/3 right-[25%] w-8 h-8 rounded-full bg-gradient-to-r from-purple-500/30 to-pink-500/30 blur-md"
+          animate={{ 
+            y: [0, -10, 0],
+            x: [0, 5, 0],
+            opacity: [0.5, 0.7, 0.5]
+          }}
+          transition={{ 
+            duration: 3,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1
+          }}
+        />
         
         <div className="container mx-auto px-4">
           <div className="flex flex-col justify-center items-center relative z-10 mx-auto max-w-6xl">
             <div className="text-white text-center">
-              <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-3">
+              <motion.h1 
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+                }}
+                className="text-4xl md:text-6xl font-bold tracking-tight mb-3"
+              >
                 <span className="relative inline-block">
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 relative inline-block">
+                  <motion.span 
+                    initial={{ backgroundPosition: "0% 50%" }}
+                    animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
+                    transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                    className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 relative inline-block"
+                  >
                     competition
-                    {/* Small sparkle in the corner */}
-                    <span className="absolute -top-2 -right-2 text-yellow-300 text-sm">✨</span>
-                  </span>
+                    {/* Animated sparkle in the corner */}
+                    <motion.span 
+                      animate={{ 
+                        scale: [1, 1.2, 1],
+                        rotate: [0, 5, 0],
+                        opacity: [1, 0.8, 1] 
+                      }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                      className="absolute -top-2 -right-2 text-yellow-300 text-sm"
+                    >
+                      ✨
+                    </motion.span>
+                  </motion.span>
                   <span className="relative inline-block text-white"> time</span>
-                  {/* Subtle glow effect */}
-                  <span className="absolute -inset-1 bg-cyan-500/5 blur-2xl rounded-full"></span>
+                  {/* Enhanced glow effect */}
+                  <motion.span 
+                    animate={{ 
+                      opacity: [0.3, 0.6, 0.3]
+                    }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                    className="absolute -inset-1 bg-cyan-500/10 blur-2xl rounded-full"
+                  ></motion.span>
                 </span>
-              </h1>
-              <p className="text-base md:text-lg font-normal text-white/90 max-w-xl mx-auto">
-                Your premier destination for discovering, participating in, and winning exclusive competitions across multiple platforms.
-              </p>
+              </motion.h1>
               
-              <div className="mt-8 flex flex-wrap gap-4 justify-center">
-                <Button 
-                  onClick={() => {
-                    const competitionsSection = document.querySelector('.live-competitions-section');
-                    if (competitionsSection) {
-                      competitionsSection.scrollIntoView({ behavior: 'smooth' });
-                    }
-                  }}
-                  className="bg-white text-blue-600 hover:bg-blue-50 py-2 px-6 rounded-md shadow-sm font-semibold transition-colors"
-                >
-                  <i className="fas fa-trophy mr-2 text-blue-600"></i>
-                  <span>View Competitions</span>
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="bg-transparent border border-white/30 text-white hover:bg-white/10 py-2 px-6 rounded-md font-medium transition-colors"
-                  onClick={() => {
-                    const competitionsSection = document.querySelector('.live-competitions-section');
-                    if (competitionsSection) {
-                      competitionsSection.scrollIntoView({ behavior: 'smooth' });
-                    }
-                  }}
-                >
-                  <i className="fas fa-plus-circle mr-2"></i>
-                  <span>My Entries</span>
-                </Button>
-                {isAdmin && (
+              <motion.p 
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.2 } }
+                }}
+                className="text-base md:text-lg font-normal text-white/90 max-w-xl mx-auto"
+              >
+                Your premier destination for discovering, participating in, and winning exclusive competitions across multiple platforms.
+              </motion.p>
+              
+              <motion.div 
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.4 } }
+                }}
+                className="mt-8 flex flex-wrap gap-4 justify-center"
+              >
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
+                  <Button 
+                    onClick={() => {
+                      const competitionsSection = document.querySelector('.live-competitions-section');
+                      if (competitionsSection) {
+                        competitionsSection.scrollIntoView({ behavior: 'smooth' });
+                      }
+                    }}
+                    className="bg-white text-blue-600 hover:bg-blue-50 py-2 px-6 rounded-md shadow-md shadow-cyan-500/20 font-semibold transition-all hover:shadow-lg hover:shadow-cyan-500/30"
+                  >
+                    <motion.span className="flex items-center">
+                      <Trophy className="w-5 h-5 mr-2 text-blue-600" />
+                      <span>View Competitions</span>
+                    </motion.span>
+                  </Button>
+                </motion.div>
+                
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
                   <Button 
                     variant="outline" 
-                    className="bg-black/30 border border-white/30 text-white hover:bg-black/40 py-2 px-6 rounded-md font-medium transition-colors"
-                    onClick={() => setShowBannerUploadModal(true)}
+                    className="bg-transparent border border-white/30 text-white hover:bg-white/10 py-2 px-6 rounded-md font-medium transition-all shadow-md shadow-purple-500/10 hover:shadow-lg hover:shadow-purple-500/20"
+                    onClick={() => {
+                      const competitionsSection = document.querySelector('.live-competitions-section');
+                      if (competitionsSection) {
+                        competitionsSection.scrollIntoView({ behavior: 'smooth' });
+                      }
+                    }}
                   >
-                    <i className="fas fa-image mr-2"></i>
-                    <span>Change Banner</span>
+                    <motion.span className="flex items-center">
+                      <i className="fas fa-plus-circle mr-2"></i>
+                      <span>My Entries</span>
+                    </motion.span>
                   </Button>
+                </motion.div>
+                
+                {isAdmin && (
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
+                    <Button 
+                      variant="outline" 
+                      className="bg-black/30 border border-white/30 text-white hover:bg-black/40 py-2 px-6 rounded-md font-medium transition-all"
+                      onClick={() => setShowBannerUploadModal(true)}
+                    >
+                      <motion.span className="flex items-center">
+                        <i className="fas fa-image mr-2"></i>
+                        <span>Change Banner</span>
+                      </motion.span>
+                    </Button>
+                  </motion.div>
                 )}
-              </div>
+              </motion.div>
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
       
-      {/* How to Play Section - Enhanced & More Exciting - With Dark Theme that matches Live Competitions section */}
-      <div className="bg-gradient-to-b from-gray-900 to-gray-900 py-14 relative">
-        {/* Enhanced decorative elements to match Live Competitions section */}
+      {/* How to Play Section - Enhanced with animations and interactive elements */}
+      <motion.div 
+        className="bg-gradient-to-b from-gray-900 to-gray-900 py-14 relative"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: false, amount: 0.2 }}
+        transition={{ duration: 0.6 }}
+      >
+        {/* Enhanced decorative elements with animations */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-0 left-1/4 w-64 h-64 bg-cyan-800/15 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-purple-800/15 rounded-full blur-3xl"></div>
-          <div className="absolute top-1/3 right-1/6 w-40 h-40 bg-blue-800/15 rounded-full blur-3xl"></div>
+          <motion.div 
+            animate={{ 
+              scale: [1, 1.05, 1],
+              opacity: [0.1, 0.15, 0.1]
+            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-0 left-1/4 w-64 h-64 bg-cyan-800/15 rounded-full blur-3xl"
+          ></motion.div>
+          <motion.div 
+            animate={{ 
+              scale: [1, 1.1, 1],
+              opacity: [0.1, 0.2, 0.1]
+            }}
+            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+            className="absolute bottom-0 right-1/4 w-80 h-80 bg-purple-800/15 rounded-full blur-3xl"
+          ></motion.div>
+          <motion.div 
+            animate={{ 
+              scale: [1, 1.15, 1],
+              opacity: [0.1, 0.18, 0.1]
+            }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            className="absolute top-1/3 right-1/6 w-40 h-40 bg-blue-800/15 rounded-full blur-3xl"
+          ></motion.div>
           <div className="hidden md:block absolute -top-24 -left-24 w-64 h-64 bg-gradient-to-br from-cyan-500/15 to-purple-500/15 rounded-full blur-2xl"></div>
           <div className="hidden md:block absolute -bottom-32 -right-32 w-80 h-80 bg-gradient-to-br from-blue-500/15 to-cyan-500/15 rounded-full blur-2xl"></div>
           <div className="absolute top-1/2 left-1/3 w-96 h-96 bg-gradient-to-br from-gray-800/20 to-gray-900/20 rounded-full blur-3xl"></div>
@@ -380,7 +528,7 @@ export default function Dashboard() {
             </button>
           </div>
         </div>
-      </div>
+      </motion.div>
       
       {/* Enhanced transition blur element with decorative effects - adjusted position */}
       <div className="h-24 bg-gradient-to-b from-transparent to-gray-900 relative overflow-hidden mt-[-4rem] z-10">
