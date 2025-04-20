@@ -911,8 +911,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       try {
         await sharp(filePath)
           .resize({
-            width: 1920,
-            height: 600,
+            width: 2560, // Increased for wider screens
+            height: 800, // Increased for better aspect ratio
             fit: 'cover',
             position: 'center'
           })

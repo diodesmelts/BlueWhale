@@ -168,14 +168,17 @@ export default function Dashboard() {
 
   return (
     <>
-      {/* Full-width Hero Welcome Section */}
+      {/* Full-width Hero Welcome Section - Enhanced for full responsiveness */}
       <div 
-        className={`w-full ${!bannerImage ? 'bg-gradient-to-r from-blue-600 to-blue-800' : ''} py-32 overflow-hidden relative`}
+        className={`w-full ${!bannerImage ? 'bg-gradient-to-r from-blue-600 to-blue-800' : ''} py-16 md:py-24 lg:py-32 overflow-hidden relative`}
         style={{
           backgroundImage: bannerImage ? `url(${bannerImage})` : '',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          minHeight: '400px',
+          width: '100vw',
+          marginLeft: 'calc(-50vw + 50%)',
+          minHeight: '300px',
+          maxWidth: '100vw',
         }}
       >
         {/* Darkening overlay */}
