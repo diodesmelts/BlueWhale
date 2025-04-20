@@ -284,7 +284,11 @@ export default function CompetitionCard({
       
       <div 
         className="competition-card mb-2 overflow-hidden rounded-2xl bg-gray-900/90 shadow-2xl cursor-pointer border border-gray-700/40 transform transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,0,0,0.7)] hover:-translate-y-1 relative backdrop-blur-lg group dark-card-hover"
-        onClick={() => setLocation(`/competitions/${id}`)}
+        onClick={() => {
+          // Navigate to competition detail and scroll to top
+          window.scrollTo(0, 0);
+          setLocation(`/competitions/${id}`);
+        }}
       >
         {/* Card Glow Effect - conditional based on category */}
         <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none ${

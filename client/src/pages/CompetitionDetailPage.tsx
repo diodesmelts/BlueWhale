@@ -77,6 +77,14 @@ export default function CompetitionDetailPage() {
       setLocation('/competitions');
     }
   }, [error, setLocation, toast]);
+  
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }, [competitionId]);
 
   const handlePurchaseTickets = (ticketCount: number, selectedNumbers?: number[]) => {
     if (!competition) return;
