@@ -370,6 +370,64 @@ export default function CompetitionDetailPage() {
                     </div>
                   </div>
                   
+                  {/* Secure Payment Information */}
+                  <div className="pt-4">
+                    <div className="flex items-center mb-4">
+                      <div className="h-5 w-1 bg-green-500 rounded-full mr-3"></div>
+                      <h2 className="text-xl font-bold text-white">Secure Payments</h2>
+                    </div>
+                    
+                    <div className="bg-[#1e293b]/30 p-5 rounded-xl border border-[#1e293b] hover:border-green-500/30 transition-colors mb-2">
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center">
+                          <div className="bg-green-500/10 rounded-full p-2 mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-400">
+                              <rect width="20" height="14" x="2" y="5" rx="2"/>
+                              <line x1="2" x2="22" y1="10" y2="10"/>
+                            </svg>
+                          </div>
+                          <div>
+                            <h3 className="text-white font-medium">Powered by Stripe</h3>
+                            <p className="text-gray-400 text-sm">Industry-leading payment processing</p>
+                          </div>
+                        </div>
+                        <div className="flex space-x-2">
+                          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons@develop/icons/stripe.svg" alt="Stripe" className="h-6 w-6 text-white" />
+                        </div>
+                      </div>
+                      
+                      <div className="flex flex-wrap gap-3 mt-4">
+                        <div className="bg-[#1e293b] px-4 py-2 rounded-lg flex items-center space-x-2">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                            <rect width="20" height="14" x="2" y="5" rx="2"/>
+                            <line x1="2" x2="22" y1="10" y2="10"/>
+                          </svg>
+                          <span className="text-sm text-white">Credit Card</span>
+                        </div>
+                        <div className="bg-[#1e293b] px-4 py-2 rounded-lg flex items-center space-x-2">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                            <path d="M12 19a7 7 0 1 0 0-14 7 7 0 0 0 0 14Z"/>
+                            <path d="M12 19v2"/>
+                            <path d="M12 3V1"/>
+                            <path d="m4.9 4.9 1.4 1.4"/>
+                            <path d="m17.7 17.7 1.4 1.4"/>
+                            <path d="M3 12h2"/>
+                            <path d="M19 12h2"/>
+                            <path d="m4.9 19.1 1.4-1.4"/>
+                            <path d="m17.7 6.3 1.4-1.4"/>
+                          </svg>
+                          <span className="text-sm text-white">Apple Pay</span>
+                        </div>
+                        <div className="bg-[#1e293b] px-4 py-2 rounded-lg flex items-center space-x-2">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/>
+                          </svg>
+                          <span className="text-sm text-white">Secure SSL</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
                   {/* Display entry steps if user has entered */}
                   {(competition.isEntered && competition.entrySteps && competition.entrySteps.length > 0) && (
                     <div className="pt-2">

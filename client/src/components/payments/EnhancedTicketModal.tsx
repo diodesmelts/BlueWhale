@@ -168,6 +168,34 @@ export default function EnhancedTicketModal({
             )}
           </Button>
           
+          {/* Secure payment information */}
+          <div className="mt-4 pt-4 border-t border-gray-700/30">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <div className="bg-green-500/10 rounded-full p-1.5 mr-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-400">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/>
+                  </svg>
+                </div>
+                <div className="text-sm text-gray-300">Secure payments by <span className="font-medium text-white">Stripe</span></div>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-6 bg-white/10 rounded flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                    <rect width="18" height="12" x="3" y="6" rx="2"/>
+                    <line x1="3" x2="21" y1="10" y2="10"/>
+                  </svg>
+                </div>
+                <div className="w-8 h-6 bg-white/10 rounded flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                    <path d="M12 19a7 7 0 1 0 0-14 7 7 0 0 0 0 14Z"/>
+                    <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="mt-3 text-center text-sm text-gray-400">
             You can select up to {competition.maxTicketsPerUser} tickets in total
           </div>
@@ -199,6 +227,22 @@ export default function EnhancedTicketModal({
                   <span className="absolute top-0 left-0 w-full h-full bg-white/10 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
                   PROCEED TO PAYMENT
                 </Button>
+                
+                <div className="flex items-center justify-center mt-4 space-x-3">
+                  <div className="w-8 h-5 bg-white/10 rounded flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                      <rect width="18" height="12" x="3" y="6" rx="2"/>
+                      <line x1="3" x2="21" y1="10" y2="10"/>
+                    </svg>
+                  </div>
+                  <div className="w-8 h-5 bg-white/10 rounded flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                      <path d="M12 19a7 7 0 1 0 0-14 7 7 0 0 0 0 14Z"/>
+                      <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                    </svg>
+                  </div>
+                  <div className="text-xs text-gray-400">Secure payment via Stripe</div>
+                </div>
                 <Button 
                   variant="outline"
                   className="w-full py-3 h-auto border-gray-600 text-gray-300 hover:text-white hover:bg-gray-800 hover:border-gray-500"
