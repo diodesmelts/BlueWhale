@@ -189,14 +189,14 @@ export default function Dashboard() {
           hidden: { opacity: 0 },
           visible: { opacity: 1, transition: { duration: 0.5, staggerChildren: 0.1 } }
         }}
-        className={`w-full ${!bannerImage ? 'bg-gradient-to-r from-blue-600 to-blue-800' : ''} py-16 md:py-24 lg:py-32 overflow-hidden relative`}
+        className={`w-full ${!bannerImage ? 'bg-gradient-to-r from-blue-600 to-blue-800' : ''} py-24 md:py-36 lg:py-48 overflow-hidden relative`}
         style={{
           backgroundImage: bannerImage ? `url(${bannerImage})` : '',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           width: '100vw',
           marginLeft: 'calc(-50vw + 50%)',
-          minHeight: '300px',
+          minHeight: '450px', /* 50% larger than the previous 300px */
           maxWidth: '100vw',
         }}
       >
@@ -262,7 +262,7 @@ export default function Dashboard() {
                   hidden: { opacity: 0, y: 20 },
                   visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
                 }}
-                className="text-4xl md:text-6xl font-bold tracking-tight mb-3"
+                className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-3"
               >
                 <span className="relative inline-block">
                   <motion.span 
