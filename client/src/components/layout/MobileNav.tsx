@@ -60,10 +60,13 @@ export default function MobileNav() {
     { icon: "fas fa-medal", label: "Wins", path: "/my-wins" },
   ] : [];
   
-  // Authentication navigation item (login/profile)
-  const authNavItem: NavItem = user
-    ? { icon: "fas fa-user", label: "Profile", path: "/profile" } // This will be handled in the dropdown
-    : { icon: "fas fa-sign-in-alt", label: "Login", path: "/auth" };
+  // Authentication navigation items (login/register/profile)
+  const authNavItems: NavItem[] = user
+    ? [{ icon: "fas fa-user", label: "Profile", path: "/profile" }] // Profile when logged in
+    : [
+        { icon: "fas fa-sign-in-alt", label: "Login", path: "/login" },
+        { icon: "fas fa-user-plus", label: "Register", path: "/register" }
+      ];
   
   // Build navigation items
   let navItems: NavItem[] = [...publicNavItems, ...userNavItems];
@@ -73,8 +76,8 @@ export default function MobileNav() {
     navItems.push({ icon: "fas fa-shield-alt", label: "Admin", path: "/admin" } as NavItem);
   } 
   
-  // Always add login/profile item
-  navItems.push(authNavItem);
+  // Always add login/register/profile items
+  navItems = [...navItems, ...authNavItems];
 
   const isActive = (path: string) => location === path;
 

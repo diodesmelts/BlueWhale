@@ -15,6 +15,8 @@ import Leaderboard from "@/pages/Leaderboard";
 import AdminPage from "@/pages/AdminPage";
 import ListingsPage from "@/pages/ListingsPage";
 import AuthPage from "@/pages/AuthPage";
+import LoginPage from "@/pages/LoginPage";
+import RegisterPage from "@/pages/RegisterPage";
 import AboutPage from "@/pages/AboutPage";
 import TermsPage from "@/pages/TermsPage";
 import PrivacyPage from "@/pages/PrivacyPage";
@@ -44,6 +46,8 @@ function Router() {
       <Route path="/competitions/cash" component={CashCompetitionsPage} />
       <Route path="/leaderboard" component={Leaderboard} />
       <Route path="/auth" component={AuthPage} />
+      <Route path="/login" component={LoginPage} />
+      <Route path="/register" component={RegisterPage} />
       
       {/* Static Content Pages */}
       <Route path="/how-to-play" component={HowToPlayPage} />

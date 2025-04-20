@@ -272,13 +272,20 @@ export default function TopNav() {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              // User is not logged in - show login button
-              <Link href="/auth">
-                <Button className="flex items-center bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-700 hover:to-purple-700 text-white border-0 shadow-md px-5 py-5">
-                  <LogIn className="h-5 w-5 mr-2" />
-                  <span className="text-base font-medium">Sign In</span>
-                </Button>
-              </Link>
+              // User is not logged in - show login and register buttons
+              <div className="flex items-center space-x-3">
+                <Link href="/login">
+                  <Button variant="outline" className="flex items-center bg-transparent border border-cyan-600 text-cyan-400 hover:bg-cyan-900/30 px-4 py-5 shadow-sm">
+                    <LogIn className="h-5 w-5 mr-2" />
+                    <span className="text-base font-medium">Login</span>
+                  </Button>
+                </Link>
+                <Link href="/register">
+                  <Button className="flex items-center bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-700 hover:to-purple-700 text-white border-0 shadow-md px-4 py-5">
+                    <span className="text-base font-medium">Register</span>
+                  </Button>
+                </Link>
+              </div>
             )}
           </div>
         </div>

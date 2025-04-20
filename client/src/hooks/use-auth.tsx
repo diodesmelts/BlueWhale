@@ -16,6 +16,10 @@ type AuthContextType = {
   loginUser: (username: string, password: string) => Promise<User | null>;
   logoutUser: () => Promise<void>;
   registerUser: (username: string, email: string, password: string) => Promise<User | null>;
+  // Direct access to mutations for form integration
+  loginMutation: UseMutationResult<User, Error, LoginCredentials>;
+  registerMutation: UseMutationResult<User, Error, RegisterCredentials>;
+  logoutMutation: UseMutationResult<void, Error, void>;
 };
 
 type LoginCredentials = {
