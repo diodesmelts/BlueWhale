@@ -115,10 +115,8 @@ export default function MobileNav() {
               <Link href={item.path}>
                 {isActive(item.path) ? (
                   <div className="flex flex-col items-center">
-                    <div className="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-r from-cyan-600 to-purple-600 text-white shadow-md -mt-6 mb-1 border-2 border-black">
-                      <i className={`${item.icon} text-lg`}></i>
-                    </div>
-                    <span className="text-xs font-bold text-cyan-400">{item.label}</span>
+                    <i className={`${item.icon} text-cyan-400 text-xl`}></i>
+                    <span className="text-xs font-bold text-cyan-400 border-b-2 border-cyan-400 pb-1">{item.label}</span>
                   </div>
                 ) : (
                   <div className="flex flex-col items-center py-1 px-3 cursor-pointer hover:text-cyan-400 transition-colors">

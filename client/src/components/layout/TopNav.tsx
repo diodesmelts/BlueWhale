@@ -107,10 +107,10 @@ export default function TopNav() {
                   <DropdownMenu key={item.path}>
                     <DropdownMenuTrigger asChild>
                       <button
-                        className={`px-5 py-3 rounded-full text-base flex items-center transition-all duration-200 ${
+                        className={`px-5 py-3 text-lg flex items-center transition-all duration-200 ${
                           location.startsWith(item.path)
-                            ? 'bg-cyan-900 text-cyan-300 shadow-md font-medium'
-                            : 'text-gray-300 hover:bg-gray-800'
+                            ? 'text-cyan-300 font-medium border-b-2 border-cyan-400'
+                            : 'text-gray-300 hover:text-gray-100'
                         }`}
                       >
                         <i className={`${item.icon} mr-2 text-lg`}></i>
@@ -134,10 +134,10 @@ export default function TopNav() {
                 ) : (
                   <Link key={item.path} href={item.path}>
                     <button
-                      className={`px-5 py-3 rounded-full text-base flex items-center transition-all duration-200 ${
+                      className={`px-5 py-3 text-lg flex items-center transition-all duration-200 ${
                         isActive(item.path)
-                          ? 'bg-cyan-900 text-cyan-300 shadow-md font-medium'
-                          : 'text-gray-300 hover:bg-gray-800'
+                          ? 'text-cyan-300 font-medium border-b-2 border-cyan-400'
+                          : 'text-gray-300 hover:text-gray-100'
                       }`}
                     >
                       <i className={`${item.icon} mr-2 text-lg`}></i>
