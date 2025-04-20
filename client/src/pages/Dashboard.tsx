@@ -368,9 +368,8 @@ export default function Dashboard() {
           </div>
         </div>
         
-        {/* Subtle curved divider to create a wave effect */}
-        <div className="absolute bottom-[-2px] left-0 right-0 h-8 bg-gray-900"></div>
-        <div className="absolute bottom-[-2px] left-[5%] right-[5%] h-16 bg-gray-900 rounded-t-[50%]"></div>
+        {/* Clean straight line transition */}
+        <div className="absolute bottom-[-1px] left-0 right-0 h-1 bg-gray-900"></div>
       </motion.div>
       
       {/* How to Play Section - Enhanced with animations and interactive elements */}
