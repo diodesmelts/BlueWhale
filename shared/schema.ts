@@ -12,6 +12,7 @@ export const users = pgTable("users", {
   isAdmin: boolean("is_admin").default(false),
   stripeCustomerId: text("stripe_customer_id"),
   walletBalance: integer("wallet_balance").default(0), // Stored in cents
+  mascotId: text("mascot_id").default("whale"), // Default mascot is blue whale
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -94,6 +95,7 @@ export const insertUserSchema = createInsertSchema(users).pick({
   email: true,
   isAdmin: true,
   isPremium: true,
+  mascotId: true,
 });
 
 // Create the base schema from drizzle
