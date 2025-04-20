@@ -14,7 +14,7 @@ import MyWins from "@/pages/MyWins";
 import Leaderboard from "@/pages/Leaderboard";
 import AdminPage from "@/pages/AdminPage";
 import ListingsPage from "@/pages/ListingsPage";
-import AuthPage from "@/pages/AuthPage";
+
 import LoginPage from "@/pages/LoginPage";
 import RegisterPage from "@/pages/RegisterPage";
 import ProfilePage from "@/pages/ProfilePage";

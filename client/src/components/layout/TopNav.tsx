@@ -35,7 +35,7 @@ export default function TopNav() {
   const [location, setLocation] = useLocation();
   const { isAdmin } = useAdmin();
   const { user, logoutUser, isLoading } = useAuth();
-  const [currentMascotId, setCurrentMascotId] = useState<string | null>(user?.mascotId || "whale");
+  const [currentMascotId, setCurrentMascotId] = useState<string | null>("whale");
 
   // Public navigation items available to all users
   const publicNavItems: NavItem[] = [
