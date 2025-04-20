@@ -248,78 +248,131 @@ export default function CompetitionDetailPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Left column - Main content */}
           <div className="lg:col-span-8 space-y-6">
-            {/* Hero section with image */}
-            <div className="bg-gradient-to-b from-[#111827] to-[#0f172a] rounded-xl overflow-hidden shadow-lg border border-[#1e293b]">
-              <div className="relative">
-                {/* Main image with aspect ratio */}
-                <div className="relative pb-[56.25%] border-2 border-[#1e3a8a]/30 rounded-lg overflow-hidden shadow-lg">
-                  <img 
-                    src={competition.image} 
-                    alt={competition.title} 
-                    className="absolute inset-0 w-full h-full object-cover"
-                  />
-                  
-                  {/* Overlay gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a] to-transparent opacity-70"></div>
-                  
-                  {/* Action buttons */}
-                  <div className="absolute top-4 right-4 flex space-x-2">
-                    <button 
-                      className={`p-2 rounded-full ${competition.isBookmarked ? 'bg-blue-600' : 'bg-black/40 backdrop-blur-sm'} text-white transition-colors duration-200 hover:shadow-lg`}
-                      onClick={() => handleBookmark(competition.id)}
-                    >
-                      <Bookmark className="h-5 w-5" />
-                    </button>
-                    <button 
-                      className={`p-2 rounded-full ${competition.isLiked ? 'bg-rose-600' : 'bg-black/40 backdrop-blur-sm'} text-white transition-colors duration-200 hover:shadow-lg`}
-                      onClick={() => handleLike(competition.id)}
-                    >
-                      <Heart className="h-5 w-5" />
-                    </button>
-                  </div>
-                  
-                  {/* Category badge */}
-                  <div className="absolute top-4 left-4">
-                    <div className="px-3 py-1 bg-blue-600 text-white text-xs font-semibold uppercase tracking-wider rounded-full shadow-md">
-                      WIN NOW
+            {/* Redesigned Hero section */}
+            <div className="flex flex-col lg:flex-row gap-6 mb-6">
+              {/* Left side - Main image */}
+              <div className="lg:w-1/2">
+                <div className="bg-gradient-to-b from-[#111827] to-[#0f172a] rounded-xl overflow-hidden shadow-lg border border-[#1e293b] h-full">
+                  <div className="relative">
+                    {/* Main image */}
+                    <div className="relative border-2 border-[#1e3a8a]/30 rounded-lg overflow-hidden shadow-lg">
+                      <img 
+                        src={competition.image} 
+                        alt={competition.title} 
+                        className="w-full h-full object-cover aspect-square"
+                      />
+                      
+                      {/* Action buttons */}
+                      <div className="absolute top-4 right-4 flex space-x-2">
+                        <button 
+                          className={`p-2 rounded-full ${competition.isBookmarked ? 'bg-blue-600' : 'bg-black/40 backdrop-blur-sm'} text-white transition-colors duration-200 hover:shadow-lg`}
+                          onClick={() => handleBookmark(competition.id)}
+                        >
+                          <Bookmark className="h-5 w-5" />
+                        </button>
+                        <button 
+                          className={`p-2 rounded-full ${competition.isLiked ? 'bg-rose-600' : 'bg-black/40 backdrop-blur-sm'} text-white transition-colors duration-200 hover:shadow-lg`}
+                          onClick={() => handleLike(competition.id)}
+                        >
+                          <Heart className="h-5 w-5" />
+                        </button>
+                      </div>
+                      
+                      {/* Category badge */}
+                      <div className="absolute top-4 left-4">
+                        <div className="px-3 py-1 bg-blue-600 text-white text-xs font-semibold uppercase tracking-wider rounded-full shadow-md">
+                          WIN NOW
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
               
-              {/* Title and Competition Info Below the Image */}
-              <div className="p-5 border-t border-[#1e293b]">
-                <h1 className="text-2xl font-bold text-white mb-3">{competition.title}</h1>
-                
-                <p className="text-gray-400 text-sm mb-3">
-                  by <span className="text-white">Blue Whale</span>
-                  <CheckCircle className="h-3 w-3 ml-1 inline text-blue-400" />
-                </p>
-              </div>
-              
-              {/* Quick stats */}
-              <div className="grid grid-cols-3 gap-px bg-[#1e293b]">
-                <div className="p-4 bg-gradient-to-b from-[#111827] to-[#0f172a] flex flex-col items-center">
-                  <div className="text-blue-300 text-xs uppercase mb-1 font-medium flex items-center">
-                    <Trophy className="h-3 w-3 mr-1" /> Prize
+              {/* Right side - Competition details */}
+              <div className="lg:w-1/2">
+                <div className="bg-gradient-to-b from-[#111827] to-[#0f172a] rounded-xl overflow-hidden shadow-lg border border-[#1e293b] h-full p-6">
+                  {/* Title and organizer - Much more prominent */}
+                  <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">{competition.title}</h1>
+                  
+                  <div className="flex items-center mb-6">
+                    <p className="text-gray-400 text-sm">
+                      by <span className="text-white">Blue Whale</span>
+                    </p>
+                    <CheckCircle className="h-4 w-4 ml-1 text-blue-400" />
                   </div>
-                  <div className="text-xl font-bold text-white">£{competition.prize}</div>
-                </div>
-                <div className="p-4 bg-gradient-to-b from-[#111827] to-[#0f172a] flex flex-col items-center">
-                  <div className="text-blue-300 text-xs uppercase mb-1 font-medium flex items-center">
-                    <Ticket className="h-3 w-3 mr-1" /> Ticket Price
+                  
+                  {/* Ticket Price - Very prominent */}
+                  <div className="mb-6">
+                    <div className="flex items-center gap-4">
+                      <div className="bg-blue-600 px-4 py-2 rounded-lg">
+                        <span className="text-2xl font-bold text-white">£{(competition.ticketPrice/100).toFixed(2)}</span>
+                      </div>
+                      <span className="text-gray-400">per ticket</span>
+                    </div>
                   </div>
-                  <div className="text-xl font-bold text-white">£{(competition.ticketPrice/100).toFixed(2)}</div>
-                </div>
-                <div className="p-4 bg-gradient-to-b from-[#111827] to-[#0f172a] flex flex-col items-center">
-                  <div className="text-blue-300 text-xs uppercase mb-1 font-medium flex items-center">
-                    <Calendar className="h-3 w-3 mr-1" /> Closes
+                  
+                  {/* Progress bar for tickets */}
+                  <div className="mb-6">
+                    <div className="flex justify-between mb-2">
+                      <span className="text-blue-300 text-sm">{competition.totalTickets - competition.soldTickets} tickets remaining</span>
+                      <span className="text-gray-400 text-sm">{competition.soldTickets} sold</span>
+                    </div>
+                    <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
+                      <div 
+                        className="h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full"
+                        style={{ width: `${(competition.soldTickets / competition.totalTickets) * 100}%` }}
+                      ></div>
+                    </div>
+                    <div className="flex justify-between mt-1">
+                      <span className="text-gray-400 text-xs">0</span>
+                      <span className="text-gray-400 text-xs">{competition.totalTickets}</span>
+                    </div>
                   </div>
-                  <div className="text-xl font-bold text-white">
-                    {competition.drawTime ? new Date(competition.drawTime).toLocaleDateString('en-GB', {
-                      day: 'numeric', 
-                      month: 'short'
-                    }) : 'Apr 24'}
+                  
+                  {/* Key details in a cleaner layout */}
+                  <div className="grid grid-cols-3 gap-4 mb-6">
+                    <div className="bg-[#1a2747]/50 rounded-lg p-3 text-center">
+                      <div className="text-blue-300 text-xs uppercase mb-1 font-medium">Draw Date</div>
+                      <div className="font-bold text-white">
+                        {competition.drawTime ? new Date(competition.drawTime).toLocaleDateString('en-GB', {
+                          day: 'numeric', 
+                          month: 'short'
+                        }) : 'Apr 24'}
+                      </div>
+                    </div>
+                    <div className="bg-[#1a2747]/50 rounded-lg p-3 text-center">
+                      <div className="text-blue-300 text-xs uppercase mb-1 font-medium">Prize Value</div>
+                      <div className="font-bold text-white">£{competition.prize}</div>
+                    </div>
+                    <div className="bg-[#1a2747]/50 rounded-lg p-3 text-center">
+                      <div className="text-blue-300 text-xs uppercase mb-1 font-medium">Max Per Person</div>
+                      <div className="font-bold text-white">{competition.maxTicketsPerUser}</div>
+                    </div>
+                  </div>
+                  
+                  {/* Secure payment methods */}
+                  <div className="flex items-center justify-between mb-4 mt-auto">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-8 h-6 bg-[#1a2747] rounded flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-300">
+                          <rect width="18" height="12" x="3" y="6" rx="2"/>
+                          <line x1="3" x2="21" y1="10" y2="10"/>
+                        </svg>
+                      </div>
+                      <div className="w-8 h-6 bg-[#1a2747] rounded flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-300">
+                          <path d="M12 19a7 7 0 1 0 0-14 7 7 0 0 0 0 14Z"/>
+                          <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                        </svg>
+                      </div>
+                    </div>
+                    <div className="text-sm text-blue-300/80 flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-400 mr-1">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/>
+                      </svg>
+                      Secure payment via Stripe
+                    </div>
                   </div>
                 </div>
               </div>
@@ -486,26 +539,20 @@ export default function CompetitionDetailPage() {
           <div className="lg:col-span-4 space-y-6">
             {/* Enhanced Prize Draw Timer */}
             <div className="bg-gradient-to-b from-[#111827] to-[#0f172a] rounded-xl overflow-hidden shadow-xl border border-[#1e293b] relative">
-              {/* Glow effect behind the card */}
-              <div className="absolute inset-0 bg-blue-600/10 filter blur-xl transform scale-90"></div>
-              
-              {/* Header with blue gradient and shine effect */}
-              <div className="relative bg-gradient-to-r from-blue-600 via-blue-500 to-blue-800 py-3 px-4 overflow-hidden">
-                {/* Shine effect overlay */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent animate-shine"></div>
-                
+              {/* Header with orange accent for countdown */}
+              <div className="relative bg-gradient-to-r from-orange-500 to-orange-600 py-3 px-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <Sparkles className="h-4 w-4 text-white mr-2 animate-pulse" />
-                    <h3 className="text-white font-bold tracking-wide">PRIZE DRAW</h3>
+                    <Clock className="h-4 w-4 text-white mr-2" />
+                    <h3 className="text-white font-bold tracking-wide">TIME REMAINING</h3>
                   </div>
-                  <div className="px-3 py-0.5 rounded-full text-xs bg-blue-800/70 backdrop-blur-sm text-white font-medium uppercase border border-white/20">
+                  <div className="px-3 py-0.5 rounded-full text-xs bg-orange-700/70 text-white font-medium uppercase border border-white/20">
                     {isEnded ? 'Ended' : 'LIVE'}
                   </div>
                 </div>
               </div>
               
-              <div className="relative p-6 bg-gradient-to-br from-[#111827]/90 to-[#0c1424]/90 backdrop-blur-sm">
+              <div className="p-5">
                 {isEnded ? (
                   <div className="text-center text-white font-bold py-4 text-xl tracking-wider">
                     COMPETITION CLOSED
@@ -513,21 +560,21 @@ export default function CompetitionDetailPage() {
                 ) : (
                   <div>
                     <div className="grid grid-cols-4 gap-3">
-                      <div className="bg-gradient-to-b from-[#1a2747] to-[#141e34] rounded-lg p-3 text-center border border-blue-500/20 shadow-lg">
+                      <div className="bg-gradient-to-b from-[#1a2747] to-[#141e34] rounded-lg p-3 text-center border border-orange-500/20 shadow-lg">
                         <div className="text-3xl font-bold text-white">5</div>
-                        <div className="text-xs text-blue-300 uppercase font-medium mt-1">days</div>
+                        <div className="text-xs text-orange-300 uppercase font-medium mt-1">days</div>
                       </div>
-                      <div className="bg-gradient-to-b from-[#1a2747] to-[#141e34] rounded-lg p-3 text-center border border-blue-500/20 shadow-lg">
+                      <div className="bg-gradient-to-b from-[#1a2747] to-[#141e34] rounded-lg p-3 text-center border border-orange-500/20 shadow-lg">
                         <div className="text-3xl font-bold text-white">12</div>
-                        <div className="text-xs text-blue-300 uppercase font-medium mt-1">hrs</div>
+                        <div className="text-xs text-orange-300 uppercase font-medium mt-1">hrs</div>
                       </div>
-                      <div className="bg-gradient-to-b from-[#1a2747] to-[#141e34] rounded-lg p-3 text-center border border-blue-500/20 shadow-lg">
+                      <div className="bg-gradient-to-b from-[#1a2747] to-[#141e34] rounded-lg p-3 text-center border border-orange-500/20 shadow-lg">
                         <div className="text-3xl font-bold text-white">45</div>
-                        <div className="text-xs text-blue-300 uppercase font-medium mt-1">min</div>
+                        <div className="text-xs text-orange-300 uppercase font-medium mt-1">min</div>
                       </div>
-                      <div className="bg-gradient-to-b from-[#1a2747] to-[#141e34] rounded-lg p-3 text-center border border-blue-500/20 shadow-lg">
+                      <div className="bg-gradient-to-b from-[#1a2747] to-[#141e34] rounded-lg p-3 text-center border border-orange-500/20 shadow-lg">
                         <div className="text-3xl font-bold text-white">10</div>
-                        <div className="text-xs text-blue-300 uppercase font-medium mt-1">sec</div>
+                        <div className="text-xs text-orange-300 uppercase font-medium mt-1">sec</div>
                       </div>
                     </div>
                     
@@ -545,21 +592,15 @@ export default function CompetitionDetailPage() {
             
             {/* Enhanced Ticket purchase card */}
             <div className="bg-gradient-to-b from-[#111827] to-[#0f172a] rounded-xl overflow-hidden shadow-xl border border-[#1e293b] relative">
-              {/* Glow effect behind the card */}
-              <div className="absolute inset-0 bg-blue-600/10 filter blur-xl transform scale-90"></div>
-              
-              {/* Header with blue gradient and shine effect */}
-              <div className="relative bg-gradient-to-r from-blue-600 via-blue-500 to-blue-800 py-3 px-4 overflow-hidden">
-                {/* Shine effect overlay */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent animate-shine"></div>
-                
-                <h3 className="text-white font-bold tracking-wide flex items-center relative z-10">
+              {/* Clean header with blue accent */}
+              <div className="relative bg-gradient-to-r from-blue-500 to-blue-600 py-3 px-4">
+                <h3 className="text-white font-bold tracking-wide flex items-center">
                   <Ticket className="h-4 w-4 mr-2" />
                   GET YOUR TICKETS
                 </h3>
               </div>
               
-              <div className="relative p-6 bg-gradient-to-br from-[#111827]/90 to-[#0c1424]/90 backdrop-blur-sm">
+              <div className="p-6 bg-gradient-to-br from-[#111827]/90 to-[#0c1424]/90 backdrop-blur-sm">
                 {/* User's tickets section */}
                 {competition.isEntered && competition.ticketCount && competition.ticketCount > 0 ? (
                   <div>
