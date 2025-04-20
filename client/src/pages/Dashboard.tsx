@@ -367,6 +367,10 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
+        
+        {/* Subtle curved divider to create a wave effect */}
+        <div className="absolute bottom-[-2px] left-0 right-0 h-8 bg-gray-900"></div>
+        <div className="absolute bottom-[-2px] left-[5%] right-[5%] h-16 bg-gray-900 rounded-t-[50%]"></div>
       </motion.div>
       
       {/* How to Play Section - Enhanced with animations and interactive elements */}
@@ -403,245 +407,724 @@ export default function Dashboard() {
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
             className="absolute top-1/3 right-1/6 w-40 h-40 bg-blue-800/15 rounded-full blur-3xl"
           ></motion.div>
-          <div className="hidden md:block absolute -top-24 -left-24 w-64 h-64 bg-gradient-to-br from-cyan-500/15 to-purple-500/15 rounded-full blur-2xl"></div>
-          <div className="hidden md:block absolute -bottom-32 -right-32 w-80 h-80 bg-gradient-to-br from-blue-500/15 to-cyan-500/15 rounded-full blur-2xl"></div>
-          <div className="absolute top-1/2 left-1/3 w-96 h-96 bg-gradient-to-br from-gray-800/20 to-gray-900/20 rounded-full blur-3xl"></div>
+          <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-gray-900 to-transparent"></div>
+          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-gray-900 to-transparent"></div>
         </div>
         
         <div className="container mx-auto px-4 relative z-10">
-          <div className="flex flex-col items-center mb-12">
-            <span className="text-xs uppercase tracking-wider font-semibold text-cyan-300 mb-2">Easy to Get Started</span>
-            <h2 className="text-4xl font-bold text-center text-white mb-4 tracking-tight relative">
-              <span className="relative inline-block">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 relative inline-block">
-                  How to Play
-                  {/* Small sparkle in the corner */}
-                  <span className="absolute -top-2 -right-2 text-yellow-300 text-sm">✨</span>
-                </span>
-                <span className="relative inline-block"> & Win</span>
-                {/* Subtle glow effect */}
-                <span className="absolute -inset-1 bg-cyan-500/5 blur-2xl rounded-full"></span>
-              </span>
-            </h2>
-            <p className="text-center text-gray-300 max-w-xl mx-auto">Join thousands of winners who've already discovered the excitement of Blue Whale Competitions!</p>
-            <div className="mt-4 flex justify-center">
-              <div className="h-1 w-24 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 rounded-full shadow-[0_0_5px_rgba(34,211,238,0.5)]"></div>
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {/* Card 1 - Browse */}
-            <div className="bg-gray-800/70 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-[0_0_30px_rgba(0,0,0,0.7)] border border-gray-700/30 transition-all duration-300 p-8 text-center relative overflow-hidden transform hover:-translate-y-1 group">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-blue-600"></div>
-              <div className="relative">
-                <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 text-white flex items-center justify-center rounded-2xl mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-md">
-                  <i className="fas fa-search text-3xl"></i>
-                </div>
-                <div className="absolute top-5 right-5 w-8 h-8 rounded-full bg-blue-900/50 opacity-0 group-hover:opacity-50 transition-opacity"></div>
-                <div className="absolute bottom-7 left-3 w-6 h-6 rounded-full bg-cyan-900/50 opacity-0 group-hover:opacity-50 transition-opacity"></div>
-                <h3 className="text-2xl font-bold text-white mb-3">1. Browse Competitions</h3>
-                <p className="text-gray-300 leading-relaxed">
-                  Discover our thrilling range of competitions with amazing prizes! From gadgets and holidays to cash prizes, there's something for everyone.
-                </p>
-                <Link href="/competitions" className="mt-6 text-blue-400 font-medium text-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <span>View All Competitions</span>
-                  <i className="fas fa-arrow-right ml-2"></i>
-                </Link>
-              </div>
+          {/* Enhanced Header Section with glow and sparkle effects */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.5 }}
+            transition={{ duration: 0.8 }}
+            className="mb-12 text-center"
+          >
+            <div className="inline-block relative">
+              <motion.span
+                initial={{ opacity: 0, y: -10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.1 }}
+                className="uppercase tracking-wider text-xs font-semibold text-cyan-300 mb-2 block"
+              >
+                Getting Started
+              </motion.span>
+              <motion.h2 
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight relative"
+              >
+                <motion.span 
+                  initial={{ backgroundPosition: "0% 50%" }}
+                  animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
+                  transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                  className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 relative inline-block"
+                >
+                  How To
+                  {/* Animated sparkle in the corner */}
+                  <motion.span 
+                    animate={{ 
+                      scale: [1, 1.3, 1],
+                      rotate: [0, 5, 0],
+                      opacity: [1, 0.8, 1] 
+                    }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                    className="absolute -top-2 -right-2 text-yellow-300 text-sm"
+                  >
+                    ✨
+                  </motion.span>
+                </motion.span>
+                <span className="relative inline-block"> Play</span>
+                {/* Enhanced glow effect */}
+                <motion.span 
+                  animate={{ 
+                    opacity: [0.3, 0.6, 0.3],
+                    scale: [1, 1.05, 1]
+                  }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute -inset-1 bg-cyan-500/10 blur-2xl rounded-full"
+                ></motion.span>
+              </motion.h2>
+              <motion.p 
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="text-gray-300 max-w-xl mx-auto"
+              >
+                Follow these simple steps to participate and win exciting competitions
+              </motion.p>
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.5 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className="mt-4 flex justify-center"
+              >
+                <motion.div 
+                  animate={{ 
+                    boxShadow: ["0 0 5px rgba(34,211,238,0.3)", "0 0 15px rgba(34,211,238,0.7)", "0 0 5px rgba(34,211,238,0.3)"]
+                  }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                  className="h-1 w-24 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 rounded-full"
+                ></motion.div>
+              </motion.div>
             </div>
             
-            {/* Card 2 - Tickets */}
-            <div className="bg-gray-800/70 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-[0_0_30px_rgba(0,0,0,0.7)] border border-gray-700/30 transition-all duration-300 p-8 text-center relative overflow-hidden transform hover:-translate-y-1 group">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 to-cyan-600"></div>
-              <div className="relative">
-                <div className="w-20 h-20 bg-gradient-to-br from-cyan-500 to-cyan-600 text-white flex items-center justify-center rounded-2xl mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-md relative">
-                  <i className="fas fa-ticket-alt text-3xl"></i>
-                  <span className="absolute -top-1 -right-1 w-6 h-6 bg-amber-500 rounded-full text-xs flex items-center justify-center animate-pulse">+1</span>
-                </div>
-                <div className="absolute top-5 right-5 w-8 h-8 rounded-full bg-cyan-900/50 opacity-0 group-hover:opacity-50 transition-opacity"></div>
-                <div className="absolute bottom-7 left-3 w-6 h-6 rounded-full bg-blue-900/50 opacity-0 group-hover:opacity-50 transition-opacity"></div>
-                <h3 className="text-2xl font-bold text-white mb-3">2. Get Your Tickets</h3>
-                <p className="text-gray-300 leading-relaxed">
-                  Pick your favorites and grab your tickets! The more tickets you have, the better your chances of winning big. Simple, secure payment options available.
-                </p>
-                <div 
-                  onClick={() => {
-                    const competitionsSection = document.querySelector('.live-competitions-section');
-                    if (competitionsSection) {
-                      competitionsSection.scrollIntoView({ behavior: 'smooth' });
-                    }
-                  }}
-                  className="mt-6 text-cyan-400 font-medium text-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-                >
-                  <span>See Ticket Options</span>
-                  <i className="fas fa-arrow-right ml-2"></i>
-                </div>
-              </div>
-            </div>
-            
-            {/* Card 3 - Win */}
-            <div className="bg-gray-800/70 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-[0_0_30px_rgba(0,0,0,0.7)] border border-gray-700/30 transition-all duration-300 p-8 text-center relative overflow-hidden transform hover:-translate-y-1 group">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-purple-600"></div>
-              <div className="relative">
-                <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-600 text-white flex items-center justify-center rounded-2xl mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-md relative wiggle-on-hover">
-                  <i className="fas fa-trophy text-3xl"></i>
-                  <span className="absolute -top-2 -right-2 text-2xl">✨</span>
-                </div>
-                <div className="absolute top-5 right-5 w-8 h-8 rounded-full bg-purple-900/50 opacity-0 group-hover:opacity-50 transition-opacity"></div>
-                <div className="absolute bottom-7 left-3 w-6 h-6 rounded-full bg-pink-900/50 opacity-0 group-hover:opacity-50 transition-opacity"></div>
-                <h3 className="text-2xl font-bold text-white mb-3">3. Win Amazing Prizes</h3>
-                <p className="text-gray-300 leading-relaxed">
-                  Watch for the competition draw! Winners are picked at random and notified immediately. Could you be our next big winner?
-                </p>
-                <div 
-                  onClick={() => {
-                    const competitionsSection = document.querySelector('.live-competitions-section');
-                    if (competitionsSection) {
-                      competitionsSection.scrollIntoView({ behavior: 'smooth' });
-                    }
-                  }}
-                  className="mt-6 text-purple-400 font-medium text-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-                >
-                  <span>See Recent Winners</span>
-                  <i className="fas fa-arrow-right ml-2"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Enhanced CTA button with glow effect - adjusted position to fix overlap */}
-          <div className="mt-12 mb-16 flex justify-center relative z-20">
-            <button 
-              onClick={() => {
-                const competitionsSection = document.querySelector('.live-competitions-section');
-                if (competitionsSection) {
-                  competitionsSection.scrollIntoView({ behavior: 'smooth' });
-                }
-              }}
-              className="group relative inline-flex items-center justify-center px-8 py-3 font-medium overflow-hidden rounded-full bg-gradient-to-r from-cyan-500 to-purple-600 text-white shadow-[0_0_15px_rgba(34,211,238,0.4)] transition-all duration-300 ease-out hover:shadow-[0_0_25px_rgba(34,211,238,0.6)]"
+            {/* Call to action button with interactive effects */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.8 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+              className="mt-8"
             >
-              <span className="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-gradient-to-r from-cyan-600 via-blue-600 to-purple-600 group-hover:translate-x-0 ease">
-                <i className="fas fa-trophy mr-2"></i> Let's Go!
-              </span>
-              <span className="absolute flex items-center justify-center w-full h-full text-white transition-all duration-300 transform group-hover:translate-x-full ease">Start Competing Now</span>
-              <span className="relative invisible">Start Competing Now</span>
-            </button>
-          </div>
-        </div>
-      </motion.div>
-      
-      {/* Enhanced transition blur element with decorative effects - adjusted position */}
-      <div className="h-24 bg-gradient-to-b from-transparent to-gray-900 relative overflow-hidden mt-[-4rem] z-10">
-        <div className="absolute inset-0 backdrop-blur-xl"></div>
-        
-        {/* Subtle decorative elements that span across both sections */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-0 right-1/3 w-32 h-32 bg-cyan-700/5 rounded-full blur-xl"></div>
-          <div className="absolute bottom-0 left-1/4 w-48 h-48 bg-purple-700/5 rounded-full blur-xl"></div>
-          <div className="hidden md:block absolute -bottom-12 right-1/3 w-40 h-40 bg-blue-800/10 rounded-full blur-2xl"></div>
+              <Link href="/how-to-play">
+                <motion.a
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="inline-flex items-center py-2 px-6 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-full font-medium shadow-lg shadow-blue-700/20 hover:shadow-blue-700/40 transition-all duration-300"
+                >
+                  <span>Detailed Guide</span>
+                  <motion.span
+                    animate={{ x: [0, 4, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity, repeatType: "loop" }}
+                    className="ml-2"
+                  >
+                    <ChevronRight size={18} />
+                  </motion.span>
+                </motion.a>
+              </Link>
+            </motion.div>
+          </motion.div>
+          
+          {/* Interactive Cards with Steps - with staggered animation */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.1 }}
+            variants={{
+              visible: {
+                transition: {
+                  staggerChildren: 0.1
+                }
+              },
+              hidden: {}
+            }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
+          >
+            {/* Step 1: Browse */}
+            <motion.div
+              variants={{
+                visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+                hidden: { opacity: 0, y: 50 }
+              }}
+              whileHover={{ y: -10, transition: { duration: 0.2 } }}
+              className="bg-gradient-to-b from-gray-800 to-gray-900 rounded-xl p-6 border border-gray-700 shadow-xl shadow-blue-900/10 relative overflow-hidden group"
+            >
+              <motion.div
+                animate={{
+                  scale: [1, 1.05, 1],
+                  opacity: [0.7, 0.9, 0.7]
+                }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-blue-600/10 to-cyan-600/5 rounded-full blur-2xl -mr-20 -mt-20 group-hover:opacity-100 transition-opacity"
+              ></motion.div>
+              
+              <div className="mb-4 text-6xl text-blue-500 opacity-90">
+                <motion.div
+                  whileHover={{ rotate: [0, -10, 0, 10, 0] }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <i className="fas fa-search"></i>
+                </motion.div>
+              </div>
+              
+              <div className="relative z-10">
+                <h3 className="font-bold text-xl text-white mb-2 group-hover:text-cyan-300 transition-colors duration-300">1. Browse Competitions</h3>
+                <p className="text-gray-300 group-hover:text-gray-200 transition-colors duration-300">Explore our wide range of exciting competitions across different categories and platforms.</p>
+              </div>
+              
+              <motion.div
+                initial={{ width: 0 }}
+                whileInView={{ width: "40%" }}
+                transition={{ duration: 0.8, delay: 0.1 }}
+                className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-blue-600 to-cyan-500"
+              ></motion.div>
+            </motion.div>
+            
+            {/* Step 2: Enter */}
+            <motion.div
+              variants={{
+                visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+                hidden: { opacity: 0, y: 50 }
+              }}
+              whileHover={{ y: -10, transition: { duration: 0.2 } }}
+              className="bg-gradient-to-b from-gray-800 to-gray-900 rounded-xl p-6 border border-gray-700 shadow-xl shadow-purple-900/10 relative overflow-hidden group"
+            >
+              <motion.div
+                animate={{
+                  scale: [1, 1.05, 1],
+                  opacity: [0.7, 0.9, 0.7]
+                }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-purple-600/10 to-pink-600/5 rounded-full blur-2xl -mr-20 -mt-20 group-hover:opacity-100 transition-opacity"
+              ></motion.div>
+              
+              <div className="mb-4 text-6xl text-purple-500 opacity-90">
+                <motion.div
+                  whileHover={{ scale: [1, 1.2, 0.9, 1.1, 1] }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <i className="fas fa-ticket-alt"></i>
+                </motion.div>
+              </div>
+              
+              <div className="relative z-10">
+                <h3 className="font-bold text-xl text-white mb-2 group-hover:text-purple-300 transition-colors duration-300">2. Enter & Follow Steps</h3>
+                <p className="text-gray-300 group-hover:text-gray-200 transition-colors duration-300">Select a competition and follow the simple entry steps to secure your tickets.</p>
+              </div>
+              
+              <motion.div
+                initial={{ width: 0 }}
+                whileInView={{ width: "40%" }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-purple-600 to-pink-500"
+              ></motion.div>
+            </motion.div>
+            
+            {/* Step 3: Track */}
+            <motion.div
+              variants={{
+                visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+                hidden: { opacity: 0, y: 50 }
+              }}
+              whileHover={{ y: -10, transition: { duration: 0.2 } }}
+              className="bg-gradient-to-b from-gray-800 to-gray-900 rounded-xl p-6 border border-gray-700 shadow-xl shadow-cyan-900/10 relative overflow-hidden group"
+            >
+              <motion.div
+                animate={{
+                  scale: [1, 1.05, 1],
+                  opacity: [0.7, 0.9, 0.7]
+                }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-cyan-600/10 to-blue-600/5 rounded-full blur-2xl -mr-20 -mt-20 group-hover:opacity-100 transition-opacity"
+              ></motion.div>
+              
+              <div className="mb-4 text-6xl text-cyan-500 opacity-90">
+                <motion.div
+                  whileHover={{ rotateY: 180 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <i className="fas fa-chart-line"></i>
+                </motion.div>
+              </div>
+              
+              <div className="relative z-10">
+                <h3 className="font-bold text-xl text-white mb-2 group-hover:text-cyan-300 transition-colors duration-300">3. Track Entries</h3>
+                <p className="text-gray-300 group-hover:text-gray-200 transition-colors duration-300">Monitor your active entries and check competition closing dates on your dashboard.</p>
+              </div>
+              
+              <motion.div
+                initial={{ width: 0 }}
+                whileInView={{ width: "40%" }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-cyan-600 to-blue-500"
+              ></motion.div>
+            </motion.div>
+            
+            {/* Step 4: Win */}
+            <motion.div
+              variants={{
+                visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+                hidden: { opacity: 0, y: 50 }
+              }}
+              whileHover={{ y: -10, transition: { duration: 0.2 } }}
+              className="bg-gradient-to-b from-gray-800 to-gray-900 rounded-xl p-6 border border-gray-700 shadow-xl shadow-yellow-900/10 relative overflow-hidden group"
+            >
+              <motion.div
+                animate={{
+                  scale: [1, 1.05, 1],
+                  opacity: [0.7, 0.9, 0.7]
+                }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-yellow-600/10 to-orange-600/5 rounded-full blur-2xl -mr-20 -mt-20 group-hover:opacity-100 transition-opacity"
+              ></motion.div>
+              
+              <div className="mb-4 text-6xl text-yellow-500 opacity-90">
+                <motion.div
+                  animate={{ 
+                    rotate: [0, 10, 0, -10, 0],
+                    scale: [1, 1.1, 1]
+                  }}
+                  transition={{ duration: 5, repeat: Infinity, repeatDelay: 3 }}
+                >
+                  <i className="fas fa-trophy"></i>
+                </motion.div>
+              </div>
+              
+              <div className="relative z-10">
+                <h3 className="font-bold text-xl text-white mb-2 group-hover:text-yellow-300 transition-colors duration-300">4. Win & Celebrate</h3>
+                <p className="text-gray-300 group-hover:text-gray-200 transition-colors duration-300">Get notified when you win and follow the simple claim process to receive your prize!</p>
+              </div>
+              
+              <motion.div
+                initial={{ width: 0 }}
+                whileInView={{ width: "40%" }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-yellow-600 to-orange-500"
+              ></motion.div>
+            </motion.div>
+          </motion.div>
         </div>
         
         {/* Subtle curved divider to create a wave effect */}
         <div className="absolute bottom-[-2px] left-0 right-0 h-8 bg-gray-900"></div>
         <div className="absolute bottom-[-2px] left-[5%] right-[5%] h-16 bg-gray-900 rounded-t-[50%]"></div>
-      </div>
+      </motion.div>
       
-      {/* Enhanced Live Competitions Section - with seamless transition */}
-      <div className="bg-gradient-to-b from-gray-900 to-gray-800 py-16 relative overflow-hidden pt-[2rem] mt-[-1px]">
-        {/* Animated decorative elements - enhanced for deeper dark mode */}
+      {/* Enhanced Interactive Live Competitions Section */}
+      <motion.div 
+        className="bg-gradient-to-b from-gray-900 to-gray-800 py-16 relative overflow-hidden pt-[2rem] mt-[-1px]"
+        initial={{ opacity: 0, backgroundColor: "rgba(0,0,0,0)" }}
+        whileInView={{ opacity: 1, backgroundColor: "rgba(0,0,0,0.2)" }}
+        viewport={{ once: false, amount: 0.1 }}
+        transition={{ duration: 0.8 }}
+      >
+        {/* Animated decorative elements with motion */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-0 left-1/4 w-64 h-64 bg-cyan-800/20 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-purple-800/20 rounded-full blur-3xl"></div>
-          <div className="absolute top-1/3 right-1/6 w-40 h-40 bg-blue-800/20 rounded-full blur-3xl"></div>
+          <motion.div 
+            animate={{ 
+              scale: [1, 1.1, 1],
+              opacity: [0.1, 0.2, 0.1]
+            }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-0 left-1/4 w-64 h-64 bg-cyan-800/20 rounded-full blur-3xl"
+          ></motion.div>
+          <motion.div 
+            animate={{ 
+              scale: [1, 1.15, 1],
+              opacity: [0.1, 0.25, 0.1]
+            }}
+            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            className="absolute bottom-0 right-1/4 w-80 h-80 bg-purple-800/20 rounded-full blur-3xl"
+          ></motion.div>
+          <motion.div 
+            animate={{ 
+              scale: [1, 1.2, 1],
+              opacity: [0.1, 0.22, 0.1]
+            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+            className="absolute top-1/3 right-1/6 w-40 h-40 bg-blue-800/20 rounded-full blur-3xl"
+          ></motion.div>
           <div className="hidden md:block absolute -top-24 -left-24 w-64 h-64 bg-gradient-to-br from-cyan-500/20 to-purple-500/20 rounded-full blur-2xl"></div>
           <div className="hidden md:block absolute -bottom-32 -right-32 w-80 h-80 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-full blur-2xl"></div>
+          
+          {/* Fun animated shapes - add more playful elements */}
+          <motion.div 
+            animate={{ 
+              y: [0, -20, 0],
+              rotate: [0, 5, 0]
+            }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-[15%] right-[18%] w-12 h-12 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-md"
+          ></motion.div>
+          
+          <motion.div 
+            animate={{ 
+              y: [0, 15, 0],
+              x: [0, 10, 0],
+              rotate: [0, -5, 0]
+            }}
+            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            className="absolute bottom-[25%] left-[20%] w-16 h-16 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-full blur-md"
+          ></motion.div>
+          
+          <motion.div
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.5, 0.8, 0.5]
+            }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-1/4 left-[15%] w-2 h-2 bg-cyan-400 rounded-full shadow-[0_0_8px_rgba(34,211,238,0.8)]"
+          ></motion.div>
+          
+          <motion.div
+            animate={{
+              scale: [1, 1.3, 1],
+              opacity: [0.5, 0.9, 0.5]
+            }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+            className="absolute bottom-1/3 right-[15%] w-2 h-2 bg-purple-400 rounded-full shadow-[0_0_8px_rgba(168,85,247,0.8)]"
+          ></motion.div>
+
           <div className="absolute top-1/2 left-1/3 w-96 h-96 bg-gradient-to-br from-gray-800/30 to-gray-900/30 rounded-full blur-3xl"></div>
         </div>
         
         <div className="container mx-auto px-4 relative z-10">
-          {/* Enhanced Header Section with glow and sparkle effects */}
-          <div className="mb-12 text-center">
+          {/* Animated Header Section */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.5 }}
+            transition={{ duration: 0.8 }}
+            className="mb-12 text-center"
+          >
             <div className="inline-block relative">
-              <span className="uppercase tracking-wider text-xs font-semibold text-cyan-300 mb-2 block">Current Opportunities</span>
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight relative">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 relative inline-block">
-                  Live
-                  {/* Small sparkle in the corner of "Live" */}
-                  <span className="absolute -top-2 -right-2 text-yellow-300 text-sm">✨</span>
-                </span>
-                <span className="relative inline-block"> Competitions</span>
-                {/* Subtle glow effect */}
-                <span className="absolute -inset-1 bg-cyan-500/5 blur-2xl rounded-full"></span>
-              </h2>
-              <p className="text-gray-300 max-w-xl mx-auto">
-                Don't miss your chance to win these amazing prizes! New competitions added regularly.
-              </p>
-              <div className="mt-4 flex justify-center">
-                <div className="h-1 w-24 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 rounded-full shadow-[0_0_5px_rgba(34,211,238,0.5)]"></div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Container for competition cards */}
-          <div className="live-competitions-section relative z-10">
-            {isLoadingCompetitions ? (
-              <div className="p-8 text-center">
-                <div className="animate-spin w-10 h-10 border-4 border-cyan-500 border-t-transparent rounded-full mx-auto mb-4"></div>
-                <p className="text-gray-300 font-medium">Loading exciting competitions...</p>
-              </div>
-            ) : competitions?.length === 0 ? (
-              <div className="p-8 text-center">
-                <div className="w-20 h-20 mx-auto mb-4 text-cyan-300">
-                  <i className="fas fa-search-minus text-6xl"></i>
-                </div>
-                <p className="text-gray-300">No competitions found matching your criteria.</p>
-                <Button 
-                  variant="outline" 
-                  className="mt-4 border-cyan-700 text-cyan-400 hover:bg-cyan-900/30"
-                  onClick={() => {
-                    setPrizeValue("all");
-                    setSortBy("popularity");
-                  }}
+              <motion.span
+                initial={{ opacity: 0, y: -10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.1 }}
+                className="uppercase tracking-wider text-xs font-semibold text-cyan-300 mb-2 block"
+              >
+                Current Opportunities
+              </motion.span>
+              <motion.h2 
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight relative"
+              >
+                <motion.span 
+                  initial={{ backgroundPosition: "0% 50%" }}
+                  animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
+                  transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                  className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 relative inline-block"
                 >
-                  <i className="fas fa-sync-alt mr-2"></i> Reset Filters
-                </Button>
-              </div>
+                  Live
+                  {/* Animated sparkle in the corner */}
+                  <motion.span 
+                    animate={{ 
+                      scale: [1, 1.3, 1],
+                      rotate: [0, 5, 0],
+                      opacity: [1, 0.8, 1] 
+                    }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                    className="absolute -top-2 -right-2 text-yellow-300 text-sm"
+                  >
+                    ✨
+                  </motion.span>
+                </motion.span>
+                <span className="relative inline-block"> Competitions</span>
+                {/* Enhanced glow effect */}
+                <motion.span 
+                  animate={{ 
+                    opacity: [0.3, 0.6, 0.3],
+                    scale: [1, 1.05, 1]
+                  }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute -inset-1 bg-cyan-500/10 blur-2xl rounded-full"
+                ></motion.span>
+              </motion.h2>
+              <motion.p 
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="text-gray-300 max-w-xl mx-auto"
+              >
+                Don't miss your chance to win these amazing prizes! New competitions added regularly.
+              </motion.p>
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.5 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className="mt-4 flex justify-center"
+              >
+                <motion.div 
+                  animate={{ 
+                    boxShadow: ["0 0 5px rgba(34,211,238,0.3)", "0 0 15px rgba(34,211,238,0.7)", "0 0 5px rgba(34,211,238,0.3)"]
+                  }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                  className="h-1 w-24 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 rounded-full"
+                ></motion.div>
+              </motion.div>
+            </div>
+          </motion.div>
+          
+          {/* Interactive Competition Cards Container */}
+          <motion.div 
+            className="live-competitions-section relative z-10"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            {isLoadingCompetitions ? (
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="p-8 text-center"
+              >
+                <motion.div 
+                  className="mx-auto mb-4 w-20 h-20 bg-gray-800 rounded-xl flex items-center justify-center"
+                  animate={{ 
+                    boxShadow: ["0 0 0px rgba(34,211,238,0)", "0 0 20px rgba(34,211,238,0.4)", "0 0 0px rgba(34,211,238,0)"]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  <motion.div 
+                    animate={{ 
+                      rotate: 360,
+                      borderColor: ["rgba(34,211,238,0.7) transparent rgba(34,211,238,0.7) rgba(34,211,238,0.7)", "rgba(168,85,247,0.7) rgba(168,85,247,0.7) transparent rgba(168,85,247,0.7)", "rgba(34,211,238,0.7) transparent rgba(34,211,238,0.7) rgba(34,211,238,0.7)"]
+                    }}
+                    transition={{ 
+                      rotate: { duration: 1.5, repeat: Infinity, ease: "linear" },
+                      borderColor: { duration: 3, repeat: Infinity }
+                    }}
+                    className="w-12 h-12 border-4 border-t-transparent rounded-full"
+                  ></motion.div>
+                </motion.div>
+                <motion.p 
+                  animate={{ 
+                    opacity: [0.7, 1, 0.7] 
+                  }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="text-gray-300 font-medium"
+                >
+                  Loading exciting competitions...
+                </motion.p>
+              </motion.div>
+            ) : competitions?.length === 0 ? (
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="p-8 text-center"
+              >
+                <motion.div 
+                  initial={{ scale: 0.8, rotate: -5 }}
+                  animate={{ scale: 1, rotate: 0 }}
+                  transition={{ duration: 0.5, type: "spring" }}
+                  className="w-24 h-24 mx-auto mb-6 text-cyan-300 bg-gray-800/70 rounded-full flex items-center justify-center shadow-lg"
+                >
+                  <motion.i 
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                    className="fas fa-search-minus text-5xl"
+                  ></motion.i>
+                </motion.div>
+                <motion.p 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.2, duration: 0.4 }}
+                  className="text-gray-300 text-lg mb-4"
+                >
+                  No competitions found matching your criteria.
+                </motion.p>
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4, duration: 0.4 }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <Button 
+                    variant="outline" 
+                    className="mt-2 border-cyan-700 text-cyan-400 hover:bg-cyan-900/30 shadow-md hover:shadow-lg hover:shadow-cyan-900/20 transition-all"
+                    onClick={() => {
+                      setPrizeValue("all");
+                      setSortBy("popularity");
+                    }}
+                  >
+                    <motion.span 
+                      animate={{ rotate: [0, 360] }}
+                      transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 5 }}
+                      className="mr-2"
+                    >
+                      <i className="fas fa-sync-alt"></i>
+                    </motion.span>
+                    Reset Filters
+                  </Button>
+                </motion.div>
+              </motion.div>
             ) : (
               <>
-                {/* Grid layout with 3 columns on larger screens - increased spacing */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10 relative z-10">
-                  {competitions?.map((competition: CompetitionWithEntryStatus) => (
-                    <CompetitionCard
+                {/* Interactive filter and category controls */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="mb-8 flex flex-wrap gap-4 justify-center items-center"
+                >
+                  <motion.div
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="bg-gray-800/60 border border-gray-700/50 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg"
+                  >
+                    <Select
+                      value={prizeValue}
+                      onValueChange={setPrizeValue}
+                    >
+                      <SelectTrigger className="min-w-[160px] border-0 bg-transparent text-gray-200 focus:ring-1 focus:ring-cyan-500/50">
+                        <span className="flex items-center">
+                          <Trophy className="h-4 w-4 text-cyan-400 mr-2"/>
+                          <SelectValue placeholder="Prize Type" />
+                        </span>
+                      </SelectTrigger>
+                      <SelectContent className="bg-gray-800 border-gray-700 text-gray-200">
+                        <SelectItem value="all">All Prizes</SelectItem>
+                        <SelectItem value="cash">Cash Prizes</SelectItem>
+                        <SelectItem value="family">Family Prizes</SelectItem>
+                        <SelectItem value="appliances">Appliances</SelectItem>
+                        <SelectItem value="tech">Tech Gadgets</SelectItem>
+                        <SelectItem value="luxury">Luxury Items</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </motion.div>
+                  
+                  <motion.div
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="bg-gray-800/60 border border-gray-700/50 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg"
+                  >
+                    <Select
+                      value={sortBy}
+                      onValueChange={setSortBy}
+                    >
+                      <SelectTrigger className="min-w-[160px] border-0 bg-transparent text-gray-200 focus:ring-1 focus:ring-purple-500/50">
+                        <span className="flex items-center">
+                          <Sparkles className="h-4 w-4 text-purple-400 mr-2"/>
+                          <SelectValue placeholder="Sort By" />
+                        </span>
+                      </SelectTrigger>
+                      <SelectContent className="bg-gray-800 border-gray-700 text-gray-200">
+                        <SelectItem value="popularity">Most Popular</SelectItem>
+                        <SelectItem value="newest">Newest First</SelectItem>
+                        <SelectItem value="endingSoon">Ending Soon</SelectItem>
+                        <SelectItem value="prizeValueHigh">Prize: High to Low</SelectItem>
+                        <SelectItem value="prizeValueLow">Prize: Low to High</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </motion.div>
+                  
+                  <motion.div
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="bg-gray-800/60 border border-gray-700/50 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg"
+                  >
+                    <Select
+                      value={activeTab}
+                      onValueChange={setActiveTab}
+                    >
+                      <SelectTrigger className="min-w-[160px] border-0 bg-transparent text-gray-200 focus:ring-1 focus:ring-blue-500/50">
+                        <span className="flex items-center">
+                          <i className="fas fa-filter text-blue-400 mr-2 text-sm"></i>
+                          <SelectValue placeholder="Filter By" />
+                        </span>
+                      </SelectTrigger>
+                      <SelectContent className="bg-gray-800 border-gray-700 text-gray-200">
+                        <SelectItem value="trending">Trending Now</SelectItem>
+                        <SelectItem value="featured">Featured</SelectItem>
+                        <SelectItem value="new">New Arrivals</SelectItem>
+                        <SelectItem value="popular">Most Entered</SelectItem>
+                        <SelectItem value="all">All Competitions</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </motion.div>
+                </motion.div>
+
+                {/* Staggered animation for competition cards */}
+                <motion.div 
+                  variants={{
+                    hidden: { opacity: 0 },
+                    show: {
+                      opacity: 1,
+                      transition: {
+                        staggerChildren: 0.1
+                      }
+                    }
+                  }}
+                  initial="hidden"
+                  animate="show"
+                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10 relative z-10"
+                >
+                  {competitions?.map((competition: CompetitionWithEntryStatus, index: number) => (
+                    <motion.div 
                       key={competition.id}
-                      competition={competition}
-                      onEnter={handleEnterCompetition}
-                      onBookmark={handleBookmarkCompetition}
-                      onLike={handleLikeCompetition}
-                      onCompleteEntry={handleCompleteEntry}
-                      categoryTheme={competition.type === 'family' ? 'family' : 
-                                    competition.type === 'appliances' ? 'appliances' : 
-                                    competition.type === 'cash' ? 'cash' : undefined}
-                    />
+                      variants={{
+                        hidden: { opacity: 0, y: 20 },
+                        show: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+                      }}
+                      whileHover={{ 
+                        y: -10, 
+                        transition: { duration: 0.2 } 
+                      }}
+                    >
+                      <CompetitionCard
+                        competition={competition}
+                        onEnter={handleEnterCompetition}
+                        onBookmark={handleBookmarkCompetition}
+                        onLike={handleLikeCompetition}
+                        onCompleteEntry={handleCompleteEntry}
+                        categoryTheme={competition.type === 'family' ? 'family' : 
+                                      competition.type === 'appliances' ? 'appliances' : 
+                                      competition.type === 'cash' ? 'cash' : undefined}
+                      />
+                    </motion.div>
                   ))}
-                </div>
+                </motion.div>
                 
-                {/* Competition count indicator with improved styling for dark background */}
-                <div className="mt-10 flex justify-center">
-                  <div className="flex items-center justify-center bg-gray-800/50 backdrop-blur-sm py-2 px-5 rounded-full border border-gray-700/50">
-                    <i className="fas fa-ticket-alt text-cyan-400 mr-2"></i>
+                {/* Animated competition count indicator */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  className="mt-12 flex justify-center"
+                >
+                  <motion.div 
+                    whileHover={{ scale: 1.05 }}
+                    className="flex items-center justify-center bg-gray-800/50 backdrop-blur-sm py-3 px-6 rounded-full border border-gray-700/50 shadow-lg"
+                  >
+                    <motion.div
+                      animate={{ 
+                        rotate: [0, 10, 0, -10, 0],
+                        scale: [1, 1.1, 1]
+                      }}
+                      transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                      className="mr-3 text-cyan-400"
+                    >
+                      <i className="fas fa-ticket-alt text-lg"></i>
+                    </motion.div>
                     <span className="text-sm font-medium text-gray-300">
-                      Showing <span className="font-bold text-cyan-300">{competitions?.length || 0}</span> exciting competitions
+                      Showing <motion.span 
+                        initial={{ color: "#67e8f9" }}
+                        animate={{ 
+                          color: ["#67e8f9", "#a78bfa", "#67e8f9"] 
+                        }}
+                        transition={{ duration: 3, repeat: Infinity }}
+                        className="font-bold text-lg"
+                      >
+                        {competitions?.length || 0}
+                      </motion.span> exciting competitions
                     </span>
-                  </div>
-                </div>
+                  </motion.div>
+                </motion.div>
               </>
             )}
-          </div>
+          </motion.div>
 
           {/* Extra spacing at the bottom */}
           <div className="py-6"></div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Banner Upload Modal */}
       <Dialog open={showBannerUploadModal} onOpenChange={setShowBannerUploadModal}>
