@@ -2,7 +2,11 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 
+// Create Express application
 const app = express();
+
+// Export app for Vercel serverless functions
+export { app };
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 

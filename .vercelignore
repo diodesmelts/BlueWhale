@@ -1,0 +1,20 @@
+# Version control
+.git
+.github
+
+# Build artifacts
+node_modules
+render-*
+build-for-cloud.js
+.railwayignore
+railway.toml
+replit.nix
+.replit
+.upm
+.config
+.local
+.cache
+
+# Redundant files for Vercel
+Dockerfile
+render.yaml
