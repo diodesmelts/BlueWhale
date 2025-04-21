@@ -8,5 +8,11 @@ if (!process.env.DATABASE_URL) {
   );
 }
 
-export const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
+// Configure SSL for production environments (like Render)
+const poolConfig = { 
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : undefined
+};
+
+export const pool = new pg.Pool(poolConfig);
 export const db = drizzle(pool, { schema });
