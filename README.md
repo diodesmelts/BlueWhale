@@ -22,7 +22,7 @@ A dynamic competition tracking web application that empowers users to discover, 
 
 2. **Configure the Web Service:**
    - Name: `blue-whale-app`
-   - Build Command: `npm install && npm run build`
+   - Build Command: `npm install && npx vite build && npx esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist`
    - Start Command: `npm run start`
    - Add Environment Variables:
      - `NODE_ENV`: `production`
