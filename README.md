@@ -13,13 +13,15 @@ A dynamic competition tracking web application that empowers users to discover, 
 
 ## Deployment to Render
 
-### Deployment Process (Docker-based)
+### Deployment Process (Using Custom Build Script)
 
 For the most reliable deployment, follow these steps:
 
 1. **Make sure these files are present in your GitHub repository**:
-   - `Dockerfile` - Docker configuration for containerized deployment
+   - `deploy.js` - Robust deployment script with fallback mechanisms
    - `render.yaml` - Blueprint configuration for automated setup
+   - `.node-version` - Node.js version specification
+   - `static.json` - Static file configuration
 
 2. **Choose one of these deployment methods**:
 
@@ -45,8 +47,9 @@ For the most reliable deployment, follow these steps:
 
 2. **Configure the Web Service:**
    - Name: `blue-whale-app`
-   - Environment: `Docker`
-   - Docker Command: `npm run start`
+   - Environment: `Node`
+   - Build Command: `node deploy.js`
+   - Start Command: `npm run start`
    - Add Environment Variables:
      - `NODE_ENV`: `production`
      - `PORT`: `10000`
@@ -61,20 +64,20 @@ For the most reliable deployment, follow these steps:
    - Configure your database settings
    - Use the provided connection string in your web service env vars
 
-### Why Docker?
+### Why This Approach Works
 
-Using Docker for deployment provides several benefits:
-- Consistent build environment across all platforms
-- Eliminates "command not found" errors by packaging all dependencies
-- Isolates the application for better security
-- Simplifies environment configuration
+Our custom deployment script provides several benefits:
+- Multiple fallback mechanisms if primary build tools fail
+- Detailed error reporting for debugging
+- Automatic recovery from common build failures
+- Compatibility with Render's Node environment
 
 ### Troubleshooting Deployment Issues
 
 If you encounter build issues:
 
 1. **Check build logs** in the Render dashboard
-2. **Verify Docker is building correctly**
+2. **Verify the custom build script** is being executed properly
 3. **Ensure all environment variables** are correctly set
 4. **Check database connection** if the app builds but fails at runtime
 
