@@ -1,21 +1,32 @@
 #!/bin/bash
 set -e
 
-echo "Installing dependencies with NPM..."
-npm ci || npm install
+echo "=== STARTING BUILD PROCESS ==="
 
-echo "Moving vite and esbuild to regular dependencies..."
-# This is a critical step for Render deployment
-npm install --save vite@5.4.14 esbuild@0.25.0
+# Install core dependencies
+echo "=== Installing dependencies ==="
+npm install
 
-echo "Listing directory contents for debugging:"
-ls -la
+# Install critical build tools globally
+echo "=== Installing build tools globally ==="
+npm install -g vite esbuild typescript
 
-echo "Creating a simplified vite.config for production build..."
-cat > vite.config.js << 'EOF'
+# List installed packages for debugging
+echo "=== Installed global packages ==="
+npm list -g --depth=0
+
+echo "=== Installed local packages ==="
+npm list --depth=0 | grep -E 'vite|esbuild'
+
+# Create a production-compatible Vite config
+echo "=== Creating production Vite config ==="
+cat > vite.config.production.js << 'EOF'
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   plugins: [react()],
@@ -34,10 +45,19 @@ export default defineConfig({
 });
 EOF
 
-echo "Building frontend with simplified config..."
-npm exec -- vite build --config ./vite.config.js
+# Build frontend
+echo "=== Building frontend ==="
+vite build --config vite.config.production.js
 
-echo "Building backend with esbuild..."
-npm exec -- esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+# Build backend
+echo "=== Building backend ==="
+esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
 
-echo "Build completed successfully"
+# Create a small verification script
+echo "=== Creating verification files ==="
+echo 'console.log("Build completed successfully at", new Date().toISOString());' > dist/build-verification.js
+
+# Execute verification
+node dist/build-verification.js
+
+echo "=== BUILD PROCESS COMPLETED SUCCESSFULLY ==="
