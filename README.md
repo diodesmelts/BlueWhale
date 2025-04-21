@@ -13,12 +13,12 @@ A dynamic competition tracking web application that empowers users to discover, 
 
 ## Deployment to Render
 
-### Deployment Process
+### Deployment Process (Docker-based)
 
 For the most reliable deployment, follow these steps:
 
 1. **Make sure these files are present in your GitHub repository**:
-   - `build.sh` - Custom build script with fallback mechanisms
+   - `Dockerfile` - Docker configuration for containerized deployment
    - `render.yaml` - Blueprint configuration for automated setup
 
 2. **Choose one of these deployment methods**:
@@ -45,8 +45,8 @@ For the most reliable deployment, follow these steps:
 
 2. **Configure the Web Service:**
    - Name: `blue-whale-app`
-   - Build Command: `bash ./build.sh`
-   - Start Command: `npm run start`
+   - Environment: `Docker`
+   - Docker Command: `npm run start`
    - Add Environment Variables:
      - `NODE_ENV`: `production`
      - `PORT`: `10000`
@@ -61,12 +61,20 @@ For the most reliable deployment, follow these steps:
    - Configure your database settings
    - Use the provided connection string in your web service env vars
 
+### Why Docker?
+
+Using Docker for deployment provides several benefits:
+- Consistent build environment across all platforms
+- Eliminates "command not found" errors by packaging all dependencies
+- Isolates the application for better security
+- Simplifies environment configuration
+
 ### Troubleshooting Deployment Issues
 
 If you encounter build issues:
 
 1. **Check build logs** in the Render dashboard
-2. **Verify that the `build.sh` script** is being executed
+2. **Verify Docker is building correctly**
 3. **Ensure all environment variables** are correctly set
 4. **Check database connection** if the app builds but fails at runtime
 

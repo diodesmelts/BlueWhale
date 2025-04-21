@@ -1,9 +1,9 @@
 services:
   - type: web
     name: blue-whale-app
-    env: node
-    buildCommand: bash ./build.sh
-    startCommand: npm run start
+    env: docker
+    dockerfilePath: ./Dockerfile
+    dockerCommand: npm run start
     envVars:
       - key: NODE_ENV
         value: production
