@@ -42,29 +42,62 @@ async function deploy() {
     log('\n📦 Installing dependencies...', colors.yellow);
     runCommand('npm install');
     
+    // Explicitly install Vite and related packages
+    log('\n📦 Ensuring Vite is correctly installed...', colors.yellow);
+    runCommand('npm install --no-save vite @vitejs/plugin-react @types/node');
+    
+    // Verify Vite installation
+    log('\n🔍 Verifying Vite installation...', colors.yellow);
+    try {
+      const vitePath = require.resolve('vite');
+      log(`✅ Found Vite at: ${vitePath}`, colors.green);
+    } catch(e) {
+      log('⚠️ Could not resolve Vite package, installing globally as fallback...', colors.yellow);
+      runCommand('npm install -g vite');
+    }
+    
     // Build frontend
     log('\n🏗️ Building frontend...', colors.yellow);
-    if (!fs.existsSync('./client/dist')) {
-      fs.mkdirSync('./client/dist', { recursive: true });
+    if (!fs.existsSync('./dist')) {
+      fs.mkdirSync('./dist', { recursive: true });
+    }
+    if (!fs.existsSync('./dist/public')) {
+      fs.mkdirSync('./dist/public', { recursive: true });
     }
     
     try {
-      runCommand('npx vite build', { 
+      // Try first with npx to use local version
+      log('Attempting build with local Vite...', colors.blue);
+      runCommand('npx vite build --outDir dist/public', { 
         env: { ...process.env, NODE_ENV: 'production' }
       });
     } catch (error) {
-      log('\n⚠️ Vite build failed, trying alternative build method...', colors.bright + colors.yellow);
-      // Create a simple public directory with index.html
-      const publicDir = path.join(__dirname, 'dist', 'public');
-      if (!fs.existsSync(publicDir)) {
-        fs.mkdirSync(publicDir, { recursive: true });
+      log('\n⚠️ Local Vite build failed, trying with direct path...', colors.bright + colors.yellow);
+      
+      try {
+        // Try to use the Vite binary directly from node_modules
+        runCommand('./node_modules/.bin/vite build --outDir dist/public', { 
+          env: { ...process.env, NODE_ENV: 'production' }
+        });
+      } catch (innerError) {
+        log('\n⚠️ Direct Vite build failed, trying global installation...', colors.bright + colors.yellow);
+        
+        try {
+          // Try using a global Vite installation
+          runCommand('vite build --outDir dist/public', { 
+            env: { ...process.env, NODE_ENV: 'production' }
+          });
+        } catch (globalError) {
+          log('\n⚠️ All Vite build methods failed, creating manual fallback...', colors.bright + colors.yellow);
+          
+          // Create a simple public directory with index.html as final fallback
+          runCommand('cp -r ./client/src ./dist/public/');
+          runCommand('cp -r ./public/* ./dist/public/');
+          runCommand('cp ./client/index.html ./dist/public/');
+          
+          log('✅ Created fallback static assets', colors.green);
+        }
       }
-      
-      // Copy client files to public
-      runCommand('cp -r ./client/src ./dist/public/');
-      runCommand('cp -r ./client/index.html ./dist/public/');
-      
-      log('✅ Created fallback static assets', colors.green);
     }
     
     // Build backend
