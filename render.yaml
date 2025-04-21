@@ -1,9 +1,17 @@
 services:
   - type: web
     name: blue-whale-app
-    env: docker
-    dockerfilePath: ./Dockerfile
-    dockerContext: ./
+    env: node
+    buildCommand: bash render-deploy.sh
+    startCommand: |
+      if [ -f dist/index.js ]; then
+        node dist/index.js
+      elif [ -f dist/start.js ]; then
+        node dist/start.js
+      else
+        echo "ERROR: No executable file found"
+        exit 1
+      fi
     envVars:
       - key: NODE_ENV
         value: production

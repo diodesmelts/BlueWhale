@@ -7,6 +7,10 @@ set -e
 
 echo "Starting custom Render deployment process"
 
+# Run diagnostic test
+echo "Running diagnostic test"
+node render-test.js || true
+
 # Install required dependencies
 echo "Installing build dependencies"
 npm install --no-save esbuild typescript
@@ -21,9 +25,31 @@ mkdir -p dist/shared
 echo "Copying shared schema"
 cp -r ./shared/* ./dist/shared/
 
-# Build the server with esbuild
-echo "Building server"
-./node_modules/.bin/esbuild server/index.ts --platform=node --bundle --outfile=dist/index.js --external:express --external:pg --external:drizzle-orm
+# Copy package files
+echo "Copying package files"
+cp package.json dist/
+cp package-lock.json dist/
+
+# Try different approaches to build the server
+echo "Building server (Approach 1)"
+./node_modules/.bin/esbuild server/index.ts --platform=node --bundle --outfile=dist/index.js --external:express --external:pg --external:drizzle-orm || echo "esbuild failed, trying alternative approach"
+
+# If esbuild fails, try with tsc
+if [ ! -f dist/index.js ]; then
+  echo "Building server (Approach 2)"
+  npm install --no-save typescript
+  ./node_modules/.bin/tsc --skipLibCheck server/index.ts --outDir dist || echo "tsc failed, trying alternative approach"
+fi
+
+# If tsc fails, just copy the source files
+if [ ! -f dist/index.js ]; then
+  echo "Building server (Approach 3)"
+  cp -r ./server/* ./dist/
+  # Create a simple starter script that uses tsx
+  echo "#!/usr/bin/env node
+require('tsx').runMain('./index.ts');" > dist/start.js
+  chmod +x dist/start.js
+fi
 
 # Create a static HTML file
 echo "Creating static frontend"
