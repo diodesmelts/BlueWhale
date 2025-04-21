@@ -2,7 +2,7 @@ services:
   - type: web
     name: blue-whale-app
     env: node
-    buildCommand: node deploy.js
+    buildCommand: node manual-build.cjs || node deploy.js
     startCommand: npm run start
     envVars:
       - key: NODE_ENV
