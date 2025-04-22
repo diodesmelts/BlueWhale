@@ -1,4 +1,14 @@
 .git
 .github
 node_modules
-examples
+notification-changes
+scripts
+attached_assets
+.vscode
+*.log
+.env.local
+.env.development.local
+*.d.ts
+tsconfig.tsbuildinfo
+manual-build.cjs
+*.md

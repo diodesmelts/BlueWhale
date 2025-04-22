@@ -1,6 +1,5 @@
-// Vercel standard API handler
+// Simplified Vercel API handler
 const express = require('express');
-const { createServer } = require('http');
 const { join } = require('path');
 const fs = require('fs');
 
@@ -9,13 +8,25 @@ const app = express();
 
 // Use JSON middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Serve static files from dist folder if it exists
-if (fs.existsSync(join(process.cwd(), 'dist'))) {
-  app.use(express.static(join(process.cwd(), 'dist')));
-}
+// Set CORS headers
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+  next();
+});
 
-// API endpoints (same as in index.js but more structured)
+// Static assets path
+const staticPath = join(process.cwd(), 'dist');
+const hasStaticFiles = fs.existsSync(staticPath);
+
+// API endpoints for preview/demo data
 app.get('/api/settings/logo', (req, res) => {
   res.json({
     imageUrl: 'https://28ab6440-e7e2-406a-9e35-29d8f501e03a.replit.dev/assets/blue_whale.svg'
@@ -72,27 +83,29 @@ app.get('/api/status', (req, res) => {
   });
 });
 
-// SPA Fallback - serve index.html for all other routes
+// Handle all other routes - either serve static files or landing page
 app.get('*', (req, res) => {
-  if (fs.existsSync(join(process.cwd(), 'dist', 'index.html'))) {
-    res.sendFile(join(process.cwd(), 'dist', 'index.html'));
-  } else {
-    // Serve the landing page from index.js
+  if (hasStaticFiles) {
+    // Check if this is a specific file path
+    const filePath = join(staticPath, req.path);
+    
+    if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+      return res.sendFile(filePath);
+    }
+    
+    // SPA fallback
+    return res.sendFile(join(staticPath, 'index.html'));
+  }
+  
+  // No static files available, use the landing page from index.js
+  try {
     const indexModule = require('./index.js');
-    indexModule(req, res);
+    return indexModule(req, res);
+  } catch (error) {
+    console.error('Failed to load landing page:', error);
+    return res.status(500).send('Server error');
   }
 });
-
-// Create HTTP server
-const server = createServer(app);
-
-// Start server if not running as Vercel serverless function
-if (process.env.NODE_ENV !== 'production') {
-  const PORT = process.env.PORT || 3000;
-  server.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
-}
 
 // Export for Vercel serverless
 module.exports = app;
