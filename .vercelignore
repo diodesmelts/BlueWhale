@@ -1,4 +1,4 @@
-# ignore unnecessary files
+# Ignore development files and directories
 README.md
 .git
 .github
@@ -6,9 +6,10 @@ README.md
 node_modules
 attached_assets
 scripts
+
+# Include API, built files, and configuration
 !api
 !dist
-
-# Always include these files
+!vercel-build.js
 !index.html
 !vercel.json
