@@ -1,85 +1,26 @@
-# Blue Whale Competitions
+# Blue Whale Competitions - Vercel Deployment
 
-A dynamic competition tracking web application that empowers users to discover, manage, and monitor online competitions through an intelligent and visually refined user experience.
+This is an ultra-simplified version of the Blue Whale Competitions platform specifically for Vercel deployment.
 
-## Tech Stack
+## Structure
 
-- React.js frontend with TypeScript
-- Tailwind CSS for responsive design
-- Express.js backend
-- PostgreSQL database with Drizzle ORM
-- Zod validation for data integrity
-- React Query for state management
-- Authentication with Passport.js
-- Stripe payment integration
+- `index.html` - Main landing page
+- `api/status.js` - Simple API endpoint
+- `vercel.json` - Minimal Vercel configuration
 
-## Deployment to Vercel
+## Deployment Steps
 
-### Simple Deployment Process
+1. Create a new Vercel project
+2. Point to this directory (`standalone`)
+3. Deploy! No additional configuration needed
 
-1. **Connect to GitHub Repository**
-   - Go to [Vercel Dashboard](https://vercel.com/dashboard)
-   - Click "Add New" → "Project"
-   - Import your GitHub repository
-   - Configure the following settings:
-     - Framework Preset: `Other`
-     - Build Command: `npm run build`
-     - Output Directory: `dist`
-     - Root Directory: `.` (default)
+## Why This Structure?
 
-2. **Configure Environment Variables**
-   - Add these required variables:
-     - `DATABASE_URL`: Your PostgreSQL connection string
-     - `SESSION_SECRET`: Random string for session security
-     - `STRIPE_SECRET_KEY`: Your Stripe secret key
-     - `VITE_STRIPE_PUBLIC_KEY`: Your Stripe publishable key
+This is the absolute simplest structure that works with Vercel. It contains:
+- Pure HTML (no server-side rendering)
+- A single API endpoint following Vercel's serverless format
+- Minimal configuration
 
-3. **Deploy**
-   - Click "Deploy"
-   - Vercel will build and deploy your application
-   - All API routes will automatically work through the serverless functions
+## Important Notes
 
-### Project Structure
-
-- **Frontend:** React application built with Vite
-- **API:** Serverless functions in `/api` directory
-- **Config:** Deployment settings in `vercel.json`
-
-The serverless API automatically provides fallback data when not connected to a database, making it perfect for demos and development.
-
-## Local Development
-
-1. Install dependencies:
-   ```
-   npm install
-   ```
-
-2. Start the development server:
-   ```
-   npm run dev
-   ```
-
-3. Open [http://localhost:5000](http://localhost:5000) in your browser.
-
-## Database Setup
-
-For local development with a database:
-
-1. Create a PostgreSQL database
-2. Set up the `DATABASE_URL` environment variable
-3. Run migrations:
-   ```
-   npm run db:push
-   ```
-
-## Features
-
-- Competition discovery and browsing
-- User accounts and authentication
-- Secure payments with Stripe
-- Ticket purchasing system
-- Responsive design for all devices
-- User profile management
-- Mascot selection system
-- Categorized competitions (Family, Appliances, Cash)
-- Leaderboard with user rankings
+This is a placeholder landing page. Once deployment is working correctly, we can gradually add more functionality.
