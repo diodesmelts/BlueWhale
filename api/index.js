@@ -8,144 +8,374 @@ const landingPage = `<!DOCTYPE html>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blue Whale Competitions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary-blue: #0261FE;
+      --dark-blue: #090D1F;
+      --darker-blue: #01081B;
+      --text-white: #FFFFFF;
+      --light-gray: #F3F4F6;
+      --card-pink: #FFF1F6;
+      --card-green: #ECFDF7;
+      --card-yellow: #FFF8E6;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
     body {
-      font-family: system-ui, sans-serif;
-      background-color: #0a192f;
-      color: white;
+      font-family: 'Inter', system-ui, sans-serif;
+      background-color: var(--darker-blue);
+      color: var(--text-white);
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      margin: 0;
-      padding: 0;
     }
+    
     header {
-      padding: 2rem 1rem;
+      background-color: var(--dark-blue);
+      padding: 1.5rem 2rem;
       display: flex;
-      justify-content: center;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
+    
     .logo {
       font-size: 1.75rem;
       font-weight: 700;
-      color: #64ffda;
-    }
-    main {
-      flex: 1;
+      color: var(--text-white);
       display: flex;
-      flex-direction: column;
       align-items: center;
-      padding: 2rem 1rem;
-      text-align: center;
+      gap: 8px;
     }
-    .container {
-      max-width: 800px;
-      width: 100%;
-    }
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1.5rem;
-      background: linear-gradient(to right, #4a00e0, #8e2de2);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .competitions-preview {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      margin-top: 3rem;
-    }
-    .competition-card {
-      background: rgba(255, 255, 255, 0.05);
+    
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background-color: var(--primary-blue);
       border-radius: 8px;
-      overflow: hidden;
-      transition: transform 0.3s ease;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    .competition-card:hover {
-      transform: translateY(-5px);
-    }
-    .card-image {
-      height: 180px;
-      width: 100%;
-      background: linear-gradient(to right, #4a00e0, #8e2de2);
       display: flex;
       align-items: center;
       justify-content: center;
       color: white;
       font-weight: bold;
     }
+    
+    .header-links {
+      display: flex;
+      gap: 2rem;
+    }
+    
+    .header-link {
+      color: var(--text-white);
+      text-decoration: none;
+      font-weight: 500;
+      opacity: 0.8;
+      transition: opacity 0.2s ease;
+    }
+    
+    .header-link:hover {
+      opacity: 1;
+    }
+    
+    .active-link {
+      opacity: 1;
+      position: relative;
+    }
+    
+    .active-link::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: var(--primary-blue);
+    }
+    
+    main {
+      flex: 1;
+      padding: 3rem 2rem;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    
+    .hero {
+      margin-bottom: 4rem;
+      text-align: center;
+    }
+    
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #00C2FF, #0261FE);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto;
+      opacity: 0.9;
+    }
+    
+    .competitions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+    
+    .competition-card {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      position: relative;
+    }
+    
+    .competition-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(2, 97, 254, 0.15);
+      border-color: rgba(2, 97, 254, 0.2);
+    }
+    
+    .card-image {
+      height: 200px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 1.5rem;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    
+    .appliances .card-image {
+      background: linear-gradient(135deg, #FF4B8B, #FF8E53);
+    }
+    
+    .cash .card-image {
+      background: linear-gradient(135deg, #10B981, #3B82F6);
+    }
+    
+    .family .card-image {
+      background: linear-gradient(135deg, #FBBF24, #F59E0B);
+    }
+    
     .card-content {
       padding: 1.5rem;
     }
+    
     .card-category {
       display: inline-block;
       font-size: 0.75rem;
-      background-color: rgba(100, 255, 218, 0.2);
-      color: #64ffda;
-      padding: 0.25rem 0.5rem;
-      border-radius: 4px;
-      margin-bottom: 1rem;
-    }
-    .card-title {
-      font-size: 1.25rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 50px;
       margin-bottom: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
     }
+    
+    .appliances .card-category {
+      background-color: var(--card-pink);
+      color: #FF4B8B;
+    }
+    
+    .cash .card-category {
+      background-color: var(--card-green);
+      color: #10B981;
+    }
+    
+    .family .card-category {
+      background-color: var(--card-yellow);
+      color: #F59E0B;
+    }
+    
+    .card-title {
+      font-size: 1.35rem;
+      margin-bottom: 0.75rem;
+      color: white;
+    }
+    
     .card-price {
       font-weight: 700;
-      color: #64ffda;
+      font-size: 1.1rem;
+      color: var(--primary-blue);
+      display: block;
+      margin-top: 1rem;
     }
+    
+    .progress-container {
+      margin-top: 1rem;
+      height: 6px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    
+    .progress-bar {
+      height: 100%;
+      background-color: var(--primary-blue);
+      border-radius: 3px;
+    }
+    
+    .progress-text {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+      opacity: 0.7;
+    }
+    
     footer {
-      padding: 2rem 1rem;
+      background-color: var(--dark-blue);
+      padding: 2rem;
       text-align: center;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      color: #8892b0;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      color: rgba(255, 255, 255, 0.6);
+    }
+    
+    .btn-primary {
+      display: inline-block;
+      background-color: var(--primary-blue);
+      color: white;
+      font-weight: 600;
+      padding: 0.75rem 1.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      margin-top: 3rem;
+      transition: all 0.2s ease;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .btn-primary:hover {
+      background-color: #0052E0;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 15px rgba(2, 97, 254, 0.2);
+    }
+    
+    .btn-wrapper {
+      text-align: center;
+      margin-top: 2rem;
+    }
+    
+    @media (max-width: 768px) {
+      .header-links {
+        display: none;
+      }
+      
+      h1 {
+        font-size: 2.2rem;
+      }
+      
+      .hero p {
+        font-size: 1rem;
+      }
+      
+      .competitions-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
   <header>
-    <div class="logo">Blue Whale Competitions</div>
+    <div class="logo">
+      <div class="logo-icon">BW</div>
+      Blue Whale Competitions
+    </div>
+    <div class="header-links">
+      <a href="#" class="header-link active-link">Home</a>
+      <a href="#" class="header-link">Competitions</a>
+      <a href="#" class="header-link">Winners</a>
+      <a href="#" class="header-link">How It Works</a>
+    </div>
   </header>
   
   <main>
-    <div class="container">
+    <section class="hero">
       <h1>Your Source for Amazing Competitions</h1>
       <p>Discover and participate in exciting competitions. Win incredible prizes including electronics, cash rewards, family experiences, and much more!</p>
+    </section>
+    
+    <div class="competitions-grid">
+      <div class="competition-card appliances">
+        <div class="card-image">Air Fryer</div>
+        <div class="card-content">
+          <span class="card-category">Appliances</span>
+          <h3 class="card-title">Win a Ninja Air Fryer</h3>
+          <span class="card-price">£4.99 per ticket</span>
+          <div class="progress-container">
+            <div class="progress-bar" style="width: 38%;"></div>
+          </div>
+          <div class="progress-text">
+            <span>389 entries</span>
+            <span>1000 total</span>
+          </div>
+        </div>
+      </div>
       
-      <div class="competitions-preview">
-        <div class="competition-card">
-          <div class="card-image">Air Fryer</div>
-          <div class="card-content">
-            <span class="card-category">Appliances</span>
-            <h3 class="card-title">Win a Ninja Air Fryer</h3>
-            <span class="card-price">£4.99 per ticket</span>
+      <div class="competition-card cash">
+        <div class="card-image">Cash Prize</div>
+        <div class="card-content">
+          <span class="card-category">Cash</span>
+          <h3 class="card-title">£500 Cash Giveaway</h3>
+          <span class="card-price">£3.49 per ticket</span>
+          <div class="progress-container">
+            <div class="progress-bar" style="width: 65%;"></div>
+          </div>
+          <div class="progress-text">
+            <span>650 entries</span>
+            <span>1000 total</span>
           </div>
         </div>
-        
-        <div class="competition-card">
-          <div class="card-image">Cash Prize</div>
-          <div class="card-content">
-            <span class="card-category">Cash</span>
-            <h3 class="card-title">£500 Cash Giveaway</h3>
-            <span class="card-price">£3.49 per ticket</span>
+      </div>
+      
+      <div class="competition-card family">
+        <div class="card-image">Family Holiday</div>
+        <div class="card-content">
+          <span class="card-category">Family</span>
+          <h3 class="card-title">Family Trip to Disneyland</h3>
+          <span class="card-price">£9.99 per ticket</span>
+          <div class="progress-container">
+            <div class="progress-bar" style="width: 22%;"></div>
           </div>
-        </div>
-        
-        <div class="competition-card">
-          <div class="card-image">Family Holiday</div>
-          <div class="card-content">
-            <span class="card-category">Family</span>
-            <h3 class="card-title">Family Trip to Disneyland</h3>
-            <span class="card-price">£9.99 per ticket</span>
+          <div class="progress-text">
+            <span>220 entries</span>
+            <span>1000 total</span>
           </div>
         </div>
       </div>
     </div>
+    
+    <div class="btn-wrapper">
+      <a href="#" class="btn-primary">View All Competitions</a>
+    </div>
   </main>
   
   <footer>
-    &copy; 2025 Blue Whale Competitions. All rights reserved.
+    <p>&copy; 2025 Blue Whale Competitions. All rights reserved.</p>
+    <p style="margin-top: 8px; font-size: 0.8rem;">This is a static preview. The full application is currently being deployed.</p>
   </footer>
 </body>
 </html>`;
