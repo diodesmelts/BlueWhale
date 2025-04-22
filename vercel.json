@@ -1,6 +1,6 @@
 {
-  "framework": null,
-  "buildCommand": "npm run build",
+  "version": 2,
+  "buildCommand": null,
   "outputDirectory": "dist/public",
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/$1" },

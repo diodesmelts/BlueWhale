@@ -1,15 +1,8 @@
-# Ignore development files and directories
-README.md
-.git
-.github
-.gitignore
-node_modules
-attached_assets
-scripts
+# Ignore everything by default
+*
 
-# Include API, built files, and configuration
-!api
-!dist
-!vercel-build.js
-!index.html
+# Only include what we explicitly need
+!api/**
+!dist/**
 !vercel.json
+!index.html

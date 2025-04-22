@@ -1,93 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <style data-vite-theme="" data-inject-first="">:root {
+      --background: 0 0% 100%;
+--foreground: 20 14.3% 4.1%;
+--muted: 60 4.8% 95.9%;
+--muted-foreground: 25 5.3% 44.7%;
+--popover: 0 0% 100%;
+--popover-foreground: 20 14.3% 4.1%;
+--card: 0 0% 100%;
+--card-foreground: 20 14.3% 4.1%;
+--border: 20 5.9% 90%;
+--input: 20 5.9% 90%;
+--primary: 191 97% 43%;
+--primary-foreground: 196 68% 99%;
+--secondary: 60 4.8% 95.9%;
+--secondary-foreground: 24 9.8% 10%;
+--accent: 60 4.8% 95.9%;
+--accent-foreground: 24 9.8% 10%;
+--destructive: 0 84.2% 60.2%;
+--destructive-foreground: 60 9.1% 97.8%;
+--ring: 20 14.3% 4.1%;
+--radius: 0.75rem;
+  }
+  .dark {
+      --background: 240 10% 3.9%;
+--foreground: 0 0% 98%;
+--muted: 240 3.7% 15.9%;
+--muted-foreground: 240 5% 64.9%;
+--popover: 240 10% 3.9%;
+--popover-foreground: 0 0% 98%;
+--card: 240 10% 3.9%;
+--card-foreground: 0 0% 98%;
+--border: 240 3.7% 15.9%;
+--input: 240 3.7% 15.9%;
+--primary: 191 97% 43%;
+--primary-foreground: 196 68% 99%;
+--secondary: 240 3.7% 15.9%;
+--secondary-foreground: 0 0% 98%;
+--accent: 240 3.7% 15.9%;
+--accent-foreground: 0 0% 98%;
+--destructive: 0 62.8% 30.6%;
+--destructive-foreground: 0 0% 98%;
+--ring: 240 4.9% 83.9%;
+--radius: 0.75rem;
+  }</style>
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <title>Blue Whale Competitions</title>
-    <style>
-      body {
-        font-family: 'Arial', sans-serif;
-        background-color: #0a192f;
-        color: white;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        margin: 0;
-        text-align: center;
-      }
-      .loading {
-        display: inline-block;
-        width: 50px;
-        height: 50px;
-        border: 3px solid rgba(100, 255, 218, 0.3);
-        border-radius: 50%;
-        border-top-color: #64ffda;
-        animation: spin 1s ease-in-out infinite;
-      }
-      @keyframes spin {
-        to { transform: rotate(360deg); }
-      }
-      .container {
-        max-width: 600px;
-        padding: 2rem;
-      }
-      h1 {
-        font-size: 2rem;
-        margin-bottom: 1rem;
-        color: #64ffda;
-      }
-      p {
-        font-size: 1.1rem;
-        line-height: 1.6;
-        margin-bottom: 1.5rem;
-      }
-      .cta {
-        display: inline-block;
-        background-color: #64ffda;
-        color: #0a192f;
-        padding: 0.75rem 1.5rem;
-        border-radius: 4px;
-        text-decoration: none;
-        font-weight: bold;
-        transition: all 0.3s ease;
-        margin-top: 1rem;
-      }
-      .cta:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-      }
-      .info {
-        margin-top: 2rem;
-        font-size: 0.9rem;
-        opacity: 0.7;
-      }
-    </style>
+    <title>Blue Whale Competitions - Win Amazing Prizes</title>
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <meta name="description" content="Blue Whale Competitions is your premier destination for high-quality competitions and prize draws. Enter for a chance to win amazing prizes!" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script type="module" crossorigin src="/assets/index-DGQXeHF_.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-Cw2KCLbW.css">
   </head>
   <body>
-    <div class="container">
-      <h1>Blue Whale Competitions</h1>
-      <div class="loading"></div>
-      <p>Loading application, please wait...</p>
-      <p class="info">If this page doesn't redirect automatically, please make sure you have JavaScript enabled in your browser.</p>
-      <div id="root"></div>
-    </div>
-    <script>
-      // This script is a fallback in case the main application script doesn't load
-      setTimeout(() => {
-        const rootElement = document.getElementById('root');
-        if (rootElement && rootElement.childElementCount === 0) {
-          document.querySelector('.container').innerHTML = `
-            <h1>Blue Whale Competitions</h1>
-            <p>There was a problem loading the application. Please try refreshing the page.</p>
-            <p>If the problem persists, it may be due to a deployment issue or browser compatibility.</p>
-            <a href="/" class="cta">Refresh Page</a>
-            <p class="info">Or try visiting our API test page to check if the server is working correctly:</p>
-            <a href="/api/test" class="cta">Check API Status</a>
-          `;
-        }
-      }, 10000); // Wait 10 seconds before showing the error message
-    </script>
+    <div id="root"></div>
+    <!-- This is a replit script which adds a banner on the top of the page when opened in development mode outside the replit environment -->
+    <script type="text/javascript" src="https://replit.com/public/js/replit-dev-banner.js"></script>
   </body>
 </html>
