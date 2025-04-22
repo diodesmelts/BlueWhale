@@ -1,0 +1,13 @@
+{
+  "name": "blue-whale-competitions",
+  "version": "1.0.0",
+  "description": "Competition tracking and management platform",
+  "type": "module",
+  "scripts": {
+    "build": "echo 'Static build - no build step needed'"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {}
+}
