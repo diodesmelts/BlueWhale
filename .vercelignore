@@ -1,8 +1,4 @@
-# Ignore everything by default
-*
-
-# Include only the API folder
-!api
-!api/index.js
-!api/[...slug].js
-!vercel.json
+.git
+.github
+node_modules
+examples
