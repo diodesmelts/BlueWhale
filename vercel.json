@@ -6,8 +6,9 @@
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/index.js" },
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/dist/public/index.html", "status": 200 }
+    { "src": "/vercel-test", "dest": "/dist/public/vercel-test.html" },
+    { "src": "/assets/(.*)", "dest": "/dist/public/assets/$1" },
+    { "src": "/(.*)", "dest": "/dist/public/index.html" }
   ],
   "env": {
     "NODE_ENV": "production"
