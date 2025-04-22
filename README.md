@@ -11,75 +11,108 @@ A dynamic competition tracking web application that empowers users to discover, 
 - Advanced state management with React Query
 - PostgreSQL database with Drizzle ORM
 
-## Deployment to Render
+## Deployment to Vercel
 
-### Deployment Process (Using Custom Build Script)
+### Prerequisites
 
-For the most reliable deployment, follow these steps:
+1. **GitHub Repository Setup**
+   - Ensure your GitHub repository contains all necessary files
+   - Make sure the following crucial files are present and properly configured:
+     - `vercel.json` - Vercel configuration
+     - `api/index.js` - Serverless API entry point
+     - `api/vercel.js` - Vercel-specific API handler
+     - `api/package.json` - Dependencies for API functions
 
-1. **Make sure these files are present in your GitHub repository**:
-   - `deploy.js` - Robust deployment script with fallback mechanisms
-   - `render.yaml` - Blueprint configuration for automated setup
-   - `.node-version` - Node.js version specification
-   - `static.json` - Static file configuration
+2. **Required Environment Variables:**
+   - `DATABASE_URL`: PostgreSQL connection string
+   - `SESSION_SECRET`: Random string for session security
+   - `STRIPE_SECRET_KEY`: Your Stripe secret key
+   - `VITE_STRIPE_PUBLIC_KEY`: Your Stripe publishable key (client-side)
 
-2. **Choose one of these deployment methods**:
+### Deployment Options
 
-### Option 1: Using Render Blueprint (Recommended)
+#### Option 1: Deploy via Vercel CLI (Recommended)
 
-1. **Deploy directly from the repository:**
-   - Go to Render Dashboard
-   - Click "Blueprint" > "New Blueprint Instance"
-   - Connect your GitHub repository
-   - Render will automatically set up the web service and database based on the `render.yaml` configuration
+This approach gives you the most control over the deployment process.
 
-2. **Add required environment variables:**
-   - After deployment, add these secrets:
-     - `STRIPE_SECRET_KEY`: (Your Stripe secret key)
-     - `VITE_STRIPE_PUBLIC_KEY`: (Your Stripe publishable key)
+1. **Install Vercel CLI globally:**
+   ```bash
+   npm install -g vercel
+   ```
 
-### Option 2: Manual Deployment
+2. **Log in to Vercel:**
+   ```bash
+   vercel login
+   ```
 
-1. **Create a web service:**
-   - Go to Render Dashboard
-   - Click "New" > "Web Service"
-   - Connect your GitHub repository
+3. **Prepare your project:**
+   ```bash
+   node vercel-deploy.js
+   ```
+   This script will prepare your project for Vercel deployment by:
+   - Building the frontend
+   - Setting up serverless functions
+   - Ensuring proper configuration
 
-2. **Configure the Web Service:**
-   - Name: `blue-whale-app`
-   - Environment: `Node`
-   - Build Command: `node deploy.js`
-   - Start Command: `npm run start`
-   - Add Environment Variables:
-     - `NODE_ENV`: `production`
-     - `PORT`: `10000`
-     - `DATABASE_URL`: (Your PostgreSQL connection string)
-     - `SESSION_SECRET`: (A random string)
-     - `STRIPE_SECRET_KEY`: (Your Stripe secret key)
-     - `VITE_STRIPE_PUBLIC_KEY`: (Your Stripe publishable key)
+4. **Deploy to Vercel:**
+   ```bash
+   vercel
+   ```
+   Follow the prompts to configure your project.
 
-3. **Create a PostgreSQL Database:**
-   - Go to Render Dashboard
-   - Click "New" > "PostgreSQL"
-   - Configure your database settings
-   - Use the provided connection string in your web service env vars
+5. **Deploy to production:**
+   ```bash
+   vercel --prod
+   ```
 
-### Why This Approach Works
+#### Option 2: Deploy via Vercel Dashboard
 
-Our custom deployment script provides several benefits:
-- Multiple fallback mechanisms if primary build tools fail
-- Detailed error reporting for debugging
-- Automatic recovery from common build failures
-- Compatibility with Render's Node environment
+1. **Fork the repository** to your GitHub account
+
+2. **Import your project to Vercel:**
+   - Go to [Vercel Dashboard](https://vercel.com/dashboard)
+   - Click "Add New" > "Project"
+   - Choose your repository
+   - Configure project settings:
+     - Framework Preset: Other
+     - Build Command: `npm run build`
+     - Output Directory: `dist`
+     - Install Command: `npm install`
+
+3. **Configure Environment Variables:**
+   - Add all required environment variables in the Vercel project settings
+
+4. **Deploy your project:**
+   - Click "Deploy"
+   - Wait for the deployment to complete
+
+### Understanding Our Vercel Setup
+
+Our Vercel deployment uses a hybrid approach:
+
+1. **Frontend:** Static files built with Vite and served from the `dist` directory
+2. **Backend API:** Serverless functions in the `api` directory:
+   - `api/index.js` - Handles API requests and serves a static landing page
+   - `api/vercel.js` - Alternative API handler specifically for Vercel
+   - `api/package.json` - Defines dependencies for serverless functions
+
+The key files that make this work:
+
+- **vercel.json**: Configuration for routing and build settings
+- **vercel-deploy.js**: Preparation script for deployment
+- **.vercelignore**: Controls which files are excluded from deployment
 
 ### Troubleshooting Deployment Issues
 
-If you encounter build issues:
+If you encounter deployment problems:
 
-1. **Check build logs** in the Render dashboard
-2. **Verify the custom build script** is being executed properly
-3. **Ensure all environment variables** are correctly set
-4. **Check database connection** if the app builds but fails at runtime
+1. **Check build logs** in the Vercel dashboard
+2. **Verify API routes** are correctly configured
+3. **Test serverless functions** individually
+4. **Ensure all environment variables** are properly set
+5. **Check for TypeScript compilation errors** in the build logs
+
+If TypeScript compilation fails, the fallback mechanism will serve the static API version.
 
 ## Local Development
 
