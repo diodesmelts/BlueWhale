@@ -405,17 +405,22 @@ module.exports = function(req, res) {
   
   // API Routes
   if (url.startsWith('/api/')) {
+    // Determine the base URL for assets
+    const baseUrl = process.env.VERCEL_URL 
+      ? `https://${process.env.VERCEL_URL}` 
+      : 'https://bluewhale-competition.vercel.app';
+      
     // Logo endpoint
     if (url === '/api/settings/logo') {
       return sendJSON({
-        imageUrl: 'https://28ab6440-e7e2-406a-9e35-29d8f501e03a.replit.dev/assets/blue_whale.svg'
+        imageUrl: `${baseUrl}/assets/blue_whale.svg`
       });
     }
     
     // Banner endpoint
     if (url === '/api/settings/banner') {
       return sendJSON({
-        imageUrl: 'https://28ab6440-e7e2-406a-9e35-29d8f501e03a.replit.dev/assets/banner.jpg'
+        imageUrl: `${baseUrl}/assets/banner.jpg`
       });
     }
     
@@ -464,6 +469,9 @@ module.exports = function(req, res) {
       return sendJSON({
         status: 'OK',
         version: '1.0.0',
+        environment: process.env.VERCEL_ENV || 'development',
+        deploymentId: process.env.VERCEL_DEPLOYMENT_ID || 'local',
+        region: process.env.VERCEL_REGION || 'local',
         timestamp: new Date().toISOString()
       });
     }
