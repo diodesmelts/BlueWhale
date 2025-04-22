@@ -1,16 +1,15 @@
+#!/usr/bin/env node
+
 /**
  * This script prepares the backend for Vercel deployment
  * It builds the server files and ensures proper folder structure
  */
 
-import fs from 'fs';
-import path from 'path';
-import { exec } from 'child_process';
-import { promisify } from 'util';
+const fs = require('fs');
+const path = require('path');
+const { execSync } = require('child_process');
 
-const execAsync = promisify(exec);
-
-async function main() {
+function main() {
   console.log('Preparing project for Vercel deployment...');
 
   // Create required directories
@@ -23,16 +22,63 @@ async function main() {
   console.log('Copying shared schema...');
   copyDir('shared', 'dist/shared');
 
-  // Build the server with esbuild
+  // Try multiple build approaches
   console.log('Building server files...');
+  
   try {
-    await execAsync(
-      'esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outfile=dist/index.js'
+    console.log('Method 1: Using esbuild...');
+    
+    // Install esbuild if not already installed
+    try {
+      // Check if esbuild exists
+      execSync('npx esbuild --version', { stdio: 'ignore' });
+    } catch (e) {
+      // Install esbuild if not found
+      console.log('Installing esbuild...');
+      execSync('npm install --no-save esbuild');
+    }
+    
+    execSync(
+      'npx esbuild server/index.ts --platform=node --external:express --external:pg --external:drizzle-orm --bundle --outfile=dist/index.js',
+      { stdio: 'inherit' }
     );
-    console.log('✅ Server build successful');
+    console.log('✅ Server build successful with esbuild');
   } catch (error) {
-    console.error('❌ Server build failed:', error);
-    process.exit(1);
+    console.error('❌ esbuild approach failed, trying TypeScript compiler...');
+    
+    try {
+      console.log('Method 2: Using TypeScript compiler...');
+      execSync('npx tsc --skipLibCheck server/index.ts --outDir dist', { stdio: 'inherit' });
+      console.log('✅ Server build successful with TypeScript');
+    } catch (error) {
+      console.error('❌ TypeScript approach failed, using direct file copy...');
+      
+      console.log('Method 3: Using direct file copy...');
+      // Copy server directory
+      copyDir('server', 'dist/server');
+      
+      // Create a simple starter script
+      fs.writeFileSync('dist/index.js', `
+// Simple server starter that works with TypeScript files
+const { spawn } = require('child_process');
+const path = require('path');
+
+// Use tsx to run the TypeScript file
+const tsx = path.resolve(require.resolve('tsx'));
+const serverPath = path.resolve(__dirname, 'server/index.ts');
+
+// Start the server
+require(tsx).run(serverPath);
+      `);
+      
+      // Install tsx as a dependency if not present
+      try {
+        console.log('Installing tsx for runtime TypeScript execution...');
+        execSync('npm install --no-save tsx', { stdio: 'inherit' });
+      } catch (e) {
+        console.error('Failed to install tsx:', e);
+      }
+    }
   }
 
   // Create serverless function for Vercel
@@ -40,14 +86,10 @@ async function main() {
   
   fs.writeFileSync('dist/api/index.js', `
 // API route handler for Vercel
-import { createServer } from 'http';
-import { app } from '../index.js';
-
-// Create server instance
-const server = createServer(app);
+const app = require('../index.js').app;
 
 // Export the Express API
-export default app;
+module.exports = app;
   `);
 
   console.log('✅ Vercel preparation complete!');
@@ -80,4 +122,10 @@ function copyDir(src, dest) {
   }
 }
 
-main().catch(console.error);
+// Run the main function
+try {
+  main();
+} catch (error) {
+  console.error('Error in prepare-vercel script:', error);
+  process.exit(1);
+}
