@@ -104,51 +104,16 @@ app.all('/api/*', (req, res) => {
 // but we still need to handle requests that might reach this handler
 app.get('*', (req, res) => {
   // In Vercel, the static files should be handled by vercel.json rewrites.
-  // This is just a fallback.
+  // This is just a fallback for API routes that don't match.
   try {
     // Try to use the index.js handler for a nice fallback page
     const indexModule = require('./index.js');
     return indexModule(req, res);
   } catch (error) {
-    // Simple fallback page if index.js is not available
-    return res.status(404).send(`
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <title>Blue Whale Competitions</title>
-          <style>
-            body {
-              font-family: system-ui, sans-serif;
-              background: #000;
-              color: #fff;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              height: 100vh;
-              margin: 0;
-            }
-            .container {
-              text-align: center;
-              max-width: 500px;
-              padding: 2rem;
-              background: rgba(0, 30, 60, 0.7);
-              border-radius: 8px;
-              box-shadow: 0 4px 20px rgba(0, 102, 204, 0.3);
-            }
-            h1 { color: #0066cc; }
-            .logo { font-size: 4rem; margin-bottom: 1rem; }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <div class="logo">🐋</div>
-            <h1>Blue Whale Competitions</h1>
-            <p>The page you're looking for isn't available.</p>
-            <p>This is a serverless API function for Vercel deployment.</p>
-          </div>
-        </body>
-      </html>
-    `);
+    res.status(404).json({
+      error: 'Not Found',
+      message: 'The requested API endpoint does not exist.'
+    });
   }
 });
 
