@@ -12,3 +12,10 @@ attached_assets
 tsconfig.tsbuildinfo
 manual-build.cjs
 *.md
+.replit
+replit.nix
+.node-version
+Dockerfile
+railway.json
+heroku.yml
+build.sh
