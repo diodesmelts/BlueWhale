@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blue Whale Competitions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue-primary: #0092d1;
+      --blue-dark: #006590;
+      --blue-light: #e0f4ff;
+      --gray-100: #f3f4f6;
+      --gray-300: #d1d5db;
+      --gray-700: #374151;
+      --white: #ffffff;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--blue-light);
+      color: var(--gray-700);
+      min-height: 100vh;
+    }
+    
+    header {
+      background-color: var(--white);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--blue-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .logo svg {
+      width: 2rem;
+      height: 2rem;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+    
+    .nav-links a {
+      text-decoration: none;
+      color: var(--gray-700);
+      font-weight: 500;
+    }
+    
+    .hero {
+      padding: 4rem 2rem;
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      color: var(--blue-dark);
+      margin-bottom: 1rem;
+    }
+    
+    .subtitle {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      color: var(--gray-700);
+    }
+    
+    .cta-button {
+      display: inline-block;
+      background-color: var(--blue-primary);
+      color: var(--white);
+      padding: 0.75rem 2rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background-color 0.3s;
+      margin: 1rem 0.5rem;
+    }
+    
+    .cta-button:hover {
+      background-color: var(--blue-dark);
+    }
+    
+    .cta-button.secondary {
+      background-color: var(--white);
+      color: var(--blue-primary);
+      border: 2px solid var(--blue-primary);
+    }
+    
+    .cta-button.secondary:hover {
+      background-color: var(--blue-light);
+    }
+    
+    .features {
+      padding: 4rem 2rem;
+      background-color: var(--white);
+    }
+    
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .feature-card {
+      padding: 2rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+    
+    .feature-icon {
+      background-color: var(--blue-light);
+      width: 4rem;
+      height: 4rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+    }
+    
+    .feature-icon svg {
+      width: 2rem;
+      height: 2rem;
+      color: var(--blue-primary);
+    }
+    
+    .feature-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--blue-dark);
+      margin-bottom: 0.5rem;
+    }
+    
+    footer {
+      background-color: var(--blue-dark);
+      color: var(--white);
+      padding: 2rem;
+      text-align: center;
+    }
+    
+    .copyright {
+      margin-top: 1rem;
+      font-size: 0.875rem;
+      color: var(--gray-300);
+    }
+    
+    .api-section {
+      padding: 3rem 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .api-endpoints {
+      background-color: var(--white);
+      border-radius: 0.5rem;
+      padding: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    
+    .endpoint {
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--gray-300);
+    }
+    
+    .endpoint:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    
+    .endpoint-url {
+      display: block;
+      background-color: var(--gray-100);
+      padding: 0.5rem 1rem;
+      border-radius: 0.25rem;
+      font-family: monospace;
+      margin: 0.5rem 0;
+      word-break: break-all;
+    }
+    
+    .badge {
+      display: inline-block;
+      background-color: var(--blue-primary);
+      color: var(--white);
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-left: 0.5rem;
+    }
+    
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .subtitle {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 10C48.2 10 10 48.2 10 100s38.2 90 90 90 90-38.2 90-90S151.8 10 100 10zm0 160c-38.6 0-70-31.4-70-70s31.4-70 70-70 70 31.4 70 70-31.4 70-70 70z" fill="#0092d1"/>
+        <path d="M145 85c-5.5 0-10 4.5-10 10s4.5 10 10 10 10-4.5 10-10-4.5-10-10-10zm-45-15c-16.5 0-30 13.5-30 30s13.5 30 30 30 30-13.5 30-30-13.5-30-30-30zm0 40c-5.5 0-10-4.5-10-10s4.5-10 10-10 10 4.5 10 10-4.5 10-10 10z" fill="#0092d1"/>
+      </svg>
+      Blue Whale
+    </div>
+    <nav class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#api">API</a>
+      <a href="https://github.com/diodesmelts/BlueWhale" target="_blank">GitHub</a>
+    </nav>
+  </header>
+  
+  <section class="hero">
+    <h1>Blue Whale Competitions</h1>
+    <p class="subtitle">Your premier destination for discovering and participating in exciting competitions and prize draws.</p>
+    <a href="#api" class="cta-button">View API</a>
+    <a href="https://github.com/diodesmelts/BlueWhale" target="_blank" class="cta-button secondary">Source Code</a>
+  </section>
+  
+  <section class="features" id="features">
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+        <h3 class="feature-title">Discover Competitions</h3>
+        <p>Browse through a curated list of verified competitions across various platforms and categories.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h3 class="feature-title">Track Deadlines</h3>
+        <p>Never miss an entry deadline with our real-time countdown timers for each competition.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          </svg>
+        </div>
+        <h3 class="feature-title">Personalized Experience</h3>
+        <p>Create a profile to track your competition entries, wins, and receive personalized recommendations.</p>
+      </div>
+    </div>
+  </section>
+  
+  <section class="api-section" id="api">
+    <h2>API Endpoints</h2>
+    <p>Blue Whale Competitions offers a robust API for accessing competition data and more. Here are the available endpoints:</p>
+    
+    <div class="api-endpoints">
+      <div class="endpoint">
+        <h3>Status <span class="badge">GET</span></h3>
+        <p>Check the API status and version information.</p>
+        <code class="endpoint-url">/api/status</code>
+      </div>
+      
+      <div class="endpoint">
+        <h3>Competitions <span class="badge">GET</span></h3>
+        <p>Get a list of all available competitions.</p>
+        <code class="endpoint-url">/api/competitions</code>
+      </div>
+      
+      <div class="endpoint">
+        <h3>Leaderboard <span class="badge">GET</span></h3>
+        <p>Get the current user leaderboard.</p>
+        <code class="endpoint-url">/api/leaderboard</code>
+      </div>
+      
+      <div class="endpoint">
+        <h3>User Stats <span class="badge">GET</span></h3>
+        <p>Get statistics for the current user.</p>
+        <code class="endpoint-url">/api/user-stats</code>
+      </div>
+      
+      <div class="endpoint">
+        <h3>Logo <span class="badge">GET</span></h3>
+        <p>Get the application logo URL.</p>
+        <code class="endpoint-url">/api/settings-logo</code>
+      </div>
+      
+      <div class="endpoint">
+        <h3>Banner <span class="badge">GET</span></h3>
+        <p>Get the application banner URL.</p>
+        <code class="endpoint-url">/api/settings-banner</code>
+      </div>
+    </div>
+  </section>
+  
+  <footer>
+    <p>Blue Whale Competitions - Your competition tracking platform</p>
+    <p class="copyright">© 2025 Blue Whale. All rights reserved.</p>
+  </footer>
+</body>
+</html>

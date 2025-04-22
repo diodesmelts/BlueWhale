@@ -1,12 +1,7 @@
 {
-  "version": 2,
-  "cleanUrls": true,
+  "buildCommand": "echo 'No build required'",
+  "outputDirectory": "public",
   "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1.js" },
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/index.html" }
-  ],
-  "github": {
-    "silent": true
-  }
+    { "src": "/api/(.*)", "dest": "/api/$1.js" }
+  ]
 }
