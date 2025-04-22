@@ -1,118 +1,31 @@
-// Optimized Vercel Serverless API handler for both API and static files
-const express = require('express');
-const cors = require('cors');
-const path = require('path');
-const fs = require('fs');
+// Simplified API endpoint for Vercel serverless function
+module.exports = (req, res) => {
+  // Set CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  
+  // Handle OPTIONS request for CORS preflight
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
 
-// Create Express app
-const app = express();
-
-// Use JSON middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// Set CORS headers
-app.use(cors({
-  origin: '*',
-  methods: 'GET,POST,PUT,DELETE,OPTIONS',
-  credentials: true
-}));
-
-// Serve static files from the dist directory if it exists
-const distPath = path.join(process.cwd(), 'dist/public');
-if (fs.existsSync(distPath)) {
-  app.use(express.static(distPath));
-}
-
-// API endpoints for preview/demo data
-app.get('/api/settings/logo', (req, res) => {
-  const baseUrl = process.env.VERCEL_URL 
-    ? `https://${process.env.VERCEL_URL}` 
-    : 'https://bluewhale-competition.vercel.app';
-    
-  res.json({
-    imageUrl: `${baseUrl}/assets/blue_whale.svg`
-  });
-});
-
-app.get('/api/settings/banner', (req, res) => {
-  const baseUrl = process.env.VERCEL_URL 
-    ? `https://${process.env.VERCEL_URL}` 
-    : 'https://bluewhale-competition.vercel.app';
-    
-  res.json({
-    imageUrl: `${baseUrl}/assets/banner.jpg`
-  });
-});
-
-app.get('/api/user', (req, res) => {
-  res.status(401).json({ message: 'Not authenticated' });
-});
-
-app.get('/api/user/stats', (req, res) => {
-  res.json({
-    activeEntries: 1,
-    totalEntries: 1,
-    totalWins: 0,
-    favoriteCategory: 'Appliances'
-  });
-});
-
-app.get('/api/competitions', (req, res) => {
-  res.json([{
-    id: 1,
-    title: 'Ninja Air Fryer',
-    organizerName: 'Blue Whale Competitions',
-    description: 'Win this amazing Air Fryer for your kitchen!',
-    image: 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec',
-    ticketPrice: 4.99,
-    endDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
-    category: 'Appliances',
-    totalTickets: 1000,
-    soldTickets: 389
-  }]);
-});
-
-app.get('/api/leaderboard', (req, res) => {
-  res.json([
-    { id: 1, username: 'SDK', initials: 'S', score: 3500, mascotId: 1 },
-    { id: 2, username: 'JaneDoe', initials: 'JD', score: 2200, mascotId: 3 },
-    { id: 3, username: 'BlueFin', initials: 'BF', score: 1800, mascotId: 2 }
-  ]);
-});
-
-app.get('/api/status', (req, res) => {
-  res.json({
+  // Main API response
+  res.setHeader('Content-Type', 'application/json');
+  
+  return res.status(200).json({
     status: 'OK',
+    message: 'Blue Whale Competitions API is running',
     version: '1.0.0',
     environment: process.env.VERCEL_ENV || 'development',
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
+    endpoints: [
+      '/api/status',
+      '/api/competitions',
+      '/api/leaderboard',
+      '/api/user/stats',
+      '/api/settings/logo',
+      '/api/settings/banner'
+    ]
   });
-});
-
-// Catch-all handler for API routes not explicitly defined
-app.all('/api/*', (req, res) => {
-  res.status(404).json({
-    error: 'API endpoint not found',
-    message: 'This endpoint is not available in preview mode.'
-  });
-});
-
-// For single-page application routing, serve the main index.html
-// for all other routes to let the client-side router handle it
-app.get('*', (req, res) => {
-  const indexPath = path.join(distPath, 'index.html');
-  if (fs.existsSync(indexPath)) {
-    res.sendFile(indexPath);
-  } else {
-    res.status(404).send('Not found - Application is not properly built');
-  }
-});
-
-// Export for Vercel serverless
-module.exports = app;
-
-// For Vercel's serverless functions
-module.exports.default = (req, res) => {
-  return app(req, res);
 };
