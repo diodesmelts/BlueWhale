@@ -1,9 +1,10 @@
 {
-  "version": 2,
-  "public": true,
+  "buildCommand": "echo 'Skipping build phase'",
+  "installCommand": "echo 'Skipping installation'",
+  "outputDirectory": "public",
   "framework": null,
   "functions": {
-    "api/*.js": {
+    "api/index.js": {
       "memory": 1024,
       "maxDuration": 10
     }
@@ -11,6 +12,5 @@
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/index.js" },
     { "src": "/(.*)", "dest": "/api/index.js" }
-  ],
-  "regions": ["iad1"]
+  ]
 }
