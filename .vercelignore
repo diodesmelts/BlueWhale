@@ -1,4 +1,14 @@
-# Ignore everything by default
-*
-!api
+# Ignore all TypeScript and configuration files
+*.ts
+*.tsx
+tsconfig.json
+server/
+client/
+shared/
+vite.config.ts
+node_modules/
+
+# Only include the necessary files
+!api/
 !api/*.js
+!vercel.json
