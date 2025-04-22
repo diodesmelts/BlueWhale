@@ -1,0 +1,39 @@
+[09:46:52.655] Cloning github.com/diodesmelts/BlueWhale (Branch: main, Commit: 2ecd472)
+[09:46:52.861] Previous build caches not available
+[09:46:56.095] Cloning completed: 3.440s
+[09:46:56.150] Found .vercelignore
+[09:46:56.162] Removed 35 ignored files defined in .vercelignore
+[09:46:56.309] Running build in Washington, D.C., USA (East) – iad1
+[09:46:56.461] Running "vercel build"
+[09:46:56.819] Vercel CLI 41.6.0
+[09:46:57.547] Running "install" command: `npm install`...
+[09:47:05.766] 
+[09:47:05.767] added 425 packages, and audited 426 packages in 8s
+[09:47:05.768] 
+[09:47:05.768] 58 packages are looking for funding
+[09:47:05.768]   run `npm fund` for details
+[09:47:05.769] 
+[09:47:05.770] 1 moderate severity vulnerability
+[09:47:05.770] 
+[09:47:05.770] To address all issues, run:
+[09:47:05.770]   npm audit fix
+[09:47:05.771] 
+[09:47:05.771] Run `npm audit` for details.
+[09:47:06.008] Starting Vercel build process...
+[09:47:06.009] Creating directories
+[09:47:06.029] Building frontend with Vite
+[09:47:07.231] npm warn exec The following package was not found and will be installed: vite@6.3.2
+[09:47:12.084] [31mfailed to load config from /vercel/path0/vite.config.ts[39m
+[09:47:12.085] [31merror during build:
+[09:47:12.085] Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'vite' imported from /vercel/path0/node_modules/.vite-temp/vite.config.ts.timestamp-1745311632081-ad4feb817963c.mjs
+[09:47:12.085]     at Object.getPackageJSONURL (node:internal/modules/package_json_reader:268:9)
+[09:47:12.085]     at packageResolve (node:internal/modules/esm/resolve:768:81)
+[09:47:12.085]     at moduleResolve (node:internal/modules/esm/resolve:854:18)
+[09:47:12.085]     at defaultResolve (node:internal/modules/esm/resolve:984:11)
+[09:47:12.085]     at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:685:12)
+[09:47:12.086]     at #cachedDefaultResolve (node:internal/modules/esm/loader:634:25)
+[09:47:12.086]     at ModuleLoader.resolve (node:internal/modules/esm/loader:617:38)
+[09:47:12.086]     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:273:38)
+[09:47:12.086]     at ModuleJob._link (node:internal/modules/esm/module_job:135:49)[39m
+[09:47:12.109] Error: Command "bash build-vercel.sh" exited with 1
+[09:47:12.317] 
