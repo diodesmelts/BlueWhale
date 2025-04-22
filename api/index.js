@@ -1,12 +1,5 @@
-/**
- * Vercel API Entry Point
- * 
- * This serverless function acts as the entry point for all API routes on Vercel.
- * It imports and uses the Express app from our server code.
- */
+// Main API route handler for Vercel
+const serverBackup = require('./server-backup.js');
 
-// Use ESM syntax for compatibility
-import { app } from '../server/index.js';
-
-// Export the Express app as the default handler
-export default app;
+// Export the Express API for serverless function
+module.exports = serverBackup;
