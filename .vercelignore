@@ -1,10 +1,7 @@
-# Include only necessary files for deployment
-node_modules
-.git
-client
-server
-shared
-scripts
-dist
-*.log
-.env*
+# Exclude everything except the minimal necessary files
+*
+!index.html
+!vercel.json
+!index.js
+!api
+!api/*.js
