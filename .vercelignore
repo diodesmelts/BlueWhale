@@ -1,5 +1,8 @@
-# Only exclude node_modules and build artifacts
-node_modules
-dist
-.git
-.github
+# Ignore everything by default
+*
+
+# Include only the API folder
+!api
+!api/index.js
+!api/[...slug].js
+!vercel.json
