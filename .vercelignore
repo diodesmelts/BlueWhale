@@ -1,8 +1,28 @@
-# Ignore everything by default
-*
+# Node dependencies
+node_modules
 
-# Only include what we explicitly need
+# Development files
+.git
+.github
+.vscode
+.idea
+.env.local
+.DS_Store
+*.log
+.gitignore
+.node-version
+client/
+server/
+shared/
+scripts/
+public/
+attached_assets/
+docs/
+**/tests/
+**/*.test.js
+**/*.spec.js
+
+# Keep necessary files
 !api/**
-!dist/**
 !vercel.json
 !index.html
