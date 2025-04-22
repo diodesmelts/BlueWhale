@@ -117,5 +117,8 @@ app.get('*', (req, res) => {
   }
 });
 
-// Export for Vercel serverless
+// Export for Vercel serverless as a handler function
 module.exports = app;
+
+// For Vercel's serverless functions, also export a handler
+module.exports.default = app;

@@ -1,16 +1,19 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist/public",
-  "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/vercel.js" },
-    { "source": "/(.*)", "destination": "/index.html" }
+  "version": 2,
+  "builds": [
+    { "src": "api/vercel.js", "use": "@vercel/node" },
+    { "src": "package.json", "use": "@vercel/static-build", "config": { "distDir": "dist/public" } }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/vercel.js" },
+    { "src": "/(.*)", "dest": "/index.html" }
   ],
   "env": {
     "NODE_ENV": "production"
   },
   "headers": [
     {
-      "source": "/(.*)",
+      "src": "/(.*)",
       "headers": [
         {
           "key": "X-Content-Type-Options",
@@ -27,7 +30,7 @@
       ]
     },
     {
-      "source": "/assets/(.*)",
+      "src": "/assets/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
