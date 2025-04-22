@@ -22,7 +22,7 @@ module.exports = (req, res) => {
 
   // Serve the landing page for all other routes
   res.setHeader('Content-Type', 'text/html');
-  return res.send(serverBackup);
+  return res.end(serverBackup);
 };
 
 // JSON helper for the response object
