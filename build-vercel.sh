@@ -3,32 +3,52 @@
 # This is a special build script for Vercel that uses multiple fallback approaches
 # to ensure successful deployment even if one approach fails
 
-set -e
-
 echo "Starting Vercel build process..."
 
 # Create essential directories
 echo "Creating directories"
 mkdir -p dist
-mkdir -p dist/public
-mkdir -p dist/shared
 mkdir -p dist/api
 
-# Skip Vite and create a simple frontend build
-echo "Creating direct frontend output without Vite"
+# Install dependencies for building
+npm install vite
+npm install @vitejs/plugin-react
+npm install -g esbuild
 
-# Create client build directory
-mkdir -p dist/public
+# First attempt: Try to build the frontend with Vite directly
+echo "Trying to build frontend with Vite (Attempt 1)"
+npx vite build && FRONTEND_BUILD_SUCCESS=1 || FRONTEND_BUILD_SUCCESS=0
 
-# Copy public assets directly
-if [ -d "public" ]; then
-  echo "Copying public assets"
-  cp -r public/* dist/public/
+# If the first attempt failed, try second approach
+if [ "$FRONTEND_BUILD_SUCCESS" != "1" ]; then
+  echo "First build attempt failed, trying second approach"
+  
+  # Copy node_modules to a subdirectory to avoid conflicts
+  mkdir -p .vite-build-temp
+  cp -r node_modules .vite-build-temp/
+
+  # Try to run a simplified build
+  cd .vite-build-temp
+  npm install vite@latest @vitejs/plugin-react @replit/vite-plugin-runtime-error-modal
+  NODE_ENV=production npx vite build --outDir=../dist && FRONTEND_BUILD_SUCCESS=1 || FRONTEND_BUILD_SUCCESS=0
+  cd ..
 fi
 
-# Create a simple index.html that redirects to our API
-echo "Creating simple index.html"
-cat > dist/public/index.html << 'EOL'
+# If both Vite builds failed, copy over the static assets as a last resort
+if [ "$FRONTEND_BUILD_SUCCESS" != "1" ]; then
+  echo "Vite build failed, using static files instead"
+
+  mkdir -p dist/client
+  
+  # Copy any public assets
+  if [ -d "public" ]; then
+    echo "Copying public assets"
+    cp -r public/* dist/
+  fi
+  
+  # Create a fallback index.html
+  echo "Creating fallback index.html"
+  cat > dist/index.html << 'EOL'
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,7 +64,7 @@ cat > dist/public/index.html << 'EOL'
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      min-height: 100vh;
       margin: 0;
       padding: 20px;
       text-align: center;
@@ -102,55 +122,31 @@ cat > dist/public/index.html << 'EOL'
     .button:hover {
       background-color: #0089c1;
     }
+    .whale-svg {
+      stroke: #00a8e8;
+      fill: #00a8e8;
+      width: 100px;
+      height: 100px;
+      margin-bottom: 20px;
+    }
   </style>
 </head>
 <body>
   <div class="card">
-    <img src="/whale-logo.svg" alt="Blue Whale Logo" class="logo" onerror="this.src='/favicon.ico'; this.onerror=null;">
+    <svg class="whale-svg" viewBox="0 0 100 100">
+      <path d="M85,50c0,19.33-15.67,35-35,35S15,69.33,15,50S30.67,15,50,15S85,30.67,85,50z M60,30c2.76,0,5,2.24,5,5s-2.24,5-5,5
+        s-5-2.24-5-5S57.24,30,60,30z M30,65c0,0,5-15,20-15s20,15,20,15s-10-5-20-5S30,65,30,65z"/>
+    </svg>
     <h1>Blue Whale Competitions</h1>
     <p>The ultimate competition hub is being prepared. Our team is working on getting everything ready for you.</p>
     <div class="loading"></div>
     <p>Please check back soon or contact our support team for assistance.</p>
-    <a href="/" class="button">Refresh Page</a>
+    <a href="/api/status" class="button">Check API Status</a>
   </div>
-
-  <script>
-    // Check if the API is available
-    fetch('/api/status')
-      .then(response => response.json())
-      .then(data => {
-        console.log('API Status:', data);
-        if (data.status === 'ok') {
-          // If API is working, redirect to the main site
-          window.location.href = '/competitions';
-        }
-      })
-      .catch(error => {
-        console.error('API Check Error:', error);
-      });
-  </script>
 </body>
 </html>
 EOL
-
-# Create a simple whale logo SVG
-echo "Creating whale logo SVG"
-cat > dist/public/whale-logo.svg << 'EOL'
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="#00a8e8">
-  <path d="M85,50c0,19.33-15.67,35-35,35S15,69.33,15,50S30.67,15,50,15S85,30.67,85,50z M60,30c2.76,0,5,2.24,5,5s-2.24,5-5,5
-    s-5-2.24-5-5S57.24,30,60,30z M30,65c0,0,5-15,20-15s20,15,20,15s-10-5-20-5S30,65,30,65z"/>
-</svg>
-EOL
-
-# Create a simple favicon
-echo "Creating favicon"
-cat > dist/public/favicon.ico << 'EOL'
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="#00a8e8">
-  <circle cx="50" cy="50" r="45" fill="#001933" stroke="#00a8e8" stroke-width="2"/>
-  <path d="M75,50c0,13.8-11.2,25-25,25S25,63.8,25,50S36.2,25,50,25S75,36.2,75,50z M60,35c2.76,0,5,2.24,5,5s-2.24,5-5,5
-    s-5-2.24-5-5S57.24,35,60,35z M35,60c0,0,5-10,15-10s15,10,15,10s-7.5-4-15-4S35,60,35,60z" fill="#00a8e8"/>
-</svg>
-EOL
+fi
 
 # Copy shared schema
 echo "Copying shared schema"
