@@ -1,28 +1,10 @@
-# Node dependencies
-node_modules
+# Exclude everything by default
+*
+.*/
 
-# Development files
-.git
-.github
-.vscode
-.idea
-.env.local
-.DS_Store
-*.log
-.gitignore
-.node-version
-client/
-server/
-shared/
-scripts/
-public/
-attached_assets/
-docs/
-**/tests/
-**/*.test.js
-**/*.spec.js
-
-# Keep necessary files
+# Include only what we need for Vercel
 !api/**
+!public/**
 !vercel.json
 !index.html
+!package.json
