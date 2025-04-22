@@ -1,103 +1,85 @@
-// Simple API handler for Vercel
-const fs = require('fs');
-const path = require('path');
+// Standalone Vercel serverless handler
+const serverBackup = require('./server-backup.js');
 
-// Simple static content serving for Vercel
+// Required for Vercel Serverless API Functions
 module.exports = (req, res) => {
-  // Set CORS headers
+  // Set standard headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  
+  // Handle preflight requests for CORS
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
 
   const url = req.url || '/';
   
-  // API endpoints
+  // API Endpoints
   if (url.startsWith('/api/')) {
     return handleApiRequest(req, res);
   }
 
-  // Send the index.html for all other routes (client-side routing)
-  try {
-    const indexPath = path.join(__dirname, '../dist/index.html');
-    if (fs.existsSync(indexPath)) {
-      const content = fs.readFileSync(indexPath, 'utf8');
-      res.setHeader('Content-Type', 'text/html');
-      return res.end(content);
-    }
-    
-    // Fallback if no index.html exists
-    return res.end(`
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <title>Blue Whale Competitions</title>
-          <style>
-            body {
-              font-family: system-ui, sans-serif;
-              background-color: #0a192f;
-              color: white;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              height: 100vh;
-              margin: 0;
-              flex-direction: column;
-            }
-            .container {
-              text-align: center;
-              max-width: 600px;
-              padding: 20px;
-            }
-            .logo {
-              font-size: 2rem;
-              font-weight: bold;
-              color: #64ffda;
-              margin-bottom: 20px;
-            }
-            p {
-              line-height: 1.6;
-              opacity: 0.9;
-            }
-            .coming-soon {
-              font-size: 1.5rem;
-              margin-top: 20px;
-              color: #64ffda;
-            }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <div class="logo">Blue Whale Competitions</div>
-            <p>We're currently deploying our exciting competition platform. Check back soon to discover and enter amazing competitions!</p>
-            <div class="coming-soon">Coming Soon</div>
-          </div>
-        </body>
-      </html>
-    `);
-  } catch (error) {
-    res.statusCode = 500;
-    res.end('Server Error');
-  }
+  // Serve the landing page for all other routes
+  res.setHeader('Content-Type', 'text/html');
+  return res.send(serverBackup);
 };
 
-// Handle API requests
+// JSON helper for the response object
+function addJsonMethod(res) {
+  if (!res.json) {
+    res.json = function(obj) {
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify(obj));
+      return res;
+    };
+  }
+  return res;
+}
+
+// Add status method if it doesn't exist
+function addStatusMethod(res) {
+  if (!res.status) {
+    res.status = function(code) {
+      res.statusCode = code;
+      return res;
+    };
+  }
+  return res;
+}
+
+// API Request Handler
 function handleApiRequest(req, res) {
+  // Add convenience methods if they don't exist (in some serverless environments)
+  res = addJsonMethod(res);
+  res = addStatusMethod(res);
+  
   const url = req.url || '/';
   
-  // Settings endpoints
+  console.log(`API Request: ${url}`);
+  
+  // Logo endpoint
   if (url === '/api/settings/logo') {
-    return res.json({ imageUrl: 'https://28ab6440-e7e2-406a-9e35-29d8f501e03a.replit.dev/assets/blue_whale.svg' });
+    return res.json({ 
+      imageUrl: 'https://28ab6440-e7e2-406a-9e35-29d8f501e03a.replit.dev/assets/blue_whale.svg' 
+    });
   }
   
+  // Banner endpoint
   if (url === '/api/settings/banner') {
-    return res.json({ imageUrl: 'https://28ab6440-e7e2-406a-9e35-29d8f501e03a.replit.dev/assets/banner.jpg' });
+    return res.json({ 
+      imageUrl: 'https://28ab6440-e7e2-406a-9e35-29d8f501e03a.replit.dev/assets/banner.jpg' 
+    });
   }
   
-  // User endpoints
+  // User auth endpoint (default: not authenticated)
   if (url === '/api/user') {
-    return res.status(401).json({ message: 'Not authenticated' });
+    return res.status(401).json({ 
+      message: 'Not authenticated' 
+    });
   }
   
+  // User stats endpoint
   if (url === '/api/user/stats') {
     return res.json({
       activeEntries: 1,
@@ -107,7 +89,7 @@ function handleApiRequest(req, res) {
     });
   }
   
-  // Competitions endpoint
+  // Competitions listing endpoint
   if (url === '/api/competitions') {
     return res.json([
       {
@@ -134,6 +116,19 @@ function handleApiRequest(req, res) {
     ]);
   }
   
-  // Default for unknown API endpoints
-  return res.status(404).json({ error: 'Not found' });
+  // Status endpoint
+  if (url === '/api/status') {
+    return res.json({
+      status: 'OK',
+      environment: 'production',
+      version: '1.0.0',
+      timestamp: new Date().toISOString()
+    });
+  }
+  
+  // Default response for unknown endpoints
+  return res.status(404).json({ 
+    error: 'Endpoint not found',
+    path: url
+  });
 }
