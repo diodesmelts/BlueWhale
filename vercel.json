@@ -5,15 +5,6 @@
   "outputDirectory": "dist",
   "installCommand": "npm install --force",
   "framework": null,
-  "builds": [
-    { "src": "package.json", "use": "@vercel/node" },
-    { "src": "dist/**", "use": "@vercel/static" }
-  ],
-  "functions": {
-    "api/**/*": {
-      "memory": 1024
-    }
-  },
   "routes": [
     { "handle": "filesystem" },
     { "src": "/api/(.*)", "dest": "/api/$1" },
