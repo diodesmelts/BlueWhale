@@ -1,0 +1,183 @@
+[10:49:51.675] Cloning github.com/diodesmelts/BlueWhale (Branch: main, Commit: ad947c0)
+[10:49:51.735] Skipping build cache, deployment was triggered without cache.
+[10:49:55.731] Cloning completed: 4.056s
+[10:49:55.795] Found .vercelignore
+[10:49:55.812] Removed 35 ignored files defined in .vercelignore
+[10:49:55.958] Running build in Washington, D.C., USA (East) – iad1
+[10:49:56.110] Running "vercel build"
+[10:49:56.487] Vercel CLI 41.6.0
+[10:49:57.278] Running "install" command: `npm install --force`...
+[10:49:57.539] npm warn using --force Recommended protections disabled.
+[10:50:05.693] 
+[10:50:05.693] added 425 packages, and audited 426 packages in 8s
+[10:50:05.694] 
+[10:50:05.694] 58 packages are looking for funding
+[10:50:05.694]   run `npm fund` for details
+[10:50:05.696] 
+[10:50:05.697] 1 moderate severity vulnerability
+[10:50:05.697] 
+[10:50:05.697] To address all issues, run:
+[10:50:05.697]   npm audit fix
+[10:50:05.697] 
+[10:50:05.698] Run `npm audit` for details.
+[10:50:06.555] Starting Vercel build process...
+[10:50:06.556] Creating directories
+[10:50:06.561] Creating direct frontend output without Vite
+[10:50:06.563] Copying public assets
+[10:50:06.583] Creating simple index.html
+[10:50:06.587] Creating whale logo SVG
+[10:50:06.590] Creating favicon
+[10:50:06.593] Copying shared schema
+[10:50:06.597] Building server (Approach 1)
+[10:50:07.208] npm warn exec The following package was not found and will be installed: esbuild@0.25.2
+[10:50:08.934] ▲ [WARNING] "import.meta" is not available with the "cjs" output format and will be empty [empty-import-meta]
+[10:50:08.935] 
+[10:50:08.936]     server/vite.ts:71:32:
+[10:50:08.936]       71 │   const distPath = path.resolve(import.meta.dirname, "public");
+[10:50:08.936]          ╵                                 ~~~~~~~~~~~
+[10:50:08.936] 
+[10:50:08.937]   You need to set the output format to "esm" for "import.meta" to work correctly.
+[10:50:08.937] 
+[10:50:08.937] ✘ [ERROR] Could not resolve "vite"
+[10:50:08.937] 
+[10:50:08.938]     server/vite.ts:4:63:
+[10:50:08.938]       4 │ import { createServer as createViteServer, createLogger } from "vite";
+[10:50:08.938]         │                                                                ~~~~~~
+[10:50:08.938]         ╵                                                                "./vite"
+[10:50:08.939] 
+[10:50:08.939]   Use the relative path "./vite" to reference the file "server/vite.ts". Without the leading "./", the path "vite" is being interpreted as a package path instead.
+[10:50:08.939] 
+[10:50:08.941] ✘ [ERROR] Top-level await is currently not supported with the "cjs" output format
+[10:50:08.941] 
+[10:50:08.941]     vite.config.ts:15:10:
+[10:50:08.941]       15 │           await import("@replit/vite-plugin-cartographer").then((m...
+[10:50:08.942]          ╵           ~~~~~
+[10:50:08.942] 
+[10:50:08.942] ✘ [ERROR] Could not resolve "vite"
+[10:50:08.943] 
+[10:50:08.943]     vite.config.ts:1:29:
+[10:50:08.944]       1 │ import { defineConfig } from "vite";
+[10:50:08.944]         ╵                              ~~~~~~
+[10:50:08.944] 
+[10:50:08.944]   You can mark the path "vite" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+[10:50:08.944] 
+[10:50:08.945] ✘ [ERROR] Could not resolve "@vitejs/plugin-react"
+[10:50:08.945] 
+[10:50:08.945]     vite.config.ts:2:18:
+[10:50:08.945]       2 │ import react from "@vitejs/plugin-react";
+[10:50:08.945]         ╵                   ~~~~~~~~~~~~~~~~~~~~~~
+[10:50:08.945] 
+[10:50:08.945]   You can mark the path "@vitejs/plugin-react" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+[10:50:08.945] 
+[10:50:08.946] ✘ [ERROR] Could not resolve "@replit/vite-plugin-runtime-error-modal"
+[10:50:08.946] 
+[10:50:08.946]     vite.config.ts:5:32:
+[10:50:08.946]       5 │ ...runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
+[10:50:08.946]         ╵                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[10:50:08.946] 
+[10:50:08.946]   You can mark the path "@replit/vite-plugin-runtime-error-modal" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+[10:50:08.946] 
+[10:50:09.058] 1 of 6 warnings and 5 of 6 errors shown (disable the message limit with --log-limit=0)
+[10:50:09.076] esbuild failed, trying alternative approach
+[10:50:09.077] Building server (Approach 2)
+[10:50:09.656] npm error could not determine executable to run
+[10:50:09.657] npm error A complete log of this run can be found in: /vercel/.npm/_logs/2025-04-22T09_50_09_132Z-debug-0.log
+[10:50:09.665] tsc failed, trying alternative approach
+[10:50:09.666] Building server (Approach 3)
+[10:50:09.669] Creating fallback starter script
+[10:50:09.670] Copying backup server implementation
+[10:50:09.671] Creating API endpoint for Vercel
+[10:50:09.672] Build completed successfully!
+[10:50:09.705] Installing dependencies...
+[10:50:11.099] npm warn deprecated @esbuild-kit/core-utils@3.3.2: Merged into tsx: https://tsx.is
+[10:50:11.170] npm warn deprecated @esbuild-kit/esm-loader@2.6.5: Merged into tsx: https://tsx.is
+[10:50:12.735] 
+[10:50:12.735] added 90 packages in 3s
+[10:50:12.736] 
+[10:50:12.736] 69 packages are looking for funding
+[10:50:12.736]   run `npm fund` for details
+[10:50:12.956] Using TypeScript 5.6.3 (local user-provided)
+[10:50:20.019] server/vite.ts(39,5): error TS2322: Type '{ middlewareMode: boolean; hmr: { server: Server<typeof IncomingMessage, typeof ServerResponse>; }; allowedHosts: boolean; }' is not assignable to type 'ServerOptions'.
+[10:50:20.019]   Types of property 'allowedHosts' are incompatible.
+[10:50:20.019]     Type 'boolean' is not assignable to type 'true | string[] | undefined'.
+[10:50:20.019] 
+[10:50:24.009] server/storage.ts(109,11): error TS2739: Type '{ id: number; isPremium: boolean | null; isAdmin: boolean | null; createdAt: Date; username: string; password: string; email: string; mascotId?: string | null | undefined; }' is missing the following properties from type '{ isAdmin: boolean | null; id: number; createdAt: Date | null; username: string; password: string; email: string; isPremium: boolean | null; stripeCustomerId: string | null; walletBalance: number | null; mascotId: string | null; }': stripeCustomerId, walletBalance
+[10:50:24.012] server/storage.ts(170,85): error TS18048: 'filter.category' is possibly 'undefined'.
+[10:50:24.012] server/storage.ts(196,46): error TS2769: No overload matches this call.
+[10:50:24.013]   Overload 1 of 4, '(value: string | number | Date): Date', gave the following error.
+[10:50:24.015]     Argument of type 'Date | null' is not assignable to parameter of type 'string | number | Date'.
+[10:50:24.016]       Type 'null' is not assignable to type 'string | number | Date'.
+[10:50:24.016]   Overload 2 of 4, '(value: string | number): Date', gave the following error.
+[10:50:24.016]     Argument of type 'Date | null' is not assignable to parameter of type 'string | number'.
+[10:50:24.016]       Type 'null' is not assignable to type 'string | number'.
+[10:50:24.016] server/storage.ts(196,80): error TS2769: No overload matches this call.
+[10:50:24.017]   Overload 1 of 4, '(value: string | number | Date): Date', gave the following error.
+[10:50:24.017]     Argument of type 'Date | null' is not assignable to parameter of type 'string | number | Date'.
+[10:50:24.017]       Type 'null' is not assignable to type 'string | number | Date'.
+[10:50:24.017]   Overload 2 of 4, '(value: string | number): Date', gave the following error.
+[10:50:24.017]     Argument of type 'Date | null' is not assignable to parameter of type 'string | number'.
+[10:50:24.018]       Type 'null' is not assignable to type 'string | number'.
+[10:50:24.018] server/storage.ts(199,37): error TS18047: 'b.entries' is possibly 'null'.
+[10:50:24.018] server/storage.ts(199,49): error TS18047: 'a.entries' is possibly 'null'.
+[10:50:24.018] server/storage.ts(203,35): error TS18047: 'b.entries' is possibly 'null'.
+[10:50:24.018] server/storage.ts(203,47): error TS18047: 'a.entries' is possibly 'null'.
+[10:50:24.019] server/storage.ts(212,11): error TS2322: Type '{ id: number; createdAt: Date; entries: number; isVerified: boolean; title: string; organizer: string; description: string; image: string; platform: string; type: string; prize: number; eligibility: string; ... 8 more ...; isDeleted?: boolean | ... 1 more ... | undefined; }' is not assignable to type '{ category: string | null; id: number; title: string; organizer: string; description: string; image: string; platform: string; type: string; prize: number; ticketPrice: number | null; maxTicketsPerUser: number | null; ... 9 more ...; createdAt: Date | null; }'.
+[10:50:24.020]   Types of property 'category' are incompatible.
+[10:50:24.021]     Type 'string | null | undefined' is not assignable to type 'string | null'.
+[10:50:24.021]       Type 'undefined' is not assignable to type 'string | null'.
+[10:50:24.021] server/storage.ts(268,11): error TS2322: Type '{ id: number; createdAt: Date; userId: number; competitionId: number; entryProgress: { [x: number]: number; length: number; toString: () => string; toLocaleString: { (): string; (locales: string | string[], options?: Intl.NumberFormatOptions & Intl.DateTimeFormatOptions): string; }; ... 37 more ...; readonly [Symbol...' is not assignable to type '{ id: number; createdAt: Date | null; userId: number; competitionId: number; entryProgress: number[]; isBookmarked: boolean | null; isLiked: boolean | null; ticketCount: number | null; ticketNumbers: number[] | null; paymentIntentId: string | null; paymentStatus: string | null; totalPaid: number | null; }'.
+[10:50:24.023]   The types returned by 'entryProgress.pop()' are incompatible between these types.
+[10:50:24.023]     Type 'unknown' is not assignable to type 'number | undefined'.
+[10:50:24.024] server/storage.ts(294,11): error TS2322: Type '{ id: number; createdAt: Date; userId: number; competitionId: number; claimByDate: Date; winDate?: Date | null | undefined; prizeReceived?: boolean | null | undefined; receivedDate?: Date | ... 1 more ... | undefined; }' is not assignable to type '{ id: number; createdAt: Date | null; userId: number; competitionId: number; winDate: Date | null; claimByDate: Date; prizeReceived: boolean | null; receivedDate: Date | null; }'.
+[10:50:24.025]   Types of property 'winDate' are incompatible.
+[10:50:24.025]     Type 'Date | null | undefined' is not assignable to type 'Date | null'.
+[10:50:24.025]       Type 'undefined' is not assignable to type 'Date | null'.
+[10:50:24.025] server/storage.ts(337,18): error TS2769: No overload matches this call.
+[10:50:24.025]   Overload 1 of 4, '(value: string | number | Date): Date', gave the following error.
+[10:50:24.026]     Argument of type 'Date | null' is not assignable to parameter of type 'string | number | Date'.
+[10:50:24.026]       Type 'null' is not assignable to type 'string | number | Date'.
+[10:50:24.026]   Overload 2 of 4, '(value: string | number): Date', gave the following error.
+[10:50:24.026]     Argument of type 'Date | null' is not assignable to parameter of type 'string | number'.
+[10:50:24.026]       Type 'null' is not assignable to type 'string | number'.
+[10:50:24.026] server/storage.ts(337,46): error TS2769: No overload matches this call.
+[10:50:24.027]   Overload 1 of 4, '(value: string | number | Date): Date', gave the following error.
+[10:50:24.027]     Argument of type 'Date | null' is not assignable to parameter of type 'string | number | Date'.
+[10:50:24.027]       Type 'null' is not assignable to type 'string | number | Date'.
+[10:50:24.027]   Overload 2 of 4, '(value: string | number): Date', gave the following error.
+[10:50:24.027]     Argument of type 'Date | null' is not assignable to parameter of type 'string | number'.
+[10:50:24.028]       Type 'null' is not assignable to type 'string | number'.
+[10:50:24.028] server/storage.ts(374,11): error TS2322: Type 'boolean | null' is not assignable to type 'boolean'.
+[10:50:24.028]   Type 'null' is not assignable to type 'boolean'.
+[10:50:24.028] server/storage.ts(417,5): error TS2322: Type '{ endDate: string; drawTime: string; createdAt: string; isEntered: boolean; entryProgress: any[]; isBookmarked: boolean; isLiked: boolean; winDate: string | undefined; claimByDate: string | undefined; ... 19 more ...; isDeleted: boolean | null; }[]' is not assignable to type 'CompetitionWithEntryStatus[]'.
+[10:50:24.028]   Type '{ endDate: string; drawTime: string; createdAt: string; isEntered: boolean; entryProgress: any[]; isBookmarked: boolean; isLiked: boolean; winDate: string | undefined; claimByDate: string | undefined; ... 19 more ...; isDeleted: boolean | null; }' is not assignable to type 'CompetitionWithEntryStatus'.
+[10:50:24.029]     Types of property 'entries' are incompatible.
+[10:50:24.029]       Type 'number | null' is not assignable to type 'number'.
+[10:50:24.029]         Type 'null' is not assignable to type 'number'.
+[10:50:24.029] 
+[10:50:24.959] server/database-storage.ts(72,7): error TS2740: Type 'Omit<PgSelectBase<"competitions", { id: PgColumn<{ name: "id"; tableName: "competitions"; dataType: "number"; columnType: "PgSerial"; data: number; driverParam: number; notNull: true; hasDefault: true; isPrimaryKey: true; ... 5 more ...; generated: undefined; }, {}, {}>; ... 19 more ...; createdAt: PgColumn<...>; },...' is missing the following properties from type 'PgSelectBase<"competitions", { id: PgColumn<{ name: "id"; tableName: "competitions"; dataType: "number"; columnType: "PgSerial"; data: number; driverParam: number; notNull: true; hasDefault: true; isPrimaryKey: true; ... 5 more ...; generated: undefined; }, {}, {}>; ... 19 more ...; createdAt: PgColumn<...>; }, ... ...': config, joinsNotNullableMap, tableName, isPartialSelect, and 5 more.
+[10:50:24.960] server/database-storage.ts(78,9): error TS2740: Type 'Omit<PgSelectBase<"competitions", { id: PgColumn<{ name: "id"; tableName: "competitions"; dataType: "number"; columnType: "PgSerial"; data: number; driverParam: number; notNull: true; hasDefault: true; isPrimaryKey: true; ... 5 more ...; generated: undefined; }, {}, {}>; ... 19 more ...; createdAt: PgColumn<...>; },...' is missing the following properties from type 'PgSelectBase<"competitions", { id: PgColumn<{ name: "id"; tableName: "competitions"; dataType: "number"; columnType: "PgSerial"; data: number; driverParam: number; notNull: true; hasDefault: true; isPrimaryKey: true; ... 5 more ...; generated: undefined; }, {}, {}>; ... 19 more ...; createdAt: PgColumn<...>; }, ... ...': config, joinsNotNullableMap, tableName, isPartialSelect, and 5 more.
+[10:50:24.960] server/database-storage.ts(82,9): error TS2740: Type 'Omit<PgSelectBase<"competitions", { id: PgColumn<{ name: "id"; tableName: "competitions"; dataType: "number"; columnType: "PgSerial"; data: number; driverParam: number; notNull: true; hasDefault: true; isPrimaryKey: true; ... 5 more ...; generated: undefined; }, {}, {}>; ... 19 more ...; createdAt: PgColumn<...>; },...' is missing the following properties from type 'PgSelectBase<"competitions", { id: PgColumn<{ name: "id"; tableName: "competitions"; dataType: "number"; columnType: "PgSerial"; data: number; driverParam: number; notNull: true; hasDefault: true; isPrimaryKey: true; ... 5 more ...; generated: undefined; }, {}, {}>; ... 19 more ...; createdAt: PgColumn<...>; }, ... ...': config, joinsNotNullableMap, tableName, isPartialSelect, and 5 more.
+[10:50:24.960] server/database-storage.ts(93,9): error TS2740: Type 'Omit<PgSelectBase<"competitions", { id: PgColumn<{ name: "id"; tableName: "competitions"; dataType: "number"; columnType: "PgSerial"; data: number; driverParam: number; notNull: true; hasDefault: true; isPrimaryKey: true; ... 5 more ...; generated: undefined; }, {}, {}>; ... 19 more ...; createdAt: PgColumn<...>; },...' is missing the following properties from type 'PgSelectBase<"competitions", { id: PgColumn<{ name: "id"; tableName: "competitions"; dataType: "number"; columnType: "PgSerial"; data: number; driverParam: number; notNull: true; hasDefault: true; isPrimaryKey: true; ... 5 more ...; generated: undefined; }, {}, {}>; ... 19 more ...; createdAt: PgColumn<...>; }, ... ...': config, joinsNotNullableMap, tableName, isPartialSelect, and 5 more.
+[10:50:24.961] server/database-storage.ts(101,9): error TS2740: Type 'Omit<PgSelectBase<"competitions", { id: PgColumn<{ name: "id"; tableName: "competitions"; dataType: "number"; columnType: "PgSerial"; data: number; driverParam: number; notNull: true; hasDefault: true; isPrimaryKey: true; ... 5 more ...; generated: undefined; }, {}, {}>; ... 19 more ...; createdAt: PgColumn<...>; },...' is missing the following properties from type 'PgSelectBase<"competitions", { id: PgColumn<{ name: "id"; tableName: "competitions"; dataType: "number"; columnType: "PgSerial"; data: number; driverParam: number; notNull: true; hasDefault: true; isPrimaryKey: true; ... 5 more ...; generated: undefined; }, {}, {}>; ... 19 more ...; createdAt: PgColumn<...>; }, ... ...': config, joinsNotNullableMap, tableName, isPartialSelect, and 5 more.
+[10:50:24.961] server/database-storage.ts(108,9): error TS2740: Type 'Omit<PgSelectBase<"competitions", { id: PgColumn<{ name: "id"; tableName: "competitions"; dataType: "number"; columnType: "PgSerial"; data: number; driverParam: number; notNull: true; hasDefault: true; isPrimaryKey: true; ... 5 more ...; generated: undefined; }, {}, {}>; ... 19 more ...; createdAt: PgColumn<...>; },...' is missing the following properties from type 'PgSelectBase<"competitions", { id: PgColumn<{ name: "id"; tableName: "competitions"; dataType: "number"; columnType: "PgSerial"; data: number; driverParam: number; notNull: true; hasDefault: true; isPrimaryKey: true; ... 5 more ...; generated: undefined; }, {}, {}>; ... 19 more ...; createdAt: PgColumn<...>; }, ... ...': config, joinsNotNullableMap, tableName, isPartialSelect, and 5 more.
+[10:50:24.961] server/database-storage.ts(110,9): error TS2740: Type 'Omit<PgSelectBase<"competitions", { id: PgColumn<{ name: "id"; tableName: "competitions"; dataType: "number"; columnType: "PgSerial"; data: number; driverParam: number; notNull: true; hasDefault: true; isPrimaryKey: true; ... 5 more ...; generated: undefined; }, {}, {}>; ... 19 more ...; createdAt: PgColumn<...>; },...' is missing the following properties from type 'PgSelectBase<"competitions", { id: PgColumn<{ name: "id"; tableName: "competitions"; dataType: "number"; columnType: "PgSerial"; data: number; driverParam: number; notNull: true; hasDefault: true; isPrimaryKey: true; ... 5 more ...; generated: undefined; }, {}, {}>; ... 19 more ...; createdAt: PgColumn<...>; }, ... ...': config, joinsNotNullableMap, tableName, isPartialSelect, and 5 more.
+[10:50:24.961] server/database-storage.ts(112,9): error TS2740: Type 'Omit<PgSelectBase<"competitions", { id: PgColumn<{ name: "id"; tableName: "competitions"; dataType: "number"; columnType: "PgSerial"; data: number; driverParam: number; notNull: true; hasDefault: true; isPrimaryKey: true; ... 5 more ...; generated: undefined; }, {}, {}>; ... 19 more ...; createdAt: PgColumn<...>; },...' is missing the following properties from type 'PgSelectBase<"competitions", { id: PgColumn<{ name: "id"; tableName: "competitions"; dataType: "number"; columnType: "PgSerial"; data: number; driverParam: number; notNull: true; hasDefault: true; isPrimaryKey: true; ... 5 more ...; generated: undefined; }, {}, {}>; ... 19 more ...; createdAt: PgColumn<...>; }, ... ...': config, joinsNotNullableMap, tableName, isPartialSelect, and 5 more.
+[10:50:24.961] server/database-storage.ts(115,9): error TS2740: Type 'Omit<PgSelectBase<"competitions", { id: PgColumn<{ name: "id"; tableName: "competitions"; dataType: "number"; columnType: "PgSerial"; data: number; driverParam: number; notNull: true; hasDefault: true; isPrimaryKey: true; ... 5 more ...; generated: undefined; }, {}, {}>; ... 19 more ...; createdAt: PgColumn<...>; },...' is missing the following properties from type 'PgSelectBase<"competitions", { id: PgColumn<{ name: "id"; tableName: "competitions"; dataType: "number"; columnType: "PgSerial"; data: number; driverParam: number; notNull: true; hasDefault: true; isPrimaryKey: true; ... 5 more ...; generated: undefined; }, {}, {}>; ... 19 more ...; createdAt: PgColumn<...>; }, ... ...': config, joinsNotNullableMap, tableName, isPartialSelect, and 5 more.
+[10:50:24.961] server/database-storage.ts(119,7): error TS2740: Type 'Omit<PgSelectBase<"competitions", { id: PgColumn<{ name: "id"; tableName: "competitions"; dataType: "number"; columnType: "PgSerial"; data: number; driverParam: number; notNull: true; hasDefault: true; isPrimaryKey: true; ... 5 more ...; generated: undefined; }, {}, {}>; ... 19 more ...; createdAt: PgColumn<...>; },...' is missing the following properties from type 'PgSelectBase<"competitions", { id: PgColumn<{ name: "id"; tableName: "competitions"; dataType: "number"; columnType: "PgSerial"; data: number; driverParam: number; notNull: true; hasDefault: true; isPrimaryKey: true; ... 5 more ...; generated: undefined; }, {}, {}>; ... 19 more ...; createdAt: PgColumn<...>; }, ... ...': config, joinsNotNullableMap, tableName, isPartialSelect, and 5 more.
+[10:50:24.961] server/database-storage.ts(167,56): error TS2769: No overload matches this call.
+[10:50:24.961]   Overload 1 of 2, '(value: { userId: number | SQL<unknown> | Placeholder<string, any>; competitionId: number | SQL<unknown> | Placeholder<string, any>; entryProgress: SQL<unknown> | number[] | Placeholder<...>; ... 8 more ...; totalPaid?: number | ... 3 more ... | undefined; }): PgInsertBase<...>', gave the following error.
+[10:50:24.961]     Argument of type '{ userId: number; competitionId: number; entryProgress: { [x: number]: number; length: number; toString: () => string; toLocaleString: { (): string; (locales: string | string[], options?: (NumberFormatOptions & DateTimeFormatOptions) | undefined): string; }; ... 37 more ...; readonly [Symbol.unscopables]: { ...; }; ...' is not assignable to parameter of type '{ userId: number | SQL<unknown> | Placeholder<string, any>; competitionId: number | SQL<unknown> | Placeholder<string, any>; entryProgress: SQL<unknown> | number[] | Placeholder<...>; ... 8 more ...; totalPaid?: number | ... 3 more ... | undefined; }'.
+[10:50:24.961]       Types of property 'entryProgress' are incompatible.
+[10:50:24.961]         Type '{ [x: number]: number; length: number; toString: () => string; toLocaleString: { (): string; (locales: string | string[], options?: (NumberFormatOptions & DateTimeFormatOptions) | undefined): string; }; ... 37 more ...; readonly [Symbol.unscopables]: { ...; }; }' is not assignable to type 'SQL<unknown> | number[] | Placeholder<string, any>'.
+[10:50:24.961]           Type '{ [x: number]: number; length: number; toString: () => string; toLocaleString: { (): string; (locales: string | string[], options?: (NumberFormatOptions & DateTimeFormatOptions) | undefined): string; }; ... 37 more ...; readonly [Symbol.unscopables]: { ...; }; }' is not assignable to type 'number[]'.
+[10:50:24.961]             The types returned by 'pop()' are incompatible between these types.
+[10:50:24.961]               Type 'unknown' is not assignable to type 'number | undefined'.
+[10:50:24.961]   Overload 2 of 2, '(values: { userId: number | SQL<unknown> | Placeholder<string, any>; competitionId: number | SQL<unknown> | Placeholder<string, any>; entryProgress: SQL<unknown> | number[] | Placeholder<...>; ... 8 more ...; totalPaid?: number | ... 3 more ... | undefined; }[]): PgInsertBase<...>', gave the following error.
+[10:50:24.961]     Argument of type '{ userId: number; competitionId: number; entryProgress: { [x: number]: number; length: number; toString: () => string; toLocaleString: { (): string; (locales: string | string[], options?: (NumberFormatOptions & DateTimeFormatOptions) | undefined): string; }; ... 37 more ...; readonly [Symbol.unscopables]: { ...; }; ...' is not assignable to parameter of type '{ userId: number | SQL<unknown> | Placeholder<string, any>; competitionId: number | SQL<unknown> | Placeholder<string, any>; entryProgress: SQL<unknown> | number[] | Placeholder<...>; ... 8 more ...; totalPaid?: number | ... 3 more ... | undefined; }[]'.
+[10:50:24.961]       Type '{ userId: number; competitionId: number; entryProgress: { [x: number]: number; length: number; toString: () => string; toLocaleString: { (): string; (locales: string | string[], options?: (NumberFormatOptions & DateTimeFormatOptions) | undefined): string; }; ... 37 more ...; readonly [Symbol.unscopables]: { ...; }; ...' is missing the following properties from type '{ userId: number | SQL<unknown> | Placeholder<string, any>; competitionId: number | SQL<unknown> | Placeholder<string, any>; entryProgress: SQL<unknown> | number[] | Placeholder<...>; ... 8 more ...; totalPaid?: number | ... 3 more ... | undefined; }[]': length, pop, push, concat, and 35 more.
+[10:50:24.962] server/database-storage.ts(324,5): error TS2322: Type '{ endDate: string; createdAt: string; isEntered: boolean; entryProgress: number[]; isBookmarked: boolean; isLiked: boolean; ticketCount: number; ticketNumbers: number[]; winDate: string | undefined; ... 21 more ...; isDeleted: boolean | null; }[]' is not assignable to type 'CompetitionWithEntryStatus[]'.
+[10:50:24.962]   Type '{ endDate: string; createdAt: string; isEntered: boolean; entryProgress: number[]; isBookmarked: boolean; isLiked: boolean; ticketCount: number; ticketNumbers: number[]; winDate: string | undefined; ... 21 more ...; isDeleted: boolean | null; }' is not assignable to type 'CompetitionWithEntryStatus'.
+[10:50:24.962]     Types of property 'entries' are incompatible.
+[10:50:24.962]       Type 'number | null' is not assignable to type 'number'.
+[10:50:24.962]         Type 'null' is not assignable to type 'number'.
+[10:50:24.962] 
