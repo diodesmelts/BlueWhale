@@ -3,3 +3,5 @@ node_modules
 server/public
 vite.config.ts.*
 *.tar.gz
+# Temporarily allow dist folder
+# dist/
