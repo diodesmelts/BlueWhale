@@ -1,73 +1,96 @@
-// Pre-build script for Vercel deployment
+const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
 
-console.log('Starting Vercel build process...');
+console.log('Starting custom Vercel build process...');
 
-// Run the build command
+// Run the Vite build for the frontend
 try {
-  console.log('Building the application...');
-  execSync('npm run build', { stdio: 'inherit' });
-  console.log('Build completed successfully.');
+  console.log('Building frontend with Vite...');
+  execSync('npx vite build', { stdio: 'inherit' });
+  console.log('Frontend build completed successfully.');
 } catch (error) {
-  console.error('Error building application:', error);
+  console.error('Frontend build failed:', error);
   process.exit(1);
 }
 
-// Create a simplified index.html in the root directory for Vercel to serve
-const rootIndexPath = path.join(__dirname, 'index.html');
-const distIndexPath = path.join(__dirname, 'dist', 'public', 'index.html');
+// Check if dist/public directory exists
+const distPublicDir = path.join(__dirname, 'dist/public');
+if (!fs.existsSync(distPublicDir)) {
+  console.error('Error: dist/public directory not found after build.');
+  process.exit(1);
+}
 
-if (fs.existsSync(distIndexPath)) {
-  console.log('Creating root index.html to redirect to the built application...');
-  
-  // Create a simple HTML file that redirects to the built application
-  const redirectHtml = `<!DOCTYPE html>
+// Create a backup index.html in case something goes wrong
+console.log('Creating backup index.html...');
+const indexHtml = `<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="refresh" content="0;url=/dist/public/index.html">
-    <title>Blue Whale Competitions - Redirecting...</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #0a192f;
-        color: white;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        margin: 0;
-        text-align: center;
-      }
-      .loading {
-        display: inline-block;
-        width: 50px;
-        height: 50px;
-        border: 3px solid rgba(100, 255, 218, 0.3);
-        border-radius: 50%;
-        border-top-color: #64ffda;
-        animation: spin 1s ease-in-out infinite;
-      }
-      @keyframes spin {
-        to { transform: rotate(360deg); }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="loading"></div>
-    <p>Redirecting to Blue Whale Competitions...</p>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blue Whale Competitions</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f8ff;
+      color: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 800px;
+      padding: 40px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      text-align: center;
+    }
+    h1 {
+      color: #0092d1;
+      margin-bottom: 20px;
+      font-size: 32px;
+    }
+    p {
+      line-height: 1.6;
+      margin-bottom: 20px;
+      font-size: 18px;
+    }
+    .logo {
+      width: 150px;
+      margin-bottom: 20px;
+    }
+    .btn {
+      display: inline-block;
+      background-color: #0092d1;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 20px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <path d="M100 10C48.2 10 10 48.2 10 100s38.2 90 90 90 90-38.2 90-90S151.8 10 100 10zm0 160c-38.6 0-70-31.4-70-70s31.4-70 70-70 70 31.4 70 70-31.4 70-70 70z" fill="#0092d1"/>
+      <path d="M145 85c-5.5 0-10 4.5-10 10s4.5 10 10 10 10-4.5 10-10-4.5-10-10-10zm-45-15c-16.5 0-30 13.5-30 30s13.5 30 30 30 30-13.5 30-30-13.5-30-30-30zm0 40c-5.5 0-10-4.5-10-10s4.5-10 10-10 10 4.5 10 10-4.5 10-10 10z" fill="#0092d1"/>
+    </svg>
+    <h1>Blue Whale Competitions</h1>
+    <p>Welcome to Blue Whale Competitions - your premier destination for exciting competitions and prize draws.</p>
+    <p>Our full application is being deployed. In the meantime, you can check out our API endpoints.</p>
+    <a href="/api/status" class="btn">Check API Status</a>
+  </div>
+</body>
 </html>`;
 
-  fs.writeFileSync(rootIndexPath, redirectHtml);
-  console.log('Root index.html created successfully.');
-} else {
-  console.error('Error: dist/public/index.html not found. Build may have failed.');
-  process.exit(1);
-}
+// Write the backup index.html (overwrite if it exists)
+fs.writeFileSync(path.join(distPublicDir, 'index.html'), indexHtml);
 
-console.log('Vercel build process completed successfully.');
+console.log('Vercel build process completed successfully!');

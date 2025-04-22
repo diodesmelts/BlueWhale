@@ -1,11 +1,9 @@
 {
   "version": 2,
-  "functions": {
-    "api/*.js": {
-      "memory": 1024,
-      "maxDuration": 10
-    }
-  },
+  "framework": null,
+  "buildCommand": "node vercel-build.js",
+  "outputDirectory": "dist/public",
+  "installCommand": "npm install",
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/$1.js" },
     { "handle": "filesystem" },
