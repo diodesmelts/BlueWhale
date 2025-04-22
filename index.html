@@ -3,8 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <meta http-equiv="refresh" content="0;url=/dist/public/index.html">
-    <title>Blue Whale Competitions - Redirecting...</title>
+    <title>Blue Whale Competitions</title>
     <style>
       body {
         font-family: 'Arial', sans-serif;
@@ -30,10 +29,36 @@
       @keyframes spin {
         to { transform: rotate(360deg); }
       }
+      .container {
+        max-width: 600px;
+        padding: 2rem;
+      }
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        color: #64ffda;
+      }
+      p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+      }
+      #root {
+        width: 100%;
+        height: 100%;
+      }
     </style>
   </head>
   <body>
-    <div class="loading"></div>
-    <p>Redirecting to Blue Whale Competitions...</p>
+    <div id="root">
+      <div class="container">
+        <h1>Blue Whale Competitions</h1>
+        <div class="loading"></div>
+        <p>Loading application, please wait...</p>
+      </div>
+    </div>
+    
+    <!-- This script will be replaced by the react code on build -->
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
