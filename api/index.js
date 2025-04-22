@@ -1,6 +1,8 @@
-// Optimized Vercel Serverless API handler
+// Optimized Vercel Serverless API handler for both API and static files
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
+const fs = require('fs');
 
 // Create Express app
 const app = express();
@@ -15,6 +17,12 @@ app.use(cors({
   methods: 'GET,POST,PUT,DELETE,OPTIONS',
   credentials: true
 }));
+
+// Serve static files from the dist directory if it exists
+const distPath = path.join(process.cwd(), 'dist/public');
+if (fs.existsSync(distPath)) {
+  app.use(express.static(distPath));
+}
 
 // API endpoints for preview/demo data
 app.get('/api/settings/logo', (req, res) => {
@@ -88,6 +96,17 @@ app.all('/api/*', (req, res) => {
     error: 'API endpoint not found',
     message: 'This endpoint is not available in preview mode.'
   });
+});
+
+// For single-page application routing, serve the main index.html
+// for all other routes to let the client-side router handle it
+app.get('*', (req, res) => {
+  const indexPath = path.join(distPath, 'index.html');
+  if (fs.existsSync(indexPath)) {
+    res.sendFile(indexPath);
+  } else {
+    res.status(404).send('Not found - Application is not properly built');
+  }
 });
 
 // Export for Vercel serverless
