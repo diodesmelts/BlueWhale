@@ -1,21 +1,14 @@
+# ignore unnecessary files
+README.md
 .git
 .github
+.gitignore
 node_modules
-notification-changes
-scripts
 attached_assets
-.vscode
-*.log
-.env.local
-.env.development.local
-*.d.ts
-tsconfig.tsbuildinfo
-manual-build.cjs
-*.md
-.replit
-replit.nix
-.node-version
-Dockerfile
-railway.json
-heroku.yml
-build.sh
+scripts
+!api
+!dist
+
+# Always include these files
+!index.html
+!vercel.json
