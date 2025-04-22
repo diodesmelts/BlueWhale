@@ -1,7 +1,5 @@
 {
-  "buildCommand": "echo 'No build required'",
-  "outputDirectory": "public",
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1.js" }
-  ]
+  "version": 2,
+  "public": true,
+  "cleanUrls": true
 }

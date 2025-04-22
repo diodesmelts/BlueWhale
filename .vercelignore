@@ -1,10 +1,10 @@
-# Exclude everything by default
-*
-.*/
-
-# Include only what we need for Vercel
-!api/**
-!public/**
-!vercel.json
-!index.html
-!package.json
+# Include only necessary files for deployment
+node_modules
+.git
+client
+server
+shared
+scripts
+dist
+*.log
+.env*
