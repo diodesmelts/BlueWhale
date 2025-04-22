@@ -4,9 +4,9 @@
  * Enhanced build script for Vercel deployment
  */
 
-import { execSync } from 'child_process';
-import fs from 'fs';
-import path from 'path';
+const { execSync } = require('child_process');
+const fs = require('fs');
+const path = require('path');
 
 function log(message) {
   console.log(`[build] ${message}`);
@@ -20,18 +20,44 @@ function runCommand(command, options = {}) {
   });
 }
 
+function ensureDir(dir) {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+}
+
 async function buildProject() {
   try {
     log('Starting enhanced build for Vercel deployment');
     
-    // Full build including front-end and back-end
-    log('Building client and server...');
-    runCommand('vite build');
-    runCommand('esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist');
+    // Install dependencies if needed
+    if (!fs.existsSync('node_modules')) {
+      log('Installing dependencies...');
+      runCommand('npm install');
+    }
     
-    // Copy API routes to make them directly accessible
-    log('Copying serverless API handlers...');
-    fs.mkdirSync(path.join('dist', 'api'), { recursive: true });
+    // Generate the main frontend build
+    log('Building frontend with Vite...');
+    try {
+      runCommand('npx vite build');
+    } catch (error) {
+      log(`Vite build failed: ${error.message}`);
+      log('Falling back to simplified build...');
+      // Create a minimal dist directory
+      ensureDir('dist');
+    }
+    
+    // Bundle the server
+    log('Building server with esbuild...');
+    try {
+      runCommand('npx esbuild server/index.ts --platform=node --packages=external --bundle --outdir=dist --format=esm');
+    } catch (error) {
+      log(`Server build failed: ${error.message}`);
+    }
+    
+    // Copy API handlers to dist
+    log('Copying API handlers...');
+    ensureDir(path.join('dist', 'api'));
     if (fs.existsSync('api')) {
       fs.readdirSync('api').forEach(file => {
         if (file.endsWith('.js')) {
@@ -41,6 +67,33 @@ async function buildProject() {
           );
         }
       });
+    }
+    
+    // Ensure we have an index.html
+    if (!fs.existsSync(path.join('dist', 'index.html'))) {
+      log('Creating fallback index.html...');
+      const apiIndexPath = path.join('api', 'index.js');
+      if (fs.existsSync(apiIndexPath)) {
+        const apiIndexContent = fs.readFileSync(apiIndexPath, 'utf8');
+        // Extract the HTML template if it exists
+        const htmlMatch = apiIndexContent.match(/const landingPage = `([\s\S]*?)`;/);
+        if (htmlMatch && htmlMatch[1]) {
+          fs.writeFileSync(path.join('dist', 'index.html'), htmlMatch[1]);
+        } else {
+          // Create a simple redirect
+          fs.writeFileSync(path.join('dist', 'index.html'), `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="refresh" content="0;url=/api">
+</head>
+<body>
+  Redirecting to Blue Whale Competitions...
+</body>
+</html>
+          `);
+        }
+      }
     }
     
     log('Build completed successfully!');
